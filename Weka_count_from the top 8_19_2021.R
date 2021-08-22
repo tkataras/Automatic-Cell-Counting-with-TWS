@@ -101,7 +101,7 @@ get_match_id <- function(sub_inv,full_inv){
 
 ##set wd to where you want folders, later this should be like THE ORIGIN
 getwd()
-CLASS_ORIGIN <- "F:/Theo/iba_7_2020_autocount/Hina_IFNBKO_pair/working_images/new_val_train_etc/new_new_train/class_8bit/"
+CLASS_ORIGIN <- "C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS"
 setwd(CLASS_ORIGIN)
 
 
@@ -127,28 +127,16 @@ dir.create(paste(ORIGIN, "Weka_output", sep = ""))
 #getting the number of needed folder from # classifier.model files in folder with ONLY classifier.model files
 
 nm = "masks_class"
-for (i in nums){
-    dir.create(paste(ORIGIN, "Weka_output","/",nm,i,sep = ""))
-}
-
 OUTPUT_thresh <- paste(c(ORIGIN, "Weka_output_thresh/"), collapse = "")
 dir.create(paste(OUTPUT_thresh, sep = ""))
-
-for (i in nums){
-  dir.create(paste(OUTPUT_thresh,"/",nm,i,sep = ""))
-}
-
 OUTPUT_project <- paste(c(ORIGIN, "Weka_output_thresh_project/"), collapse = "")
 dir.create(paste(OUTPUT_project, sep = ""))
-
-for (i in nums){
-  dir.create(paste(OUTPUT_project,"/",nm,i,sep = ""))
-}
-
 OUTPUT_count <- paste(c(ORIGIN, "counted/"), collapse = "")
 dir.create(paste(OUTPUT_count, sep = ""))
-
 for (i in nums){
+  dir.create(paste(ORIGIN, "Weka_output","/",nm,i,sep = ""))
+  dir.create(paste(OUTPUT_thresh,"/",nm,i,sep = ""))
+  dir.create(paste(OUTPUT_project,"/",nm,i,sep = ""))
   dir.create(paste(OUTPUT_count,"/",nm,i,sep = ""))
 }
 
@@ -166,7 +154,7 @@ for (i in nums){
 
 ##getting images names, can pick any folder with all images in question to do this
 
-inputdir_all1 <-"F:/Theo/iba_7_2020_autocount/Hina_IFNBKO_pair/working_images/new_val_train_etc/new_new_train/validation/" 
+inputdir_all1 <-"C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/" 
 inputdir_all <- dir(inputdir_all1)
 id1 <- inputdir_all
 
@@ -263,7 +251,7 @@ for (j in nums){
 
 
 ############################## now we have binary projected images to work with and need to compare to roi for each classifier
-your_boat <- NA
+your_boat <- "tru_count_over_dir_correct_8_13.ijm"
 
 ##we use tru_count_over_dir_correct.ijm
 
@@ -275,7 +263,7 @@ your_boat <- NA
 #setting working dir, needs to contain all counted output folders
 
 ### adding in the results of the hand_count_from_roi.ijm, this will not change by folder
-hand_ini <- read.csv("F:/Theo/iba_7_2020_autocount/Hina_IFNBKO_pair/working_images/new_val_train_etc/Results_hand_roi_8_3_2021.csv")
+hand_ini <- read.csv("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/Results_hand_roi_8_3_2021.csv")
 
 ##processing hand count roi to get count per image
 lv_h <- levels(as.factor(hand_ini$Label))
