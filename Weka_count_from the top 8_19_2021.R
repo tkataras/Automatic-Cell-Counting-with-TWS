@@ -319,7 +319,7 @@ for (f in 1:length(class_list)){
  
     
     
-    ##this next part does the collecting of tp, fp and fp and turns it into precision and recall
+    ##this next part does the collecting of tp, fp and fn and turns it into precision and recall
     for (i in 1:length(img_names)) {
       
       ##this ".png" at the end of file name cames from saving by the tru_count imagej macro. needs to be removed to match the image names in the results file
