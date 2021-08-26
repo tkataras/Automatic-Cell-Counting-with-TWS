@@ -117,13 +117,6 @@ get_match_id <- function(sub_inv,full_inv){
   match_id <- match_id[complete.cases(match_id)]
 }
 
-
-
-getwd()
-CLASS_ORIGIN <- "C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS"
-#setwd(CLASS_ORIGIN)
-# 
-# 
 # class_list <- dir(CLASS_ORIGIN)
 # 
 # 
@@ -146,10 +139,20 @@ CLASS_ORIGIN <- "C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-
 # dir(OUTPUT_count)
 # 
 
+
+# Start of main
+
+# Remove results file if it already exists
+unlink('Data/Corrected_files/Weka_Output_Counted/All_classifier_comparison_inc_missing_8_11.csv')
+
+# Input the genotype data as .txt file
+geno_file <- scan(file="Data/genotype.txt", what='character')
+
+# File output location
 OUTPUT_count <- "Data/Corrected_files/Weka_Output_Counted/"
 
 class_list <- dir(OUTPUT_count)
-
+#setwd("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS")
 
 ############################## now we have binary projected images to work with and need to compare to roi for each classifier
 your_boat <- "tru_count_over_dir_correct.ijm"
@@ -186,8 +189,6 @@ for (f in 1:length(class_list)){
   class_res_loc <- paste(counted_folder_dir,dir(OUTPUT_count)[f],"/Results.csv",sep = "")
   class_results <- read.csv(class_res_loc)
   class <- dir(OUTPUT_count)[f]
-  
-  
   
   ##biig if else loop baby!
   
@@ -226,16 +227,17 @@ for (f in 1:length(class_list)){
       fn = as.numeric(hand_final$count_h[i])
       this_row <- cbind(name,tp, fp, fn) 
       print("hi")
-    }else {
-      
-      
+    } else {
       fp = 0
       tp = 0
       fn = 0
-      #i = 5
       for (j in 1:length(dftc$points)) {
-        if (dftc$points[j] == 0){fp = fp +1} #auto count objects with no hand markers
-        else if (dftc$points[j] == 1){tp = tp +1} #auto count objects with exactly 1 marker
+        if (dftc$points[j] == 0) {
+          fp = fp +1
+        } #auto count objects with no hand markers
+        else if (dftc$points[j] == 1) {
+          tp = tp +1
+        } #auto count objects with exactly 1 marker
         else {
           tp = tp+1 #adds one tp and requisite number of fn for objects with multiple markers
           fn = fn + dftc$points[j] - 1
@@ -250,26 +252,19 @@ for (f in 1:length(class_list)){
       this_row <- cbind(name, tp, fp, fn) 
       
       
-    }#this is the closeing bracket for if there were no cell objects so dftc is empty
+    } #this is the closing bracket for if there were no cell objects so dftc is empty
     
     final_blah <-rbind(final_blah, this_row)
     
   }
+  
+  # Set final_blah columns to be numeric
   final_blah <- final_blah[-1,]
   final_blah$tp <- as.numeric(final_blah$tp)
   final_blah$fp <- as.numeric(final_blah$fp)
   final_blah$fn <- as.numeric(final_blah$fn)
   
-  
-  
-  
-  
-  
   ##need to calculate Precision and recall
-  
-  
-  
-  
   tot_tp <- sum(as.numeric(final_blah$tp))
   tot_fp <- sum(as.numeric(final_blah$fp))
   tot_fn <- sum(as.numeric(final_blah$fn))
@@ -288,24 +283,17 @@ for (f in 1:length(class_list)){
   reca <- round(reca, 4)
   F1 <- round(F1, 4)
   
-  
   print(paste(class," precision = ", prec ))
   print(paste(class," recall = ", reca ))
   print(paste(class," F1 = ", F1 ))
-  
-  
   
   current_loc <- paste(counted_folder_dir,"/",class_list[f],sep = "")
   file_out_name <- paste(current_loc,"/",class,"_Final.csv",sep = "")
   #writes out the final file to save the output
   write.csv(final_blah, file_out_name )
   
-  
-  
   #need to add geno again
   #going to do automatically this time
-  
-  
   a <- trim_names(final_blah$name)
   b <- sep_slidebook(a)
   c <- squish(b)
@@ -314,7 +302,9 @@ for (f in 1:length(class_list)){
   colnames(d) <- c("file_name", "img_ID", "a_num","S_num", "F_num")
   d <- data.frame(d)
   
-  geno <- c("gp", "gp", "gp", "wt", "gp", "gp", "wt", "wt", "wt", "wt")
+  # Why is this saved as a string theo?
+  #geno <- c("gp", "gp", "gp", "wt", "gp", "gp", "wt", "wt", "wt", "wt")
+  geno <- geno_file
   final_blah$geno <- geno
   final_blah$geno <- as.factor(final_blah$geno)
   
