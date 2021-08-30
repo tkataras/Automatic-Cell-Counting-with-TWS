@@ -244,14 +244,15 @@ for (f in 1:length(class_list)){
   
 
 
-  ###***#*#*#*#*# HAVE TO remOVE the VALIDATION FILES FROM HAND AND AUTO COUNTS; WILL NEED TO DO THIS TO SUPERDF MUCH LAter TOO any time my count is used
+  ###***#*#*#*#*# HAVE TO remOVE the VALIDATION FILES FROM HAND AND AUTO COUNTS; use SUPERDF FOR THIS AT THE BEGINNING 
 
 
   valid_files <- superdf$lv
-  a2 <- trim_names(valid_files)
+  a2 <- trim_names(valid_files, half = "back", split = ":")
   b2 <- sep_slidebook(a2)
   c2 <- squish(b2)
 
+  
   a <- trim_names(final_blah$name)
   b <- sep_slidebook(a)
   c <- squish(b)
@@ -379,6 +380,110 @@ for (f in 1:length(class_list)){
 
 
 
-write.csv(your_boat, paste(counted_folder_dir,"/All_classifier_comparison_inc_missing_8_11.csv", sep = ""))
+write.csv(your_boat, paste(counted_folder_dir,"/All_auto_classifier_comparison_no_val_8_23.csv", sep = ""))
 
+
+
+
+
+
+
+final_inter <- read.csv("F:/Theo/iba_7_2020_autocount/Hina_IFNBKO_pair/working_images/new_val_train_etc/new_new_train/Auto_thresh_output_counted/Internodes_output/Internodes_output_Final.csv")
+dim(final_inter)
+tail(final_inter)
+
+final_yen <- read.csv("F:/Theo/iba_7_2020_autocount/Hina_IFNBKO_pair/working_images/new_val_train_etc/new_new_train/Auto_thresh_output_counted/Yen_output/Yen_output_Final.csv")
+dim(final_inter)
+tail(final_yen)
+
+
+final_inter$auto_count <- final_inter$tp + final_inter$fp
+t.test(final_inter$auto_count ~ final_blah$geno)
+
+
+
+#lm
+lm_inter_wt_tk <- lm(final_inter$auto_count[final_blah$geno == "wt"] ~ superdf$count_theo_hand[superdf$geno == "wt"])
+summary(lm_inter_wt_tk)
+
+lm_inter_gp_tk <- lm(final_inter$auto_count[final_blah$geno == "gp"] ~ superdf$count_theo_hand[superdf$geno == "gp"])
+summary(lm_inter_gp_tk)
+
+lm_inter_wt_hs <- lm(final_inter$auto_count[final_blah$geno == "wt"] ~ superdf$count_Hina_hand[superdf$geno == "wt"])
+summary(lm_inter_wt_hs)
+
+lm_inter_gp_hs <- lm(final_inter$auto_count[final_blah$geno == "gp"] ~ superdf$count_Hina_hand[superdf$geno == "gp"])
+summary(lm_inter_gp_hs)
+
+
+prec2 <- final_inter$tp/(final_inter$tp + final_inter$fp)
+
+reca2 <-final_inter$tp/(final_inter$tp + final_inter$fn)
+F1_2 <- 2*(prec2*reca2/(prec2 + reca2))
+
+final_inter$prec2 <- prec2
+final_inter$reca2 <- reca2
+final_inter$F1_2 <-  F1_2
+
+
+p_g_tt <- t.test(final_inter$prec2 ~ final_blah$geno)
+p_g_tt_p <- p_g_tt$p.value
+
+r_g_tt <- t.test(final_inter$reca2 ~ final_blah$geno)
+r_g_tt_p <- r_g_tt$p.value
+
+F1_g_tt <- t.test(final_inter$F1_2 ~ final_blah$geno)
+F1_g_tt_p <- F1_g_tt$p.value
+
+
+
+
+
+
+
+
+final_yen$auto_count <- final_yen$tp + final_yen$fp
+t.test(final_yen$auto_count ~ final_blah$geno)
+
+
+#lm
+lm_yen_wt_tk <- lm(final_yen$auto_count[final_blah$geno == "wt"] ~ superdf$count_theo_hand[superdf$geno == "wt"])
+summary(lm_yen_wt_tk)
+
+lm_yen_gp_tk <- lm(final_yen$auto_count[final_blah$geno == "gp"] ~ superdf$count_theo_hand[superdf$geno == "gp"])
+summary(lm_yen_gp_tk)
+
+lm_yen_wt_hs <- lm(final_yen$auto_count[final_blah$geno == "wt"] ~ superdf$count_Hina_hand[superdf$geno == "wt"])
+summary(lm_yen_wt_hs)
+
+lm_yen_gp_hs <- lm(final_yen$auto_count[final_blah$geno == "gp"] ~ superdf$count_Hina_hand[superdf$geno == "gp"])
+summary(lm_yen_gp_hs)
+
+
+
+prec2 <- final_yen$tp/(final_yen$tp + final_yen$fp)
+
+reca2 <-final_yen$tp/(final_yen$tp + final_yen$fn)
+F1_2 <- 2*(prec2*reca2/(prec2 + reca2))
+
+final_yen$prec2 <- prec2
+final_yen$reca2 <- reca2
+final_yen$F1_2 <-  F1_2
+
+
+p_g_tt <- t.test(final_yen$prec2 ~ final_blah$geno)
+p_g_tt_p <- p_g_tt$p.value
+
+r_g_tt <- t.test(final_yen$reca2 ~ final_blah$geno)
+r_g_tt_p <- r_g_tt$p.value
+
+F1_g_tt <- t.test(final_yen$F1_2 ~ final_blah$geno)
+F1_g_tt_p <- F1_g_tt$p.value
+
+head(superdf)
+superdf$count_auto_thresh_inter <- final_inter$auto_count
+
+superdf$count_auto_thresh_yen <- final_yen$auto_count
+
+write.csv(superdf, "F:/Theo/iba_7_2020_autocount/Hina_IFNBKO_pair/working_images/new_val_train_etc/new_new_train/superdf_with_inter_yen_auto_not_area_norm_8_23_2021.csv")
 
