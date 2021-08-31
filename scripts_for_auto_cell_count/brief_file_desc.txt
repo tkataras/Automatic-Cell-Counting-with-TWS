@@ -1,0 +1,16 @@
+BS_TWS_apply – A BeanShell script that applies multiple Weka classifiers over a single set of validation data and saves output in specified folders
+
+classifier_comparison – R script for statistical comparison between classifiers on validation data
+
+count_from_roi – Simple ImageJ macro script to record total objects (eg. Hand placed markers or cell segmentation objects) within images
+
+full dataset process – R script for statistical comparison of hand counts on full dataset
+
+Full dataset counting – R script for counting auto generated object segmentations and performing T test of cell count by genotype
+
+generate geno file – R script that was used with our full dataset to generate the geno file used
+
+projecting images – R script used on our image segmentations which needed to be overlapped before final counting
+
+count_over_dir – ImageJ macro to generate count results.csv files for multiple classifiers. Compares cell segmentation objects with hand placed markers for cell counting.
+
