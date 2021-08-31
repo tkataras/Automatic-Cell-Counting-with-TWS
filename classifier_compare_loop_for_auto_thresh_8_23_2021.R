@@ -1,4 +1,16 @@
+#!/usr/bin/env Rscript
+###
+# Author: Theo
+# Date 8/26/2021
+# This file is the pipeline.....
+#
 
+###
+# Method: trim_names 
+# Input: 
+# Output:
+# Description:
+###
 trim_names <- function(file_names, split = " - ", half = "front"){
   id1 <- file_names
   sid1 <- strsplit(id1, split)
@@ -15,6 +27,13 @@ trim_names <- function(file_names, split = " - ", half = "front"){
   newsid1 <- newsid1[-1]
   
 }
+
+###
+# Method: Sep_slidebook 
+# Input: 
+# Output:
+# Description:
+###
 sep_slidebook <- function(x, sep = "-"){
   
   newsid1 <- x
@@ -65,6 +84,13 @@ sep_slidebook <- function(x, sep = "-"){
   #return(id1_df_squish)
   return(id1_df)
 }
+
+###
+# Method: squish 
+# Input: 
+# Output:
+# Description:
+###
 squish <- function(input_df){
   
   id1_df_squish <- NA
@@ -72,27 +98,25 @@ squish <- function(input_df){
     id1_df_squish[i] <- paste0(input_df[i,], sep = "_", collapse = "")  
   }
   return(id1_df_squish)
-}##simple function to combine rows of the df with info
+}
+
+###
+# Method: get_match_id 
+# Input: 
+# Output:
+# Description: simple function to combine rows of the df with info
+###
 get_match_id <- function(sub_inv,full_inv){
   match_id <- NA
   
-  
-  
   for (i in 1: length(sub_inv) ){
     pineapple <- grep(sub_inv[i],full_inv)
-    if (sum(pineapple) == 0) {print("not found")} else match_id[i] <- pineapple
+    if (sum(pineapple) == 0) {print("not found")}
+    else match_id[i] <- pineapple
   }
   match_id <- match_id[complete.cases(match_id)]
 }
 
-
-
-
-# getwd()
-# CLASS_ORIGIN <- "F:/Theo/iba_7_2020_autocount/Hina_IFNBKO_pair/working_images/new_val_train_etc/new_new_train/Auto_thresh_output_counted/"
-# setwd(CLASS_ORIGIN)
-# 
-# 
 # class_list <- dir(CLASS_ORIGIN)
 # 
 # 
@@ -115,13 +139,23 @@ get_match_id <- function(sub_inv,full_inv){
 # dir(OUTPUT_count)
 # 
 
-OUTPUT_count <- "F:/Theo/iba_7_2020_autocount/Hina_IFNBKO_pair/working_images/new_val_train_etc/new_new_train/Auto_thresh_output_counted/"
+
+# Start of main
+
+# Remove results file if it already exists
+unlink('Data/Corrected_files/Weka_Output_Counted/All_classifier_comparison_inc_missing_8_11.csv')
+
+# Input the genotype data as .txt file
+geno_file <- scan(file="Data/genotype.txt", what='character')
+
+# File output location
+OUTPUT_count <- "Data/Corrected_files/Weka_Output_Counted/"
 
 class_list <- dir(OUTPUT_count)
-
+#setwd("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS")
 
 ############################## now we have binary projected images to work with and need to compare to roi for each classifier
-your_boat <- NA
+your_boat <- "tru_count_over_dir_correct.ijm"
 
 ##we use tru_count_over_dir_correct.ijm
 
@@ -133,7 +167,8 @@ your_boat <- NA
 #setting working dir, needs to contain all counted output folders
 
 ### adding in the results of the hand_count_from_roi.ijm, this will not change by folder
-hand_ini <- read.csv("F:/Theo/iba_7_2020_autocount/Hina_IFNBKO_pair/working_images/Results_roi_after_Npt3_7_16_2021.csv")
+#hand_ini <- read.csv("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/Data/Corrected_files/Results/Results_hand_roi_8_3_2021.csv")
+hand_ini <- read.csv("Data/Corrected_files/Results/Results_hand_roi_8_3_2021.csv")
 
 ##processing hand count roi to get count per image
 lv_h <- levels(as.factor(hand_ini$Label))
@@ -148,23 +183,12 @@ hand_final$count_h <- as.numeric(hand_final$count_h)
 
 
 counted_folder_dir <- OUTPUT_count
-setwd(counted_folder_dir)
-
-
-
-
-####inputting superdf for all hand counts, already has val files removed
-superdf <- read.csv("F:/Theo/iba_7_2020_autocount/Hina_IFNBKO_pair/working_images/new_val_train_etc/superdf_no_val_area_adj_8_12.csv")
-dim(superdf)
-head(superdf)
-
+#setwd(counted_folder_dir)
 
 for (f in 1:length(class_list)){
   class_res_loc <- paste(counted_folder_dir,dir(OUTPUT_count)[f],"/Results.csv",sep = "")
   class_results <- read.csv(class_res_loc)
   class <- dir(OUTPUT_count)[f]
-  
-  
   
   ##biig if else loop baby!
   
@@ -182,19 +206,17 @@ for (f in 1:length(class_list)){
   ###### can use this to check size restriction 
   #print(min(class_results$Area))
   
-  
-  
   ##this next part does the collecting of tp, fp and fp and turns it into precision and recall
   for (i in 1:length(img_names)) {
     
     ##this .png cames from saving by the tru_count imagej macro. needs to be removed to match the image names in the results file
     current_img_plus_png <- img_names[i]
-    # current_img_plus_png_split <- unlist(strsplit(current_img_plus_png, split = ""))
-    # new_length <-length(current_img_plus_png_split) - 8 #this used to be 4, but now i have to remove "mask.png"
-    # current_img <- paste(current_img_plus_png_split[1:new_length], sep = "", collapse = "")
+    current_img_plus_png_split <- unlist(strsplit(current_img_plus_png, split = ""))
+    new_length <-length(current_img_plus_png_split) - 8 #this used to be 4, but now i have to remove "mask.png"
+    current_img <- paste(current_img_plus_png_split[1:new_length], sep = "", collapse = "")
     # 
     dftc<- NA
-    dftc <- class_results[class_results$Label == current_img_plus_png,]  ###pulls out just the rows in results with the image name of the current image
+    dftc <- class_results[class_results$Label == current_img,]  ###pulls out just the rows in results with the image name of the current image
     dftc
     
     if (dim(dftc)[1] == 0){
@@ -204,17 +226,18 @@ for (f in 1:length(class_list)){
       fp = 0
       fn = as.numeric(hand_final$count_h[i])
       this_row <- cbind(name,tp, fp, fn) 
-      
-    }else {
-      
-      
+      print("hi")
+    } else {
       fp = 0
       tp = 0
       fn = 0
-      #i = 5
       for (j in 1:length(dftc$points)) {
-        if (dftc$points[j] == 0){fp = fp +1} #auto count objects with no hand markers
-        else if (dftc$points[j] == 1){tp = tp +1} #auto count objects with exactly 1 marker
+        if (dftc$points[j] == 0) {
+          fp = fp +1
+        } #auto count objects with no hand markers
+        else if (dftc$points[j] == 1) {
+          tp = tp +1
+        } #auto count objects with exactly 1 marker
         else {
           tp = tp+1 #adds one tp and requisite number of fn for objects with multiple markers
           fn = fn + dftc$points[j] - 1
@@ -229,55 +252,19 @@ for (f in 1:length(class_list)){
       this_row <- cbind(name, tp, fp, fn) 
       
       
-    }#this is the closeing bracket for if there were no cell objects so dftc is empty
+    } #this is the closing bracket for if there were no cell objects so dftc is empty
     
     final_blah <-rbind(final_blah, this_row)
     
   }
+  
+  # Set final_blah columns to be numeric
   final_blah <- final_blah[-1,]
   final_blah$tp <- as.numeric(final_blah$tp)
   final_blah$fp <- as.numeric(final_blah$fp)
   final_blah$fn <- as.numeric(final_blah$fn)
   
-  
-  
-  
-
-
-  ###***#*#*#*#*# HAVE TO remOVE the VALIDATION FILES FROM HAND AND AUTO COUNTS; use SUPERDF FOR THIS AT THE BEGINNING 
-
-
-  valid_files <- superdf$lv
-  a2 <- trim_names(valid_files, half = "back", split = ":")
-  b2 <- sep_slidebook(a2)
-  c2 <- squish(b2)
-
-  
-  a <- trim_names(final_blah$name)
-  b <- sep_slidebook(a)
-  c <- squish(b)
-  length(c)
-  d <- cbind(final_blah$name,c,b) ##specify: original file names, info columns, squished ID
-  colnames(d) <- c("file_name", "img_ID", "a_num","S_num", "F_num")
-  d <- data.frame(d)
-
-
-  val <- get_match_id(c2,c)
-  length(val)
-  dim(final_blah)
-  final_blah <- final_blah[val,]
-  dim(final_blah)
-
-
-  
-  
-  
-  
   ##need to calculate Precision and recall
-  
-  
-  
-  
   tot_tp <- sum(as.numeric(final_blah$tp))
   tot_fp <- sum(as.numeric(final_blah$fp))
   tot_fn <- sum(as.numeric(final_blah$fn))
@@ -296,24 +283,17 @@ for (f in 1:length(class_list)){
   reca <- round(reca, 4)
   F1 <- round(F1, 4)
   
-  
   print(paste(class," precision = ", prec ))
   print(paste(class," recall = ", reca ))
   print(paste(class," F1 = ", F1 ))
-  
-  
   
   current_loc <- paste(counted_folder_dir,"/",class_list[f],sep = "")
   file_out_name <- paste(current_loc,"/",class,"_Final.csv",sep = "")
   #writes out the final file to save the output
   write.csv(final_blah, file_out_name )
   
-  
-  
   #need to add geno again
   #going to do automatically this time
-  
-  
   a <- trim_names(final_blah$name)
   b <- sep_slidebook(a)
   c <- squish(b)
@@ -322,21 +302,11 @@ for (f in 1:length(class_list)){
   colnames(d) <- c("file_name", "img_ID", "a_num","S_num", "F_num")
   d <- data.frame(d)
   
-  
-  wtn = c(442, 460, 462,878, 899, 898)
-  gpn = c(426, 428, 443, 306, 307, 319)
-  
-  wt_imgs <- final_blah[d$a_num %in% wtn, ]
-  dim(wt_imgs)
-  gp_imgs <- final_blah[d$a_num %in% gpn, ]
-  dim(gp_imgs)
-  
-  final_blah$geno[d$a_num %in% wtn] = "wt"
-  final_blah$geno[d$a_num %in% gpn] = "gp"
-  
-  
-  
-  
+  # Why is this saved as a string theo?
+  #geno <- c("gp", "gp", "gp", "wt", "gp", "gp", "wt", "wt", "wt", "wt")
+  geno <- geno_file
+  final_blah$geno <- geno
+  final_blah$geno <- as.factor(final_blah$geno)
   
   #####this makes the table comparing all classifiers
   
@@ -380,110 +350,6 @@ for (f in 1:length(class_list)){
 
 
 
-write.csv(your_boat, paste(counted_folder_dir,"/All_auto_classifier_comparison_no_val_8_23.csv", sep = ""))
+write.csv(your_boat, paste(counted_folder_dir,"/All_classifier_comparison_inc_missing_8_11.csv", sep = ""))
 
-
-
-
-
-
-
-final_inter <- read.csv("F:/Theo/iba_7_2020_autocount/Hina_IFNBKO_pair/working_images/new_val_train_etc/new_new_train/Auto_thresh_output_counted/Internodes_output/Internodes_output_Final.csv")
-dim(final_inter)
-tail(final_inter)
-
-final_yen <- read.csv("F:/Theo/iba_7_2020_autocount/Hina_IFNBKO_pair/working_images/new_val_train_etc/new_new_train/Auto_thresh_output_counted/Yen_output/Yen_output_Final.csv")
-dim(final_inter)
-tail(final_yen)
-
-
-final_inter$auto_count <- final_inter$tp + final_inter$fp
-t.test(final_inter$auto_count ~ final_blah$geno)
-
-
-
-#lm
-lm_inter_wt_tk <- lm(final_inter$auto_count[final_blah$geno == "wt"] ~ superdf$count_theo_hand[superdf$geno == "wt"])
-summary(lm_inter_wt_tk)
-
-lm_inter_gp_tk <- lm(final_inter$auto_count[final_blah$geno == "gp"] ~ superdf$count_theo_hand[superdf$geno == "gp"])
-summary(lm_inter_gp_tk)
-
-lm_inter_wt_hs <- lm(final_inter$auto_count[final_blah$geno == "wt"] ~ superdf$count_Hina_hand[superdf$geno == "wt"])
-summary(lm_inter_wt_hs)
-
-lm_inter_gp_hs <- lm(final_inter$auto_count[final_blah$geno == "gp"] ~ superdf$count_Hina_hand[superdf$geno == "gp"])
-summary(lm_inter_gp_hs)
-
-
-prec2 <- final_inter$tp/(final_inter$tp + final_inter$fp)
-
-reca2 <-final_inter$tp/(final_inter$tp + final_inter$fn)
-F1_2 <- 2*(prec2*reca2/(prec2 + reca2))
-
-final_inter$prec2 <- prec2
-final_inter$reca2 <- reca2
-final_inter$F1_2 <-  F1_2
-
-
-p_g_tt <- t.test(final_inter$prec2 ~ final_blah$geno)
-p_g_tt_p <- p_g_tt$p.value
-
-r_g_tt <- t.test(final_inter$reca2 ~ final_blah$geno)
-r_g_tt_p <- r_g_tt$p.value
-
-F1_g_tt <- t.test(final_inter$F1_2 ~ final_blah$geno)
-F1_g_tt_p <- F1_g_tt$p.value
-
-
-
-
-
-
-
-
-final_yen$auto_count <- final_yen$tp + final_yen$fp
-t.test(final_yen$auto_count ~ final_blah$geno)
-
-
-#lm
-lm_yen_wt_tk <- lm(final_yen$auto_count[final_blah$geno == "wt"] ~ superdf$count_theo_hand[superdf$geno == "wt"])
-summary(lm_yen_wt_tk)
-
-lm_yen_gp_tk <- lm(final_yen$auto_count[final_blah$geno == "gp"] ~ superdf$count_theo_hand[superdf$geno == "gp"])
-summary(lm_yen_gp_tk)
-
-lm_yen_wt_hs <- lm(final_yen$auto_count[final_blah$geno == "wt"] ~ superdf$count_Hina_hand[superdf$geno == "wt"])
-summary(lm_yen_wt_hs)
-
-lm_yen_gp_hs <- lm(final_yen$auto_count[final_blah$geno == "gp"] ~ superdf$count_Hina_hand[superdf$geno == "gp"])
-summary(lm_yen_gp_hs)
-
-
-
-prec2 <- final_yen$tp/(final_yen$tp + final_yen$fp)
-
-reca2 <-final_yen$tp/(final_yen$tp + final_yen$fn)
-F1_2 <- 2*(prec2*reca2/(prec2 + reca2))
-
-final_yen$prec2 <- prec2
-final_yen$reca2 <- reca2
-final_yen$F1_2 <-  F1_2
-
-
-p_g_tt <- t.test(final_yen$prec2 ~ final_blah$geno)
-p_g_tt_p <- p_g_tt$p.value
-
-r_g_tt <- t.test(final_yen$reca2 ~ final_blah$geno)
-r_g_tt_p <- r_g_tt$p.value
-
-F1_g_tt <- t.test(final_yen$F1_2 ~ final_blah$geno)
-F1_g_tt_p <- F1_g_tt$p.value
-
-head(superdf)
-superdf$count_auto_thresh_inter <- final_inter$auto_count
-
-superdf$count_auto_thresh_yen <- final_yen$auto_count
-
-write.csv(superdf, "F:/Theo/iba_7_2020_autocount/Hina_IFNBKO_pair/working_images/new_val_train_etc/new_new_train/superdf_with_inter_yen_auto_not_area_norm_8_23_2021.csv")
 

@@ -147,14 +147,14 @@ for (i in nums){
 ##F:\Theo\iba_7_2020_autocount\Hina_IFNBKO_pair\working_images\new_val_train_etc\test\BS_class_test.bsh
 
 ###need to threshold Weka imge outputs for this next step!!!
-
+:q
 #now need to process the multi plane validation images
 #will do this in R, but will need to regularize image names to project pairs and trios correctly.
 #if you do not need this sort of image processing, this step in not neccessary
 
 ##getting images names, can pick any folder with all images in question to do this
 
-inputdir_all1 <-"C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/" 
+inputdir_all1 <-"C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/Data/" 
 inputdir_all <- dir(inputdir_all1)
 id1 <- inputdir_all
 

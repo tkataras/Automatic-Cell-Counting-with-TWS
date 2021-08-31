@@ -198,7 +198,21 @@ count_dir <- dir("F:/Theo/iba_7_2020_autocount/Hina_IFNBKO_pair/working_images/n
 count_sep <- sep_slidebook(count_dir)
 count_squish <- squish(count_sep)
 
+remove <- get_match_id_2(val_squish,count_squish)
 
+setwd("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/Data/Full_dataset/Weka_Output_Counted/class19/")
+getwd()
+for (j in match_id){
+  file.remove(count_dir[remove])
+}
 
+####moving over only the NON validation hand counts
+roi_dir <- dir("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/Data/Full_dataset/Hand_ROI/")
+roi_sep <- sep_slidebook(roi_dir)
+roi_squish <- squish(roi_sep)
 
+rem <- get_match_id(val_squish,roi_squish)
 
+for (j in match_id){
+  file.remove(roi_dir[rem])
+}
