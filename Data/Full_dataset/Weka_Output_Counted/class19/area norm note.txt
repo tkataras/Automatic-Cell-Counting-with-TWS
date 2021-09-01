@@ -1,0 +1,5 @@
+#area normalizing note, 
+image 460-S57-F2 counts divided by 0.92888
+image 460-S57-F3 counts divided by 0.915726
+
+these were relative area of tissue in total image, all other images were 100% tissue

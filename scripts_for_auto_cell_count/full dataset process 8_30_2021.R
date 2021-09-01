@@ -15,22 +15,22 @@ hand_final <- data.frame(cbind(lv_h, count_h))
 hand_final$count_h <- as.numeric(hand_final$count_h)
 
 
-counted_folder_dir <-"F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/Data/Full_dataset/counted2/"
+counted_folder_dir <-"F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/Data/Full_dataset/counted_no_min_size/"
 setwd(counted_folder_dir)
 class_list <- list.files()
 
 
 
 prenums <- (strsplit(class_list,split = "class"))
-
-nums <- unlist(lapply(prenums, function(x) x[2]))
-nums <- as.numeric(nums)
+# 
+# nums <- unlist(lapply(prenums, function(x) x[2]))
+# nums <- as.numeric(nums)
 
 #for (f in 1:length(class_list)){
 #f = 1 
-class_loc <- paste(counted_folder_dir,class_list[f],"/Results.csv",sep = "")
+class_loc <- paste(counted_folder_dir,class_list,"/Results.csv",sep = "")
 class_results <- read.csv(class_loc)
-class <- paste("class",nums[f], sep = "")
+class <- class_list
 
 
 
@@ -110,15 +110,17 @@ print(paste(class," F1 = ", F1 ))
 
 
 
-current_loc <- paste(counted_folder_dir,class_list[f],sep = "")
+current_loc <- paste(counted_folder_dir,class,sep = "")
 file_out_name <- paste(current_loc,"/",class,"_Final.csv",sep = "")
-write.csv(final_blah, file_out_name )
+# write.csv(final_blah, file_out_name )
+
+final_blah <- read.csv("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/Data/Full_dataset/counted2/class19/class19_Final.csv")
 
 
 
 #need to add geno again
 #going to do from file this time
-
+##need to adapt this to command line
 
 
 dim(final_blah)
@@ -153,7 +155,12 @@ p_g_tt_p <- p_g_tt$p.value
 r_g_tt_p <- r_g_tt$p.value
 
 
-row_row <- cbind(class,prec,reca,F1,F1_g_tt_p, mean_F1_gp,mean_F1_wt, p_g_tt_p,r_g_tt_p)
+stat_info <- cbind(prec,reca,F1,F1_g_tt_p, mean_F1_gp,mean_F1_wt, p_g_tt_p,r_g_tt_p)
+rownames(stat_info) <-class
+colnames(stat_info)<- c("Precision", "Recall", "F1", "F1_t.test_p_val.","Mean_F1_gp", "Mean_F1_wt", "Precision_geno_t.test", "Recall_geno_t.test")
+
+write.csv(stat_info, paste0("Data/Full_dataset/stat_info_", class, ".csv"))
+
 
 
 wt_prec_sd <-sd(final_blah$prec2[final_blah$geno == "wt"])
@@ -193,6 +200,15 @@ final_blah$hand_count <- hand_final$count_h
 final_blah$auto_count <- final_blah$tp + final_blah$fp
 
 
+file_out_name2 <- paste(current_loc,"/",class,"_Final_Full.csv",sep = "")
+
+write.csv(final_blah, file_out_name2)
+
+#read back in the file after area norm***
+final_blah <- read.csv("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/Data/Full_dataset/Weka_Output_Counted/class19/class19_Final_Full.csv")
+
+
+
 t.test(final_blah$auto_count ~ final_blah$geno)
 t.test(final_blah$hand_count ~ final_blah$geno)
 
@@ -217,3 +233,157 @@ me_a_gp <- mean(final_blah$auto_count[final_blah$geno == "gp"])
 sd_a_gp <- sd(final_blah$auto_count[final_blah$geno == "gp"])
 
 
+#count analysis
+
+#*#*#*# now doing all stats from an updated superdf file located in new new train
+superdf <- read.csv("F:/Theo/iba_7_2020_autocount/Hina_IFNBKO_pair/working_images/new_val_train_etc/superdf_no_val_area_adj_8_12.csv")
+dim(superdf)
+head(superdf)
+
+
+superdf$count_new_auto <- final_blah$auto_count
+
+
+
+me_ha_wt <- mean(superdf$count_Hina_hand[superdf$geno == "wt"])
+sd_ha_wt <- sd(superdf$count_Hina_hand[superdf$geno == "wt"])
+
+me_ha_gp <- mean(superdf$count_Hina_hand[superdf$geno == "gp"])
+sd_ha_gp <- sd(superdf$count_Hina_hand[superdf$geno == "gp"])
+
+#hand count b
+me_hb_wt <- mean(superdf$count_theo_hand[superdf$geno == "wt"])
+sd_hb_wt <- sd(superdf$count_theo_hand[superdf$geno == "wt"])
+
+me_hb_gp <- mean(superdf$count_theo_hand[superdf$geno == "gp"])
+sd_hb_gp <- sd(superdf$count_theo_hand[superdf$geno == "gp"])
+
+#auto count
+me_a_wt <- mean(superdf$count_new_auto[superdf$geno == "wt"])
+sd_a_wt <- sd(superdf$count_new_auto[superdf$geno == "wt"])
+
+me_a_gp <- mean(superdf$count_new_auto[superdf$geno == "gp"])
+sd_a_gp <- sd(superdf$count_new_auto[superdf$geno == "gp"])
+
+
+
+
+
+df1 <- cbind(c("wt","wt","wt", "gp", "gp", "gp"), c("hand_A","hand_B", "auto", "hand_A","hand_B", "auto"), 
+             as.numeric(c(me_ha_wt,me_hb_wt,me_a_wt,me_ha_gp,me_hb_gp,me_a_gp)), 
+             as.numeric(c(sd_ha_wt,sd_hb_wt,sd_a_wt,sd_ha_gp,sd_hb_gp,sd_a_gp)) 
+)
+
+
+df1 <- data.frame(df1)
+names(df1) <-c("Genotype", "Count", "mean", "sd")
+df1
+str(df1)
+df1$mean <-as.numeric(df1$mean)
+df1$sd <-as.numeric(df1$sd)
+
+
+df1$Genotype <- factor(df1$Genotype, levels = c("wt", "gp"))
+
+#library(ggplot2)
+X11()
+ggplot(df1, aes(x=as.factor(Genotype), y=mean, fill=Count)) +
+  geom_bar(position=position_dodge(), stat="identity", colour='black') +
+  geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.2,position=position_dodge(.9)) +
+  scale_fill_brewer(palette="Paired") +
+  theme(axis.text.y = element_text(size = 15)) +
+  ylim(c(0,200))
+
+
+
+
+
+
+###trying another chart organization
+
+df2 <- cbind(c("wt", "gp","wt", "gp","wt", "gp" ), c("hand_A","hand_A","hand_B","hand_B", "auto","auto"), 
+             as.numeric(c(me_ha_wt,me_ha_gp, me_hb_wt,me_hb_gp,me_a_wt,me_a_gp)),
+             as.numeric(c(sd_ha_wt,sd_ha_gp, sd_hb_wt,sd_hb_gp,sd_a_wt,sd_a_gp)) 
+)
+
+df2 <- data.frame(df2)
+names(df2) <-c("Genotype", "Count", "mean", "sd")
+df2$mean <-as.numeric(df2$mean)
+df2$sd <-as.numeric(df2$sd)
+#library(ggplot2)
+X11()
+ggplot(df2, aes(x=as.factor(Count), y=mean, fill=Genotype)) +
+  geom_bar(position=position_dodge(), stat="identity", colour='black') +
+  geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.2,position=position_dodge(.9)) +
+  scale_fill_brewer(palette="Paired") +
+  theme(axis.text.y = element_text(size = 15)) +
+  ylim(c(0,200))
+
+
+##relevant t tests for above chart
+
+#a vs b
+t.test(superdf$count_theo_hand[superdf$geno == "wt"] , superdf$count_Hina_hand[superdf$geno == "wt"])#NS
+t.test(superdf$count_theo_hand[superdf$geno == "gp"] , superdf$count_Hina_hand[superdf$geno == "gp"])#NS
+
+
+#a vs auto
+t.test(superdf$count_Hina_hand[superdf$geno == "wt"] , superdf$count_new_auto[superdf$geno == "wt"])#S 4.574e-05
+t.test(superdf$count_Hina_hand[superdf$geno == "gp"] , superdf$count_new_auto[superdf$geno == "gp"])#NS 0.128
+
+
+#b vs auto
+t.test(superdf$count_theo_hand[superdf$geno == "wt"] , superdf$count_new_auto[superdf$geno == "wt"])# S 0.00028
+t.test(superdf$count_theo_hand[superdf$geno == "gp"] , superdf$count_new_auto[superdf$geno == "gp"])# NS 0.5858
+
+
+## wt vs gp
+t.test(superdf$count_Hina_hand ~ superdf$geno)
+t.test(superdf$count_theo_hand ~ superdf$geno)
+t.test(superdf$count_new_auto ~ superdf$geno)
+
+
+
+
+
+####corr graphs with my hand count
+
+WT = lm(final_blah$hand_count[final_blah$geno == "wt"] ~final_blah$auto_count[final_blah$geno == "wt"])
+summary(WT)
+X11()
+plot((final_blah$hand_count[final_blah$geno == "wt"] ~final_blah$auto_count[final_blah$geno == "wt"]),  pch = 20, col = "gray" , cex = 2)#,ylim = c(50,250), xlim = c(50,250))
+abline(lm(WT), lwd=2)
+
+GP = lm(final_blah$hand_count[final_blah$geno == "gp"] ~final_blah$auto_count[final_blah$geno == "gp"])
+summary(GP)
+X11()
+plot((final_blah$hand_count[final_blah$geno == "gp"]~final_blah$auto_count[final_blah$geno == "gp"]),  pch = 20, col = "gray" , cex = 2)#,ylim = c(50,250), xlim = c(50,250))
+abline(lm(GP), lwd=2)
+
+#corr with Hina
+WT = lm(superdf$count_Hina_hand[final_blah$geno == "wt"] ~final_blah$auto_count[final_blah$geno == "wt"])
+summary(WT)
+X11()
+plot((superdf$count_Hina_hand[final_blah$geno == "wt"] ~final_blah$auto_count[final_blah$geno == "wt"]),  pch = 20, col = "gray" , cex = 2)#,ylim = c(50,250), xlim = c(50,250))
+abline(lm(WT), lwd=2)
+
+GP = lm(superdf$count_Hina_hand[final_blah$geno == "gp"] ~final_blah$auto_count[final_blah$geno == "gp"])
+summary(GP)
+X11()
+plot((superdf$count_Hina_hand[final_blah$geno == "gp"]~final_blah$auto_count[final_blah$geno == "gp"]),  pch = 20, col = "gray" , cex = 2)#,ylim = c(50,250), xlim = c(50,250))
+abline(lm(GP), lwd=2)
+
+##Corr hina vs my hadn count
+WT = lm(superdf$count_Hina_hand[final_blah$geno == "wt"] ~final_blah$hand_count[final_blah$geno == "wt"])
+summary(WT)
+X11()
+plot((superdf$count_Hina_hand[final_blah$geno == "wt"] ~final_blah$hand_count[final_blah$geno == "wt"]),  pch = 20, col = "gray" , cex = 2)#,ylim = c(50,250), xlim = c(50,250))
+abline(lm(WT), lwd=2)
+
+GP = lm(superdf$count_Hina_hand[final_blah$geno == "gp"] ~final_blah$hand_count[final_blah$geno == "gp"])
+summary(GP)
+X11()
+plot((superdf$count_Hina_hand[final_blah$geno == "gp"]~final_blah$hand_count[final_blah$geno == "gp"]),  pch = 20, col = "gray" , cex = 2)#,ylim = c(50,250), xlim = c(50,250))
+abline(lm(GP), lwd=2)
+
+#}

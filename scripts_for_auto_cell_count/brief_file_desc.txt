@@ -10,7 +10,11 @@ Full dataset counting – R script for counting auto generated object segmentati
 
 generate geno file – R script that was used with our full dataset to generate the geno file used
 
+just_thresh - simple macro to threshold Weka output images into 8 bit binary
+
 projecting images – R script used on our image segmentations which needed to be overlapped before final counting
+
+Processing_and_norm - histogram normalization for all images
 
 count_over_dir – ImageJ macro to generate count results.csv files for multiple classifiers. Compares cell segmentation objects with hand placed markers for cell counting.
 

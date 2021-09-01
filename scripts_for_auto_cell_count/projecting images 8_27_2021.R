@@ -3,7 +3,8 @@
 
 ##getting images names, can pick any folder with all images in question to do this
 
-inputdir_all1 <-"F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/Data/Full_dataset/Processed_Images/" 
+###having to use a path not starting with Data for testing****
+inputdir_all1 <-"F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/test_area/Weka_Output_Thresholded/" 
 inputdir_all <- dir(inputdir_all1)
 id1 <- inputdir_all
 

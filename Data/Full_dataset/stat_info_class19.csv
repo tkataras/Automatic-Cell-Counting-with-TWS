@@ -1,0 +1,2 @@
+"","Precision","Recall","F1","F1_t.test_p_val.","Mean_F1_gp","Mean_F1_wt","Precision_geno_t.test","Recall_geno_t.test"
+"class19",0.6794,0.8487,0.7546,0.903860692227936,0.851911368174043,0.85345252070273,2.01491096404701e-07,0.00454973192251906

@@ -35,8 +35,6 @@ for (z = 0; z< input_dir_list.length; z++){
 
  
 
-//hide details from user to minimize screen clutter
-setBatchMode(true); 
 
 //holds all file names from input folder
 list = getFileList(input_dirs + input);
