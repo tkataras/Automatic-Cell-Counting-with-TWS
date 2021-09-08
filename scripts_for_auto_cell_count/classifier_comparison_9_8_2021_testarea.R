@@ -146,16 +146,19 @@ get_match_id <- function(sub_inv,full_inv){
 unlink('Data/Validation_files/Weka_Output_Counted/All_classifier_comparison_inc_missing_8_11.csv')
 
 # Input the genotype data as .txt file
-geno_file <- scan(file="Data/genotype.txt", what='character')
+#geno_file <- scan(file="Data/genotype.txt", what='character')
+geno_file <- scan(file="test_area/genotype.txt", what='character')
 
 # File output location
-OUTPUT_count <- "Data/Validation_files/Weka_Output_Counted/"
+#OUTPUT_count <- "Data/Validation_files/Weka_Output_Counted/"
+OUTPUT_count <- "test_area/Weka_Output_Counted/"
+
 
 class_list <- dir(OUTPUT_count)
 #setwd("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS")
 
 ############################## now we have binary projected images to work with and need to compare to roi for each classifier
-your_boat <- NA
+class_compare <- NA
 
 
 
@@ -168,7 +171,11 @@ your_boat <- NA
 
 ### adding in the results of the hand_count_from_roi.ijm, this will not change by folder
 #hand_ini <- read.csv("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/Data/Corrected_files/Results/Results_hand_roi_8_3_2021.csv")
-hand_ini <- read.csv("Data/Validation_files/Results/Results_hand_roi_8_3_2021.csv")
+#hand_ini <- read.csv("Data/Corrected_files/Results/Results_hand_roi_8_3_2021.csv")
+
+hand_ini <- read.csv("test_area/Validation_Hand_Counts/roi_counts.csv")
+
+
 
 ##processing hand count roi to get count per image
 lv_h <- levels(as.factor(hand_ini$Label))
@@ -201,7 +208,7 @@ for (f in 1:length(class_list)){
   #img_names <- levels(as.factor(class_results$Label))
   
   #initialize data frame
-  final_blah <- data.frame(name = NA, tp = NA, fp = NA, fn= NA)
+  img_info <- data.frame(name = NA, tp = NA, fp = NA, fn= NA)
   
   ###### can use this to check size restriction 
   #print(min(class_results$Area))
@@ -209,14 +216,14 @@ for (f in 1:length(class_list)){
   ##this next part does the collecting of tp, fp and fp and turns it into precision and recall
   for (i in 1:length(img_names)) {
     
-    ##this .png cames from saving by the tru_count imagej macro. needs to be removed to match the image names in the results file
-    current_img_plus_png <- img_names[i]
-    current_img_plus_png_split <- unlist(strsplit(current_img_plus_png, split = ""))
-    new_length <-length(current_img_plus_png_split) - 8 #this used to be 4, but now i have to remove "mask.png"
-    current_img <- paste(current_img_plus_png_split[1:new_length], sep = "", collapse = "")
-    # 
+    # ##this .png cames from saving by the tru_count imagej macro. needs to be removed to match the image names in the results file
+    # current_img_plus_png <- img_names[i]
+    # current_img_plus_png_split <- unlist(strsplit(current_img_plus_png, split = ""))
+    # new_length <-length(current_img_plus_png_split) - 8 #this used to be 4, but now i have to remove "mask.png"
+    # current_img <- paste(current_img_plus_png_split[1:new_length], sep = "", collapse = "")
+    # # 
     dftc<- NA
-    dftc <- class_results[class_results$Label == current_img,]  ###pulls out just the rows in results with the image name of the current image
+    dftc <- class_results[class_results$Label == img_names[i],]  ###pulls out just the rows in results with the image name of the current image
     dftc
     
     if (dim(dftc)[1] == 0){
@@ -254,20 +261,20 @@ for (f in 1:length(class_list)){
       
     } #this is the closing bracket for if there were no cell objects so dftc is empty
     
-    final_blah <-rbind(final_blah, this_row)
+    img_info <-rbind(img_info, this_row)
     
   }
   
-  # Set final_blah columns to be numeric
-  final_blah <- final_blah[-1,]
-  final_blah$tp <- as.numeric(final_blah$tp)
-  final_blah$fp <- as.numeric(final_blah$fp)
-  final_blah$fn <- as.numeric(final_blah$fn)
+  # Set img_info columns to be numeric
+  img_info <- img_info[-1,]
+  img_info$tp <- as.numeric(img_info$tp)
+  img_info$fp <- as.numeric(img_info$fp)
+  img_info$fn <- as.numeric(img_info$fn)
   
   ##need to calculate Precision and recall
-  tot_tp <- sum(as.numeric(final_blah$tp))
-  tot_fp <- sum(as.numeric(final_blah$fp))
-  tot_fn <- sum(as.numeric(final_blah$fn))
+  tot_tp <- sum(as.numeric(img_info$tp))
+  tot_fp <- sum(as.numeric(img_info$fp))
+  tot_fn <- sum(as.numeric(img_info$fn))
   
   
   #precision is tp/(tp + fp)
@@ -290,45 +297,45 @@ for (f in 1:length(class_list)){
   current_loc <- paste(counted_folder_dir,"/",class_list[f],sep = "")
   file_out_name <- paste(current_loc,"/",class,"_Final.csv",sep = "")
   #writes out the final file to save the output
-  write.csv(final_blah, file_out_name )
+  write.csv(img_info, file_out_name )
   
   # #need to add geno again
   # #going to do automatically this time
-  # a <- trim_names(final_blah$name)
+  # a <- trim_names(img_info$name)
   # b <- sep_slidebook(a)
   # c <- squish(b)
   # length(c)
-  # d <- cbind(final_blah$name,c,b) ##specify: original file names, info columns, squished ID
+  # d <- cbind(img_info$name,c,b) ##specify: original file names, info columns, squished ID
   # colnames(d) <- c("file_name", "img_ID", "a_num","S_num", "F_num")
   # d <- data.frame(d)
   # 
   # Why is this saved as a string theo?
   #geno <- c("gp", "gp", "gp", "wt", "gp", "gp", "wt", "wt", "wt", "wt")
   geno <- geno_file
-  final_blah$geno <- geno
-  final_blah$geno <- as.factor(final_blah$geno)
+  img_info$geno <- geno
+  img_info$geno <- as.factor(img_info$geno)
   
   #####this makes the table comparing all classifiers
   
   
   #precision and recall per image
-  prec2 <- final_blah$tp/(final_blah$tp + final_blah$fp)
+  prec2 <- img_info$tp/(img_info$tp + img_info$fp)
   
-  reca2 <-final_blah$tp/(final_blah$tp + final_blah$fn)
+  reca2 <-img_info$tp/(img_info$tp + img_info$fn)
   F1_2 <- 2*(prec2*reca2/(prec2 + reca2))
   
-  final_blah$prec2 <- prec2
-  final_blah$reca2 <- reca2
-  final_blah$F1_2 <-  F1_2
+  img_info$prec2 <- prec2
+  img_info$reca2 <- reca2
+  img_info$F1_2 <-  F1_2
   
   
-  p_g_tt <- t.test(final_blah$prec2 ~ final_blah$geno)
+  p_g_tt <- t.test(img_info$prec2 ~ img_info$geno)
   p_g_tt_p <- p_g_tt$p.value
   
-  r_g_tt <- t.test(final_blah$reca2 ~ final_blah$geno)
+  r_g_tt <- t.test(img_info$reca2 ~ img_info$geno)
   r_g_tt_p <- r_g_tt$p.value
   
-  F1_g_tt <- t.test(final_blah$F1_2 ~ final_blah$geno)
+  F1_g_tt <- t.test(img_info$F1_2 ~ img_info$geno)
   F1_g_tt_p <- F1_g_tt$p.value
   
   
@@ -338,10 +345,10 @@ for (f in 1:length(class_list)){
   p_g_tt_p <- p_g_tt$p.value
   r_g_tt_p <- r_g_tt$p.value
   
-  class
+  ###add dice coeff, **** add the mean precision and recal lfor each group? eventually want this to be non genotype specific, just group 1 and 2???***
   
-  row_row <- cbind(class,prec,reca,F1,F1_g_tt_p, mean_F1_gp,mean_F1_wt, p_g_tt_p,r_g_tt_p, class)#F1_s_tt_p,mean_F1_m, mean_F1_f
-  your_boat <- rbind(your_boat, row_row)
+  stat_info <- cbind(class,prec,reca,F1,F1_g_tt_p, mean_F1_gp,mean_F1_wt, p_g_tt_p,r_g_tt_p, class)#F1_s_tt_p,mean_F1_m, mean_F1_f
+  class_compare <- rbind(class_compare, stat_info)
   
   
   
@@ -354,6 +361,6 @@ date2 <- gsub("/", "_", date)
 
 out_name <- paste0("All_classifier_Comparison_", date2, ".csv") 
 
-write.csv(your_boat, paste(counted_folder_dir,out_name, sep = ""))
+write.csv(class_compare, paste(counted_folder_dir,out_name, sep = ""))
 
 

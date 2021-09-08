@@ -20,7 +20,7 @@ class_list <- unlist(strsplit(class_list_pre_trim, ".model"))
 
 OUTPUT_thresh <- paste(c(ORIGIN, "Weka_Output_Thresholded/"), collapse = "")
 dir.create(paste(OUTPUT_thresh, sep = ""))
-OUTPUT_project <- paste(c(ORIGIN, "Weka_Output_Trojected/"), collapse = "")
+OUTPUT_project <- paste(c(ORIGIN, "Weka_Output_Projected/"), collapse = "")
 dir.create(paste(OUTPUT_project, sep = ""))
 OUTPUT_count <- paste(c(ORIGIN, "Weka_Output_Counted/"), collapse = "")
 dir.create(paste(OUTPUT_count, sep = ""))
