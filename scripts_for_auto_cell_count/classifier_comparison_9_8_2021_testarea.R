@@ -18,8 +18,8 @@ trim_names <- function(file_names, split = " - ", half = "front"){
   
   newsid1 <- NA
   for (i in 1:length(sid1)){
-    if(half == "front") {newsid1 <- c(newsid1, tail(sid1[[i]],1))} 
-    else if(half == "back") { newsid1 <- c(newsid1, head(sid1[[i]],1))} 
+    if(half == "front") {newsid1 <- c(newsid1, head(sid1[[i]],1))} 
+    else if(half == "back") { newsid1 <- c(newsid1, tail(sid1[[i]],1))} 
     else{print("half = front or back, please")
       break}
     

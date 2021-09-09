@@ -11,11 +11,20 @@ names(datain_mo)
 head(datain_mo)
 
 #*#*#*##* gonna remove the greater than 2 point counts, its not relevant here, there are few
-sum(datain_mo$points > 1) # this = 10
+sum(datain_mo$points > 1) # this = 10 of 4572 with muiltipel hadn coutns within one object
+sum(datain_mo$points > 0) # this = 4105 of 4572 with some hand count within
+
+length(datain_mo$points)
 
 
+#using the hand counts to remove cell objects taht have 2 hand counts within
 datain_mo <- datain_mo[datain_mo$points < 2,]
 dim(datain_mo)
+
+
+
+
+
 
 lm_all_res <- lm(datain_mo$points ~ datain_mo$Area)
 summary(lm_all_res)
@@ -150,6 +159,9 @@ boxplot(datain_mo$Circ. ~ as.factor(datain_mo$points))
 
 #circ
 t.test(datain_mo_wt$Circ.[datain_mo_wt$points == 0], datain_mo_gp$Circ.[datain_mo_gp$points == 0])
+
+t.test(datain_mo$Circ. ~ as.factor(datain_mo$geno))
+
 t.test(datain_mo_wt$Circ.[datain_mo_wt$points == 1], datain_mo_gp$Circ.[datain_mo_gp$points == 1])#sig
 boxplot(datain_mo_wt$Circ.[datain_mo_wt$points == 1], datain_mo_gp$Circ.[datain_mo_gp$points == 1])
 t.test(datain_mo$Circ. ~ as.factor(datain_mo$geno))
@@ -162,6 +174,35 @@ hist(datain_mo$Circ.[datain_mo$points == 0], xlim=c(0,0.4))
 hist(datain_mo$Circ.[datain_mo$points == 0], xlim=c(0,0.4), ylim=c(0,600))
 
 
+###adding aspect ratio to compare to circ
+
+datain_mo$AR <- datain_mo$Height/datain_mo$Width 
+
+t.test(datain_mo$AR ~ datain_mo$geno)  
+plot(datain_mo$AR ~ datain_mo$Circ.)
+
+#WT
+plot(datain_mo_wt$AR ~ datain_mo_wt$Circ.,ylim = c(0,8.5))
+sum(datain_mo_wt$AR <= 1.5)
+sum(datain_mo_wt$Circ. >= 0.9)
+sum(datain_mo_wt$AR <= 1.5 & datain_mo_wt$Circ. >= 0.9)
+dim(datain_mo_wt)[1]
+sum(datain_mo_wt$AR <= 1.5 & datain_mo_wt$Circ. >= 0.9)/dim(datain_mo_wt)[1]
+
+
+#GP
+plot(datain_mo_gp$AR ~ datain_mo_gp$Circ., ylim = c(0,8.5))
+sum(datain_mo_gp$AR <= 1.5)
+sum(datain_mo_gp$Circ. >= 0.9)
+sum(datain_mo_gp$AR <= 1.5 & datain_mo_gp$Circ. >= 0.9)
+dim(datain_mo_gp)[1]
+sum(datain_mo_gp$AR <= 1.5 & datain_mo_gp$Circ. >= 0.9)/dim(datain_mo_gp)[1]
+
+
+datain_mo$iscircle <- as.factor(datain_mo$AR <= 1.5 & datain_mo$Circ. >= 0.9)
+
+t.test()
 
 
 
+chisq.test(rbind(c(350, 2071), c(332, 2491)))
