@@ -149,6 +149,7 @@ t.test(datain_mo_wt$Area[datain_mo_wt$points == 1], datain_mo_gp$Area[datain_mo_
 
 #look at over geno vs area
 t.test(datain_mo$Area ~ as.factor(datain_mo$geno))
+boxplot(datain_mo$Area ~ as.factor(datain_mo$geno))
 #size vs count
 t.test(datain_mo$Area ~ as.factor(datain_mo$points))
 boxplot(datain_mo$Area ~ as.factor(datain_mo$points))
@@ -166,12 +167,19 @@ t.test(datain_mo_wt$Circ.[datain_mo_wt$points == 1], datain_mo_gp$Circ.[datain_m
 boxplot(datain_mo_wt$Circ.[datain_mo_wt$points == 1], datain_mo_gp$Circ.[datain_mo_gp$points == 1])
 t.test(datain_mo$Circ. ~ as.factor(datain_mo$geno))
 boxplot(datain_mo$Circ. ~ as.factor(datain_mo$geno))
+t.test(datain_mo$Circ. ~ as.factor(datain_mo$points))
+boxplot(datain_mo$Circ. ~ as.factor(datain_mo$points))
+
+
+
+t.test(datain_mo$Circ. ~ as.factor(datain_mo$geno))
+
 
 hist(datain_mo$Circ.[datain_mo$points == 1], xlim=c(0,0.4))
 
 hist(datain_mo$Circ.[datain_mo$points == 0], xlim=c(0,0.4))
 
-hist(datain_mo$Circ.[datain_mo$points == 0], xlim=c(0,0.4), ylim=c(0,600))
+hist(datain_mo$Circ.[datain_mo$points == 0], xlim=c(0,0.4), ylim=c(0,700))
 
 
 ###adding aspect ratio to compare to circ
@@ -206,3 +214,102 @@ t.test()
 
 
 chisq.test(rbind(c(350, 2071), c(332, 2491)))
+
+
+
+
+
+
+
+#looking at it in just the true positives
+datain_mo_wt1 <- datain_mo_wt[datain_mo_wt$points == 1,]
+dim(datain_mo_wt1)[1]
+sum(datain_mo_wt1$AR <= 1.5 & datain_mo_wt1$Circ. >= 0.9)/dim(datain_mo_wt1)[1]
+sum(datain_mo_wt1$AR <= 1.5 & datain_mo_wt1$Circ. >= 0.9)
+
+
+datain_mo_gp1 <- datain_mo_gp[datain_mo_gp$points == 1,]
+dim(datain_mo_gp1)[1]
+sum(datain_mo_gp1$AR <= 1.5 & datain_mo_gp1$Circ. >= 0.9)/dim(datain_mo_gp1)[1]
+sum(datain_mo_gp1$AR <= 1.5 & datain_mo_gp1$Circ. >= 0.9)
+
+
+
+
+
+chisq.test(rbind(c(332, 1954), c(285, 2151)))
+
+install.packages("VennDiagram")
+require(VennDiagram)
+
+library(VennDiagram)
+
+
+venn.diagram(rbind(c(332, 1954), c(285, 2151))
+)
+
+
+venn.diagram(list(B = (datain_mo_gp1$AR <= 1.5 & datain_mo_gp1$Circ. >= 0.9), A = (datain_mo_wt1$AR <= 1.5 & datain_mo_wt1$Circ. >= 0.9)),fill = c("red", "green"),
+             alpha = c(0.5, 0.5), cex = 2,cat.fontface = 4,lty =2, fontfamily =1, main ="female cortex A_lcn2ko",
+             filename = "test.png")
+
+venn.diagram(list(B = (datain_mo_gp1$AR <= 1.5 & datain_mo_gp1$Circ. >= 0.9), A = (datain_mo_gp1$AR >= 1.5 & datain_mo_gp1$Circ. <= 0.9)),fill = c("red", "green"),
+             alpha = c(0.5, 0.5), cex = 2,lty =2, main ="female cortex A_lcn2ko",
+             filename = "test.png")
+
+datain_mo1 <- datain_mo[datain_mo$points == 1,]
+
+
+library(ggplot2)
+ggplot(data=datain_mo1, aes(x=(datain_mo_gp1$AR <= 1.5 & datain_mo_gp1$Circ. >= 0.9),fill = geno)) + geom_histogram()
+
+arecirc_wt1 <- datain_mo_wt1$Label[datain_mo_wt1$AR <= 1.5 & datain_mo_wt1$Circ. >= 0.9]
+
+
+
+arecirc_wt1X <- datain_mo_wt1$X.1[datain_mo_wt1$AR <= 1.5 & datain_mo_wt1$Circ. >= 0.9]
+
+
+length(arecirc_wt1)
+
+
+venn.diagram(list(B = as.character(arecirc_wt1), A =as.character(datain_mo_wt1$Label)),fill = c("red", "green"), filename = "test2.png")
+
+ggplot(data=datain_mo1, aes(x=(datain_mo_gp1$AR <= 1.5 & datain_mo_gp1$Circ. >= 0.9),fill = geno)) + geom_histogram()
+
+##this works
+venn.diagram(list(B = arecirc_wt1X, A =datain_mo_wt1$X.1),fill = c("red", "green"),
+             alpha = c(0.5, 0.5), cex = 2,cat.fontface = 4,lty =2, main ="True pos. WT",
+             filename = "TP_WT1.png")
+
+
+arecirc_gp1X <- datain_mo_gp1$X.1[datain_mo_gp1$AR <= 1.5 & datain_mo_gp1$Circ. >= 0.9]
+
+venn.diagram(list(B = arecirc_gp1X, A =datain_mo_gp1$X.1),fill = c("red", "green"),
+             alpha = c(0.5, 0.5), cex = 2,cat.fontface = 4,lty =2, main ="True pos. GP",
+             filename = "TP_GP1.png")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+venn.diagram(list(B = datain$gp120, A = datain$LCN2ko.gp120),fill = c("red", "green"),
+             alpha = c(0.5, 0.5), cex = 2,cat.fontface = 4,lty =2, main ="female cortex A_lcn2ko",
+             filename = "f_c_lcn2ko.png");
+
+
+
+
+
+
+

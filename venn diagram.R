@@ -36,7 +36,7 @@ require(VennDiagram)
 datain <- read.csv("C:/Users/User/Desktop/Kaul_lab_work/daniel venn/female cortex for venn.csv")
 
 venn.diagram(list(B = datain$gp120, A = datain$LCN2ko.gp120),fill = c("red", "green"),
-             alpha = c(0.5, 0.5), cex = 2,cat.fontface = 4,lty =2, fontfamily =1, main ="female cortex A_lcn2ko",
+             alpha = c(0.5, 0.5), cex = 2,cat.fontface = 4,lty =2, main ="female cortex A_lcn2ko",
              filename = "f_c_lcn2ko.png");
 
 venn.diagram(list(B = datain$gp120, A = datain$CCR5ko.gp120),fill = c("red", "green"),
