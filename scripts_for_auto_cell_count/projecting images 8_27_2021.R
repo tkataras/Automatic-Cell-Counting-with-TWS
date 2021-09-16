@@ -122,6 +122,8 @@ get_match_id <- function(sub_inv,full_inv){
 
 ###having to use a path not starting with Data for testing****
 inputdir_folders1 <- ("test_area/Weka_Output_Thresholded/")
+inputdir_folders1 <- ("test_area/Weka_Output_Thresholded/")
+
 inputdir_folders <- dir(inputdir_folders1)
 inputdir_all1 <- inputdir_folders[1] 
 inputdir_all <- dir(paste0(inputdir_folders1,inputdir_all1))
