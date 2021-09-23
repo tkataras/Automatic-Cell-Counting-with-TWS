@@ -141,15 +141,15 @@ get_match_id <- function(sub_inv,full_inv){
 
 
 # Start of main
-
+#setwd("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/scripts_for_auto_cell_count/")
 # Remove results file if it already exists
-unlink('Data/Corrected_files/Weka_Output_Counted/All_classifier_comparison_inc_missing_8_11.csv')
+unlink(paste0(getwd(), '/../Data/Validation_files/Weka_Output_Counted/All_classifier_comparison_inc_missing_8_11.csv'))
 
 # Input the genotype data as .txt file
-geno_file <- scan(file="Data/genotype.txt", what='character')
+geno_file <- scan(file=paste0(getwd(),"/../Data/genotype.txt"), what='character')
 
 # File output location
-OUTPUT_count <- "Data/Corrected_files/Weka_Output_Counted/"
+OUTPUT_count <- paste0(getwd(),"/../Data/Validation_files/Weka_Output_Counted/")
 
 class_list <- dir(OUTPUT_count)
 #setwd("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS")
@@ -168,7 +168,7 @@ your_boat <- "tru_count_over_dir_correct.ijm"
 
 ### adding in the results of the hand_count_from_roi.ijm, this will not change by folder
 #hand_ini <- read.csv("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/Data/Corrected_files/Results/Results_hand_roi_8_3_2021.csv")
-hand_ini <- read.csv("Data/Corrected_files/Results/Results_hand_roi_8_3_2021.csv")
+hand_ini <- read.csv(paste0(getwd(),"/../Data/Validation_files/Results/Results_hand_roi_8_3_2021.csv"))
 
 ##processing hand count roi to get count per image
 lv_h <- levels(as.factor(hand_ini$Label))
