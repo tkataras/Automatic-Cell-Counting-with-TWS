@@ -1,9 +1,9 @@
 #!/usr/bin/env Rscript
 ###
-# Author: Theo
-# Date 8/26/2021
+# Author: Theo, Tyler
+# Date 9/23/2021
 # This file is the pipeline.....
-#
+###
 
 ###
 # Method: trim_names 
@@ -185,6 +185,7 @@ hand_final$count_h <- as.numeric(hand_final$count_h)
 counted_folder_dir <- OUTPUT_count
 #setwd(counted_folder_dir)
 
+# Only have classifier directories in the counted folder directory please
 for (f in 1:length(class_list)){
   class_res_loc <- paste(counted_folder_dir,dir(OUTPUT_count)[f],"/Results.csv",sep = "")
   class_results <- read.csv(class_res_loc)

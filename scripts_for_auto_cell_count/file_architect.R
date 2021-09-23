@@ -1,11 +1,18 @@
+#!/usr/bin/env Rscript
+
+###
+# Author: Theo, Tyler
+# Date 9/23/2021
+# This file is...
+###
 ##making folders ####
 
 
 ##generating classifiers must be done before this step 
 
 
-#CLASS_ORIGIN <- "Data/Validation_files/Classifiers/"
-CLASS_ORIGIN <- "test_area/Classifiers/"
+CLASS_ORIGIN <- "Data/Validation_files/Classifiers/"
+#CLASS_ORIGIN <- "test_area/Classifiers/"
 
 ##this looks a mess, but it just moves back a folder from the CLASS_ORIGIN
 ORIGIN <- paste(c(((strsplit(CLASS_ORIGIN, split = "/")[[1]][-length(strsplit(CLASS_ORIGIN, split = "/")[[1]])])), ""),collapse = "/")
