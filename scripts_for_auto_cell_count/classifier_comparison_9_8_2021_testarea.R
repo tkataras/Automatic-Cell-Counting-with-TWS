@@ -147,11 +147,11 @@ unlink('Data/Validation_files/Weka_Output_Counted/All_classifier_comparison_inc_
 
 # Input the genotype data as .txt file
 #geno_file <- scan(file="Data/genotype.txt", what='character')
-geno_file <- scan(file="test_area/genotype.txt", what='character')
+geno_file <- scan(file="../test_area/genotype.txt", what='character')
 
 # File output location
 #OUTPUT_count <- "Data/Validation_files/Weka_Output_Counted/"
-OUTPUT_count <- "test_area/Weka_Output_Counted/"
+OUTPUT_count <- "../test_area/Weka_Output_Counted/"
 
 
 class_list <- dir(OUTPUT_count)
@@ -173,7 +173,7 @@ class_compare <- NA
 #hand_ini <- read.csv("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/Data/Corrected_files/Results/Results_hand_roi_8_3_2021.csv")
 #hand_ini <- read.csv("Data/Corrected_files/Results/Results_hand_roi_8_3_2021.csv")
 
-hand_ini <- read.csv("test_area/Validation_Hand_Counts/roi_counts.csv")
+hand_ini <- read.csv("../test_area/Validation_Hand_Counts/roi_counts.csv")
 
 
 
