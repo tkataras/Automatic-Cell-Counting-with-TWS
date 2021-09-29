@@ -156,26 +156,12 @@ for (j in 1:length(in_dir_list)){
     this_group <- img_file_names[all_current_ID]
     
     
-    
-    
-    if (length(this_group) == 2){
-      datain1 <- readImage(as.character(this_group[1]))
-      datain2 <- readImage(as.character(this_group[2]))
-      
-      projected <- datain1 + datain2
-      projected[projected >255] = 255
-      
-      
-      
-      
-    } else if (length(this_group) == 3){
-      datain1 <- readImage(as.character(this_group[1]))
-      datain2 <- readImage(as.character(this_group[2]))
-      datain3 <- readImage(as.character(this_group[3]))
-      
-      projected <- datain1 + datain2 +datain3
-      projected[projected >255] = 255
+    # Sum projected as equal to the number of layers in the image
+    max_len = length(this_group)
+    for (j in 1:max_len) {
+      projected = projected + readImage(as.character(this_group[j]))
     }
+    projected[projected >255] = 255
     
     # ##it turns out names get very long when working with image processing steps and you cant save a file with more than 97 charcters in the name
     # fn = this_group[1]
