@@ -25,7 +25,6 @@ sep_slidebook <- function(x, sep = "-"){
   newsid1 <- x
   newsid1_s <- strsplit(newsid1, sep)
   
-  
   #look at what elements you are working with
   head(newsid1_s,3)
   
@@ -93,13 +92,13 @@ get_match_id <- function(sub_inv,full_inv){
 
 
 ###all the file locations
-id_for_in_dir <-"F:/Theo/iba_7_2020_autocount/Hina_IFNBKO_pair/working_images/new_val_train_etc/new_new_train/Auto_thresh_output/" 
+id_for_in_dir <-"C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/tyler_test_area/Weka_Output_Thresholded/" 
 in_dir_list <- dir(id_for_in_dir)
 
 file_list <- dir(paste(id_for_in_dir,"/", in_dir_list[1],"/", sep = ""))
 
 
-id_for_out_dir <-"F:/Theo/iba_7_2020_autocount/Hina_IFNBKO_pair/working_images/new_val_train_etc/new_new_train/Auto_thresh_output_counted/"
+id_for_out_dir <-"C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/tyler_test_area/Weka_Output_Projected/"
 
 out_dir_list <- dir(id_for_out_dir)
 
@@ -113,7 +112,7 @@ id1 <- file_list
 newsid1 <- trim_names(id1)
 
 
-id1_df_sep <- sep_slidebook(x = newsid1)
+id1_df_sep <- sep_slidebook(x = newsid1, sep = c("-", "_"))
 
 
 id1_df_squish <- squish(input_df = id1_df_sep)
@@ -156,26 +155,13 @@ for (j in 1:length(in_dir_list)){
     this_group <- img_file_names[all_current_ID]
     
     
-    
-    
-    if (length(this_group) == 2){
-      datain1 <- readImage(as.character(this_group[1]))
-      datain2 <- readImage(as.character(this_group[2]))
-      
-      projected <- datain1 + datain2
-      projected[projected >255] = 255
-      
-      
-      
-      
-    } else if (length(this_group) == 3){
-      datain1 <- readImage(as.character(this_group[1]))
-      datain2 <- readImage(as.character(this_group[2]))
-      datain3 <- readImage(as.character(this_group[3]))
-      
-      projected <- datain1 + datain2 +datain3
-      projected[projected >255] = 255
+    # Sum projected as equal to the number of layers in the image
+    projected = 0
+    max_len = length(this_group)
+    for (j in 1:max_len) {
+      projected = projected + readImage(as.character(this_group[j]))
     }
+    projected[projected >255] = 255
     
     # ##it turns out names get very long when working with image processing steps and you cant save a file with more than 97 charcters in the name
     # fn = this_group[1]
