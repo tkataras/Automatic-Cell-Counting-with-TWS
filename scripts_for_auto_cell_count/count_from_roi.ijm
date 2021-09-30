@@ -38,7 +38,7 @@ if(list.length < 2) {
 	
 	
 	// prints text in the log window after all files are processed
-	print("counts from "+list.length+" rois")
+	print("counts from "+list.length+" rois");
 	//run("Summarize");
 	saveAs("Results", output +"/roi_counts.csv");
 }
