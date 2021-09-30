@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 ###
-# Author: Theo
+# Author: Theo, Tyler
 # Date 8/26/2021
 # This file is the pipeline.....
 #
@@ -110,13 +110,13 @@ library("OpenImageR")
 
 
 ###all the file locations
-id_for_in_dir <-"F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/tyler_test_area/Weka_Output_Thresholded/"
+id_for_in_dir <-"C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/tyler_test_area/Weka_Output_Thresholded/"
 in_dir_list <- dir(id_for_in_dir)
 
 file_list <- dir(paste(id_for_in_dir,"/", in_dir_list[1],"/", sep = ""))
 
 
-id_for_out_dir <-"F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/tyler_test_area/Weka_Output_Projected/"
+id_for_out_dir <-"C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/tyler_test_area/Weka_Output_Projected/"
 
 out_dir_list <- dir(id_for_out_dir)
 
