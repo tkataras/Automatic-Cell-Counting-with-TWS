@@ -143,13 +143,13 @@ get_match_id <- function(sub_inv,full_inv){
 # Start of main
 #setwd("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/scripts_for_auto_cell_count/")
 # Remove results file if it already exists
-unlink(paste0(getwd(), '/../Data/Validation_files/Weka_Output_Counted/All_classifier_comparison_inc_missing_8_11.csv'))
+unlink(paste0(getwd(),'/../tyler_test_area/Weka_Output_Counted/All_classifier_comparison_inc_missing_8_11.csv'))
 
 # Input the genotype data as .txt file
-geno_file <- scan(file=paste0(getwd(),"/../Data/genotype.txt"), what='character')
+geno_file <- scan(file=paste0(getwd(),"/../tyler_test_area/genotype.txt"), what='character')
 
 # File output location
-OUTPUT_count <- paste0(getwd(),"/../Data/Validation_files/Weka_Output_Counted/")
+OUTPUT_count <- paste0(getwd(),"/../tyler_test_area/Weka_Output_Counted/")
 
 class_list <- dir(OUTPUT_count)
 #setwd("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS")
@@ -168,7 +168,7 @@ your_boat <- "tru_count_over_dir_correct.ijm"
 
 ### adding in the results of the hand_count_from_roi.ijm, this will not change by folder
 #hand_ini <- read.csv("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/Data/Corrected_files/Results/Results_hand_roi_8_3_2021.csv")
-hand_ini <- read.csv(paste0(getwd(),"/../Data/Validation_files/Results/Results_hand_roi_8_3_2021.csv"))
+hand_ini <- read.csv(paste0(getwd(),"/../tyler_test_area/Results/roi_counts.csv"))
 
 ##processing hand count roi to get count per image
 lv_h <- levels(as.factor(hand_ini$Label))
@@ -195,7 +195,7 @@ for (f in 1:length(class_list)){
   
   ##from levels present in the classifier results output, this should be the same each time, BUT IT WoNT BE IF ONE IMAGE HAS NO CELL OBJECtS
   #need to go into the counted folder and pull out all image names, meaning ignorming the Restuls.csv files. images from tru_count with be .png
-  folder_loc <- paste(counted_folder_dir,"/",dir(OUTPUT_count)[f], collapse = "", sep = "")
+  folder_loc <- paste(counted_folder_dir,dir(OUTPUT_count)[f], collapse = "", sep = "")
   files <- list.files(path =  folder_loc, pattern = "\\.png$")
   
   img_names <- files
@@ -215,7 +215,7 @@ for (f in 1:length(class_list)){
     current_img_plus_png_split <- unlist(strsplit(current_img_plus_png, split = ""))
     new_length <-length(current_img_plus_png_split) - 8 #this used to be 4, but now i have to remove "mask.png"
     current_img <- paste(current_img_plus_png_split[1:new_length], sep = "", collapse = "")
-    # 
+    
     dftc<- NA
     dftc <- class_results[class_results$Label == current_img,]  ###pulls out just the rows in results with the image name of the current image
     dftc
@@ -227,7 +227,7 @@ for (f in 1:length(class_list)){
       fp = 0
       fn = as.numeric(hand_final$count_h[i])
       this_row <- cbind(name,tp, fp, fn) 
-      print("hi")
+      print("hi this is an empty image")
     } else {
       fp = 0
       tp = 0

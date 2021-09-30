@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 ###
-# Author: Theo, Tyler
+# Author: Theo, Tyler Jang
 # Date 8/26/2021
 # This file is the pipeline.....
 #
