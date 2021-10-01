@@ -1,15 +1,18 @@
             macro "The -- True -- Count" {
+//Overview: uses hand placed markers and weka output images from each classifier to begin accuracy calculation
+//Input: Binary images, hand placed markes in roi files, one file for each image
+//Output: Binary image files including only cells counted, and .csv file in classifier folder with accuracy information
 
-
+//this hides intermediary information and speeds processing
 setBatchMode(true); 
 
-
+//set input and output directories locations
 input_dirs = getDirectory("Choose source directories");
 output_dirs = getDirectory("_Choose output directories");
 
 
 
-
+// set size minimum for cells to exclude small radius noise
   size_min=20;
   Dialog.create("Size Min");
   Dialog.addNumber("Minimum pixel size for object count:", size_min);
@@ -17,16 +20,16 @@ output_dirs = getDirectory("_Choose output directories");
   size_min = Dialog.getNumber();
 
 
-//the roi location will not change
+//the hand placed roi location will not change as it is applied to each classifier image set
 dir2 = getDirectory("_Choose source directory for the roi multipoint counts");
 
 
-
+// gets the folders for each classifier
 input_dir_list = getFileList(input_dirs);
 
 output_dir_list = getFileList(output_dirs);
 
-
+// this loop iterates through classifier folders
 for (z = 0; z< input_dir_list.length; z++){
 
 	
@@ -44,7 +47,7 @@ n = 0;
 
 
 
-//iterate  macro over the objects in the input folder
+//iterate  macro over the images in the input folder
 for (q = 0; q < list.length; q++)
         action(input, output, list[q], dir2, list2[q]);
 
@@ -53,7 +56,7 @@ for (q = 0; q < list.length; q++)
 function action(input, output, filename, input2, filename2) {
        
       
-        
+//opens and thresholds binary images or Weka output directly       
  open(input_dirs + input + filename);
         run("8-bit");
         setAutoThreshold("Default dark");
@@ -63,7 +66,7 @@ function action(input, output, filename, input2, filename2) {
 		run("Convert to Mask");
 		//run("Invert");
 		
-		
+// this imageJ plugin creates the results file and image of the count cells based on the size exclusion		
 run("Analyze Particles...", "size="+size_min+"-Infinity pixel show=Masks display summarize add");
 saveAs("Png",output_dirs + output + filename);
 
