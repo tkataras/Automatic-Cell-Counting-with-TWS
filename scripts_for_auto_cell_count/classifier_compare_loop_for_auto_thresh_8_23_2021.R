@@ -11,6 +11,7 @@
 # Output: bisected file names based on split
 # Description:useful if information in automatic file name from microscope is repetitive
 ###
+library(stringr)
 trim_names <- function(file_names, split = " - ", half = "front"){
   id1 <- file_names
   sid1 <- strsplit(id1, split)
@@ -141,9 +142,9 @@ get_match_id <- function(sub_inv,full_inv){
 
 
 # Start of main
-#setwd("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/scripts_for_auto_cell_count/")
+setwd("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/scripts_for_auto_cell_count/")
 # Remove results file if it already exists
-unlink(paste0(getwd(),'/../tyler_test_area/Weka_Output_Counted/All_classifier_comparison_inc_missing_8_11.csv'))
+#unlink(paste0(getwd(),'/../tyler_test_area/Weka_Output_Counted/All_classifier_comparison_inc_missing_8_11.csv'))
 
 # Input the genotype data as .txt file
 geno_file <- scan(file=paste0(getwd(),"/../tyler_test_area/genotype.txt"), what='character')
@@ -214,10 +215,11 @@ for (f in 1:length(class_list)){
     current_img_plus_png <- img_names[i]
     current_img_plus_png_split <- unlist(strsplit(current_img_plus_png, split = ""))
     new_length <-length(current_img_plus_png_split) - 8 #this used to be 4, but now i have to remove "mask.png"
-    current_img <- paste(current_img_plus_png_split[1:new_length], sep = "", collapse = "")
+    #current_img <- paste(current_img_plus_png_split[1:new_length], sep = "", collapse = "")
     
     dftc<- NA
-    dftc <- class_results[class_results$Label == current_img,]  ###pulls out just the rows in results with the image name of the current image
+    dftc <- class_results[class_results$Label == current_img_plus_png,]  ###pulls out just the rows in results with the image name of the current image
+    #dftc <- class_results[class_results$Label == current_img_plus_png,]  ###pulls out just the rows in results with the image name of the current image
     dftc
     
     if (dim(dftc)[1] == 0){
@@ -322,35 +324,39 @@ for (f in 1:length(class_list)){
   final_blah$reca2 <- reca2
   final_blah$F1_2 <-  F1_2
   
+  # Catch if only 2 images before running statistical tests
+  if(length(final_blah$geno) > 2) {
+    p_g_tt <- t.test(final_blah$prec2 ~ final_blah$geno)
+    p_g_tt_p <- p_g_tt$p.value
+    
+    r_g_tt <- t.test(final_blah$reca2 ~ final_blah$geno)
+    r_g_tt_p <- r_g_tt$p.value
+    
+    F1_g_tt <- t.test(final_blah$F1_2 ~ final_blah$geno)
+    F1_g_tt_p <- F1_g_tt$p.value
+    
+    
+    mean_F1_gp <-(F1_g_tt$estimate[1])
+    mean_F1_wt <-(F1_g_tt$estimate[2])
+    
+    p_g_tt_p <- p_g_tt$p.value
+    r_g_tt_p <- r_g_tt$p.value
+    
+    class
   
-  p_g_tt <- t.test(final_blah$prec2 ~ final_blah$geno)
-  p_g_tt_p <- p_g_tt$p.value
-  
-  r_g_tt <- t.test(final_blah$reca2 ~ final_blah$geno)
-  r_g_tt_p <- r_g_tt$p.value
-  
-  F1_g_tt <- t.test(final_blah$F1_2 ~ final_blah$geno)
-  F1_g_tt_p <- F1_g_tt$p.value
-  
-  
-  mean_F1_gp <-(F1_g_tt$estimate[1])
-  mean_F1_wt <-(F1_g_tt$estimate[2])
-  
-  p_g_tt_p <- p_g_tt$p.value
-  r_g_tt_p <- r_g_tt$p.value
-  
-  class
-  
-  row_row <- cbind(class,prec,reca,F1,F1_g_tt_p, mean_F1_gp,mean_F1_wt, p_g_tt_p,r_g_tt_p, class)#F1_s_tt_p,mean_F1_m, mean_F1_f
+    row_row <- cbind(class,prec,reca,F1,F1_g_tt_p, mean_F1_gp,mean_F1_wt, p_g_tt_p,r_g_tt_p, class)#F1_s_tt_p,mean_F1_m, mean_F1_f
+  } else {
+    row_row = NA
+  }
   your_boat <- rbind(your_boat, row_row)
   
   
   
 }#this is the bottom bracket of iterating through all the class folders
 
-
-
-
-write.csv(your_boat, paste(counted_folder_dir,"/All_classifier_comparison_inc_missing_8_11.csv", sep = ""))
+# Write the results of the counts as a csv file
+tempTime = strsplit(as.character(Sys.time()),split =  " ")[[1]][2]
+tempTime = paste0(strsplit(tempTime, split = ":", )[[1]], collapse = "")
+write.csv(your_boat, paste(counted_folder_dir,"/All_classifier_comparison_inc_missing ", tempTime, ".csv", sep = ""))
 
 
