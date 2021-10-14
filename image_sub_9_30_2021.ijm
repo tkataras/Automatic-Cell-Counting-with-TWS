@@ -27,12 +27,6 @@ for (i=0; i<list.length; i++) {
 		selectWindow(list2[i]);
 			run("8-bit");
 			//rename("test2");
-
-			setAutoThreshold("Default dark");
-			//run("Threshold...");
-			//setThreshold(133, 255);
-			setOption("BlackBackground", true);
-			run("Convert to Mask");
 			run("Invert");
 			
 

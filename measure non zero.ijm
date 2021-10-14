@@ -27,11 +27,16 @@ function action(input, filename) {
         
         open(input + filename);
 
+
+//set all componets to measure, most important is "limit" which sets measure to only look at pixels above threshold
+run("Set Measurements...", "area mean standard modal min centroid center perimeter bounding fit shape feret's integrated median skewness kurtosis area_fraction limit display redirect=None decimal=8");
+
+//sets threshold to 0 to ignore backgorund, does ignore the few zeros that fall within cell area
 setThreshold(1, 255);
 setOption("BlackBackground", true);
 
-		run("Measure");
-      	
+run("Measure");
+//getValue("Mean limit") 
       	
       	
 		
