@@ -2,179 +2,44 @@
 ###
 # Author: Theo
 # Date 8/26/2021
-# This file is the pipeline.....
+# This file is the pipeline for comparing classifier accuracy on validation data
 #
-
-###
-# Method: trim_names 
-# Input: file names
-# Output: bisected file names based on split
-# Description:useful if information in automatic file name from microscope is repetitive
-###
-trim_names <- function(file_names, split = " - ", half = "front"){
-  id1 <- file_names
-  sid1 <- strsplit(id1, split)
-  
-  
-  newsid1 <- NA
-  for (i in 1:length(sid1)){
-    if(half == "back") {newsid1 <- c(newsid1, tail(sid1[[i]],1))} 
-    else if(half == "front") { newsid1 <- c(newsid1, head(sid1[[i]],1))} 
-    else{print("half = front or back, please")
-      break}
-    
-  }
-  newsid1 <- newsid1[-1]
-  
-}
-
-###
-# Method: Sep_slidebook 
-# Input: file names containng all relevant image info (animal #, slice #, field #)
-# Output: data frame with each type of info as it own column
-# Description: parses out individual grouping variables
-###
-sep_slidebook <- function(x, sep = "-"){
-  
-  newsid1 <- x
-  newsid1_s <- strsplit(newsid1, sep)
-  
-  
-  #look at what elements you are working with
-  head(newsid1_s,3)
-  
-  max_l <- length(newsid1_s[[1]])
-  
-  
-  
-  ##parseit takes a list of seperated relevent name elements from every image
-  parseit <-function(x,object_num){
-    newsid1_anum <- NA
-    for (i in 1:length(x)){
-      newsid1_anum <- c(newsid1_anum, x[[i]][object_num])
-    }
-    newsid1_anum <- newsid1_anum[-1]
-    
-  }
-  ###these are what you need to adjust for different names of images!!!!####
-  newsid1_anum <- parseit(x = newsid1_s, object_num = 2)
-  newsid1_snum <- parseit(x = newsid1_s, object_num = 3)
-  newsid1_fnum <- parseit(x = newsid1_s, object_num = max_l)
-  
-  fnumsid1_s <- strsplit(newsid1_fnum, "") #### sometimes another seperation step is required
-  
-  
-  
-  newsid1_fnum1 <- parseit(x = fnumsid1_s, object_num = 1)
-  newsid1_fnum2 <- parseit(x = fnumsid1_s, object_num = 2)
-  newsid1_fnum3 <- paste(newsid1_fnum1,newsid1_fnum2, sep = "") # for clarity, seperated objects can be recombined in order with paste()
-  
-  
-  
-  ####making the data frames-----------
-  
-  
-  id1_df <- cbind(newsid1_anum, newsid1_snum, newsid1_fnum3)
-  head(id1_df)
-  
-  
-  
-  
-  
-  #return(id1_df_squish)
-  return(id1_df)
-}
-
-###
-# Method: squish 
-# Input: data from of grouping variables
-# Output: list of unique image IDs contining specific grouping information
-# Description: creates one grouping object for each image that can be compared across other iterations of the images with slightly different file names
-###
-squish <- function(input_df){
-  
-  id1_df_squish <- NA
-  for (i in 1:dim(input_df)[1]) {
-    id1_df_squish[i] <- paste0(input_df[i,], sep = "_", collapse = "")  
-  }
-  return(id1_df_squish)
-}
-
-###
-# Method: get_match_id 
-# Input: 
-# Output:
-# Description: simple function to combine rows of the df with info
-###
-get_match_id <- function(sub_inv,full_inv){
-  match_id <- NA
-  
-  for (i in 1: length(sub_inv) ){
-    pineapple <- grep(sub_inv[i],full_inv)
-    if (sum(pineapple) == 0) {print("not found")}
-    else match_id[i] <- pineapple
-  }
-  match_id <- match_id[complete.cases(match_id)]
-}
-
-# class_list <- dir(CLASS_ORIGIN)
-# 
-# 
-# prenums <- (strsplit(class_list,split = "classifier"))
-# 
-# prenums2 <- unlist(lapply(prenums, function(x) x[2]))
-# 
-# prenums3 <- lapply(strsplit(prenums2, split = ".model"), function(x) x[1])
-# 
-# nums <- as.numeric(unlist(prenums3))
-# 
-# 
-# 
-# ##this looks a mess, but it just moves back a folder from the CLASS_ORIGIN
-# ORIGIN <- paste(c(((strsplit(CLASS_ORIGIN, split = "/")[[1]][-length(strsplit(CLASS_ORIGIN, split = "/")[[1]])])), ""),collapse = "/")
-# 
-# 
-# 
-# OUTPUT_count <- paste(c(ORIGIN, "counted/"), collapse = "")
-# dir(OUTPUT_count)
-# 
+#Inputs: genotypes file, hand count results file from Cout Roi, results of The Count.IJM in each classifier folder 
+#Outputs: csv table with accuracy measurements for each classifier
 
 
 # Start of main
 
-# Remove results file if it already exists #**** need to change in long term
-unlink('Data/Validation_files/Weka_Output_Counted/All_classifier_comparison_inc_missing_8_11.csv')
-
-# Input the genotype data as .txt file
-geno_file <- scan(file="Data/genotype.txt", what='character')
-
+# Input the genotype data as .csv file
+geno_file <- read.csv("Data/genotype.csv")
 
 # File output location
 OUTPUT_count <- "Data/Validation_files/Weka_Output_Counted/"
 
 class_list <- dir(OUTPUT_count)
-#setwd("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS")
 
 ############################## now we have binary projected images to work with and need to compare to roi for each classifier
-your_boat <- NA
 
+#initialize variables
+row_row <- NA #holds row of accuracy values for each classifier one at a time
+your_boat <- NA #holds all accuracy values for classifiers
+count_h <- NA# holds hand count number per image
 
 
 
 ###################now need to proces the results files
 
 
-#iterate through results folders, will save final output within
+#iterate through the counted classifier folders folders, will save final output within each folder
 #setting working dir, needs to contain all counted output folders
 
-### adding in the results of the hand_count_from_roi.ijm, this will not change by folder, and is generated manually by saving results in Imagej from Count ROI
-#hand_ini <- read.csv("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/Data/Corrected_files/Results/Results_hand_roi_8_3_2021.csv")
-hand_ini <- read.csv("Data/Validation_files/Results/Results_hand_roi_8_3_2021.csv")
 
 ##processing hand count roi to get count per image
-lv_h <- levels(as.factor(hand_ini$Label))
 
-count_h <- NA
+### adding in the results of the hand_count_from_roi.ijm, this will not change by folder, and is generated manually by saving results in Imagej from Count ROI
+hand_ini <- read.csv("Data/Validation_files/Results/Results_hand_roi_8_3_2021.csv")
+
+lv_h <- levels(as.factor(hand_ini$Label))
 for (i in 1:length(lv_h)){
   count_h[i]<- sum(hand_ini$Label == lv_h[i])
   
@@ -182,25 +47,23 @@ for (i in 1:length(lv_h)){
 hand_final <- data.frame(cbind(lv_h, count_h))
 hand_final$count_h <- as.numeric(hand_final$count_h)
 
-
+#location of folders holding The Count output
 counted_folder_dir <- OUTPUT_count
-#setwd(counted_folder_dir)
 
+#iterate through each classifier 
 for (f in 1:length(class_list)){
   class_res_loc <- paste(counted_folder_dir,dir(OUTPUT_count)[f],"/Results.csv",sep = "")
   class_results <- read.csv(class_res_loc)
   class <- dir(OUTPUT_count)[f]
   
   ##if else loop for determining true positive, false positive and false negative cell counts
-  
   ##from levels present in the classifier results output, this should be the same each time, BUT IT WoNT BE IF ONE IMAGE HAS NO CELL OBJECtS
   #need to go into the counted folder and pull out all image names, meaning ignorming the Restuls.csv files. images from tru_count with be .png
   folder_loc <- paste(counted_folder_dir,"/",dir(OUTPUT_count)[f], collapse = "", sep = "")
   files <- list.files(path =  folder_loc, pattern = "\\.png$")
   
   img_names <- files
-  #img_names <- levels(as.factor(class_results$Label))
-  
+
   #initialize data frame
   final_blah <- data.frame(name = NA, tp = NA, fp = NA, fn= NA)
   
@@ -293,20 +156,8 @@ for (f in 1:length(class_list)){
   #writes out the final file to save the output
   write.csv(final_blah, file_out_name )
   
-  # #need to add geno again
-  # #going to do automatically this time
-  # a <- trim_names(final_blah$name)
-  # b <- sep_slidebook(a)
-  # c <- squish(b)
-  # length(c)
-  # d <- cbind(final_blah$name,c,b) ##specify: original file names, info columns, squished ID
-  # colnames(d) <- c("file_name", "img_ID", "a_num","S_num", "F_num")
-  # d <- data.frame(d)
-  # 
-  # Why is this saved as a string theo?
-  #geno <- c("gp", "gp", "gp", "wt", "gp", "gp", "wt", "wt", "wt", "wt")
   geno <- geno_file
-  final_blah$geno <- geno
+  final_blah$geno <- geno[,1]
   final_blah$geno <- as.factor(final_blah$geno)
   
   #####this makes the table comparing all classifiers
@@ -322,6 +173,11 @@ for (f in 1:length(class_list)){
   final_blah$reca2 <- reca2
   final_blah$F1_2 <-  F1_2
   
+  ##t test on geno, only works with 2 geno
+  if(length(levels(as.factor(geno))) > 2){
+    print("automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
+  }
+    levels(as.factor(geno))
   
   p_g_tt <- t.test(final_blah$prec2 ~ final_blah$geno)
   p_g_tt_p <- p_g_tt$p.value

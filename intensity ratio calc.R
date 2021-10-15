@@ -97,6 +97,23 @@ TukeyHSD(a)
 
 
 
+###looking at unprocessed eph aroudn dapi and total
+
+##total
+datueph_tot <- read.csv("F:/primary microglia Jeff images/6-19-2021 - pHMC Staining plate 7 Ephrin-b1/Results eph unprocessed.csv")
 
 
+
+
+boxplot(datueph_tot$Mean ~ dateph$cond)
+
+
+stripchart(datueph_tot$Mean ~ dateph$cond, vertical=TRUE,method="jitter", add=T, col = 2, pch = 19)
+
+
+##running two way anova
+summary(aov(datueph_tot$Mean ~ dateph$cond))
+
+a <- aov(dateph$mode.ratio.inside.outsided ~ dateph$cond)
+TukeyHSD(a)
 
