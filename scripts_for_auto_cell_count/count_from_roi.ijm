@@ -3,6 +3,7 @@
 
 
 //prompt window to select input folder
+//TODO: change to relative paths
 input = getDirectory("Choose source directory");
 output = getDirectory("Choose output directory (Not the same as the source directory)");
 
