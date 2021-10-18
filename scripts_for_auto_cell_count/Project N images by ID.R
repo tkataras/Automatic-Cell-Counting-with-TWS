@@ -11,7 +11,7 @@
 # Output: bisected file names based on split
 # Description:useful if information in automatic file name from microscope is repetitive
 ###
-trim_names <- function(file_names, split = " - ", half = "front"){
+trim_names <- function(file_names, split = "_XY", half = "front"){
   id1 <- file_names
   sid1 <- strsplit(id1, split)
   
@@ -127,7 +127,7 @@ out_dir_list <- dir(id_for_out_dir)
 
 id1 <- file_list
 
-newsid1 <- trim_names(id1)
+newsid1 <- trim_names(id1, half="back")
 
 
 id1_df_sep <- sep_slidebook(x = newsid1, sep = c("-"))
@@ -167,7 +167,7 @@ for (j in 1:length(in_dir_list)){
   
   
   
-  for (i in 1: length(u_img)){
+  for (i in 1:length(u_img)){
     ##identify images belonging to each unique image ID
     all_current_ID <- grep(u_img[i],big_df$img_ID)
     this_group <- img_file_names[all_current_ID]

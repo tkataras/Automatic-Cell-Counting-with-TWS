@@ -11,10 +11,10 @@
 # Start of main
 
 # Input the genotype data as .csv file
-geno_file <- read.csv("Data/genotype.csv")
+geno_file <- read.csv("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/tyler_test_area/genotype.csv")
 
 # File output location
-OUTPUT_count <- "Data/Validation_files/Weka_Output_Counted/"
+OUTPUT_count <- "C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/tyler_test_area/Weka_Output_Counted/"
 
 class_list <- dir(OUTPUT_count)
 
@@ -37,7 +37,7 @@ count_h <- NA# holds hand count number per image
 ##processing hand count roi to get count per image
 
 ### adding in the results of the hand_count_from_roi.ijm, this will not change by folder, and is generated manually by saving results in Imagej from Count ROI
-hand_ini <- read.csv("Data/Validation_files/Results/Results_hand_roi_8_3_2021.csv")
+hand_ini <- read.csv("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/tyler_test_area/Results/roi_counts.csv")
 
 lv_h <- levels(as.factor(hand_ini$Label))
 for (i in 1:length(lv_h)){
@@ -80,7 +80,7 @@ for (f in 1:length(class_list)){
     current_img <- paste(current_img_plus_png_split[1:new_length], sep = "", collapse = "")
     # 
     dftc<- NA
-    dftc <- class_results[class_results$Label == current_img,]  ###pulls out just the rows in results with the image name of the current image
+    dftc <- class_results[class_results$Label == current_img_plus_png,]  ###pulls out just the rows in results with the image name of the current image
     dftc
     
     if (dim(dftc)[1] == 0){

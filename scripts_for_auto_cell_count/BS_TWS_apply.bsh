@@ -1,3 +1,5 @@
+//TODO: Set the input and output dirs as relative paths since should be consistent in the end
+
 #@ File(label="Input directory", description="Select the directory with input images", style="directory") inputDir
 
 

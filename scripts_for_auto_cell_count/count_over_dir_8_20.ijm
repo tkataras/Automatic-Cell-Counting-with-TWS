@@ -7,6 +7,7 @@
 setBatchMode(true); 
 
 //set input and output directories locations
+//TODO: Hard set the path to source and output directories
 input_dirs = getDirectory("Choose source directories");
 output_dirs = getDirectory("_Choose output directories");
 
