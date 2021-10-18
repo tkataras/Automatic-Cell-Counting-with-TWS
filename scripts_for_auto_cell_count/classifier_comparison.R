@@ -11,10 +11,10 @@
 # Start of main
 
 # Input the genotype data as .csv file
-geno_file <- read.csv("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/tyler_test_area/genotype.csv")
+geno_file <- read.csv("../training_area/genotype.csv")
 
 # File output location
-OUTPUT_count <- "C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/tyler_test_area/Weka_Output_Counted/"
+OUTPUT_count <- "../training_area/Weka_Output_Counted/"
 
 class_list <- dir(OUTPUT_count)
 
@@ -37,7 +37,7 @@ count_h <- NA# holds hand count number per image
 ##processing hand count roi to get count per image
 
 ### adding in the results of the hand_count_from_roi.ijm, this will not change by folder, and is generated manually by saving results in Imagej from Count ROI
-hand_ini <- read.csv("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/tyler_test_area/Results/roi_counts.csv")
+hand_ini <- read.csv("../training_area/Results/roi_counts.csv")
 
 lv_h <- levels(as.factor(hand_ini$Label))
 for (i in 1:length(lv_h)){

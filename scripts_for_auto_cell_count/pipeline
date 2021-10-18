@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "hi"
+Rscript classifier_comparison.r
