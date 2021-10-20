@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 ###
-# Author: Theo
-# Date 8/26/2021
+# Author: Theo, Tyler
+# Date 10/20/2021
 # This file is the pipeline for comparing classifier accuracy on validation data
 #
 #Inputs: genotypes file, hand count results file from Cout Roi, results of The Count.IJM in each classifier folder 
@@ -11,10 +11,11 @@
 # Start of main
 
 # Input the genotype data as .csv file
-geno_file <- read.csv("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/tyler_test_area/genotype.csv")
+geno_file <- read.csv("../training_area/genotype.csv")
 
 # File output location
-OUTPUT_count <- "C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/tyler_test_area/Weka_Output_Counted/"
+OUTPUT_count <- "../training_area/Weka_Output_Counted/"
+result_out <- "../training_area/Results/"
 
 class_list <- dir(OUTPUT_count)
 
@@ -37,7 +38,7 @@ count_h <- NA# holds hand count number per image
 ##processing hand count roi to get count per image
 
 ### adding in the results of the hand_count_from_roi.ijm, this will not change by folder, and is generated manually by saving results in Imagej from Count ROI
-hand_ini <- read.csv("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/tyler_test_area/Results/roi_counts.csv")
+hand_ini <- read.csv("../training_area/Results/roi_counts.csv")
 
 lv_h <- levels(as.factor(hand_ini$Label))
 for (i in 1:length(lv_h)){
@@ -157,6 +158,7 @@ for (f in 1:length(class_list)){
   write.csv(final_blah, file_out_name )
   
   geno <- geno_file
+
   final_blah$geno <- geno[,1]
   final_blah$geno <- as.factor(final_blah$geno)
   
@@ -174,10 +176,11 @@ for (f in 1:length(class_list)){
   final_blah$F1_2 <-  F1_2
   
   ##t test on geno, only works with 2 geno
-  if(length(levels(as.factor(geno))) > 2){
+  if(length(levels(as.factor(geno[,1]))) > 2){
     print("automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
   }
-    levels(as.factor(geno))
+
+  levels(as.factor(geno[,1]))
   
   p_g_tt <- t.test(final_blah$prec2 ~ final_blah$geno)
   p_g_tt_p <- p_g_tt$p.value
@@ -211,6 +214,6 @@ date2 <- gsub("/", "_", date)
 
 out_name <- paste0("All_classifier_Comparison_", date2, ".csv") 
 
-write.csv(your_boat, paste(counted_folder_dir,out_name, sep = ""))
+write.csv(your_boat, paste(result_out,out_name, sep = ""))
 
 

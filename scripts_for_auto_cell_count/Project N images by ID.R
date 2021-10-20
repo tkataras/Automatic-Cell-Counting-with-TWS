@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 ###
 # Author: Theo, Tyler Jang
-# Date 8/26/2021
+# Date 10/20/2021
 # This file is the pipeline.....
 #
 
@@ -110,13 +110,13 @@ library("OpenImageR")
 
 
 ###all the file locations
-id_for_in_dir <-"C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/tyler_test_area/Weka_Output_Thresholded/"
+id_for_in_dir <-"../training_area/Weka_Output_Thresholded/"
 in_dir_list <- dir(id_for_in_dir)
 
 file_list <- dir(paste(id_for_in_dir,"/", in_dir_list[1],"/", sep = ""))
 
 
-id_for_out_dir <-"C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/tyler_test_area/Weka_Output_Projected/"
+id_for_out_dir <-"../training_area/Weka_Output_Projected/"
 
 out_dir_list <- dir(id_for_out_dir)
 
@@ -154,14 +154,10 @@ length(u_img)
 dim(big_df)
 
 
-
+# Project the n images in each classifier
 for (j in 1:length(in_dir_list)){
-  #setwd(paste(id_for_dir,"/",nm,j, sep = ""))
-  setwd(paste(id_for_in_dir,"/",in_dir_list[j], sep = ""))
-  
-  
-  getwd()
-  img_file_names <- list.files()
+  rel_path = paste0(id_for_in_dir, in_dir_list[j])
+  img_file_names <- list.files(path = rel_path)
   
   out_loc <- out_dir_list[j]
   
@@ -177,7 +173,7 @@ for (j in 1:length(in_dir_list)){
     projected = 0
     max_len = length(this_group)
     for (k in 1:max_len) {
-      projected = projected + readImage(as.character(this_group[k]))
+      projected = projected + readImage(paste0(rel_path, "/", as.character(this_group[k])))
     }
     projected[projected >255] = 255
     
@@ -195,10 +191,6 @@ for (j in 1:length(in_dir_list)){
     
     file_out_loc <- paste(paste(id_for_out_dir,out_dir_list[j], sep = ""),"/",this_group[1], sep = "")
     writeImage(projected,file_out_loc)
-    
-    # }else (print("we have a problem, ", as.character(this_group[1])," had neither 2 nor 3 images"))
-    # 
-    
   }
 }
 

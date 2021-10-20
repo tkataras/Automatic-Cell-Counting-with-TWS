@@ -1,17 +1,27 @@
 //TODO: Set the input and output dirs as relative paths since should be consistent in the end
+#@ File(label="Source directory", description="Select the directory with the source of the script", style="directory") srcDir
+//#@ File(label="Output directories", description="Select the output directories", style="directory") outputDirs
+//#@ File(label="Weka models", description="Select the folder of Weka models to apply", style="directory") modelsDir
+//#@ String(label="Result mode",choices={"Labels","Probabilities"}) resultMode
+//#@ Integer(label="Number of tiles in X:", description="Number of image subdivisions in the X direction", value=3) xTiles
+//#@ Integer(label="Number of tiles in Y:", description="Number of image subdivisions in the Y direction", value=3) yTiles
+//#@ Integer(label="Number of tiles in Z (set to 0 for 2D processing):", description="Number of image subdivisions in the Z direction (ignored when using 2D images)", value=0) zTiles
 
-#@ File(label="Input directory", description="Select the directory with input images", style="directory") inputDir
+//TODO: Set the input and output dirs as relative paths since should be consistent in the end
+bsh.cwd=srcDir;
+print(bsh.cwd);
+File inputDir=new File("../training_area/Validation_data");
+File outputDirs=new File("../training_area/Weka_Output");
+File modelsDir=new File("../training_area/Classifiers");
+print(modelsDir);
+x = pathToFile("../training_area/Classifiers");
+print(x);
+// Get to the current directory with the script
+resultMode="Labels";
+xTiles=3;
+yTiles=3;
+zTiles=0;
 
-
-#@ File(label="Output directories", description="Select the output directories", style="directory") outputDirs
-#@ File(label="Weka models", description="Select the folder of Weka models to apply", style="directory") modelsDir
-
-
-#@ String(label="Result mode",choices={"Labels","Probabilities"}) resultMode
-#@ Integer(label="Number of tiles in X:", description="Number of image subdivisions in the X direction", value=3) xTiles
-#@ Integer(label="Number of tiles in Y:", description="Number of image subdivisions in the Y direction", value=3) yTiles
-#@ Integer(label="Number of tiles in Z (set to 0 for 2D processing):", description="Number of image subdivisions in the Z direction (ignored when using 2D images)", value=0) zTiles
- 
 import trainableSegmentation.WekaSegmentation;
 import trainableSegmentation.utils.Utils;
 import ij.io.FileSaver;
@@ -27,7 +37,9 @@ getProbs = resultMode.equals( "Probabilities" );
 
 ///iterate through classifiers
 listOfMod = modelsDir.listFiles();
+print("hi");
 print(listOfMod);
+print("hi");
 //iterate through output folders
 listOfOut = outputDirs.listFiles();
 //print(listOfOut);
