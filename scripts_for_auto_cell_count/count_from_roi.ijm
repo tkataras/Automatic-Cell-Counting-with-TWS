@@ -3,9 +3,12 @@
 
 
 //prompt window to select input folder
-//TODO: change to relative paths
+//TODO: change to relative paths https://stackoverflow.com/questions/40349070/imagej-macro-and-plugin-paths
+print(getInfo("macro.filepath"));
 input = getDirectory("Choose source directory");
 output = getDirectory("Choose output directory (Not the same as the source directory)");
+//output = "../training_area/Results"
+print(output);
 
 //CLOSES old Results and Summary to avoid mixing with new results
 run("Clear Results"); 

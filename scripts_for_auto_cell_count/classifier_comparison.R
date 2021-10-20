@@ -4,9 +4,9 @@
 # Date 10/20/2021
 # This file is the pipeline for comparing classifier accuracy on validation data
 #
-#Inputs: genotypes file, hand count results file from Cout Roi, results of The Count.IJM in each classifier folder 
-#Outputs: csv table with accuracy measurements for each classifier
-
+# Inputs: genotype file, hand count results file from Cout Roi, results of The Count.IJM in each classifier folder 
+# Outputs: csv table with accuracy measurements for each classifier
+###
 
 # Start of main
 
