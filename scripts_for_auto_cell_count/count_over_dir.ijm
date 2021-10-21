@@ -1,3 +1,8 @@
+/*
+ * Author: Theo, Tyler
+ * Date: 10/21/2021
+ * Description:
+ */
 macro "The -- True -- Count" {
 	//Overview: uses hand placed markers and weka output images from each classifier to begin accuracy calculation
 	//Input: Binary images, hand placed markes in roi files, one file for each image
