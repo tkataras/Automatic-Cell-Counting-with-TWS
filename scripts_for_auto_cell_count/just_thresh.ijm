@@ -6,7 +6,7 @@
 setBatchMode(true); 
 
 
-input_dirs = getDirectory("Choose source directories");
+input_dirs = getDirectory("Choose source directory (Weka_Output)");
 //output_dirs = getDirectory("_Choose output directories");
 output_dirs = input_dirs + "../Weka_Output_Thresholded/";
 
