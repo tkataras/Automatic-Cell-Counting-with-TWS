@@ -8,13 +8,12 @@
 
 //prompt window to select input folder
 //TODO: change to relative paths https://stackoverflow.com/questions/40349070/imagej-macro-and-plugin-paths
-print(getInfo("macro.filepath"));
-print(getDir("home"));
 // Validation Hand Counts
 input = getDirectory("Choose source directory (Validation Hand Counts)");
 
 // Results
-output = input + "../Results"
+output = input + "../Results";
+
 //output = getDirectory("Choose output directory (Not the same as the source directory)");
 //output = "../training_area/Results"
 
