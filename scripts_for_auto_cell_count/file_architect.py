@@ -2,7 +2,7 @@
 """
 Created on Fri Oct 22 09:25:36 2021
 
-@author: Theo
+@author: Theo, Tyler
 File architect: creates the correct number of classifier folders in output folders
 """
 
@@ -10,7 +10,7 @@ import os
 
 #set the location of the source folder where the folder is installed. 
 #CLASS_ORIGIN =  "../tyler_test_area/Classifiers/"
-SOURCE = "C:/Users/User/Downloads/testingnow/"
+SOURCE = "../training_area/"
 
 #locate classifiers
 CLASS_ORIGIN =  SOURCE + "Classifiers/"
