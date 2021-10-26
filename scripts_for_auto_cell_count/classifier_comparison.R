@@ -28,7 +28,7 @@ count_h <- NA# holds hand count number per image
 
 
 
-###################now need to proces the results files
+###################now need to process the results files
 
 
 #iterate through the counted classifier folders folders, will save final output within each folder
@@ -115,8 +115,7 @@ for (f in 1:length(class_list)){
       fn <- fn + missed
       name <- img_names[i]
       this_row <- cbind(name, tp, fp, fn) 
-      
-      
+
     } #this is the closing bracket for if there were no cell objects so dftc is empty
     
     final_blah <-rbind(final_blah, this_row)

@@ -15,8 +15,9 @@ print("hi");
 //#@ Integer(label="Number of tiles in Z (set to 0 for 2D processing):", description="Number of image subdivisions in the Z direction (ignored when using 2D images)", value=0) zTiles
 
 // Set the working directory to the directory with the script
-bsh.cwd = srcDir;
 
+//srcDir = "C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/scripts_for_auto_cell_count";
+bsh.cwd = srcDir;
 inputDir = bsh.cwd + "/../training_area/Validation_data/";
 outputDirs = bsh.cwd + "/../training_area/Weka_Output";
 modelsDir = bsh.cwd + "/../training_area/Classifiers";
