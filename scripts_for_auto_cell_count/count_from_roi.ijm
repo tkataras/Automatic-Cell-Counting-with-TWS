@@ -9,8 +9,9 @@
 //prompt window to select input folder
 //TODO: change to relative paths https://stackoverflow.com/questions/40349070/imagej-macro-and-plugin-paths
 // Validation Hand Counts
-input = getDirectory("Choose source directory (Validation Hand Counts)");
-
+//input = getDirectory("Choose source directory (Validation Hand Counts)");
+input = getArgument();
+input = input + "../training_area/Validation_Hand_Counts/";
 // Results
 output = input + "../Results";
 

@@ -7,14 +7,14 @@ exec("python", input + "file_architect.py");
 //TODO figure out bean shell calling
 //runMacro(input + "BS_TWS_apply.bsh", input);
 
-//runMacro(input + "just_thresh.ijm");
-//runMacro(input + "count_from_roi.ijm");
-//runMacro(input + "count_over_dir.ijm");
+runMacro(input + "just_thresh.ijm");
+runMacro(input + "count_from_roi.ijm");
+runMacro(input + "count_over_dir.ijm", input);
 y = input + "test.py";
 z = input + "classifier_comparison.py";
 
 print(y);
 // Next run classifier comparison
-exec("python", y);
+//exec("python", y);
 exec("python", z, input);
 print("finished pipeline");

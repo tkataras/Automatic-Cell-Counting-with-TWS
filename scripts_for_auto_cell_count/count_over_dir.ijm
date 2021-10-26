@@ -14,8 +14,11 @@ macro "The -- True -- Count" {
 	//set input and output directories locations
 	//TODO: Hard set the path to source and output directories 
 	// Projected
-	input_dirs = getDirectory("Choose source directories (Weka Output Projected)");
-	
+	input_dirs = getArgument();
+	//input_dirs = getDirectory("Choose source directories (Weka Output Projected)");
+
+	input_dirs = input_dirs + "../training_area/Weka_Output_Projected/";
+	print(input_dirs);
 	// Counted
 	//output_dirs = getDirectory("_Choose output directories");
 	output_dirs = input_dirs + "../Weka_Output_Counted/";
