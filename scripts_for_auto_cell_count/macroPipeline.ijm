@@ -1,16 +1,20 @@
 input = getDirectory("Choose source directory of macro");
 print(input);
+File.setDefaultDir(input);
+print(File.getDefaultDir);
 exec("python", input + "file_architect.py");
 
 //TODO figure out bean shell calling
 //runMacro(input + "BS_TWS_apply.bsh", input);
 
-runMacro(input + "just_thresh.ijm");
-runMacro(input + "count_from_roi.ijm");
-runMacro(input + "count_over_dir.ijm");
-y = input + "pipeline.sh";
-z = input + "test.py";
+//runMacro(input + "just_thresh.ijm");
+//runMacro(input + "count_from_roi.ijm");
+//runMacro(input + "count_over_dir.ijm");
+y = input + "test.py";
+z = input + "classifier_comparison.py";
 
 print(y);
 // Next run classifier comparison
-exec("python", z);
+exec("python", y);
+exec("python", z, input);
+print("finished pipeline");

@@ -1,7 +1,17 @@
 #!/usr/bin/python
+print("Enter classifier comparison")
 import pandas as pd
 import numpy as np
 import os
+import sys
+
+currDir = os.getcwd()
+def setDir(arg1):
+    currDir = arg1
+    os.chdir(currDir)
+print("Read imports")
+
+setDir(sys.argv[1])
 
 # Input the genotype data as a .csv file
 geno_file = "../training_area/genotype.csv"
@@ -10,7 +20,11 @@ geno_file = "../training_area/genotype.csv"
 OUTPUT_count = "../training_area/Weka_Output_Counted/"
 result_out = "../training_area/Results/"
 
+#print(os.listdir("../"))
+print("before os call")
+print(os.getcwd())
 class_list = os.listdir(OUTPUT_count)
+print("after os call")
 
 ############################## now we have binary projected images to work with and need to compare to roi for each classifier
 
@@ -44,7 +58,7 @@ hand_final = count_h
 #location of folders holding The Count output
 counted_folder_dir = OUTPUT_count
 
-
+print("Got to start of iterating over classifiers")
 #iterate through each classifier 
 for f in range(0, len(class_list)):
     class_res_loc = counted_folder_dir + os.listdir(OUTPUT_count)[f] + "/Results.csv"
