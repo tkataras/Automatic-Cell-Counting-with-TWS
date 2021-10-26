@@ -1,12 +1,14 @@
 #!/usr/bin/python
 ###
 # Author: Tyler Jang, Theo Kataras
-# Date 10/25/2021
+# Date 10/26/2021
 # This file is the pipeline for comparing classifier accuracy on validation data
 #
 # Inputs: genotype file, hand count results file from Cout Roi, results of The Count.IJM in each classifier folder 
 # Outputs: csv table with accuracy measurements for each classifier
 ###
+from typing import final
+from numpy.lib.function_base import median
 import pandas as pd
 import numpy as np
 import os
@@ -121,15 +123,9 @@ for f in range(0, len(class_list)):
     #final_blah = final_blah.append(this_row)
     
     # Need to calculate precision and recall
-    #print(final_blah)
-
     tot_tp = sum(final_blah["tp"])
     tot_fp = sum(final_blah["fp"])
     tot_fn = sum(final_blah["fn"])
-    
-    #print(tot_tp)
-    #print(tot_fp)
-    #print(tot_fn)
 
     # precision is tp/(tp + fp)
     prec = tot_tp/(tot_tp + tot_fp)
@@ -169,6 +165,7 @@ for f in range(0, len(class_list)):
             return numer/denom
         except ZeroDivisionError:
             return 0
+    # TODO need to treat this like a list
     F1_2 = 2*(catchDivideByZero(prec2*reca2, prec2 + reca2)) 
 
     # Insert prec2, reca2, and F1_2 into final blah
@@ -176,16 +173,26 @@ for f in range(0, len(class_list)):
     final_blah["reca2"] = reca2
     final_blah["F1_2"] = F1_2
 
-    print(final_blah)
-
     if len(lvl_geno) > 2:
         print("automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
 
-    # TODO T test calc
-    #p_g_tt <- t.test(final_blah$prec2 ~ final_blah$geno)
-    #p_g_tt_p <- p_g_tt$p.value
+    # TODO Welch 2 Sample T test calc  
+    # TODO Given that this can be a max of 2 levels I can just select the data relavent
+    # TODO however gp and wt will be variable so I need to solve that problem
+    groupOne = final_blah.query('geno == "gp"')
+    groupTwo = final_blah.query('geno == "wt"')
     
-    #p_g_tt = scipy.stats.ttest_ind(final_blah["prec2"], final_blah["geno"])
+    p_g_tt = scipy.stats.ttest_ind(groupOne["prec2"], groupTwo["prec2"], equal_var=False)
+    r_g_tt = scipy.stats.ttest_ind(groupOne["reca2"], groupTwo["reca2"], equal_var=False)
+    F1_g_tt = scipy.stats.ttest_ind(groupOne["F1_2"], groupTwo["F1_2"], equal_var=False)
+    final_blah["p_g_tt_p"] = p_g_tt[1]
+    final_blah["r_g_tt_p"] = r_g_tt[1]
+    final_blah["F1_g_tt_p"] = F1_g_tt[1]
+
+    # Get means of F1_2
+    final_blah["mean_F1_gp"] = sum(groupOne["F1_2"])/len(groupOne["F1_2"])
+    final_blah["mean_F1_wt"] = sum(groupTwo["F1_2"])/len(groupTwo["F1_2"])
+
 currTime = time.localtime(time.time())
 print(currTime)
 #generating a unique file name based on time and date
@@ -195,5 +202,3 @@ out_name = "All_classifier_Comparison_" + date + ".csv"
 
 #write.csv(your_boat, paste(result_out,out_name, sep = ""))
 final_blah.to_csv(result_out + out_name)
-
-print("end")
