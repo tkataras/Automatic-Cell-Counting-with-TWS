@@ -160,8 +160,6 @@ for (j in 1:length(in_dir_list)){
   
   out_loc <- out_dir_list[j]
   
-  
-  
   for (i in 1:length(u_img)){
     ##identify images belonging to each unique image ID
     all_current_ID <- grep(u_img[i],big_df$img_ID)

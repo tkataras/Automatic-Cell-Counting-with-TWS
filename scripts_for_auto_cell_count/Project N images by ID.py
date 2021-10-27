@@ -8,6 +8,8 @@
 import os
 import sys
 import pandas as pd
+import numpy as np
+import imageio
 
 # Method: trim_names 
 # Input: file names
@@ -74,6 +76,12 @@ def sep_slidebook(file_names, delim):
         newsid1_fnum3.append(newsid1_fnum1[index] + newsid1_fnum2[index])
 
     # Make a dataframe
+    id1_df = pd.DataFrame(columns=["newsid1_anum", "newsid1_snum", "newsid1_fnum3"])
+    for index in range(0, len(newsid1_anum)):
+        newRow = pd.DataFrame([[newsid1_anum[index], newsid1_snum[index], newsid1_fnum3[index]]], columns=["newsid1_anum", "newsid1_snum", "newsid1_fnum3"])
+        id1_df = id1_df.append(newRow)
+    return id1_df
+
 ###
 # Method: squish 
 # Input: data from of grouping variables
@@ -81,8 +89,20 @@ def sep_slidebook(file_names, delim):
 # Description: creates one grouping object for each image that can be compared across other iterations of the images with slightly different file names
 ###
 def squish(input_df):
-    print("squish hi")
+    id1_df_squish = []
+    m = input_df.to_numpy()
+    for i in range(0, input_df.shape[0]):
+        currStr = ""
+        for j in range(0, input_df.shape[1]):
+            currStr = currStr + m[i][j] + "-"
+        id1_df_squish.append(currStr)
 
+    # Convert list to dataframe
+    id1_df_squish_df = pd.DataFrame(columns=["id1_df_squish"])
+    for index in range(0, len(id1_df_squish)):
+        newRow = pd.DataFrame([[id1_df_squish[index]]], columns=["id1_df_squish"])
+        id1_df_squish_df = id1_df_squish_df.append(newRow)
+    return id1_df_squish_df
 
 # Start of main
 # Method to change working directory from inputted ImageJ Macro
@@ -101,12 +121,50 @@ in_dir_list = os.listdir(id_for_in_dir)
 file_list = os.listdir(id_for_in_dir + "/" + in_dir_list[1] +"/")
 out_dir_list = os.listdir(id_for_out_dir)
 
-
-##getting images names, can pick any folder with all images in question to do this
+# Getting images names, can pick any folder with all images in question to do this
 id1 = file_list
-
 # TODO why is it front in R?
-newsid1 = trim_names(id1, half="back")
+#newsid1 = trim_names(id1, half="back")
+newsid1 = id1
 id1_df_sep = sep_slidebook(newsid1, "-")
-#id1_df_squish <- squish(input_df = id1_df_sep)
+id1_df_squish = squish(id1_df_sep)
 
+# Specify: original file names, info columns, squished ID
+newsid1_df = pd.DataFrame(columns=["newsid1"])
+for index in range(0, len(newsid1)):
+        newRow = pd.DataFrame([[newsid1[index]]], columns=["newsid1"])
+        newsid1_df = newsid1_df.append(newRow)
+# This df gives us access to varibles based on the images in several forms
+big_df = pd.concat([newsid1_df, id1_df_squish], axis=1)
+big_df = pd.concat([big_df, id1_df_sep], axis=1)
+big_df.columns = ["File_name", "Img_ID", "A_num", "S_num", "F_num"]
+
+# Now need to gather and project all items with matching img_ID 
+# Need to start working in directory that holds all image folders
+u_img = np.unique(big_df["Img_ID"])
+
+# Project the n images in each classifier
+for image in range(0, len(in_dir_list)):
+    rel_path = id_for_in_dir + in_dir_list[image]
+    img_file_names = os.listdir(rel_path)
+    out_loc = out_dir_list[image]
+
+    for id in range(0, len(u_img)):
+        # Identify images belonging to each unique image ID
+        all_current_ID = big_df.query('Img_ID == @u_img[@id]')
+
+        #this_group = []
+        # Find the full image name from the list
+        #for x in range(0, len(all_current_ID["File_name"])):
+        #    for img in img_file_names:
+        #        if img.find(list(all_current_ID["File_name"])[x]) != -1:
+        #            this_group.append(img)
+        
+        # Sum projected as equal to the number of layers in the image
+        projected = 0
+        maxLen = all_current_ID.shape[0]
+        for k in range(0, maxLen):
+            path = rel_path + "/" + list(all_current_ID["File_name"])[k]
+            projected = projected + imageio.imread(path)
+        file_out_loc = id_for_out_dir + out_dir_list[image] + "/" + list(all_current_ID["File_name"])[0]
+        imageio.imwrite(file_out_loc, projected)
