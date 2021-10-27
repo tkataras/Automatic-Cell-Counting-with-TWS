@@ -12,12 +12,12 @@ macro "The -- True -- Count" {
 	setBatchMode(true); 
 	
 	//set input and output directories locations
-	//TODO: Hard set the path to source and output directories 
-	// Projected
-	input_dirs = getDirectory("Choose source directories (Weka Output Projected)");
 	
-	// Counted
-	//output_dirs = getDirectory("_Choose output directories");
+	// Weka Output Projected
+	input_dirs = getArgument();
+	input_dirs = input_dirs + "../training_area/Weka_Output_Projected/";
+	
+	// Weka Output Counted
 	output_dirs = input_dirs + "../Weka_Output_Counted/";
 	
 	

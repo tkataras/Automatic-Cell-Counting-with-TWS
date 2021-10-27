@@ -5,8 +5,10 @@
  */
 setBatchMode(true); 
 
+// Weka Output
+input_dirs = getArgument();
+input_dirs = input_dirs + "../training_area/Weka_Output/";
 
-input_dirs = getDirectory("Choose source directory (Weka_Output)");
 //output_dirs = getDirectory("_Choose output directories");
 output_dirs = input_dirs + "../Weka_Output_Thresholded/";
 

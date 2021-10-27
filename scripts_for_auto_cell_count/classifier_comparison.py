@@ -1,9 +1,20 @@
 #!/usr/bin/python
+###
+# Author: Tyler Jang, Theo Kataras
+# Date 10/26/2021
+# This file is the pipeline for comparing classifier accuracy on validation data
+#
+# Inputs: genotype file, hand count results file from Cout Roi, results of The Count.IJM in each classifier folder 
+# Outputs: csv table with accuracy measurements for each classifier
+###
+from typing import final
+from numpy.lib.function_base import median
 import pandas as pd
 import numpy as np
 import os
 import sys
 import time
+import scipy.stats
 
 # Method to change working directory from inputted ImageJ Macro
 currDir = os.getcwd()
@@ -24,11 +35,9 @@ class_list = os.listdir(OUTPUT_count)
 ############################## now we have binary projected images to work with and need to compare to roi for each classifier
 
 #initialize variables
-#row_row = NA #holds row of accuracy values for each classifier one at a time
-#your_boat = NA #holds all accuracy values for classifiers
+#row_row = pd.DataFrame(columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp,mean_F1_wt", "p_g_tt_p", "r_g_tt_p", "class"]) #holds row of accuracy values for each classifier one at a time
+your_boat = pd.DataFrame(columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp", "mean_F1_wt", "p_g_tt_p", "r_g_tt_p", "class"]) #holds all accuracy values for classifiers
 #count_h <- NA # holds hand count number per image
-
-
 
 ###################now need to proces the results files
 
@@ -74,7 +83,6 @@ for f in range(0, len(class_list)):
 
     img_names = files
 
-    # TODO need to make a data frame
     final_blah = pd.DataFrame(columns=["name", "tp", "fp", "fn"])
 
     for image in range(0, len(img_names)):
@@ -83,7 +91,6 @@ for f in range(0, len(class_list)):
         dftc = class_results[class_results["Label"].isin([current_img_plus_png])]
         
         if dftc.size == 0:
-            # TODO convert this to working code
             name = img_names[i]
             tp = 0
             fp = 0
@@ -102,30 +109,23 @@ for f in range(0, len(class_list)):
                 else:
                     tp = tp + 1
                     fn = fn + autoCount - 1
-        print(fp)
-        print(tp)
+        
         #for each image add total number hand count - sum(dftc$points), the sum points must always be less than hand_final$count 
         ## dtfc$points only counts the markers that fall within cell objects, hand_final$counts is the sum of all points in total. 
         #when this is not true(eg there are negative values) check the image names of the hand count!!
         missed = count_h[lvl_h[image]] - sum(dftc["points"]) 
         fn = fn + missed
         name = img_names[image]
-        print(fn)
 
-        #TODO somehow make it equivalent
         this_row = pd.DataFrame([[name, tp, fp, fn]], columns=["name", "tp", "fp", "fn"])
         final_blah = final_blah.append(this_row)
+    # TODO I don't think this line of code should be here in the first place, it seems harmful
     #final_blah = final_blah.append(this_row)
-    ##need to calculate Precision and recall
-    print(final_blah)
-
+    
+    # Need to calculate precision and recall
     tot_tp = sum(final_blah["tp"])
     tot_fp = sum(final_blah["fp"])
     tot_fn = sum(final_blah["fn"])
-    
-    print(tot_tp)
-    print(tot_fp)
-    print(tot_fn)
 
     # precision is tp/(tp + fp)
     prec = tot_tp/(tot_tp + tot_fp)
@@ -136,47 +136,77 @@ for f in range(0, len(class_list)):
     print(curr_class + " percision = " +  str(prec))
     print(curr_class + " recall = " +  str(reca))
     print(curr_class + " F1 = " +  str(F1))
-
-      
     current_loc = counted_folder_dir + "/" + class_list[f]
     file_out_name = current_loc + "/" + curr_class + "_Final.csv"
     #writes out the final file to save the output
     final_blah.to_csv(file_out_name)
   
+    # Add genotypes to csv file
     geno = pd.read_csv(geno_file)
     lvl_geno = np.unique(geno)
-    print(lvl_geno)
+    genoList = []
+    for numRows in range(0, len(final_blah["name"])):
+        genoList.append(geno["geno"][numRows % 2])
+    final_blah["geno"] = genoList
+
 
     #####this makes the table comparing all classifiers
   
-  
-    # TODO F1_2 calculations
     #precision and recall per image
     prec2 = final_blah["tp"]/(final_blah["tp"] + final_blah["fp"])    
     reca2 = final_blah["tp"]/(final_blah["tp"] + final_blah["fn"])
-    #F1_2 = 2*(prec2*reca2/(prec2 + reca2))
-  
-    print(prec2)
-    print(reca2)
-    #print(F1_2)
+
+    # TODO This is throwing a divide by 0 error I want to ignore
+    # This is temp fix, but a negative * positive can still cause divide by 0
+    def catchDivideByZero(numer, denom):
+        try:
+            return numer/denom
+        except ZeroDivisionError:
+            return None
+    
+    # Calculate F1_2
+    F1_2 = []
+    for index in range(0, len(prec2)):
+        result = catchDivideByZero(list(prec2)[index] * list(reca2)[index], list(prec2)[index] + list(reca2)[index])
+        if result == None:
+            F1_2.append(None)
+        else:
+            F1_2.append(2 * result)
+    # Insert prec2, reca2, and F1_2 into final blah
+    final_blah["prec2"] = prec2
+    final_blah["reca2"] = reca2
+    final_blah["F1_2"] = F1_2
 
     if len(lvl_geno) > 2:
         print("automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
 
-    # TODO T test calc
-    #p_g_tt <- t.test(final_blah$prec2 ~ final_blah$geno)
-    #p_g_tt_p <- p_g_tt$p.value
+    # TODO Welch 2 Sample T test calc  
+    # TODO Given that this can be a max of 2 levels I can just select the data relavent
+    # TODO however gp and wt will be variable so I need to solve that problem
+    groupOne = final_blah.query('geno == "gp"')
+    groupTwo = final_blah.query('geno == "wt"')
 
-#format(Sys.time(),"%D")
+    p_g_tt = scipy.stats.ttest_ind(groupOne["prec2"], groupTwo["prec2"], equal_var=False, nan_policy="omit")
+    r_g_tt = scipy.stats.ttest_ind(groupOne["reca2"], groupTwo["reca2"], equal_var=False, nan_policy="omit")
+    F1_g_tt = scipy.stats.ttest_ind(groupOne["F1_2"], groupTwo["F1_2"], equal_var=False, nan_policy="omit")
+    p_g_tt_p = p_g_tt[1]
+    r_g_tt_p = r_g_tt[1]
+    F1_g_tt_p = F1_g_tt[1]
+
+    # TODO why is this called F1 not F1_2, it's confusing me
+    # Get means of F1_2
+    mean_F1_gp = np.nanmean(groupOne["F1_2"])
+    mean_F1_wt = np.nanmean(groupTwo["F1_2"])
+
+    # Prepare output csv file
+    row_row = pd.DataFrame([[curr_class, prec, reca, F1, F1_g_tt_p, mean_F1_gp, mean_F1_wt, p_g_tt_p, r_g_tt_p, curr_class]], columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp", "mean_F1_wt", "p_g_tt_p", "r_g_tt_p", "class"])
+    your_boat = your_boat.append(row_row)
 currTime = time.localtime(time.time())
 print(currTime)
 #generating a unique file name based on time and date
 date = str(currTime.tm_mday) + "-" + str(currTime.tm_hour) + "-" + str(currTime.tm_min) + "-" + str(currTime.tm_sec)
-#date2 <- gsub("/", "_", date)
 
 out_name = "All_classifier_Comparison_" + date + ".csv"
 
 #write.csv(your_boat, paste(result_out,out_name, sep = ""))
-final_blah.to_csv(result_out + out_name)
-
-print("end")
+your_boat.to_csv(result_out + out_name)
