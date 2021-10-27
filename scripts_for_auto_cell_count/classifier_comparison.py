@@ -35,8 +35,8 @@ class_list = os.listdir(OUTPUT_count)
 ############################## now we have binary projected images to work with and need to compare to roi for each classifier
 
 #initialize variables
-#row_row = NA #holds row of accuracy values for each classifier one at a time
-#your_boat = NA #holds all accuracy values for classifiers
+#row_row = pd.DataFrame(columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp,mean_F1_wt", "p_g_tt_p", "r_g_tt_p", "class"]) #holds row of accuracy values for each classifier one at a time
+your_boat = pd.DataFrame(columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp", "mean_F1_wt", "p_g_tt_p", "r_g_tt_p", "class"]) #holds all accuracy values for classifiers
 #count_h <- NA # holds hand count number per image
 
 ###################now need to proces the results files
@@ -136,8 +136,6 @@ for f in range(0, len(class_list)):
     print(curr_class + " percision = " +  str(prec))
     print(curr_class + " recall = " +  str(reca))
     print(curr_class + " F1 = " +  str(F1))
-
-      
     current_loc = counted_folder_dir + "/" + class_list[f]
     file_out_name = current_loc + "/" + curr_class + "_Final.csv"
     #writes out the final file to save the output
@@ -164,10 +162,16 @@ for f in range(0, len(class_list)):
         try:
             return numer/denom
         except ZeroDivisionError:
-            return 0
-    # TODO need to treat this like a list
-    F1_2 = 2*(catchDivideByZero(prec2*reca2, prec2 + reca2)) 
-
+            return None
+    
+    # Calculate F1_2
+    F1_2 = []
+    for index in range(0, len(prec2)):
+        result = catchDivideByZero(list(prec2)[index] * list(reca2)[index], list(prec2)[index] + list(reca2)[index])
+        if result == None:
+            F1_2.append(None)
+        else:
+            F1_2.append(2 * result)
     # Insert prec2, reca2, and F1_2 into final blah
     final_blah["prec2"] = prec2
     final_blah["reca2"] = reca2
@@ -181,18 +185,22 @@ for f in range(0, len(class_list)):
     # TODO however gp and wt will be variable so I need to solve that problem
     groupOne = final_blah.query('geno == "gp"')
     groupTwo = final_blah.query('geno == "wt"')
-    
-    p_g_tt = scipy.stats.ttest_ind(groupOne["prec2"], groupTwo["prec2"], equal_var=False)
-    r_g_tt = scipy.stats.ttest_ind(groupOne["reca2"], groupTwo["reca2"], equal_var=False)
-    F1_g_tt = scipy.stats.ttest_ind(groupOne["F1_2"], groupTwo["F1_2"], equal_var=False)
-    final_blah["p_g_tt_p"] = p_g_tt[1]
-    final_blah["r_g_tt_p"] = r_g_tt[1]
-    final_blah["F1_g_tt_p"] = F1_g_tt[1]
 
+    p_g_tt = scipy.stats.ttest_ind(groupOne["prec2"], groupTwo["prec2"], equal_var=False, nan_policy="omit")
+    r_g_tt = scipy.stats.ttest_ind(groupOne["reca2"], groupTwo["reca2"], equal_var=False, nan_policy="omit")
+    F1_g_tt = scipy.stats.ttest_ind(groupOne["F1_2"], groupTwo["F1_2"], equal_var=False, nan_policy="omit")
+    p_g_tt_p = p_g_tt[1]
+    r_g_tt_p = r_g_tt[1]
+    F1_g_tt_p = F1_g_tt[1]
+
+    # TODO why is this called F1 not F1_2, it's confusing me
     # Get means of F1_2
-    final_blah["mean_F1_gp"] = sum(groupOne["F1_2"])/len(groupOne["F1_2"])
-    final_blah["mean_F1_wt"] = sum(groupTwo["F1_2"])/len(groupTwo["F1_2"])
+    mean_F1_gp = np.nanmean(groupOne["F1_2"])
+    mean_F1_wt = np.nanmean(groupTwo["F1_2"])
 
+    # Prepare output csv file
+    row_row = pd.DataFrame([[curr_class, prec, reca, F1, F1_g_tt_p, mean_F1_gp, mean_F1_wt, p_g_tt_p, r_g_tt_p, curr_class]], columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp", "mean_F1_wt", "p_g_tt_p", "r_g_tt_p", "class"])
+    your_boat = your_boat.append(row_row)
 currTime = time.localtime(time.time())
 print(currTime)
 #generating a unique file name based on time and date
@@ -201,4 +209,4 @@ date = str(currTime.tm_mday) + "-" + str(currTime.tm_hour) + "-" + str(currTime.
 out_name = "All_classifier_Comparison_" + date + ".csv"
 
 #write.csv(your_boat, paste(result_out,out_name, sep = ""))
-final_blah.to_csv(result_out + out_name)
+your_boat.to_csv(result_out + out_name)
