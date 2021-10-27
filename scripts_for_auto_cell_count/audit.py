@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/python
 """
 Created on Mon Oct 25 10:59:36 2021
 
@@ -6,9 +6,9 @@ Created on Mon Oct 25 10:59:36 2021
 Audit: randomly selects number of images equal to validation set and copies images to Audit folder
 inputs: genetypes.csv file for unseen data, location of Validation images folder
 """
+
 import os
-os.getcwd()
-os.chdir("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/")
+import sys
 import csv
 import numpy
 import random
@@ -16,8 +16,23 @@ from shutil import copyfile
 #copyfile(src, dst)
 
 
+#os.getcwd()
+#os.chdir("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/")
+
+
+
+# Method to change working directory from inputted ImageJ Macro
+currDir = os.getcwd()
+def setDir(arg1):
+    currDir = arg1
+    os.chdir(currDir)
+setDir(sys.argv[1]) #this is returning "list index out of range******
+
+# Input the genotype data as a .csv file
+geno_file = "../training_area/genotype.csv"
+
 #read in genetype.csv
-geno = open("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/data/Full_dataset/geno_full.csv")
+geno = open("../data/Full_dataset/geno_full.csv")
 geno2 = csv.reader(geno)
 
 #variable name
@@ -39,7 +54,7 @@ lvl_geno = numpy.unique(g)
 
 
 #read in file names from the counted/projected unseen dataset
-folder_loc = "F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/data/Full_dataset/Weka_Output_Counted/class19" 
+folder_loc = "../data/Full_dataset/Weka_Output_Counted/class19/" 
 files = []
 for image in os.listdir(folder_loc):
     #print(image[-4:])
@@ -47,7 +62,7 @@ for image in os.listdir(folder_loc):
             files.append(image)
 
 #determine number of draws by number of files in validation hand count folder
-val_loc = "F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/data/Validation_files/Validation_Hand_Counts/"
+val_loc = "../data/Validation_files/Validation_Hand_Counts/"
 val_files = os.listdir(val_loc)
 draws = len(val_files)
 draws_per_geno = int(draws/len(lvl_geno))
@@ -74,6 +89,6 @@ audit_set = rand_ev0 + rand_ev1
 audit_set
 
 for file in audit_set:
-    shutil.copyfile("../data/Full_dataset/Weka_Output_Counted/class19" + file, "F:/full_backup_3_23_2021/Kaul_lab_work/bin_general/data/Full_dataset/Audit_images/")
+    shutil.copyfile("../data/Full_dataset/Weka_Output_Counted/class19" + file, "../data/Full_dataset/Audit_images/")
 
 #####this might be working, but file not found
