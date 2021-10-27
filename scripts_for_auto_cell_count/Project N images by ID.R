@@ -4,7 +4,6 @@
 # Date 10/20/2021
 # This file is the pipeline.....
 #
-
 ###
 # Method: trim_names 
 # Input: file names

@@ -7,8 +7,6 @@
 # Inputs: genotype file, hand count results file from Cout Roi, results of The Count.IJM in each classifier folder 
 # Outputs: csv table with accuracy measurements for each classifier
 ###
-from typing import final
-from numpy.lib.function_base import median
 import pandas as pd
 import numpy as np
 import os
