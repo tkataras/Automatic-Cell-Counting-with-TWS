@@ -4,14 +4,15 @@
  * Description:
  */
  
+//hide details from user to minimize screen clutter
+setBatchMode(true);
+
 //macro for per image count from goi. also has xy location of all points
 
-//prompt window to select input folder
-//TODO: change to relative paths https://stackoverflow.com/questions/40349070/imagej-macro-and-plugin-paths
 // Validation Hand Counts
-//input = getDirectory("Choose source directory (Validation Hand Counts)");
 input = getArgument();
 input = input + "../training_area/Validation_Hand_Counts/";
+
 // Results
 output = input + "../Results";
 
@@ -20,9 +21,7 @@ output = input + "../Results";
 
 //CLOSES old Results and Summary to avoid mixing with new results
 run("Clear Results"); 
-
-//hide details from user to minimize screen clutter
-setBatchMode(true); 
+ 
 
 //holds all file names from input folder
 list = getFileList(input);
