@@ -4,7 +4,6 @@
 # Date 10/20/2021
 # This file is the pipeline.....
 #
-
 ###
 # Method: trim_names 
 # Input: file names
@@ -160,8 +159,6 @@ for (j in 1:length(in_dir_list)){
   img_file_names <- list.files(path = rel_path)
   
   out_loc <- out_dir_list[j]
-  
-  
   
   for (i in 1:length(u_img)){
     ##identify images belonging to each unique image ID

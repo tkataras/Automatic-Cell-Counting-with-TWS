@@ -7,8 +7,6 @@
 # Inputs: genotype file, hand count results file from Cout Roi, results of The Count.IJM in each classifier folder 
 # Outputs: csv table with accuracy measurements for each classifier
 ###
-from typing import final
-from numpy.lib.function_base import median
 import pandas as pd
 import numpy as np
 import os
@@ -36,7 +34,7 @@ class_list = os.listdir(OUTPUT_count)
 
 #initialize variables
 #row_row = pd.DataFrame(columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp,mean_F1_wt", "p_g_tt_p", "r_g_tt_p", "class"]) #holds row of accuracy values for each classifier one at a time
-your_boat = pd.DataFrame(columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp", "mean_F1_wt", "p_g_tt_p", "r_g_tt_p", "class"]) #holds all accuracy values for classifiers
+your_boat = pd.DataFrame(columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp", "mean_F1_wt", "p_g_tt_p", "r_g_tt_p"]) #holds all accuracy values for classifiers
 #count_h <- NA # holds hand count number per image
 
 ###################now need to proces the results files
@@ -199,7 +197,7 @@ for f in range(0, len(class_list)):
     mean_F1_wt = np.nanmean(groupTwo["F1_2"])
 
     # Prepare output csv file
-    row_row = pd.DataFrame([[curr_class, prec, reca, F1, F1_g_tt_p, mean_F1_gp, mean_F1_wt, p_g_tt_p, r_g_tt_p, curr_class]], columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp", "mean_F1_wt", "p_g_tt_p", "r_g_tt_p", "class"])
+    row_row = pd.DataFrame([[curr_class, prec, reca, F1, F1_g_tt_p, mean_F1_gp, mean_F1_wt, p_g_tt_p, r_g_tt_p]], columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp", "mean_F1_wt", "p_g_tt_p", "r_g_tt_p"])
     your_boat = your_boat.append(row_row)
 currTime = time.localtime(time.time())
 print(currTime)
