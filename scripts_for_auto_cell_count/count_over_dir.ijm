@@ -109,7 +109,9 @@ macro "The -- True -- Count" {
 			roiManager("Delete");       
 		}
 		selectWindow("Results");
-		saveAs("Results", output_dirs + output + "Results.csv");
+		//take / off end of folder name to get classifier ID
+		class_name = substring(output_dir_list[z],0,lengthOf(output_dir_list[z]) -1);
+		saveAs("Results", output_dirs + output + class_name + "_Results.csv");
 		run("Clear Results");
 	}
 	// prints text in the log window after all files are processed

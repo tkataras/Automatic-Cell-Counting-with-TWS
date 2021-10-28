@@ -16,9 +16,6 @@ from shutil import copyfile
 #copyfile(src, dst)
 
 
-#os.getcwd()
-#os.chdir("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/")
-
 
 
 # Method to change working directory from inputted ImageJ Macro
@@ -26,7 +23,16 @@ currDir = os.getcwd()
 def setDir(arg1):
     currDir = arg1
     os.chdir(currDir)
-setDir(sys.argv[1]) #this is returning "list index out of range******
+setDir(sys.argv[1]) 
+
+os.chdir(sys.argv[1])##would this work????
+
+
+
+#os.getcwd()
+os.chdir("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/scripts_for_auto_cell_count")
+
+
 
 # Input the genotype data as a .csv file
 geno_file = "../training_area/genotype.csv"
@@ -82,13 +88,21 @@ for i in range(len(files)):
         ev1_files.append(files[i])
 
 #make random selections for level 1
-rand_ev0 = random.sample(ev0_files, draws_per_geno)
-rand_ev1 = random.sample(ev1_files, draws_per_geno)
+LEV0 = len(ev0_files)
+LEV1 = len(ev1_files)
 
-audit_set = rand_ev0 + rand_ev1
+
+rand_ev0 = random.sample(range(1,LEV0), draws_per_geno)
+
+rand_ev1 = random.sample(range(1,LEV1), draws_per_geno)
+
+###need to get these random variable numbers from oritional file directory, eg images, counted 
+
+
+audit_set = ev0_files[rand_ev0] + ev1_files[rand_ev1] ##this isnt working
 audit_set
 
 for file in audit_set:
-    shutil.copyfile("../data/Full_dataset/Weka_Output_Counted/class19" + file, "../data/Full_dataset/Audit_images/")
+    shutil.copyfile("../data/Full_dataset/Weka_Output_Counted/class19/" + file, "../data/Full_dataset/Audit/Audit_Counted")
 
 #####this might be working, but file not found
