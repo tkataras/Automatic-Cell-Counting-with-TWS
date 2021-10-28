@@ -63,7 +63,8 @@ counted_folder_dir = OUTPUT_count
 print("Got to start of iterating over classifiers")
 #iterate through each classifier 
 for f in range(0, len(class_list)):
-    class_res_loc = counted_folder_dir + os.listdir(OUTPUT_count)[f] + "/Results.csv"
+    class_name = os.listdir(OUTPUT_count)[f]
+    class_res_loc = counted_folder_dir + os.listdir(OUTPUT_count)[f] + "/" + class_name + "_Results.csv"
     class_results = pd.read_csv(class_res_loc)
     curr_class = os.listdir(OUTPUT_count)[f]
     print(curr_class)
