@@ -1,4 +1,4 @@
-input = getDirectory("Choose source directory of macro");
+input = getDirectory("Choose source directory of the macro (Scripts for Auto Cell Count)");
 print(input);
 
 File.setDefaultDir(input);
