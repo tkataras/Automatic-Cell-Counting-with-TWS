@@ -67,13 +67,11 @@ for f in range(0, len(class_list)):
     class_res_loc = counted_folder_dir + os.listdir(OUTPUT_count)[f] + "/" + class_name + "_Results.csv"
     class_results = pd.read_csv(class_res_loc)
     curr_class = os.listdir(OUTPUT_count)[f]
-    print(curr_class)
 
     ##if else loop for determining true positive, false positive and false negative cell counts
     ##from levels present in the classifier results output, this should be the same each time, BUT IT WoNT BE IF ONE IMAGE HAS NO CELL OBJECtS
     #need to go into the counted folder and pull out all image names, meaning ignorming the Results.csv files. images from tru_count with be .png
     folder_loc = counted_folder_dir + os.listdir(OUTPUT_count)[f]
-    print(folder_loc)
 
     files = []
     for image in os.listdir(folder_loc):
@@ -176,7 +174,7 @@ for f in range(0, len(class_list)):
     final_blah["reca2"] = reca2
     final_blah["F1_2"] = F1_2
 
-    if len(lvl_geno) > 2:
+    if len(lvl_geno) != 2:
         print("automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
 
     # Calculate the Welch 2 Sample T-test   
@@ -199,7 +197,6 @@ for f in range(0, len(class_list)):
     row_row = pd.DataFrame([[curr_class, prec, reca, F1, F1_g_tt_p, mean_F1_gp, mean_F1_wt, p_g_tt_p, r_g_tt_p]], columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp", "mean_F1_wt", "p_g_tt_p", "r_g_tt_p"])
     your_boat = your_boat.append(row_row)
 currTime = time.localtime(time.time())
-print(currTime)
 #generating a unique file name based on time and date
 date = str(currTime.tm_mday) + "-" + str(currTime.tm_hour) + "-" + str(currTime.tm_min) + "-" + str(currTime.tm_sec)
 
