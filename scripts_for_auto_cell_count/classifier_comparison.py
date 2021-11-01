@@ -82,7 +82,6 @@ for f in range(0, len(class_list)):
 
     final_blah = pd.DataFrame(columns=["name", "tp", "fp", "fn"])
 
-    print(len(img_names))
     for image in range(0, len(img_names)):
         current_img_plus_png = img_names[image]
         
