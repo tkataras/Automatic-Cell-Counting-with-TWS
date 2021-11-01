@@ -179,11 +179,9 @@ for f in range(0, len(class_list)):
     if len(lvl_geno) > 2:
         print("automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
 
-    # TODO Welch 2 Sample T test calc  
-    # TODO Given that this can be a max of 2 levels I can just select the data relavent
-    # TODO however gp and wt will be variable so I need to solve that problem
-    groupOne = final_blah.query('geno == "gp"')
-    groupTwo = final_blah.query('geno == "wt"')
+    # Calculate the Welch 2 Sample T-test   
+    groupOne = final_blah.query('geno == @lvl_geno[0]')
+    groupTwo = final_blah.query('geno == @lvl_geno[1]')
 
     p_g_tt = scipy.stats.ttest_ind(groupOne["prec2"], groupTwo["prec2"], equal_var=False, nan_policy="omit")
     r_g_tt = scipy.stats.ttest_ind(groupOne["reca2"], groupTwo["reca2"], equal_var=False, nan_policy="omit")
