@@ -1,12 +1,23 @@
 input = getDirectory("Choose source directory of the macro (Scripts for Auto Cell Count)");
-print(input);
+classifierDir = input + "../training_area/Classifiers"
+searchDirectory = getFileList(classifierDir);
 
-File.setDefaultDir(input);
-print(File.getDefaultDir);
+print(classifierDir);
+Dialog.create("Select Classifier to test on full dataset");
+/*for (index = 0; index < searchDirectory.length; index++) {
+	print(searchDirectory[index]);	
+	classifierName = searchDirectory[index];
+	Dialog.addCheckbox(classifierName, false);	
+}*/
+Dialog.addChoice("Choose classifier", searchDirectory);
+Dialog.show();
 
+selectedClassifier = Dialog.getChoice();
 
-exec("python", input + "file_architect.py", input);
+exec("python", input + "file_architect.py", input, selectedClassifier);
 
+print(selectedClassifier);
+/*
 //TODO figure out bean shell calling
 //runMacro(input + "BS_TWS_apply.bsh");
 
@@ -36,3 +47,4 @@ print(y);
 //exec("python", y);
 exec("python", z, input);
 print("finished pipeline");
+*/
