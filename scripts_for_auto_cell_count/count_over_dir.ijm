@@ -13,10 +13,9 @@ macro "The -- True -- Count" {
 	
 	//set input and output directories locations
 	
-	// Weka Output Projected
+	// Weka Output Projected if Projected, else Weka Output Thresholded
 	input_dirs = getArgument();
-	input_dirs = input_dirs + "../training_area/Weka_Output_Projected/";
-	
+
 	// Weka Output Counted
 	output_dirs = input_dirs + "../Weka_Output_Counted/";
 	
