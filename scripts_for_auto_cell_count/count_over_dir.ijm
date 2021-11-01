@@ -19,7 +19,6 @@ macro "The -- True -- Count" {
 	// Weka Output Counted
 	output_dirs = input_dirs + "../Weka_Output_Counted/";
 	
-	
 	// set size minimum for cells to exclude small radius noise
 	size_min=20;
 	Dialog.create("Size Min");

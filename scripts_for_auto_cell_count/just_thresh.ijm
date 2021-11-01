@@ -1,16 +1,23 @@
 /*
  * Author: Theo, Tyler
- * Date: 10/21/2021
+ * Date: 11/1/2021
  * Description:
  */
 setBatchMode(true); 
 
 // Weka Output
 input_dirs = getArgument();
-input_dirs = input_dirs + "../training_area/Weka_Output/";
+// Weka Output Thresholded
+output_dirs = ""
 
-//output_dirs = getDirectory("_Choose output directories");
-output_dirs = input_dirs + "../Weka_Output_Thresholded/";
+// Check if the argument is from testing or training area
+if(input_dirs.contains("testing_area")) {
+	input_dirs = input_dirs + "/Weka_Output/";
+	output_dirs = input_dirs + "/Weka_Output_Thresholded/";
+} else {
+	input_dirs = input_dirs + "../training_area/Weka_Output/";
+	output_dirs = input_dirs + "../Weka_Output_Thresholded/";
+}
 
 input_dir_list = getFileList(input_dirs);
 output_dir_list = getFileList(output_dirs);
@@ -39,3 +46,4 @@ for (z = 0; z< input_dir_list.length; z++) {
 		saveAs("Png",output_dirs + output + filename);	
 	}
 }
+print("Finished just_thresh.ijm");

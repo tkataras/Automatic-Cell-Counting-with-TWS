@@ -82,13 +82,14 @@ for f in range(0, len(class_list)):
 
     final_blah = pd.DataFrame(columns=["name", "tp", "fp", "fn"])
 
+    print(len(img_names))
     for image in range(0, len(img_names)):
         current_img_plus_png = img_names[image]
         
         dftc = class_results[class_results["Label"].isin([current_img_plus_png])]
         
         if dftc.size == 0:
-            name = img_names[i]
+            name = img_names[image]
             tp = 0
             fp = 0
             fn = count_h[lvl_h[image]]
@@ -204,3 +205,4 @@ out_name = "All_classifier_Comparison_" + date + ".csv"
 
 #write.csv(your_boat, paste(result_out,out_name, sep = ""))
 your_boat.to_csv(result_out + out_name)
+print("bottom of classifier comparison")
