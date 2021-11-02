@@ -1,6 +1,11 @@
 # Automatic-Cell-counting-with-TWS
 A repository for the suit of scripts I use to perform automatic cell quantification.
 
+# Installation Guide
+```
+git clone https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
+```
+
 # Software Dependencies
 
 ```
@@ -10,18 +15,15 @@ pip3 install numpy
 pip3 install scipy
 pip3 install pandas
 ```
-# Installation Guide
-```
-git clone https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
-```
 
-Prerequisites:
+# Prerequisites:
 Current** version of FIJI distribution of Imagej
 *** need R version___
 Need beanshell installation through terminal
  
 By downloading our Github repository you will have a set of folders for practice and for experimental use.
-           	Practice.
+
+# Practice
 The first step in practice is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference.
 The pipeline will then individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .ROi files and the supplied genotypes.csv file. Our data includes paired images in individual fields of view for increased context when counting, so intermediate steps are included to identify and project these image pairs for the final automatic count.
 After the pipeline completes a run, run times will vary by hardware capacity, open the all_classifier_comparison.csv* file to compare the performance of the various classifiers. Several classifiers should demonstrate the same accuracy statistics as the image size is very small, containing at most 3 cells per image.
