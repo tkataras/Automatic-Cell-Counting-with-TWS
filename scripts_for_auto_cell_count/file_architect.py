@@ -15,6 +15,7 @@ def setDir(arg1):
     os.chdir(currDir)
 setDir(sys.argv[1])
 
+test_stage = False
 if len(sys.argv) == 3:
     class_list_pre_trim = []
     class_list_pre_trim.append(sys.argv[2])
@@ -22,6 +23,7 @@ if len(sys.argv) == 3:
     #set the location of the source folder where the folder is installed. 
     SOURCE = "../training_area/testing_area/"
     CLASS_ORIGIN =  SOURCE + "Classifiers/"
+    test_stage = True
 else:
     #set the location of the source folder where the folder is installed. 
     SOURCE = "../training_area/"
@@ -58,3 +60,7 @@ for class_ID in class_list:
     os.mkdir(OUTPUT_thresh + class_ID)
     os.mkdir(OUTPUT_project + class_ID)
     os.mkdir(OUTPUT_count + class_ID)
+
+if test_stage:
+    os.mkdir(SOURCE + "Audit_Images/")
+    os.mkdir(SOURCE + "Audit_Hand_Counts/")

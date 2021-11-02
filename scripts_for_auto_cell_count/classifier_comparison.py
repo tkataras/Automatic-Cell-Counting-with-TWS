@@ -88,7 +88,7 @@ for f in range(0, len(class_list)):
         dftc = class_results[class_results["Label"].isin([current_img_plus_png])]
         
         if dftc.size == 0:
-            name = img_names[i]
+            name = img_names[image]
             tp = 0
             fp = 0
             fn = count_h[lvl_h[image]]
