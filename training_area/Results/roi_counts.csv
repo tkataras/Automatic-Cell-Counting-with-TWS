@@ -1,12 +1,16 @@
- ,Label,Area,Mean,Min,Max,X,Y
-1,BKO-426-S42-Iba-Syn-Cortex-10x-F2b_XY1561767178_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-2.roi,0,0,0,0,21.000,22.000
-2,BKO-426-S42-Iba-Syn-Cortex-10x-F2b_XY1561767178_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-2.roi,0,0,0,0,67.500,52.500
-3,BKO-428-S42-Iba-Syn-Cortex-10x-F3a_XY1561767178_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-1-1.roi,0,0,0,0,44.899,30.355
-4,BKO-428-S72-Iba-Syn-Cortex-10x-F2a_XY1562015876_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-1-1.roi,0,0,0,0,45.980,52.957
-5,BKO-428-S72-Iba-Syn-Cortex-10x-F2a_XY1562015876_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-1-1.roi,0,0,0,0,48.436,26.818
-6,BKO-442-S44-Iba-Syn-Cortex-10x-F1b_XY1562190410_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-3.roi,0,0,0,0,15.000,40.000
-7,BKO-442-S44-Iba-Syn-Cortex-10x-F1b_XY1562190410_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-3.roi,0,0,0,0,74.500,72.500
-8,BKO-460-S57-Iba-Syn-Cortex-10x-F1a_XY1562191200_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-2-1.roi,0,0,0,0,48.142,39.199
-9,BKO-462-S72-Iba-Syn-Cortex-10x-F3a_XY1562191900_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-2-1.roi,0,0,0,0,21.512,20.038
-10,BKO-462-S72-Iba-Syn-Cortex-10x-F3a_XY1562191900_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-2-1.roi,0,0,0,0,9.228,62.390
-11,BKO-462-S72-Iba-Syn-Cortex-10x-F3a_XY1562191900_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-2-1.roi,0,0,0,0,74.968,15.812
+Name,*,Value
+input_dirs,,"C:\Users\19099\Documents\Kaul_Lab\AutoCellCount\Automatic-Cell-counting-with-TWS..."
+output_dirs,*,"C:\Users\19099\Documents\Kaul_Lab\AutoCellCount\Automatic-Cell-counting-with-TWS..."
+x,*,array[1]
+firstStage,*,1
+input_dir_list,*,array[5]
+output_dir_list,*,array[5]
+z,*,0
+input,*,"classifier1/"
+output,*,"classifier1/"
+list,*,array[13]
+
+---,,---
+Error:,,'[' or '.' expected in line 40:
+,
+,,print ( list <)> ; 

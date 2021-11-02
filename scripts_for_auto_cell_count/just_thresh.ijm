@@ -21,17 +21,18 @@ if(input_dirs.contains("testing_area")) {
 } else {
 	input_dirs = input_dirs + "../training_area/Weka_Output/";
 	output_dirs = input_dirs + "../Weka_Output_Thresholded/";
+	firstStage = true;
 }
 
 // Code for the first half of the pipeline
 if(firstStage) {
 	input_dir_list = getFileList(input_dirs);
 	output_dir_list = getFileList(output_dirs);
-	
+
 	for (z = 0; z< input_dir_list.length; z++) {	
 		input = input_dir_list[z];
 		output = output_dir_list[z];
-	
+		
 		//holds all file names from input folder
 		list = getFileList(input_dirs + input);
 		
@@ -41,7 +42,7 @@ if(firstStage) {
 		}
 			
 		//describes the actions for each image
-		function action(input, output, filename) {        
+		function action(input, output, filename) {      
 			open(input_dirs + input + filename);
 			run("8-bit");
 			setAutoThreshold("Default");
@@ -58,15 +59,11 @@ if(firstStage) {
 		
 	//iterate  macro over the objects in the input folder
 	for (q = 0; q < list.length; q++) {
-		action(input_dirs, output_dirs, list[q]);
+		actionTwo(input_dirs, output_dirs, list[q]);
 	}
 	
-	
 	//describes the actions for each image
-	function action(input, output, filename) {   
-		print(input);
-		print(output);
-		print(filename);     
+	function actionTwo(input, output, filename) {       
 		open(input + "/" + filename);
 		run("8-bit");
 		setAutoThreshold("Default");

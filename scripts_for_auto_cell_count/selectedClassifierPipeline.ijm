@@ -28,15 +28,15 @@ Dialog.show();
 result = Dialog.getCheckbox();
 if (result) {
 	exec("python", input + "Project N Images by ID.py", input);
-	searchDirectory = input + "../training_area/testing_area/Weka_Output_Projected/";
+	searchDirectory = input + "../training_area/testing_area/Weka_Output_Projected/" + trimClassName[0];
 } else {
-	searchDirectory = input + "../training_area/testing_area/Weka_Output_Thresholded/";
+	searchDirectory = input + "../training_area/testing_area/Weka_Output_Thresholded/" + trimClassName[0];
 }
 
 // Run ImageJ macros
 runMacro(input + "just_thresh.ijm", testingPath);
+runMacro(input + "count_over_dir.ijm", searchDirectory);
 
-//runMacro(input + "count_over_dir.ijm", searchDirectory);
 /*
 runMacro(input + "count_from_roi.ijm", testingPath);
 
