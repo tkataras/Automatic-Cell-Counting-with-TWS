@@ -27,7 +27,7 @@ Dialog.addCheckbox("Do you need to project multiple image segmentations?", false
 Dialog.show();
 result = Dialog.getCheckbox();
 if (result) {
-	exec("python", input + "Project N Images by ID.py", input);
+	exec("python", input + "Project N Images by ID.py", input, trimClassName[0]);
 	searchDirectory = input + "../training_area/testing_area/Weka_Output_Projected/" + trimClassName[0];
 } else {
 	searchDirectory = input + "../training_area/testing_area/Weka_Output_Thresholded/" + trimClassName[0];

@@ -138,7 +138,7 @@ macro "The -- True -- Count" {
 		list2 = getFileList(dir2);
 			
 		n = 0;
-			
+		print(list.length);
 		//iterate  macro over the images in the input folder
 		for (q = 0; q < list.length; q++) {
 			actionTwo(input_dirs, output_dirs + "/", list[q], dir2, list2[q]);
@@ -147,7 +147,7 @@ macro "The -- True -- Count" {
 		//describes the actions for each image
 		function actionTwo(input, output, filename, input2, filename2) {    
 			//opens and thresholds binary images or Weka output directly       
-			open(input + filename);
+			open(input + "/" + filename);
 			run("8-bit");
 			setAutoThreshold("Default dark");
 			run("Threshold...");
