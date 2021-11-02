@@ -18,6 +18,8 @@ pip3 install pandas
 
 # Prerequisites:
 Current** version of FIJI distribution of Imagej
+https://imagej.net/software/fiji/
+
 *** need R version___
 Need beanshell installation through terminal
  
