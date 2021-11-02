@@ -125,7 +125,7 @@ macro "The -- True -- Count" {
 		print("AH HA HA "+list.length+" images");
 	} else {
 		//the hand placed roi location will not change as it is applied to each classifier image set
-		//dir2 = getDirectory("_Choose source directory for the roi multipoint counts");
+		// TODO This should be audit hand counts
 		dir2 = input_dirs + "/../../../Validation_Hand_Counts/";
 
 		print(input_dirs);
@@ -139,6 +139,7 @@ macro "The -- True -- Count" {
 			
 		n = 0;
 		print(list.length);
+		print(list2.length);
 		//iterate  macro over the images in the input folder
 		for (q = 0; q < list.length; q++) {
 			actionTwo(input_dirs, output_dirs + "/", list[q], dir2, list2[q]);
