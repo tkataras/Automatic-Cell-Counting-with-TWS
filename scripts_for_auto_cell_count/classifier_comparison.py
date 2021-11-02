@@ -204,4 +204,3 @@ out_name = "All_classifier_Comparison_" + date + ".csv"
 
 #write.csv(your_boat, paste(result_out,out_name, sep = ""))
 your_boat.to_csv(result_out + out_name)
-print("bottom of classifier comparison")

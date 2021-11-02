@@ -4,12 +4,8 @@ classifierDir = input + "../training_area/Classifiers";
 searchDirectory = getFileList(classifierDir);
 
 print(classifierDir);
+
 Dialog.create("Select Classifier to test on full dataset");
-/*for (index = 0; index < searchDirectory.length; index++) {
-	print(searchDirectory[index]);	
-	classifierName = searchDirectory[index];
-	Dialog.addCheckbox(classifierName, false);	
-}*/
 Dialog.addChoice("Choose classifier", searchDirectory);
 Dialog.show();
 
@@ -37,17 +33,14 @@ if (result) {
 
 // Run ImageJ macros
 runMacro(input + "just_thresh.ijm", testingPath);
+
+runMacro(input + "count_over_dir.ijm", searchDirectory);
 /*
 runMacro(input + "count_from_roi.ijm", testingPath);
 
-runMacro(input + "count_over_dir.ijm", searchDirectory);
-
-y = input + "test.py";
 z = input + "classifier_comparison.py";
 
-print(y);
 // Next, run classifier comparison
-//exec("python", y);
 exec("python", z, input);
 print("finished pipeline");
 */
