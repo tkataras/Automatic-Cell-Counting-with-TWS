@@ -112,44 +112,93 @@ def setDir(arg1):
     os.chdir(currDir)
 setDir(sys.argv[1])
 
-# Input and Output file directories
-id_for_in_dir = "../training_area/Weka_Output_Thresholded/"
-id_for_out_dir = "../training_area/Weka_Output_Projected/"
+firstStage = True
+if len(sys.argv) == 3:
+    # Input and Output file directories
+    id_for_in_dir = "../training_area/testing_area/Weka_Output_Thresholded/" + sys.argv[2] + "/"
+    id_for_out_dir = "../training_area/testing_area/Weka_Output_Projected/" + sys.argv[2] + "/"
+    firstStage = False
+else:
+    # Input and Output file directories
+    id_for_in_dir = "../training_area/Weka_Output_Thresholded/"
+    id_for_out_dir = "../training_area/Weka_Output_Projected/"
 
-# Get the classifiers/files contained in these directories
-in_dir_list = os.listdir(id_for_in_dir)
-file_list = os.listdir(id_for_in_dir + "/" + in_dir_list[1] +"/")
-out_dir_list = os.listdir(id_for_out_dir)
+if firstStage:
+    # Get the classifiers/files contained in these directories
+    in_dir_list = os.listdir(id_for_in_dir)
+    file_list = os.listdir(id_for_in_dir + "/" + in_dir_list[1] +"/")
+    out_dir_list = os.listdir(id_for_out_dir)
 
-# Getting images names, can pick any folder with all images in question to do this
-# TODO why do I need trim names? (I believe it was for R code limitations) Code runs faster without it.
-#newsid1 = trim_names(id1, half="back")
-newsid1 = file_list
-id1_df_sep = sep_slidebook(newsid1, "-")
-id1_df_squish = squish(id1_df_sep)
+    # Getting images names, can pick any folder with all images in question to do this
+    # TODO why do I need trim names? (I believe it was for R code limitations) Code runs faster without it.
+    #newsid1 = trim_names(id1, half="back")
+    newsid1 = file_list
+    id1_df_sep = sep_slidebook(newsid1, "-")
+    id1_df_squish = squish(id1_df_sep)
 
-# Specify: original file names, info columns, squished ID
-newsid1_df = pd.DataFrame(columns=["newsid1"])
-for index in range(0, len(newsid1)):
-        newRow = pd.DataFrame([[newsid1[index]]], columns=["newsid1"])
-        newsid1_df = newsid1_df.append(newRow)
+    # Specify: original file names, info columns, squished ID
+    newsid1_df = pd.DataFrame(columns=["newsid1"])
+    for index in range(0, len(newsid1)):
+            newRow = pd.DataFrame([[newsid1[index]]], columns=["newsid1"])
+            newsid1_df = newsid1_df.append(newRow)
 
-# This df gives us access to varibles based on the images in several forms
-big_df = pd.concat([newsid1_df, id1_df_squish], axis=1)
-big_df = pd.concat([big_df, id1_df_sep], axis=1)
-big_df.columns = ["File_name", "Img_ID", "A_num", "S_num", "F_num"]
+    # This df gives us access to varibles based on the images in several forms
+    big_df = pd.concat([newsid1_df, id1_df_squish], axis=1)
+    big_df = pd.concat([big_df, id1_df_sep], axis=1)
+    big_df.columns = ["File_name", "Img_ID", "A_num", "S_num", "F_num"]
 
-# Now need to gather and project all items with matching img_ID 
-# Need to start working in directory that holds all image folders
-u_img = np.unique(big_df["Img_ID"])
+    # Now need to gather and project all items with matching img_ID 
+    # Need to start working in directory that holds all image folders
+    u_img = np.unique(big_df["Img_ID"])
 
-# Project the n images in each classifier
-for image in range(0, len(in_dir_list)):
-    rel_path = id_for_in_dir + in_dir_list[image]
-    img_file_names = os.listdir(rel_path)
-    out_loc = out_dir_list[image]
-    
-    # For each image of the same unique ID number
+    # Project the n images in each classifier
+    for image in range(0, len(in_dir_list)):
+        rel_path = id_for_in_dir + in_dir_list[image]
+        img_file_names = os.listdir(rel_path)
+        out_loc = out_dir_list[image]
+        
+        # For each image of the same unique ID number
+        for id in range(0, len(u_img)):
+            # Identify images belonging to each unique image ID
+            all_current_ID = big_df.query('Img_ID == @u_img[@id]')
+
+            # Sum projected as equal to the number of layers in the image
+            projected = 0
+            maxLen = all_current_ID.shape[0]
+            # Project the image of the same ID onto one image
+            for k in range(0, maxLen):
+                path = rel_path + "/" + list(all_current_ID["File_name"])[k]
+                projected = projected + imageio.imread(path)
+            file_out_loc = id_for_out_dir + out_dir_list[image] + "/" + list(all_current_ID["File_name"])[0]
+            imageio.imwrite(file_out_loc, projected)
+# Second half of the pipeline
+else:
+    # Get the classifiers/files contained in these directories
+    in_dir_list = os.listdir(id_for_in_dir)
+
+    # Getting images names, can pick any folder with all images in question to do this
+    # TODO why do I need trim names? (I believe it was for R code limitations) Code runs faster without it.
+    #newsid1 = trim_names(id1, half="back")
+    newsid1 = in_dir_list
+    id1_df_sep = sep_slidebook(newsid1, "-")
+    id1_df_squish = squish(id1_df_sep)
+
+    # Specify: original file names, info columns, squished ID
+    newsid1_df = pd.DataFrame(columns=["newsid1"])
+    for index in range(0, len(newsid1)):
+            newRow = pd.DataFrame([[newsid1[index]]], columns=["newsid1"])
+            newsid1_df = newsid1_df.append(newRow)
+
+    # This df gives us access to varibles based on the images in several forms
+    big_df = pd.concat([newsid1_df, id1_df_squish], axis=1)
+    big_df = pd.concat([big_df, id1_df_sep], axis=1)
+    big_df.columns = ["File_name", "Img_ID", "A_num", "S_num", "F_num"]
+
+    # Now need to gather and project all items with matching img_ID 
+    # Need to start working in directory that holds all image folders
+    u_img = np.unique(big_df["Img_ID"])
+
+    # Project the n images in the classifier
     for id in range(0, len(u_img)):
         # Identify images belonging to each unique image ID
         all_current_ID = big_df.query('Img_ID == @u_img[@id]')
@@ -159,7 +208,7 @@ for image in range(0, len(in_dir_list)):
         maxLen = all_current_ID.shape[0]
         # Project the image of the same ID onto one image
         for k in range(0, maxLen):
-            path = rel_path + "/" + list(all_current_ID["File_name"])[k]
+            path = id_for_in_dir + "/" + list(all_current_ID["File_name"])[k]
             projected = projected + imageio.imread(path)
-        file_out_loc = id_for_out_dir + out_dir_list[image] + "/" + list(all_current_ID["File_name"])[0]
+        file_out_loc = id_for_out_dir + "/" + list(all_current_ID["File_name"])[0]
         imageio.imwrite(file_out_loc, projected)

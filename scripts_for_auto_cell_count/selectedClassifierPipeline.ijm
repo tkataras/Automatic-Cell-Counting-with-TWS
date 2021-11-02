@@ -13,7 +13,9 @@ selectedClassifier = Dialog.getChoice();
 
 exec("python", input + "file_architect.py", input, selectedClassifier);
 
-print(selectedClassifier);
+trimClassName = split(selectedClassifier, ".");
+
+testingPath = testingPath + "Weka_Output/" + trimClassName[0];
 
 //TODO figure out bean shell calling
 //runMacro(input + "BS_TWS_apply.bsh");
@@ -25,16 +27,16 @@ Dialog.addCheckbox("Do you need to project multiple image segmentations?", false
 Dialog.show();
 result = Dialog.getCheckbox();
 if (result) {
-	exec("python", input + "Project N Images by ID.py", input);
-	searchDirectory = input + "../training_area/testing_area/Weka_Output_Projected/";
+	exec("python", input + "Project N Images by ID.py", input, trimClassName[0]);
+	searchDirectory = input + "../training_area/testing_area/Weka_Output_Projected/" + trimClassName[0];
 } else {
-	searchDirectory = input + "../training_area/testing_area/Weka_Output_Thresholded/";
+	searchDirectory = input + "../training_area/testing_area/Weka_Output_Thresholded/" + trimClassName[0];
 }
 
 // Run ImageJ macros
 runMacro(input + "just_thresh.ijm", testingPath);
-
 runMacro(input + "count_over_dir.ijm", searchDirectory);
+
 /*
 runMacro(input + "count_from_roi.ijm", testingPath);
 
