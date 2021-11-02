@@ -7,7 +7,6 @@ Audit: randomly selects number of images equal to validation set and copies imag
 inputs: genetypes.csv file for unseen data, location of Validation images folder
 """
 import os
-from shutil import copyfile
 import sys
 import csv
 import numpy

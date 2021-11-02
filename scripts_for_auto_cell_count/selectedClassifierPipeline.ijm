@@ -13,7 +13,9 @@ selectedClassifier = Dialog.getChoice();
 
 exec("python", input + "file_architect.py", input, selectedClassifier);
 
-print(selectedClassifier);
+trimClassName = split(selectedClassifier, ".");
+
+testingPath = testingPath + "Weka_Output/" + trimClassName[0];
 
 //TODO figure out bean shell calling
 //runMacro(input + "BS_TWS_apply.bsh");
@@ -34,7 +36,7 @@ if (result) {
 // Run ImageJ macros
 runMacro(input + "just_thresh.ijm", testingPath);
 
-runMacro(input + "count_over_dir.ijm", searchDirectory);
+//runMacro(input + "count_over_dir.ijm", searchDirectory);
 /*
 runMacro(input + "count_from_roi.ijm", testingPath);
 
