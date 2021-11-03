@@ -24,7 +24,7 @@ macro "The -- True -- Count" {
 	x = split(input_dirs, "/");
 
 		// Weka Output Counted
-		output_dirs = input_dirs + "/../../Weka_Output_Counted/";
+		output_dirs = input_dirs + "/../../Weka_Output_Counted/" + x[x.length-1];
 	print(output_dirs);
 	
 	// set size minimum for cells to exclude small radius noise
@@ -62,13 +62,10 @@ macro "The -- True -- Count" {
 			//setOption("BlackBackground", true);	
 			run("Convert to Mask");
 			//run("Invert");
-			print(input + "/" + filename);
-			print("file opened");
 						
 			// this imageJ plugin creates the results file and image of the count cells based on the size exclusion		
 			run("Analyze Particles...", "size="+size_min+"-Infinity pixel show=Masks display summarize add");
-			print("output + filename:");
-			print(output + filename);
+			
 			
 			saveAs("Png",output + "/" + filename);// *#*#*##* need to at x, which is the classifier name,  and a / so it saves in the correct folder
 			
@@ -80,7 +77,7 @@ macro "The -- True -- Count" {
 				
 			
 					}
-				}
+				
 					
 				//update the results table
 				//setResult("points", n++, counts);	
@@ -91,7 +88,7 @@ macro "The -- True -- Count" {
 		selectWindow("Results");
 		//take / off end of folder name to get classifier ID
 		class_name = x[x.length-1];
-		saveAs("Results", output_dirs + class_name + "_Results_test_data.csv"); // **#*#*CANT FIND THIS FILE ANYWHERE*#*#*#*##*
+		saveAs("Results", output_dirs + "/" + class_name + "_Results_test_data.csv"); // **#*#*CANT FIND THIS FILE ANYWHERE*#*#*#*##*
 		run("Clear Results");
 		
 		// prints text in the log window after all files are processed

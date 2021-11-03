@@ -1,12 +1,12 @@
-/*
+		/*
  * Author: Theo, Tyler
- * Date: 10/21/2021
- * Description:
+ * Date: 11/3/2021
+ * Description: couns full dataset output
  */
 macro "The -- True -- Count" {
-	//Overview: uses hand placed markers and weka output images from each classifier to begin accuracy calculation
-	//Input: Binary images, hand placed markes in roi files, one file for each image
-	//Output: Binary image files including only cells counted, and .csv file in classifier folder with accuracy information
+	//Overview: this just counts the cellss in overlapped or thresholded binary images 
+	//Input: Binary images,
+	//Output: Binary image files including only cells counted, and .csv file in classifier folder with count info
 	
 	//this hides intermediary information and speeds processing
 	setBatchMode(true); 
@@ -18,12 +18,11 @@ macro "The -- True -- Count" {
 
 	// Get the classifier
 	x = split(input_dirs, "/");
-	firstStage = true;
-	if(input_dirs.contains("testing_area")) {
-		// Weka Output Counted
+	print(x[x.length-1]);
+	print([x.length-1);
+	print("above two are x");
 		output_dirs = input_dirs + "/../../Weka_Output_Counted/" + x[x.length-1];
-		firstStage = false;
-	} else {
+		
 		// Weka Output Counted
 		output_dirs = input_dirs + "../Weka_Output_Counted/";
 	}

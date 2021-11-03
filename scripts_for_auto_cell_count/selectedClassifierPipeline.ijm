@@ -1,4 +1,4 @@
-input = getDirectory("Choose source directory of the macro (Scripts for Auto Cell Count)");
+	input = getDirectory("Choose source directory of the macro (Scripts for Auto Cell Count)");
 testingPath = input + "../training_area/testing_area/";
 classifierDir = input + "../training_area/Classifiers";
 searchDirectory = getFileList(classifierDir);
