@@ -35,7 +35,7 @@ if (result) {
 
 // Run ImageJ macros
 runMacro(input + "just_thresh.ijm", testingPath); //***IT STILL SEemS to ME LIKE thiS NEEDS TO BE RUN BEFORE PROJECT IMAGES***
-runMacro(input + "count_full_dataset_TK.ijm", searchDirectory);
+runMacro(input + "count_full_dataset.ijm", searchDirectory);
 
 /*
 runMacro(input + "count_from_roi.ijm", testingPath);

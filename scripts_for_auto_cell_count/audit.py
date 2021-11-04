@@ -13,20 +13,20 @@ import numpy
 import random
 
 # Method to change working directory from inputted ImageJ Macro
-currDir = os.getcwd()
-def setDir(arg1):
-    currDir = arg1
-    os.chdir(currDir)
-setDir(sys.argv[1]) 
+#currDir = os.getcwd()
+#def setDir(arg1):
+#    currDir = arg1
+#    os.chdir(currDir)
+#setDir(sys.argv[1]) 
 
+#set the folder to appropriate working directory
 os.chdir(sys.argv[1])
+##REMOVE THIS LATER
+os.chdir("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/scripts_for_auto_cell_count/")
 
 
-# Input the genotype data as a .csv file
-geno_file = "../training_area/genotype.csv"
-
-#read in genetype.csv
-geno = open("../training_area/geno_full.csv")
+#read in genotype.csv
+geno = open("../training_area/testing_area/geno_full.csv")
 geno2 = csv.reader(geno)
 
 #variable name
@@ -95,4 +95,3 @@ for file in audit_set:
     filename = "../training_area/testing_area/images/" + os.path.basename(file)
     print(filename)
     copyfile(filename, os.path.join("../training_area/testing_area/Audit_Images", filename))
-#####this might be working, but file not found
