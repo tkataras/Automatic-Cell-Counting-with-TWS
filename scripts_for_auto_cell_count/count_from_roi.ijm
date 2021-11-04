@@ -30,7 +30,7 @@ list = getFileList(input);
 if(list.length < 2) {
 	print("Need at least two input roi files");
 } else {
-//iterate  macro over the objects in the input folder
+//iterate macro over the objects in the input folder
 	for (i = 0; i < list.length; i++) {
 		action(input, list[i]);
 	}	

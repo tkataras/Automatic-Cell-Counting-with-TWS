@@ -1,8 +1,8 @@
 #!/usr/bin/python
 ###
 # Author: Theo, Tyler Jang
-# Date 10/20/2021
-# This file is the pipeline.....
+# Date 11/2/2021
+# This file in the pipeline.....
 #
 ###
 import os
@@ -113,6 +113,7 @@ def setDir(arg1):
 setDir(sys.argv[1])
 
 firstStage = True
+# If in the second stage of the pipeline, use the specified classifier
 if len(sys.argv) == 3:
     # Input and Output file directories
     id_for_in_dir = "../training_area/testing_area/Weka_Output_Thresholded/" + sys.argv[2] + "/"

@@ -138,6 +138,7 @@ for f in range(0, len(class_list)):
     #writes out the final file to save the output
     final_blah.to_csv(file_out_name)
   
+    # TODO it won't be an alternating pattern, just set the geno values to their rows
     # Add genotypes to csv file
     geno = pd.read_csv(geno_file)
     lvl_geno = np.unique(geno)

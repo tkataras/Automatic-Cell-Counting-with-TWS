@@ -69,7 +69,7 @@ macro "The -- True -- Count" {
 			
 			saveAs("Png",output + "/" + filename);// *#*#*##* need to at x, which is the classifier name,  and a / so it saves in the correct folder
 			
-			//run("Measure");	
+			run("Measure");	
 			
 			
 			
