@@ -70,7 +70,10 @@ macro "The -- True -- Count" {
 			saveAs("Png",output + "/" + filename);// *#*#*##* need to at x, which is the classifier name,  and a / so it saves in the correct folder
 			
 			run("Measure");	
-				
+			
+			
+			
+			
 			numroi = roiManager("count"); // establish number of objects
 			print("number auto count objects=" + numroi -1);
 		
