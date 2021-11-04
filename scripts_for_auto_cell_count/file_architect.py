@@ -61,6 +61,9 @@ for class_ID in class_list:
     os.mkdir(OUTPUT_project + class_ID)
     os.mkdir(OUTPUT_count + class_ID)
 
+
+#TODO need to have classifiers subfolder in audit images, hand count and counted
 if test_stage:
     os.mkdir(SOURCE + "Audit_Images/")
     os.mkdir(SOURCE + "Audit_Hand_Counts/")
+    os.mkdir(SOURCE + "Audit_Counted/")

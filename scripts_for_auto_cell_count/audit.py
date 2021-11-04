@@ -6,52 +6,51 @@ Created on Mon Oct 25 10:59:36 2021
 Audit: randomly selects number of images equal to validation set and copies images to Audit folder
 inputs: genetypes.csv file for unseen data, location of Validation images folder
 """
+import pandas as pd
+import numpy as np
 import os
 import sys
-import csv
 import numpy
 import random
 
 # Method to change working directory from inputted ImageJ Macro
-#currDir = os.getcwd()
-#def setDir(arg1):
-#    currDir = arg1
-#    os.chdir(currDir)
-#setDir(sys.argv[1]) 
+currDir = os.getcwd()
+def setDir(arg1):
+    currDir = arg1
+    os.chdir(currDir)
+setDir(sys.argv[1])
+    
+selectedClassifier = sys.argv[2]
 
-#set the folder to appropriate working directory
-os.chdir(sys.argv[1])
+
+
 ##REMOVE THIS LATER
 os.chdir("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/scripts_for_auto_cell_count/")
-
+selectedClassifier = "classifier2"
 
 #read in genotype.csv
-geno = open("../training_area/testing_area/geno_full.csv")
-geno2 = csv.reader(geno)
+geno_file = "../training_area/testing_area/geno_full.csv"
 
-#variable name
-header = []
-header = next(geno2)
-print(header)
 
-#row information, holdes exp grouping variable for each image
-rows = []
-for row in geno2:
-    rows.append(row)
+geno = pd.read_csv(geno_file)
+# Get the unique genotype labels
+lvl_geno = np.unique(geno)
+if len(lvl_geno) != 2:
+    print("automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
 
-g = []
-for elements in rows:
-    g.append(elements[1])
 
-lvl_geno = numpy.unique(g)
 
-#read in file names from the counted/projected unseen dataset
-folder_loc = "../training_area/testing_area/Weka_Output_Counted/classifier1" 
+  
+#read in file names from the counted/projected experimental dataset
+folder_loc = "../training_area/testing_area/Weka_Output_Counted/" +  selectedClassifier
 files = []
 for image in os.listdir(folder_loc):
-    #print(image[-4:])
     if image[-4:] == ".png":
             files.append(image)
+files
+
+
+####TODO make rest of this work, i am this far
 
 #determine number of draws by number of files in validation hand count folder
 val_loc = "../training_area/Validation_Hand_Counts/"
@@ -63,13 +62,16 @@ draws_per_geno = int(draws/len(lvl_geno))
 #define experimental variable level 1 files
 ev0_files = []
 for i in range(len(files)):
-    if g[i] == lvl_geno[0]:
+    if geno["geno"][i] == lvl_geno[0]:
         ev0_files.append(files[i])
+        
+ 
+        
         
 #define experimental variable level 2 files        
 ev1_files = []
 for i in range(len(files)):
-    if g[i] == lvl_geno[1]:
+    if geno["geno"][i] == lvl_geno[1]:
         ev1_files.append(files[i])
 
 #make random selections for level 1

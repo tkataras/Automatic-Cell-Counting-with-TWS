@@ -60,7 +60,7 @@ print(class_list)
 
 #location of folders holding The Count output
 
-print("Got to start of iterating over classifier images")
+print("Got to start iterating over classifier images")
 class_res_loc = OUTPUT_count + selectedClassifier + "/" + selectedClassifier + "_Results_test_data.csv"
 class_results = pd.read_csv(class_res_loc)
 
