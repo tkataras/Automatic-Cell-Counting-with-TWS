@@ -12,6 +12,7 @@ import os
 import sys
 import numpy
 import random
+import shutil
 
 # Method to change working directory from inputted ImageJ Macro
 currDir = os.getcwd()
@@ -20,13 +21,15 @@ def setDir(arg1):
     os.chdir(currDir)
 setDir(sys.argv[1])
     
+
+#os.chdir(sys.argv[1])
 selectedClassifier = sys.argv[2]
 
 
 
 ##REMOVE THIS LATER
-os.chdir("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/scripts_for_auto_cell_count/")
-selectedClassifier = "classifier2"
+#os.chdir("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/scripts_for_auto_cell_count/")
+#selectedClassifier = "classifier2"
 
 #read in genotype.csv
 geno_file = "../training_area/testing_area/geno_full.csv"
@@ -94,6 +97,7 @@ for index in rand_ev1:
 
 # Copy selected images into audit images directory
 for file in audit_set:
-    filename = "../training_area/testing_area/images/" + os.path.basename(file)
+    filename =  os.path.basename(file)
     print(filename)
-    copyfile(filename, os.path.join("../training_area/testing_area/Audit_Images", filename))
+    shutil.copyfile("../training_area/testing_area/images/" + filename, os.path.join("../training_area/testing_area/Audit_Images/" + selectedClassifier +"/", filename))
+    shutil.copyfile("../training_area/testing_area/Weka_Output_Counted/" + selectedClassifier +"/" + filename, os.path.join("../training_area/testing_area/Audit_Hand_Counts/"+ selectedClassifier +"/", filename))
