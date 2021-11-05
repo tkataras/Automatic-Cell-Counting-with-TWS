@@ -10,7 +10,7 @@ Dialog.addChoice("Choose classifier", searchDirectory);
 Dialog.show();
 
 selectedClassifier = Dialog.getChoice();
-
+print(selectedClassifier);
 exec("python", input + "file_architect.py", input, selectedClassifier);
 
 trimClassName = split(selectedClassifier, ".");
@@ -37,8 +37,11 @@ if (result) {
 runMacro(input + "just_thresh.ijm", testingPath); //***IT STILL SEemS to ME LIKE thiS NEEDS TO BE RUN BEFORE PROJECT IMAGES***
 runMacro(input + "count_full_dataset.ijm", searchDirectory);
 
-exec("python", input + "audit.py", input, selectedClassifier);
-exec("python", input + "finalClassifierCheck.py", input, selectedClassifier);
+// Run Python script
+exec("python", input + "audit.py", input, trimClassName[0]);
+
+
+//exec("python", input + "finalClassifierCheck.py", input, selectedClassifier);
 /*
 runMacro(input + "count_from_roi.ijm", testingPath);
 

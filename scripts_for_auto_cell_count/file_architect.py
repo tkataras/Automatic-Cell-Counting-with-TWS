@@ -37,6 +37,7 @@ print("in file architect py")
 
 type(class_list_pre_trim)
 
+##TODO decide if this should be taken out and trimClassName used as arg2 instead
 
 #trim the classifier names of the ".model" at the end
 class_list = []
