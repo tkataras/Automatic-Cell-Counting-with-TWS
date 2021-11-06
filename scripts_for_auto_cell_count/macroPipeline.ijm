@@ -28,10 +28,8 @@ runMacro(input + "just_thresh.ijm", input);
 runMacro(input + "count_from_roi.ijm", input);
 runMacro(input + "count_over_dir.ijm", searchDirectory);
 
-y = input + "test.py";
 z = input + "classifier_comparison.py";
 
-print(y);
 // Next, run classifier comparison
 //exec("python", y);
 exec("python", z, input);

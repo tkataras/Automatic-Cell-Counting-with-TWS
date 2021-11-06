@@ -34,8 +34,6 @@ macro "The -- True -- Count" {
 	Dialog.show();
 	size_min = Dialog.getNumber();
 	
-	
-	
 
 		print(input_dirs);
 		print(output_dirs);
@@ -66,22 +64,12 @@ macro "The -- True -- Count" {
 			// this imageJ plugin creates the results file and image of the count cells based on the size exclusion		
 			run("Analyze Particles...", "size="+size_min+"-Infinity pixel show=Masks display summarize add");
 			
-			
 			saveAs("Png",output + "/" + filename);// *#*#*##* need to at x, which is the classifier name,  and a / so it saves in the correct folder
-			
 			run("Measure");	
 			
-			
-			
-			
 			numroi = roiManager("count"); // establish number of objects
-			print("number auto count objects=" + numroi -1);
-		
-				
-			
-					}
-				
-					
+			print("number auto count objects=" + numroi -1);	
+		}			
 				//update the results table
 				//setResult("points", n++, counts);	
 			//}
@@ -98,5 +86,5 @@ macro "The -- True -- Count" {
 		print("AH HA HA "+list.length+" images");
 	}
 }
-
+print("Finished count_full_dataset");
 updateResults();

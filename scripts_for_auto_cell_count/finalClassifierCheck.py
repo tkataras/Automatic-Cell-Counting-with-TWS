@@ -1,7 +1,7 @@
 #!/usr/bin/python
 ###
 # Author: Tyler Jang, Theo Kataras
-# Date 10/26/2021
+# Date 11/5/2021
 # This file is the pipeline for comparing classifier accuracy on validation data
 #
 # Inputs: genotype file, hand count results file from Cout Roi, results of The Count.IJM in each classifier folder 
@@ -20,6 +20,7 @@ def setDir(arg1):
     os.chdir(currDir)
 setDir(sys.argv[1])
     
+# Get the selected classifier by the user
 selectedClassifier = sys.argv[2]
 
 # Find the number of image names to get the count of each cell in each image
@@ -59,7 +60,7 @@ geno = pd.read_csv(geno_file)
 # Get the unique genotype labels
 lvl_geno = np.unique(geno)
 if len(lvl_geno) != 2:
-    print("automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
+    print("Automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
 
 genoList = []
 for numRows in range(0, len(imgCounts["Label"])):
@@ -73,7 +74,6 @@ imgCounts.to_csv(OUTPUT_count + selectedClassifier + "/" + selectedClassifier + 
 # Calculate the Welch 2 Sample T-test   
 groupOne = imgCounts.query('geno == @lvl_geno[0]')
 groupTwo = imgCounts.query('geno == @lvl_geno[1]')
-
 t_test_calc = scipy.stats.ttest_ind(groupOne["Counts"], groupTwo["Counts"], equal_var=False, nan_policy="omit")
 
 print("T-test statistic: " + str(t_test_calc[0]))

@@ -10,12 +10,8 @@ import pandas as pd
 import numpy as np
 import os
 import sys
-import numpy
 import random
 import shutil
-
-
-
 
 ##REMOVE THIS LATER
 #os.chdir("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/scripts_for_auto_cell_count/")
@@ -32,17 +28,12 @@ lvl_geno = np.unique(geno)
 if len(lvl_geno) != 2:
     print("automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
 
-
-
-  
 #read in file names from the counted/projected experimental dataset
 folder_loc = "../training_area/testing_area/Weka_Output_Counted/" +  selectedClassifier
 files = []
 for image in os.listdir(folder_loc):
     if image[-4:] == ".png":
             files.append(image)
-files
-
 
 ####TODO make rest of this work, i am this far
 
@@ -58,10 +49,7 @@ ev0_files = []
 for i in range(len(files)):
     if geno["geno"][i] == lvl_geno[0]:
         ev0_files.append(files[i])
-        
- 
-        
-        
+            
 #define experimental variable level 2 files        
 ev1_files = []
 for i in range(len(files)):
@@ -71,7 +59,6 @@ for i in range(len(files)):
 #make random selections for level 1
 LEV0 = len(ev0_files)
 LEV1 = len(ev1_files)
-
 
 rand_ev0 = random.sample(range(0,LEV0), draws_per_geno)
 rand_ev1 = random.sample(range(0,LEV1), draws_per_geno)
