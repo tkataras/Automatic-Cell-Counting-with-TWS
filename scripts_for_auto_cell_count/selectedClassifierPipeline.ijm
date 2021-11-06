@@ -1,4 +1,4 @@
-	input = getDirectory("Choose source directory of the macro (Scripts for Auto Cell Count)");
+input = getDirectory("Choose source directory of the macro (Scripts for Auto Cell Count)");
 testingPath = input + "../training_area/testing_area/";
 classifierDir = input + "../training_area/Classifiers";
 searchDirectory = getFileList(classifierDir);
@@ -20,6 +20,8 @@ testingPath = testingPath + "Weka_Output/" + trimClassName[0];
 //TODO figure out bean shell calling
 //runMacro(input + "BS_TWS_apply.bsh");
 
+//exec("python", input + "audit.py");
+
 // TODO Check if can run without projected images
 searchDirectory = input
 Dialog.create("Example Dialog");
@@ -35,19 +37,16 @@ if (result) {
 
 // Run ImageJ macros
 runMacro(input + "just_thresh.ijm", testingPath); //***IT STILL SEemS to ME LIKE thiS NEEDS TO BE RUN BEFORE PROJECT IMAGES***
-runMacro(input + "count_full_dataset.ijm", searchDirectory);
+//runMacro(input + "count_full_dataset.ijm", searchDirectory);
 
 // Run Python script
-exec("python", input + "audit.py", input, trimClassName[0]);
+//exec("python", input + "audit.py", input, trimClassName[0]);
 
 
 //exec("python", input + "finalClassifierCheck.py", input, selectedClassifier);
-/*
-runMacro(input + "count_from_roi.ijm", testingPath);
 
-z = input + "classifier_comparison.py";
+//runMacro(input + "count_from_roi.ijm", testingPath);
 
 // Next, run classifier comparison
-exec("python", z, input);
+exec("python", input + "finalClassifierCheck.py", input, trimClassName[0]);
 print("finished pipeline");
-*/
