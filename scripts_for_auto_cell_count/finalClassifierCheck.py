@@ -60,7 +60,7 @@ geno = pd.read_csv(geno_file)
 # Get the unique genotype labels
 lvl_geno = np.unique(geno)
 if len(lvl_geno) != 2:
-    print("automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
+    print("Automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
 
 genoList = []
 for numRows in range(0, len(imgCounts["Label"])):

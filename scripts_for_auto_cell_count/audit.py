@@ -10,12 +10,8 @@ import pandas as pd
 import numpy as np
 import os
 import sys
-import numpy
 import random
 import shutil
-
-
-
 
 ##REMOVE THIS LATER
 #os.chdir("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/scripts_for_auto_cell_count/")

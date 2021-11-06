@@ -147,7 +147,7 @@ for f in range(0, len(class_list)):
 
     current_loc = counted_folder_dir + "/" + class_list[f]
     file_out_name = current_loc + "/" + curr_class + "_Final.csv"
-    #writes out the final file to save the output
+    # Writes out the final file to save the output
     final_blah.to_csv(file_out_name)
   
     # TODO it won't be an alternating pattern, just set the geno values to their rows
