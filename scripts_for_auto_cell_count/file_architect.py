@@ -54,17 +54,33 @@ OUTPUT_project = SOURCE + "Weka_Output_Projected/"
 OUTPUT_count = SOURCE + "Weka_Output_Counted/"
 
     
-#create classifier folders in each prescribed location
+#create classifier folders in each prescribed location if it doesn't already exist
 for class_ID in class_list:
     print(class_ID)
-    os.mkdir(OUTPUT + class_ID)
-    os.mkdir(OUTPUT_thresh + class_ID)
-    os.mkdir(OUTPUT_project + class_ID)
-    os.mkdir(OUTPUT_count + class_ID)
+    if not os.path.isdir(OUTPUT + class_ID):
+        os.mkdir(OUTPUT + class_ID)
+    if not os.path.isdir(OUTPUT_thresh + class_ID):
+        os.mkdir(OUTPUT_thresh + class_ID)
+    if not os.path.isdir(OUTPUT_project + class_ID):
+        os.mkdir(OUTPUT_project + class_ID)
+    if not os.path.isdir(OUTPUT_count + class_ID):
+        os.mkdir(OUTPUT_count + class_ID)
 
 
 #TODO need to have classifiers subfolder in audit images, hand count and counted
 if test_stage:
-    os.mkdir(SOURCE + "Audit_Images/")
-    os.mkdir(SOURCE + "Audit_Hand_Counts/")
-    os.mkdir(SOURCE + "Audit_Counted/")
+    if not os.path.isdir(SOURCE + "Audit_Images/"):
+        os.mkdir(SOURCE + "Audit_Images/")
+    if not os.path.isdir(SOURCE + "Audit_Images/" + class_list[0]):
+        os.mkdir(SOURCE + "Audit_Images/" + class_list[0])
+
+    if not os.path.isdir(SOURCE + "Audit_Hand_Counts/"):
+        os.mkdir(SOURCE + "Audit_Hand_Counts/")
+    if not os.path.isdir(SOURCE + "Audit_Hand_Counts/" + class_list[0]):
+        os.mkdir(SOURCE + "Audit_Hand_Counts/" + class_list[0])
+
+    if not os.path.isdir(SOURCE + "Audit_Counted/"):
+        os.mkdir(SOURCE + "Audit_Counted/")
+    if not os.path.isdir(SOURCE + "Audit_Counted/" + class_list[0]):
+        os.mkdir(SOURCE + "Audit_Counted/" + class_list[0])
+    

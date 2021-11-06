@@ -18,7 +18,8 @@ import shutil
 
 
 ##REMOVE THIS LATER
-os.chdir("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/scripts_for_auto_cell_count/")
+#os.chdir("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/scripts_for_auto_cell_count/")
+os.chdir("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/scripts_for_auto_cell_count")
 selectedClassifier = "classifier2"
 
 #read in genotype.csv
