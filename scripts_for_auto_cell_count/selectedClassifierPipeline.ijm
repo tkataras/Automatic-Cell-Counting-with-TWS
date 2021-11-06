@@ -20,8 +20,6 @@ testingPath = testingPath + "Weka_Output/" + trimClassName[0];
 //TODO figure out bean shell calling
 //runMacro(input + "BS_TWS_apply.bsh");
 
-//exec("python", input + "audit.py");
-
 // TODO Check if can run without projected images
 searchDirectory = input
 Dialog.create("Example Dialog");
@@ -40,7 +38,7 @@ runMacro(input + "just_thresh.ijm", testingPath); //***IT STILL SEemS to ME LIK
 runMacro(input + "count_full_dataset.ijm", searchDirectory);
 
 // Run Python script
-//exec("python", input + "audit.py", input, trimClassName[0]);
+exec("python", input + "audit.py", input, trimClassName[0]);
 
 // Next, run classifier comparison
 exec("python", input + "finalClassifierCheck.py", input, trimClassName[0]);

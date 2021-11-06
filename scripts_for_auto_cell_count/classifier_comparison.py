@@ -119,20 +119,32 @@ for f in range(0, len(class_list)):
     # TODO I don't think this line of code should be here in the first place, it seems harmful
     #final_blah = final_blah.append(this_row)
     
+    # TODO This is throwing a divide by 0 error I want to ignore
+    # This is temp fix, but a negative * positive can still cause divide by 0
+    def catchDivideByZero(numer, denom):
+        try:
+            return numer/denom
+        except ZeroDivisionError:
+            return None
     # Need to calculate precision and recall
     tot_tp = sum(final_blah["tp"])
     tot_fp = sum(final_blah["fp"])
     tot_fn = sum(final_blah["fn"])
 
+    print(final_blah)
     # precision is tp/(tp + fp)
     prec = tot_tp/(tot_tp + tot_fp)
     #recall is tp/(tp + fn)
     reca = tot_tp/(tot_tp + tot_fn)
-  
-    F1 = 2*(prec*reca/(prec + reca))
+    result = catchDivideByZero(prec*reca, prec + reca)
+    if result == None:
+        F1 = None
+    else:
+        F1 = 2 * result
     print(curr_class + " percision = " +  str(prec))
     print(curr_class + " recall = " +  str(reca))
     print(curr_class + " F1 = " +  str(F1))
+
     current_loc = counted_folder_dir + "/" + class_list[f]
     file_out_name = current_loc + "/" + curr_class + "_Final.csv"
     #writes out the final file to save the output
@@ -144,23 +156,14 @@ for f in range(0, len(class_list)):
     lvl_geno = np.unique(geno)
     genoList = []
     for numRows in range(0, len(final_blah["name"])):
-        genoList.append(geno["geno"][numRows % 2])
+        genoList.append(geno["geno"][numRows])
     final_blah["geno"] = genoList
 
-
-    #####this makes the table comparing all classifiers
+    print(final_blah)
   
     #precision and recall per image
     prec2 = final_blah["tp"]/(final_blah["tp"] + final_blah["fp"])    
     reca2 = final_blah["tp"]/(final_blah["tp"] + final_blah["fn"])
-
-    # TODO This is throwing a divide by 0 error I want to ignore
-    # This is temp fix, but a negative * positive can still cause divide by 0
-    def catchDivideByZero(numer, denom):
-        try:
-            return numer/denom
-        except ZeroDivisionError:
-            return None
     
     # Calculate F1_2
     F1_2 = []
