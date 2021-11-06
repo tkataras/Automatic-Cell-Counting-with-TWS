@@ -37,15 +37,10 @@ if (result) {
 
 // Run ImageJ macros
 runMacro(input + "just_thresh.ijm", testingPath); //***IT STILL SEemS to ME LIKE thiS NEEDS TO BE RUN BEFORE PROJECT IMAGES***
-//runMacro(input + "count_full_dataset.ijm", searchDirectory);
+runMacro(input + "count_full_dataset.ijm", searchDirectory);
 
 // Run Python script
 //exec("python", input + "audit.py", input, trimClassName[0]);
-
-
-//exec("python", input + "finalClassifierCheck.py", input, selectedClassifier);
-
-//runMacro(input + "count_from_roi.ijm", testingPath);
 
 // Next, run classifier comparison
 exec("python", input + "finalClassifierCheck.py", input, trimClassName[0]);
