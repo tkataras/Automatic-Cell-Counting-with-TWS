@@ -10,7 +10,7 @@ macro "The -- True -- Count" {
 	
 	//this hides intermediary information and speeds processing
 	setBatchMode(true); 
-	print("in count over dir");
+	
 	//set input and output directories locations
 	//TODO: Hard set the path to source and output directories 
 	// Projected
@@ -54,7 +54,6 @@ macro "The -- True -- Count" {
 		
 		//iterate  macro over the images in the input folder
 		for (q = 0; q < list.length; q++) {
-			print(list.length);
 			action(input, output, list[q], dir2, list2[q]);
 		}
 		
