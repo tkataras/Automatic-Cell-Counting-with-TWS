@@ -23,6 +23,13 @@ setDir(sys.argv[1])
 # Get the selected classifier by the user
 selectedClassifier = sys.argv[2]
 
+
+##REMOVE THIS LATER
+os.chdir("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/scripts_for_auto_cell_count/")
+#os.chdir("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/scripts_for_auto_cell_count")
+selectedClassifier = "classifier2"
+
+
 # Find the number of image names to get the count of each cell in each image
 
 # Input the genotype data as a .csv file

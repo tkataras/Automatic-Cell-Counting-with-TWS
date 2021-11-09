@@ -13,10 +13,16 @@ import sys
 import random
 import shutil
 
-##REMOVE THIS LATER
-#os.chdir("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/scripts_for_auto_cell_count/")
-os.chdir("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/scripts_for_auto_cell_count")
-selectedClassifier = "classifier2"
+# Method to change working directory from inputted ImageJ Macro
+currDir = os.getcwd()
+def setDir(arg1):
+    currDir = arg1
+    os.chdir(currDir)
+setDir(sys.argv[1])
+    
+# Get the selected classifier by the user
+selectedClassifier = sys.argv[2]
+
 
 #read in genotype.csv
 geno_file = "../training_area/testing_area/geno_full.csv"
