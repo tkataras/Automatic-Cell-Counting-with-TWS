@@ -7,9 +7,8 @@ print(File.getDefaultDir);
 
 exec("python", input + "file_architect.py", input);
 
-//TODO figure out bean shell calling
-//runMacro(input + "BS_TWS_apply.bsh");
-
+// TODO need to find a way to put this bsh into user's plugins
+run("BS TWS apply");
 
 runMacro(input + "just_thresh.ijm", input);
 
@@ -33,6 +32,6 @@ runMacro(input + "count_over_dir.ijm", searchDirectory);
 z = input + "classifier_comparison.py";
 
 // Next, run classifier comparison
-//exec("python", y);
 exec("python", z, input);
 print("finished pipeline");
+*/
