@@ -13,7 +13,8 @@ import sys
 import random
 import shutil
 
-# Set the current directory to the first argument
+
+# Method to change working directory from inputted ImageJ Macro
 currDir = os.getcwd()
 def setDir(arg1):
     currDir = arg1
@@ -22,7 +23,6 @@ setDir(sys.argv[1])
 
 # Get the selected classifier by the user
 selectedClassifier = sys.argv[2]
-
 #read in genotype.csv
 geno_file = "../training_area/testing_area/geno_full.csv"
 
