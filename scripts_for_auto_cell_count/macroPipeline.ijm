@@ -10,6 +10,9 @@ exec("python", input + "file_architect.py", input);
 //TODO figure out bean shell calling
 //runMacro(input + "BS_TWS_apply.bsh");
 
+
+runMacro(input + "just_thresh.ijm", input);
+
 // TODO Check if can run without projected images
 searchDirectory = input
 Dialog.create("Example Dialog");
@@ -24,7 +27,6 @@ if (result) {
 }
 
 // Run ImageJ macros
-runMacro(input + "just_thresh.ijm", input);
 runMacro(input + "count_from_roi.ijm", input);
 runMacro(input + "count_over_dir.ijm", searchDirectory);
 

@@ -213,3 +213,5 @@ else:
             projected = projected + imageio.imread(path)
         file_out_loc = id_for_out_dir + "/" + list(all_current_ID["File_name"])[0]
         imageio.imwrite(file_out_loc, projected)
+
+print("Finished Projecting N images by ID")
