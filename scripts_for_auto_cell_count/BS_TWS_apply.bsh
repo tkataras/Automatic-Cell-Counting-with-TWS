@@ -3,7 +3,6 @@
  * Date: 10/20/2021
  * Description: This macro applies each Weka classifier onto each validated training image.
  */
-print("hi");
 // The user will have to select the directory that contains the script they are running.
 #@ File(label="Source directory", description="Select the directory with the source of the scripts", style="directory") srcDir
 
