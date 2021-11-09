@@ -17,12 +17,12 @@ trimClassName = split(selectedClassifier, ".");
 
 testingPath = testingPath + "Weka_Output/" + trimClassName[0];
 
-//TODO figure out bean shell calling
+//TODO do I need to call this method at all
 //runMacro(input + "BS_TWS_apply.bsh");
 
 // TODO Check if can run without projected images
 searchDirectory = input
-Dialog.create("Example Dialog");
+Dialog.create("Question");
 Dialog.addCheckbox("Do you need to project multiple image segmentations?", false);
 Dialog.show();
 result = Dialog.getCheckbox();
