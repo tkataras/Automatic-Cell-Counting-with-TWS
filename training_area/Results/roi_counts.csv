@@ -1,22 +1,27 @@
-Name,*,Value
-Memory,*,92MB of 14160MB (<1%)
-nImages(),*,18
-getTitle(),*,"BKO-462-S72-Iba-Syn-Cortex-10x-F3a_XY1562191900_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-1.png"
-input_dirs,*,"F:\Theo\full_backup_3_23_2021\Kaul_lab_work\bin_general\scripts_for_auto_cell_co..."
-output_dirs,*,"F:\Theo\full_backup_3_23_2021\Kaul_lab_work\bin_general\scripts_for_auto_cell_co..."
-size_min,*,20
-dir2,*,"F:\Theo\full_backup_3_23_2021\Kaul_lab_work\bin_general\scripts_for_auto_cell_co..."
-input_dir_list,*,array[4]
-output_dir_list,*,array[4]
-z,*,0
-input,*,"classifier2/"
-output,*,"classifier2/"
-list,*,array[6]
-list2,*,array[6]
-n,*,0
-q,*,6
-
----,,---
-Error:,,Undefined variable in line 123:
-,
-,,saveAs ( "Results" , output_dirs + output + <class_name> + "_Results.csv" ) ; 
+ ,Label,Area,Mean,Min,Max,X,Y
+1,BKO-426-S42-Iba-Syn-Cortex-10x-F2b_XY1562195173_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-3-1.roi,0,0,0,0,95.582,68.530
+2,BKO-426-S42-Iba-Syn-Cortex-10x-F2b_XY1562195173_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-3-1.roi,0,0,0,0,143.157,38.866
+3,BKO-426-S42-Iba-Syn-Cortex-10x-F2b_XY1562195173_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-3-1.roi,0,0,0,0,14.425,72.448
+4,BKO-426-S42-Iba-Syn-Cortex-10x-F2b_XY1562195173_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-3-1.roi,0,0,0,0,47.634,38.306
+5,BKO-426-S42-Iba-Syn-Cortex-10x-F2b_XY1562195173_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-3-1.roi,0,0,0,0,36.254,20.955
+6,BKO-426-S42-Iba-Syn-Cortex-10x-F2b_XY1562195173_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-3-1.roi,0,0,0,0,21.142,84.201
+7,BKO-426-S42-Iba-Syn-Cortex-10x-F2b_XY1562195173_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-3-1.roi,0,0,0,0,126.925,125.619
+8,BKO-426-S42-Iba-Syn-Cortex-10x-F2b_XY1562195173_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-3-1.roi,0,0,0,0,57.709,124.127
+9,BKO-426-S42-Iba-Syn-Cortex-10x-F3b_XY1562195173_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-1-1.roi,0,0,0,0,38.679,76.925
+10,BKO-426-S42-Iba-Syn-Cortex-10x-F3b_XY1562195173_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-1-1.roi,0,0,0,0,88.866,38.306
+11,BKO-426-S42-Iba-Syn-Cortex-10x-F3b_XY1562195173_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-1-1.roi,0,0,0,0,138.119,46.328
+12,BKO-426-S42-Iba-Syn-Cortex-10x-F3b_XY1562195173_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-1-1.roi,0,0,0,0,133.828,97.821
+13,BKO-426-S42-Iba-Syn-Cortex-10x-F3b_XY1562195173_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-1-1.roi,0,0,0,0,6.590,114.985
+14,BKO-426-S42-Iba-Syn-Cortex-10x-F3b_XY1562195173_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-1-1.roi,0,0,0,0,69.276,3.604
+15,BKO-426-S42-Iba-Syn-Cortex-10x-F4a_XY1562195154_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-2-1.roi,0,0,0,0,45.955,18.716
+16,BKO-426-S42-Iba-Syn-Cortex-10x-F4a_XY1562195154_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-2-1.roi,0,0,0,0,14.985,115.545
+17,BKO-426-S42-Iba-Syn-Cortex-10x-F4a_XY1562195154_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-2-1.roi,0,0,0,0,82.709,93.157
+18,BKO-426-S42-Iba-Syn-Cortex-10x-F4a_XY1562195154_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-2-1.roi,0,0,0,0,133.269,135.321
+19,BKO-460-S57-Iba-Syn-Cortex-10x-F1b_XY1562191217_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-1-1.roi,0,0,0,0,72.075,25.993
+20,BKO-460-S57-Iba-Syn-Cortex-10x-F1b_XY1562191217_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-1-1.roi,0,0,0,0,12.187,36.067
+21,BKO-460-S57-Iba-Syn-Cortex-10x-F1b_XY1562191217_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-1-1.roi,0,0,0,0,45.769,130.097
+22,BKO-460-S57-Iba-Syn-Cortex-10x-F2b_XY1562191217_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-2-1.roi,0,0,0,0,79.537,80.284
+23,BKO-460-S57-Iba-Syn-Cortex-10x-F2b_XY1562191217_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-2-1.roi,0,0,0,0,118.530,36.254
+24,BKO-460-S57-Iba-Syn-Cortex-10x-F2b_XY1562191217_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-2-1.roi,0,0,0,0,62.746,103.231
+25,BKO-460-S57-Iba-Syn-Cortex-10x-F3b_XY1562191217_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-3-1.roi,0,0,0,0,18.343,95.396
+26,BKO-460-S57-Iba-Syn-Cortex-10x-F3b_XY1562191217_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-3-1.roi,0,0,0,0,119.090,75.246

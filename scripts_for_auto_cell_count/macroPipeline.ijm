@@ -1,10 +1,8 @@
 input = getDirectory("Choose source directory of the macro (Scripts for Auto Cell Count)");
-
 print(input);
 
 File.setDefaultDir(input);
 print(File.getDefaultDir);
-
 
 exec("python", input + "file_architect.py", input);
 
@@ -12,7 +10,7 @@ exec("python", input + "file_architect.py", input);
 //fiji_dir = getDirectory("Select the plugins directory for fiji (fiji/plugins)");
 // Copy BS_TWS_apply.bsh into fiji_dir
 
-run("BS TWS apply");
+//run("BS TWS apply", input);
 
 runMacro(input + "just_thresh.ijm", input);
 
@@ -38,4 +36,3 @@ z = input + "classifier_comparison.py";
 // Next, run classifier comparison
 exec("python", z, input);
 print("finished pipeline");
-*/
