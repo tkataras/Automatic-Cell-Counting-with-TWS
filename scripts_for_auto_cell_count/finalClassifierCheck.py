@@ -23,23 +23,12 @@ setDir(sys.argv[1])
 # Get the selected classifier by the user
 selectedClassifier = sys.argv[2]
 
-
-##REMOVE THIS LATER
-os.chdir("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/scripts_for_auto_cell_count/")
-#os.chdir("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/scripts_for_auto_cell_count")
-selectedClassifier = "classifier2"
-
-
-# Find the number of image names to get the count of each cell in each image
-
 # Input the genotype data as a .csv file
 geno_file = "../training_area/testing_area/geno_full.csv"
 
 # File output location
 OUTPUT_count = "../training_area/testing_area/Weka_Output_Counted/"
 result_out = "../training_area/testing_area/Results/"
-print("In finalClassifierCheck")
-print(OUTPUT_count + selectedClassifier)
 class_list_temp = os.listdir(OUTPUT_count + selectedClassifier)
 
 class_list = []
