@@ -1,7 +1,7 @@
-,name,tp,fp,fn
-0,BKO-426-S42-Iba-Syn-Cortex-10x-F2a_XY1562195154_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-3.png,5,4,3
-0,BKO-426-S42-Iba-Syn-Cortex-10x-F3a_XY1562195154_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-1.png,6,1,0
-0,BKO-426-S42-Iba-Syn-Cortex-10x-F4a_XY1562195154_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-2.png,4,0,0
-0,BKO-460-S57-Iba-Syn-Cortex-10x-F1a_XY1562191200_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-1.png,3,1,0
-0,BKO-460-S57-Iba-Syn-Cortex-10x-F2a_XY1562191200_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-2.png,3,1,0
-0,BKO-460-S57-Iba-Syn-Cortex-10x-F3a_XY1562191200_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-3.png,2,3,0
+,name,tp,fp,fn,avg_area,avg_circularity
+0,BKO-426-S42-Iba-Syn-Cortex-10x-F2a_XY1562195154_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-3.png,5,4,3,326.44444444444446,0.4966850855555555
+0,BKO-426-S42-Iba-Syn-Cortex-10x-F3a_XY1562195154_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-1.png,6,1,0,232.71428571428572,0.6450498185714286
+0,BKO-426-S42-Iba-Syn-Cortex-10x-F4a_XY1562195154_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-2.png,4,0,0,477.5,0.7323809450000001
+0,BKO-460-S57-Iba-Syn-Cortex-10x-F1a_XY1562191200_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-1.png,3,1,0,306.5,0.679335585
+0,BKO-460-S57-Iba-Syn-Cortex-10x-F2a_XY1562191200_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-2.png,3,1,0,115.25,0.70529827
+0,BKO-460-S57-Iba-Syn-Cortex-10x-F3a_XY1562191200_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-3.png,2,3,0,174.4,0.554414522

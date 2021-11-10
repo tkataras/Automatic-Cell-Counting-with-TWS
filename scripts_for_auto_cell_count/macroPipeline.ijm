@@ -1,5 +1,8 @@
 input = getDirectory("Choose source directory of the macro (Scripts for Auto Cell Count)");
 
+// Set measurements to calculate
+run("Set Measurements...", "area mean standard modal min centroid center perimeter bounding fit shape feret's integrated median skewness kurtosis area_fraction limit display redirect=None decimal=8");
+
 print(input);
 
 File.setDefaultDir(input);

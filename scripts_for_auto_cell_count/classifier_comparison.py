@@ -11,7 +11,7 @@ import pandas as pd
 import numpy as np
 import os
 import sys
-#import time
+import time
 import scipy.stats
 
 # Method to change working directory from inputted ImageJ Macro
@@ -61,7 +61,7 @@ hand_final = count_h
 counted_folder_dir = OUTPUT_count
 
 print("Got to start of iterating over classifiers")
-#iterate through each classifier 
+# Iterate through each classifier 
 for f in range(0, len(class_list)):
     class_name = os.listdir(OUTPUT_count)[f]
     class_res_loc = counted_folder_dir + os.listdir(OUTPUT_count)[f] + "/" + class_name + "_Results.csv"
@@ -80,24 +80,28 @@ for f in range(0, len(class_list)):
 
     img_names = files
 
-    final_blah = pd.DataFrame(columns=["name", "tp", "fp", "fn"])
-
+    final_blah = pd.DataFrame(columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
+    
     for image in range(0, len(img_names)):
         current_img_plus_png = img_names[image]
         
         dftc = class_results[class_results["Label"].isin([current_img_plus_png])]
         
+        # If the images are all empty
         if dftc.size == 0:
             name = img_names[image]
             tp = 0
             fp = 0
             fn = count_h[lvl_h[image]]
-            this_row = pd.DataFrame([[name, tp, fp, fn]], columns=["name", "tp", "fp", "fn"])
+            avg_area = 0
+            avg_circular = 0
+            this_row = pd.DataFrame([[name, tp, fp, fn, avg_area, avg_circular]], columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
         else: 
             fp = 0
             tp = 0
             fn = 0
-
+            avg_area = np.mean(dftc["Area"])
+            avg_circular = np.mean(dftc["Circ."])
             for autoCount in (dftc["points"]):
                 if autoCount == 0:
                     fp = fp + 1
@@ -114,11 +118,9 @@ for f in range(0, len(class_list)):
         fn = fn + missed
         name = img_names[image]
 
-        this_row = pd.DataFrame([[name, tp, fp, fn]], columns=["name", "tp", "fp", "fn"])
+        this_row = pd.DataFrame([[name, tp, fp, fn, avg_area, avg_circular]], columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
         final_blah = final_blah.append(this_row)
-    # TODO I don't think this line of code should be here in the first place, it seems harmful
-    #final_blah = final_blah.append(this_row)
-    
+            
     # TODO This is throwing a divide by 0 error I want to ignore
     # This is temp fix, but a negative * positive can still cause divide by 0
     def catchDivideByZero(numer, denom):
@@ -131,7 +133,6 @@ for f in range(0, len(class_list)):
     tot_fp = sum(final_blah["fp"])
     tot_fn = sum(final_blah["fn"])
 
-    print(final_blah)
     # precision is tp/(tp + fp)
     prec = tot_tp/(tot_tp + tot_fp)
     #recall is tp/(tp + fn)
@@ -158,8 +159,6 @@ for f in range(0, len(class_list)):
     for numRows in range(0, len(final_blah["name"])):
         genoList.append(geno["geno"][numRows])
     final_blah["geno"] = genoList
-
-    print(final_blah)
   
     #precision and recall per image
     prec2 = final_blah["tp"]/(final_blah["tp"] + final_blah["fp"])    
@@ -200,12 +199,11 @@ for f in range(0, len(class_list)):
     # Prepare output csv file
     row_row = pd.DataFrame([[curr_class, prec, reca, F1, F1_g_tt_p, mean_F1_gp, mean_F1_wt, p_g_tt_p, r_g_tt_p]], columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp", "mean_F1_wt", "p_g_tt_p", "r_g_tt_p"])
     your_boat = your_boat.append(row_row)
-#currTime = time.localtime(time.time())
+currTime = time.localtime(time.time())
 #generating a unique file name based on time and date
-#date = str(currTime.tm_mday) + "-" + str(currTime.tm_hour) + "-" + str(currTime.tm_min) + "-" + str(currTime.tm_sec)
+date = str(currTime.tm_mday) + "-" + str(currTime.tm_hour) + "-" + str(currTime.tm_min) + "-" + str(currTime.tm_sec)
 
-#out_name = "All_classifier_Comparison_" + date + ".csv"
-out_name = "All_classifier_Comparison.csv"
+out_name = "All_classifier_Comparison_" + date + ".csv"
 
 #write.csv(your_boat, paste(result_out,out_name, sep = ""))
 your_boat.to_csv(result_out + out_name)

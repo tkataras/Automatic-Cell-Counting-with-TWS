@@ -37,9 +37,10 @@ if (result) {
 runMacro(input + "just_thresh.ijm", testingPath); //***IT STILL SEemS to ME LIKE thiS NEEDS TO BE RUN BEFORE PROJECT IMAGES***
 runMacro(input + "count_full_dataset.ijm", searchDirectory);
 
-// Run Python script
-exec("python", input + "audit.py", input, trimClassName[0]);
-
 // Next, run classifier comparison
 exec("python", input + "finalClassifierCheck.py", input, trimClassName[0]);
 print("finished pipeline");
+
+
+// Run Python script
+exec("python", input + "audit.py", input, trimClassName[0]);

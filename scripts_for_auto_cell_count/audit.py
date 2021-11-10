@@ -13,7 +13,6 @@ import sys
 import random
 import shutil
 
-
 # Method to change working directory from inputted ImageJ Macro
 currDir = os.getcwd()
 def setDir(arg1):
