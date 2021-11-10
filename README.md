@@ -20,6 +20,7 @@ sudo apt-get install python3-pip
 pip3 install numpy
 pip3 install scipy
 pip3 install pandas
+pip3 install python-time
 ```
 
 # Prerequisites:
@@ -34,6 +35,11 @@ https://imagej.net/software/fiji/
 # How To Use
 
 By downloading our Github repository you will have a set of folders for practice and for experimental use.
+
+# Input Files (aka Ingredients) 
+-Your images
+-genotype.csv file
+-geno_full.csv
 
 # Stage 1
 __1.1__ The first step is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference. This is so that our program knows where you have downloaded it. Select the directory/folder named scripts_for_auto_cell_count.
