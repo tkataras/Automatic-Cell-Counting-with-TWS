@@ -11,7 +11,7 @@ import pandas as pd
 import numpy as np
 import os
 import sys
-#import time
+import time
 import scipy.stats
 
 # Method to change working directory from inputted ImageJ Macro
@@ -200,12 +200,11 @@ for f in range(0, len(class_list)):
     # Prepare output csv file
     row_row = pd.DataFrame([[curr_class, prec, reca, F1, F1_g_tt_p, mean_F1_gp, mean_F1_wt, p_g_tt_p, r_g_tt_p]], columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp", "mean_F1_wt", "p_g_tt_p", "r_g_tt_p"])
     your_boat = your_boat.append(row_row)
-#currTime = time.localtime(time.time())
+currTime = time.localtime(time.time())
 #generating a unique file name based on time and date
-#date = str(currTime.tm_mday) + "-" + str(currTime.tm_hour) + "-" + str(currTime.tm_min) + "-" + str(currTime.tm_sec)
+date = str(currTime.tm_mday) + "-" + str(currTime.tm_hour) + "-" + str(currTime.tm_min) + "-" + str(currTime.tm_sec)
 
-#out_name = "All_classifier_Comparison_" + date + ".csv"
-out_name = "All_classifier_Comparison.csv"
+out_name = "All_classifier_Comparison_" + date + ".csv"
 
 #write.csv(your_boat, paste(result_out,out_name, sep = ""))
 your_boat.to_csv(result_out + out_name)
