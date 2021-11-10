@@ -33,7 +33,7 @@ By downloading our Github repository you will have a set of folders for practice
 # Practice
 The first step in practice is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference.
 
-<img src = "figures/selectSourece.PNG">
+<img src = "figures/selectSource.PNG">
 
 The pipeline will then individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .roi files and the supplied genotypes.csv file. 
 
