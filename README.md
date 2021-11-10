@@ -31,7 +31,7 @@ Need beanshell installation through terminal
 By downloading our Github repository you will have a set of folders for practice and for experimental use.
 
 # Practice
-The first step in practice is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference.
+The first step in practice is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference. This is so that our program knows where you have downloaded it. Select the directory/folder named scripts_for_auto_cell_count.
 
 <img src = "figures/selectSource.PNG">
 
@@ -43,7 +43,7 @@ Our data includes paired images in individual fields of view for increased conte
 
 <img src = "figures/selectMultipleSegmentation.PNG">
 
-To count the number of objects in your data, the program defaults to a 20 pixel minimum size of the objects as countable. If you want the minimum size of what an object must be in order to be counted, you are able to adjust this value.
+To count the number of objects in your data, the program defaults to a 20 pixel minimum size of the objects as countable. If you want a different minimum size threshold in order to be counted, you are able to adjust this value.
 
 <img src = "figures/selectSizeMin.PNG">
 
