@@ -18,7 +18,7 @@ runMacro(input + "just_thresh.ijm", input);
 
 // TODO Check if can run without projected images
 searchDirectory = input
-Dialog.create("Example Dialog");
+Dialog.create("Multiple Image Segmentations?");
 Dialog.addCheckbox("Do you need to project multiple image segmentations?", false);
 Dialog.show();
 result = Dialog.getCheckbox();
