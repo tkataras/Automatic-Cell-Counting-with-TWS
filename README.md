@@ -58,12 +58,16 @@ Once again, the program must know where it is downloaded. Select the directory/f
 
 Now, select the most accurate classifier. Selecting the most accurate classifier is left to the user, but information is supplied in the form of accuracy values in Precision, Recall and F! score, as well as statistical outputs of mean accuracy comparison between two separate experimental conditions entered in the genotypes.csv file. With base functionality, the pipeline is set up to process a dataset with two experimental groups.
 
+<img src = "figures/selectClassifier.PNG">
+
 *** 
-After the best classifier is selected, the second step of the pipline is initiated which applies a single classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons. This step requires a second genotypes.csv file from the user containing experimental grouping information for the unseen dataset.
-Additionaly, the second step of the pipeline sets aside a random sample of images equal to the number of validation images and equally distributed between experimental groups to serve as the performance estimate on the unseen data. This performance analysis requires user input in the form of .ROI hand counts. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison
+After the best classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons. This step requires a second genotypes.csv file from the user containing experimental grouping information for the unseen dataset.
+
+Additionaly, the second step of the pipeline sets aside a random sample of images equal to the number of validation images and equally distributed between experimental groups to serve as the performance estimate on the unseen data. This performance analysis requires user input in the form of .roi hand counts. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison.
 ***
- 
-           	Creating hand count markers
+
+__Creating hand count markers__
+
 Hand count markers are created in Imagej using the Point Selection Tool, available in the toolbar, and the ROI manager.
 1.      Open an image and place one or two count markers
 2.      Add the selections to the ROI manager
