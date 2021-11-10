@@ -35,11 +35,7 @@ The first step in practice is to initiate the pipeline. You will be prompted to 
 
 <img src = "figures/selectSourece.PNG">
 
-The pipeline will then individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .roi files and the supplied genotypes.csv file. 
-
-__To generate your own genotype.csv file:__
-
-Our data includes paired images in individual fields of view for increased context when counting, so intermediate steps are included to identify and project these image pairs for the final automatic count.
+The pipeline will then individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .ROi files and the supplied genotypes.csv file. Our data includes paired images in individual fields of view for increased context when counting, so intermediate steps are included to identify and project these image pairs for the final automatic count.
 After the pipeline completes a run, run times will vary by hardware capacity, open the all_classifier_comparison.csv* file to compare the performance of the various classifiers. Several classifiers should demonstrate the same accuracy statistics as the image size is very small, containing at most 3 cells per image.
 Now, select the most accurate classifier. Selecting the most accurate classifier is left to the user, but information is supplied in the form of accuracy values in Precision, Recall and F! score, as well as statistical outputs of mean accuracy comparison between two separate experimental conditions entered in the genotypes.csv file. With base functionality, the pipeline is set up to process a dataset with two experimental groups.***
  
