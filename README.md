@@ -33,32 +33,34 @@ By downloading our Github repository you will have a set of folders for practice
 
 # How To Use
 # Stage 1
-The first step is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference. This is so that our program knows where you have downloaded it. Select the directory/folder named scripts_for_auto_cell_count.
+__1.1__ The first step is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference. This is so that our program knows where you have downloaded it. Select the directory/folder named scripts_for_auto_cell_count.
 
 <img src = "figures/selectSource.PNG">
 
-The pipeline will then individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .roi files and the supplied genotypes.csv file. 
+__1.2__ The pipeline will then individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .roi files and the supplied genotypes.csv file. 
 
 __To generate your own genotype.csv file: TODO__
 
-Our data includes paired images in individual fields of view for increased context when counting, so intermediate steps are included to identify and project these image pairs for the final automatic count. If your data does not include paired images, do not select this option below:
+__1.3__ Our data includes paired images in individual fields of view for increased context when counting, so intermediate steps are included to identify and project these image pairs for the final automatic count. If your data does not include paired images, do not select this option below:
 
 <img src = "figures/selectMultipleSegmentation.PNG">
 
-To count the number of objects in your data, the program defaults to a 20 pixel minimum size of the objects as countable. If you want a different minimum size threshold in order to be counted, you are able to adjust this value.
+__1.4__ To count the number of objects in your data, the program defaults to a 20 pixel minimum size of the objects as countable. If you want a different minimum size threshold in order to be counted, you are able to adjust this value.
 
 <img src = "figures/selectSizeMin.PNG">
 
 After the pipeline completes a run, run times will vary by hardware capacity, open the all_classifier_comparison.csv* file to compare the performance of the various classifiers. Several classifiers should demonstrate the same accuracy statistics as the image size is very small, containing at most 3 cells per image.
 
 # Stage 2
-Once again, the program must know where it is downloaded. Select the directory/folder named scripts_for_auto_cell_count.
+__2.1__ Once again, the program must know where it is downloaded. Select the directory/folder named scripts_for_auto_cell_count.
 
 <img src = "figures/selectSource.PNG">
 
-Now, select the most accurate classifier. Selecting the most accurate classifier is left to the user, but information is supplied in the form of accuracy values in Precision, Recall and F! score, as well as statistical outputs of mean accuracy comparison between two separate experimental conditions entered in the genotypes.csv file. With base functionality, the pipeline is set up to process a dataset with two experimental groups.
+__2.2__ Now, select the most accurate classifier. Selecting the most accurate classifier is left to the user, but information is supplied in the form of accuracy values in Precision, Recall and F! score, as well as statistical outputs of mean accuracy comparison between two separate experimental conditions entered in the genotypes.csv file. With base functionality, the pipeline is set up to process a dataset with two experimental groups.
 
 <img src = "figures/selectClassifier.PNG">
+
+__2.3__ Repeat steps __1.3__ and __1.4__ with the parameters you used in stage 1.
 
 *** 
 After the best classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons. This step requires a second genotypes.csv file from the user containing experimental grouping information for the unseen dataset.
