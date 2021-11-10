@@ -7,10 +7,14 @@ print(File.getDefaultDir);
 exec("python", input + "file_architect.py", input);
 
 // TODO need to find a way to put this bsh into user's plugins
+<<<<<<< HEAD
 //fiji_dir = getDirectory("Select the plugins directory for fiji (fiji/plugins)");
 // Copy BS_TWS_apply.bsh into fiji_dir
 
 //run("BS TWS apply", input);
+=======
+run("BS TWS apply");
+>>>>>>> parent of 900d13a... Changed the arguments to audit.py to take the current dir and selected classifier
 
 runMacro(input + "just_thresh.ijm", input);
 
