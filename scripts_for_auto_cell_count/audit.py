@@ -15,6 +15,7 @@ import shutil
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 # Method to change working directory from inputted ImageJ Macro
 currDir = os.getcwd()
@@ -28,12 +29,17 @@ selectedClassifier = sys.argv[2]
 =======
 =======
 >>>>>>> parent of dc34ec3... 11/9/2021 stuck on no cells in audit(and i expect validation) means no roi, messing up count over dir and the like
+=======
+>>>>>>> parent of dc34ec3... 11/9/2021 stuck on no cells in audit(and i expect validation) means no roi, messing up count over dir and the like
 ##REMOVE THIS LATER
 #os.chdir("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/scripts_for_auto_cell_count/")
 os.chdir("C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/scripts_for_auto_cell_count")
 selectedClassifier = "classifier2"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of dc34ec3... 11/9/2021 stuck on no cells in audit(and i expect validation) means no roi, messing up count over dir and the like
+=======
 >>>>>>> parent of dc34ec3... 11/9/2021 stuck on no cells in audit(and i expect validation) means no roi, messing up count over dir and the like
 =======
 >>>>>>> parent of dc34ec3... 11/9/2021 stuck on no cells in audit(and i expect validation) means no roi, messing up count over dir and the like
