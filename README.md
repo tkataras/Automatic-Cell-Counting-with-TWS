@@ -23,15 +23,18 @@ pip3 install pandas
 ```
 
 # Prerequisites:
-Current** version of FIJI distribution of Imagej
+-Current** version of FIJI distribution of Imagej
+
 https://imagej.net/software/fiji/
 
-*** need R version___
-Need beanshell installation through terminal
+-R version___
+
+-Need beanshell installation through terminal TODO
  
+# How To Use
+
 By downloading our Github repository you will have a set of folders for practice and for experimental use.
 
-# How To Use
 # Stage 1
 __1.1__ The first step is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference. This is so that our program knows where you have downloaded it. Select the directory/folder named scripts_for_auto_cell_count.
 
