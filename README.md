@@ -6,7 +6,7 @@ A repository for the suit of scripts I use to perform automatic cell quantificat
 1. [Installation Guide](#installation-guide)
 2. [Software Dependencies](#software-dependencies)
 3. [Prerequisites](#prerequisites)
-4. [How To Use](#how_to_use)
+4. [How To Use](#how-to-use)
 # Installation Guide
 ```
 git clone https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
