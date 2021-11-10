@@ -39,13 +39,16 @@ The pipeline will then individually apply classifiers to the validation data and
 
 __To generate your own genotype.csv file:__
 
-Our data includes paired images in individual fields of view for increased context when counting, so intermediate steps are included to identify and project these image pairs for the final automatic count.
+Our data includes paired images in individual fields of view for increased context when counting, so intermediate steps are included to identify and project these image pairs for the final automatic count. If your data does not include paired images, do not select this option below:
 
 <img src = "figures/selectMultipleSegmentation.PNG">
 
-After the pipeline completes a run, run times will vary by hardware capacity, open the all_classifier_comparison.csv* file to compare the performance of the various classifiers. Several classifiers should demonstrate the same accuracy statistics as the image size is very small, containing at most 3 cells per image.
+To count the number of objects in your data, the program defaults to a 20 pixel minimum size of the objects as countable. If you want the minimum size of what an object must be in order to be counted, you are able to adjust this value.
 
 <img src = "figures/selectSizeMin.PNG">
+
+After the pipeline completes a run, run times will vary by hardware capacity, open the all_classifier_comparison.csv* file to compare the performance of the various classifiers. Several classifiers should demonstrate the same accuracy statistics as the image size is very small, containing at most 3 cells per image.
+
 
 Now, select the most accurate classifier. Selecting the most accurate classifier is left to the user, but information is supplied in the form of accuracy values in Precision, Recall and F! score, as well as statistical outputs of mean accuracy comparison between two separate experimental conditions entered in the genotypes.csv file. With base functionality, the pipeline is set up to process a dataset with two experimental groups.***
  
