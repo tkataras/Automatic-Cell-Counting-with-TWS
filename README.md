@@ -5,7 +5,8 @@ A repository for the suit of scripts I use to perform automatic cell quantificat
 ## Table of Contents
 1. [Installation Guide](#installation-guide)
 2. [Software Dependencies](#software-dependencies)
-
+3. [Prerequisites](#prerequisites)
+4. [How To Use](#how_to_use)
 # Installation Guide
 ```
 git clone https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
@@ -30,7 +31,8 @@ Need beanshell installation through terminal
  
 By downloading our Github repository you will have a set of folders for practice and for experimental use.
 
-# Practice
+# How To Use
+# Stage 1
 The first step in practice is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference. This is so that our program knows where you have downloaded it. Select the directory/folder named scripts_for_auto_cell_count.
 
 <img src = "figures/selectSource.PNG">
@@ -49,7 +51,7 @@ To count the number of objects in your data, the program defaults to a 20 pixel 
 
 After the pipeline completes a run, run times will vary by hardware capacity, open the all_classifier_comparison.csv* file to compare the performance of the various classifiers. Several classifiers should demonstrate the same accuracy statistics as the image size is very small, containing at most 3 cells per image.
 
-
+# Stage 2
 Now, select the most accurate classifier. Selecting the most accurate classifier is left to the user, but information is supplied in the form of accuracy values in Precision, Recall and F! score, as well as statistical outputs of mean accuracy comparison between two separate experimental conditions entered in the genotypes.csv file. With base functionality, the pipeline is set up to process a dataset with two experimental groups.***
  
 After the best classifier is selected, the second step of the pipline is initiated which applies a single classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons. This step requires a second genotypes.csv file from the user containing experimental grouping information for the unseen dataset.
