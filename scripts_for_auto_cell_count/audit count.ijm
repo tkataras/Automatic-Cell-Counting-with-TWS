@@ -5,7 +5,7 @@
  * Date: 10/21/2021
  * Description:
  */
-macro "The -- True -- Count" {
+macro "The -- Audit -- Count" {
 	//Overview: uses hand placed markers and weka output images from each classifier to begin accuracy calculation
 	//Input: Binary images, hand placed markes in roi files, one file for each image
 	//Output: Binary image files including only cells counted, and .csv file in classifier folder with accuracy information
@@ -16,10 +16,17 @@ macro "The -- True -- Count" {
 	//set input and output directories locations
 	
 	// Weka Output Projected if Projected, else Weka Output Thresholded
-	input_dirs = getArgument();
+	Arg1 = getArgument();
+	print(Arg1);
+	in_args = split(Arg1, ",,");
 	
-	// Weka Output Counted
-	output_dirs = input_dirs + "../testing_area/Weka_Output_Counted/";
+	print(in_args[0]);
+	print(in_args[1]);
+	
+
+	//need the counted audit images
+	input = in_args[0] + "/../../Audit_Counted/" + in_args[1]+ "/";
+	
 	
 	// Clear the results table
 	run("Clear Results");
@@ -28,36 +35,30 @@ macro "The -- True -- Count" {
 	
 	//the hand placed roi location will not change as it is applied to each classifier image set
 	//dir2 = getDirectory("_Choose source directory for the roi multipoint counts");
-	dir2 = input_dirs + "../Validation_Hand_Counts/";
+	output = in_args[0] + "/../../Audit_Hand_Counts/" + in_args[1]+ "/";
 	
-	// gets the folders for each classifier
-	input_dir_list = getFileList(input_dirs);
-		
-	output_dir_list = getFileList(output_dirs);
-		
-	// this loop iterates through classifier folders
-	for (z = 0; z< input_dir_list.length; z++) {		
-		input = input_dir_list[z];
-		output = output_dir_list[z];
-			
+
+
+	
+			// ###################################################i have gotten thsi far
 		//holds all file names from input folder
-		list = getFileList(input_dirs + input);
-		list2 = getFileList(dir2);
+		list = getFileList(input);
+		list2 = getFileList(output);
 			
 		n = 0;
 			
 		//iterate  macro over the images in the input folder
 		for (q = 0; q < list.length; q++) {
-			action(input, output, list[q], dir2, list2[q]);
+			action(input, output, list[q], list2[q]);
 		}
 			
 		//describes the actions for each image
-		function action(input, output, filename, input2, filename2) {    
+		function action(input, output, filename, filename2) {    
 			//opens and thresholds binary images or Weka output directly       
 			print("hi");
-			print(input_dirs + input + filename);
+			print( input + filename);
 			print("hi");
-			open(input_dirs + input + filename);
+			open( input + filename);
 			run("8-bit");
 			setAutoThreshold("Default dark");
 			run("Threshold...");
@@ -68,8 +69,12 @@ macro "The -- True -- Count" {
 					
 			// this imageJ plugin creates the results file and image of the count cells based on the size exclusion		
 			run("Analyze Particles...", "size="+size_min+"-Infinity pixel show=Masks display summarize add");
-			saveAs("Png",output_dirs + output + filename);
-				
+			//saveAs("Png",output_dirs + output + filename);
+
+	//this if statement is made to allow the program to cycle over image files saved in the hand count folder to signify empty image
+		if (endsWith(filename2, ".roi") > 0) {
+      			
+   			
 			open(input2 + filename2);
 			roiManager("Add");
 			
@@ -105,15 +110,20 @@ macro "The -- True -- Count" {
 				//update the results table
 				setResult("points", n++, counts);	
 			}
-			roiManager("deselect")		
+			} else {
+      			print("no hand counts in " + filename2);
+      			open(input2 + filename2);
+      			run("Measure");
+   			}   
+			roiManager("deselect");		
 			roiManager("Delete");       
 		}
 		selectWindow("Results");
-		//take / off end of folder name to get classifier ID
-		class_name = substring(output_dir_list[z],0,lengthOf(output_dir_list[z]) -1);
-		saveAs("Results", output_dirs + output + class_name + "_Results.csv");
-		run("Clear Results");
-	}
+		print(getFileList(dir2));
+		
+		saveAs("Results", dir2 + "/Results.csv");
+		//run("Clear Results");
+	
 	// prints text in the log window after all files are processed
 	print("AH HA HA "+list.length+" images");
 }
