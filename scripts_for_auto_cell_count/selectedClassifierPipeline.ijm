@@ -39,6 +39,7 @@ if (result) {
 
 runMacro(input + "count_full_dataset.ijm", searchDirectory);
 
+<<<<<<< HEAD
 // Run Python script
 //exec("python", input + "audit.py", input, trimClassName[0]);
 runMacro(input + "audit count.ijm", testingPath + "," + trimClassName[0]);
@@ -46,3 +47,12 @@ runMacro(input + "audit count.ijm", testingPath + "," + trimClassName[0]);
 // Next, run classifier comparison
 //exec("python", input + "finalClassifierCheck.py", input, trimClassName[0]);
 //print("finished pipeline");
+=======
+// Next, run classifier comparison
+exec("python", input + "finalClassifierCheck.py", input, trimClassName[0]);
+print("finished pipeline");
+
+
+// Run Python script
+exec("python", input + "audit.py", input, trimClassName[0]);
+>>>>>>> b3b59bcba87ddcf4aeb26930821b05ce5f9c307d

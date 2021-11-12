@@ -5,7 +5,8 @@ A repository for the suit of scripts I use to perform automatic cell quantificat
 ## Table of Contents
 1. [Installation Guide](#installation-guide)
 2. [Software Dependencies](#software-dependencies)
-
+3. [Prerequisites](#prerequisites)
+4. [How To Use](#how-to-use)
 # Installation Guide
 ```
 git clone https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
@@ -19,34 +20,69 @@ sudo apt-get install python3-pip
 pip3 install numpy
 pip3 install scipy
 pip3 install pandas
+pip3 install python-time
 ```
 
 # Prerequisites:
-Current** version of FIJI distribution of Imagej
+-Current** version of FIJI distribution of Imagej
+
 https://imagej.net/software/fiji/
 
-*** need R version___
-Need beanshell installation through terminal
+-R version___
+
+-Need beanshell installation through terminal TODO
  
+# How To Use
+
 By downloading our Github repository you will have a set of folders for practice and for experimental use.
 
-# Practice
-The first step in practice is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference.
+# Input Files (aka Ingredients) 
+-Your images
+-genotype.csv file
+-geno_full.csv
 
-<img src = "figures/selectSourece.PNG">
+# Stage 1
+__1.1__ The first step is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference. This is so that our program knows where you have downloaded it. Select the directory/folder named scripts_for_auto_cell_count.
 
-The pipeline will then individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .roi files and the supplied genotypes.csv file. 
+<img src = "figures/selectSource.PNG">
 
-__To generate your own genotype.csv file:__
+__1.2__ The pipeline will then individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .roi files and the supplied genotypes.csv file. 
 
-Our data includes paired images in individual fields of view for increased context when counting, so intermediate steps are included to identify and project these image pairs for the final automatic count.
-After the pipeline completes a run, run times will vary by hardware capacity, open the all_classifier_comparison.csv* file to compare the performance of the various classifiers. Several classifiers should demonstrate the same accuracy statistics as the image size is very small, containing at most 3 cells per image.
-Now, select the most accurate classifier. Selecting the most accurate classifier is left to the user, but information is supplied in the form of accuracy values in Precision, Recall and F! score, as well as statistical outputs of mean accuracy comparison between two separate experimental conditions entered in the genotypes.csv file. With base functionality, the pipeline is set up to process a dataset with two experimental groups.***
- 
-After the best classifier is selected, the second step of the pipline is initiated which applies a single classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons. This step requires a second genotypes.csv file from the user containing experimental grouping information for the unseen dataset.
-Additionaly, the second step of the pipeline sets aside a random sample of images equal to the number of validation images and equally distributed between experimental groups to serve as the performance estimate on the unseen data. This performance analysis requires user input in the form of .ROI hand counts. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison*****
- 
-           	Creating hand count markers
+__To generate your own genotype.csv file: TODO__
+
+__1.3__ Our data includes paired images in individual fields of view for increased context when counting, so intermediate steps are included to identify and project these image pairs for the final automatic count. If your data does not include paired images, do not select this option below:
+
+<img src = "figures/selectMultipleSegmentation.PNG">
+
+__1.4__ To count the number of objects in your data, the program defaults to a 20 pixel minimum size of the objects as countable. If you want a different minimum size threshold in order to be counted, you are able to adjust this value.
+
+<img src = "figures/selectSizeMin.PNG">
+
+After the pipeline completes a run, run times will vary by hardware capacity, open the All_Classifier_Comparison.csv file to compare the performance of the various classifiers. 
+
+This will be located under training_area/Results.
+
+For the testing dataset, several classifiers should demonstrate the same accuracy statistics as the image size is very small as they contain at most 3 cells per image.
+
+# Stage 2
+__2.1__ Once again, the program must know where it is downloaded. Select the directory/folder named scripts_for_auto_cell_count.
+
+<img src = "figures/selectSource.PNG">
+
+__2.2__ Now, select the most accurate classifier. Selecting the most accurate classifier is left to the user, but information is supplied in the form of accuracy values in Precision, Recall and F! score, as well as statistical outputs of mean accuracy comparison between two separate experimental conditions entered in the genotypes.csv file. With base functionality, the pipeline is set up to process a dataset with two experimental groups.
+
+<img src = "figures/selectClassifier.PNG">
+
+__2.3__ Repeat steps __1.3__ and __1.4__ with the parameters you used in stage 1.
+
+*** 
+After the best classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons. This step requires a second genotypes.csv file from the user containing experimental grouping information for the unseen dataset.
+
+Additionaly, the second step of the pipeline sets aside a random sample of images equal to the number of validation images and equally distributed between experimental groups to serve as the performance estimate on the unseen data. This performance analysis requires user input in the form of .roi hand counts. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison.
+***
+
+__Creating hand count markers__
+
 Hand count markers are created in Imagej using the Point Selection Tool, available in the toolbar, and the ROI manager.
 1.      Open an image and place one or two count markers
 2.      Add the selections to the ROI manager

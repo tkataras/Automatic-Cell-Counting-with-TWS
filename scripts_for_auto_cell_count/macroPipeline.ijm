@@ -1,5 +1,8 @@
 input = getDirectory("Choose source directory of the macro (Scripts for Auto Cell Count)");
 
+// Set measurements to calculate
+run("Set Measurements...", "area mean standard modal min centroid center perimeter bounding fit shape feret's integrated median skewness kurtosis area_fraction limit display redirect=None decimal=8");
+
 print(input);
 
 File.setDefaultDir(input);
@@ -18,7 +21,7 @@ runMacro(input + "just_thresh.ijm", input);
 
 // TODO Check if can run without projected images
 searchDirectory = input
-Dialog.create("Example Dialog");
+Dialog.create("Multiple Image Segmentations?");
 Dialog.addCheckbox("Do you need to project multiple image segmentations?", false);
 Dialog.show();
 result = Dialog.getCheckbox();
