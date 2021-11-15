@@ -12,6 +12,7 @@ import os
 import sys
 import random
 import shutil
+import csv
 
 # Method to change working directory from inputted ImageJ Macro
 currDir = os.getcwd()
@@ -19,6 +20,9 @@ def setDir(arg1):
     currDir = arg1
     os.chdir(currDir)
 setDir(sys.argv[1])
+
+# Output file location
+OUTPUT_count = "../training_area/Audit_Counted/"
 
 # Get the selected classifier by the user
 selectedClassifier = sys.argv[2]
@@ -59,7 +63,6 @@ for i in range(len(files)):
     if geno["geno"][i] == lvl_geno[1]:
         ev1_files[files[i]] = lvl_geno[1]
 
-print(ev0_files)
 #make random selections for level 1
 LEV0 = len(ev0_files)
 LEV1 = len(ev1_files)
@@ -74,7 +77,6 @@ for incremenet in range(0, draws_per_geno):
     audit_set[ev1_key] = ev1_value
 
 ###need to get these random variable numbers from oritional file directory, eg images, counted 
-print(audit_set)
 
 """ Temp so I don't need to redo ROI stuff
 # Copy selected images into audit images directory
@@ -90,8 +92,22 @@ for file in audit_set.keys():
 #based on alphabetical file order, as they will be read in by imagej and python
 genoCSV = []
 for key, value in sorted(audit_set.items()):
-    print(key)
-    print(value)
+    genoCSV.append([value])
+print(genoCSV)
+# Write a CSV for the geno data
+with open("geno_audit.csv", 'w+', newline ='') as file:
+    write = csv.writer(file)
+    write.writerow(["geno"])
+    write.writerows(genoCSV)
 
+hand_ini = pd.read_csv("../training_area/testing_area/Audit_Hand_Counts/roi_counts.csv", usecols=['Label'])
+lvl_h = np.unique(hand_ini)
+count_h = {}
+for i in range(0, len(hand_ini)):
+    if count_h.get(hand_ini.loc[i].at["Label"]) == None:
+        count_h[hand_ini.loc[i].at["Label"]] = 1
+    else:
+        count_h[hand_ini.loc[i].at["Label"]] = count_h[hand_ini.loc[i].at["Label"]] + 1
 
-print("Finished audit.py")
+print(count_h)
+print("Finished audit.py") 
