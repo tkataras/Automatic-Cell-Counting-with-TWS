@@ -73,6 +73,12 @@ macro "The -- True -- Count" {
 				
 			open(input2 + filename2);
 			roiManager("Add");
+			run("Measure");	
+
+
+			//TODO
+			//need to save the exact roi info for each auto object
+			
 			
 			numroi = roiManager("count"); // establish number of objects
 				
