@@ -12,6 +12,14 @@ macro "The -- Audit -- Count" {
 	
 	//this hides intermediary information and speeds processing
 	setBatchMode(true); 
+
+		// set size minimum for cells to exclude small radius noise
+	size_min=20;
+	Dialog.create("Size Min");
+	Dialog.addNumber("Minimum pixel size for object count:", size_min);
+	Dialog.show();
+	size_min = Dialog.getNumber();
+
 	
 	//set input and output directories locations
 	
@@ -75,7 +83,7 @@ macro "The -- Audit -- Count" {
 		if (endsWith(filename2, ".roi") > 0) {
       			
    			
-			open(input2 + filename2);
+			open(output + filename2);
 			roiManager("Add");
 			
 			numroi = roiManager("count"); // establish number of objects
@@ -111,20 +119,26 @@ macro "The -- Audit -- Count" {
 				setResult("points", n++, counts);	
 			}
 			} else {
+				//this block will add a row to the results file signifying an emapy image. the dimensions of the roi will be very large comparitively
       			print("no hand counts in " + filename2);
-      			open(input2 + filename2);
+      			open(output + filename2);
+      			run("Select All");
       			run("Measure");
+      			roiManager("Add");
+      			counts = 0;
+      			//update the results table
+				setResult("points", n++, counts); //testing this
    			}   
 			roiManager("deselect");		
 			roiManager("Delete");       
 		}
 		selectWindow("Results");
-		print(getFileList(dir2));
 		
-		saveAs("Results", dir2 + "/Results.csv");
+		
+		saveAs("Results", output + "/" +in_args[1]+ "_testing_Results.csv");
 		//run("Clear Results");
 	
 	// prints text in the log window after all files are processed
-	print("AH HA HA "+list.length+" images");
+	print("AH HA HA "+list.length+" audit images");
 }
 updateResults();

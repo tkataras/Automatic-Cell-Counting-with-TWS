@@ -6,7 +6,7 @@ searchDirectory = getFileList(classifierDir);
 print(classifierDir);
 
 Dialog.create("Select Classifier to test on full dataset");
-Dialog.addChoice("Choose classifier", searchDirectory);
+Dialog.addChoice("_Choose classifier", searchDirectory);
 Dialog.show();
 
 selectedClassifier = Dialog.getChoice();
@@ -37,22 +37,20 @@ if (result) {
 
 // Run ImageJ macros
 
-runMacro(input + "count_full_dataset.ijm", searchDirectory);
+//runMacro(input + "count_full_dataset.ijm", searchDirectory);
 
-<<<<<<< HEAD
 // Run Python script
 //exec("python", input + "audit.py", input, trimClassName[0]);
 runMacro(input + "audit count.ijm", testingPath + "," + trimClassName[0]);
 
 // Next, run classifier comparison
 //exec("python", input + "finalClassifierCheck.py", input, trimClassName[0]);
-//print("finished pipeline");
-=======
+
+
 // Next, run classifier comparison
 exec("python", input + "finalClassifierCheck.py", input, trimClassName[0]);
+
 print("finished pipeline");
 
 
-// Run Python script
-exec("python", input + "audit.py", input, trimClassName[0]);
->>>>>>> b3b59bcba87ddcf4aeb26930821b05ce5f9c307d
+

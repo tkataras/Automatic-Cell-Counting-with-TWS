@@ -84,4 +84,10 @@ for file in audit_set:
     shutil.copyfile("../training_area/testing_area/images/" + filename, os.path.join("../training_area/testing_area/Audit_Images/" + selectedClassifier +"/", filename))
     shutil.copyfile("../training_area/testing_area/Weka_Output_Counted/" + selectedClassifier +"/" + filename, os.path.join("../training_area/testing_area/Audit_Counted/"+ selectedClassifier +"/", filename))
 
+
+
+#based on the order of these images, need to set up new genotypes file. 
+#because of randomly selecting images, the geno ratio will be the same, but order will likely not be
+
+
 print("Finished audit.py")
