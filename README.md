@@ -73,11 +73,14 @@ __2.2__ Now, select the most accurate classifier. Selecting the most accurate cl
 
 <img src = "figures/selectClassifier.PNG">
 
-__2.3__ Repeat steps __1.3__ and __1.4__ with the parameters you used in stage 1.
+__2.3__ After the best classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons. This step requires a second genotypes.csv file from the user containing experimental grouping information for the unseen dataset.
+
+__To generate your own genotype.csv file: TODO__
+
+
+__2.4__ Repeat steps __1.3__ and __1.4__ with the parameters you used in stage 1.
 
 *** 
-After the best classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons. This step requires a second genotypes.csv file from the user containing experimental grouping information for the unseen dataset.
-
 Additionaly, the second step of the pipeline sets aside a random sample of images equal to the number of validation images and equally distributed between experimental groups to serve as the performance estimate on the unseen data. This performance analysis requires user input in the form of .roi hand counts. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison.
 ***
 
@@ -98,3 +101,4 @@ The image names much match exactly between the hand counts and the original imag
 Each folder must only contain images or hand counts, with the exception of the Weka Output Counted folder, in which classifier subfolders will include calculation data files.
 At present, two experimental conditions, denoted in the genotypes.csv files, are expected. 
 
+Images are expected to be PNG and end with .PNG
