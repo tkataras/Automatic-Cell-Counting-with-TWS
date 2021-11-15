@@ -36,9 +36,11 @@ https://imagej.net/software/fiji/
 
 By downloading our Github repository you will have a set of folders for practice and for experimental use.
 
-# Input Files (aka Ingredients) 
--Your images
--genotype.csv file
+# Input Files
+-Your images in .PNG format
+
+-genotype.csv 
+
 -geno_full.csv
 
 # Stage 1
@@ -73,7 +75,7 @@ __2.2__ Now, select the most accurate classifier. Selecting the most accurate cl
 
 <img src = "figures/selectClassifier.PNG">
 
-__2.3__ After the best classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons. This step requires a second genotypes.csv file from the user containing experimental grouping information for the unseen dataset.
+__2.3__ After the best classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons. This step requires a second genotypes file named geno_full.csv from the user containing experimental grouping information for the unseen dataset.
 
 __To generate your own genotype.csv file: TODO__
 
