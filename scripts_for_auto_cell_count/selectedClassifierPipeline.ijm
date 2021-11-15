@@ -36,16 +36,11 @@ if (result) {
 }
 
 // Run ImageJ macros
-
 //runMacro(input + "count_full_dataset.ijm", searchDirectory);
 
 // Run Python script
 //exec("python", input + "audit.py", input, trimClassName[0]);
 //runMacro(input + "audit count.ijm", testingPath + "," + trimClassName[0]);
-
-// Next, run classifier comparison
-//exec("python", input + "finalClassifierCheck.py", input, trimClassName[0]);
-
 
 // Next, run classifier comparison
 exec("python", input + "finalClassifierCheck.py", input, trimClassName[0]);
