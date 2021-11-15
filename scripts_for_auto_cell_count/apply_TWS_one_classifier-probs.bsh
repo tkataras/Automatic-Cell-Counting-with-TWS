@@ -1,0 +1,71 @@
+#@ File(label="Input directory", description="Select the directory with input images", style="directory") inputDir
+#@ File(label="Output directory", description="Select the output directory", style="directory") outputDir
+#@ File(label="Weka model", description="Select the Weka model to apply") modelPath
+
+
+
+resultMode = "Labels";
+xTiles = 3;
+yTiles = 3;
+zTiles = 0;
+
+
+import trainableSegmentation.WekaSegmentation;
+import trainableSegmentation.utils.Utils;
+import ij.io.FileSaver;
+import ij.IJ;
+import ij.ImagePlus;
+  
+// starting time
+startTime = System.currentTimeMillis();
+  
+// caculate probabilities?
+getProbs = resultMode.equals( "Probabilities" );
+ 
+// create segmentator
+segmentator = new WekaSegmentation( zTiles > 0 );
+// load classifier
+segmentator.loadClassifier( modelPath.getCanonicalPath() );
+  
+// get list of input images
+listOfFiles = inputDir.listFiles();
+for ( i = 0; i < listOfFiles.length; i++ )
+{
+    // process only files (do not go into sub-folders)
+    if( listOfFiles[ i ].isFile() )
+    {
+        // try to read file as image
+        image = IJ.openImage( listOfFiles[i].getCanonicalPath() );
+        if( image != null )
+        {
+            tilesPerDim = new int[ 2 ];
+            if( image.getNSlices() > 1 )
+            {
+                tilesPerDim = new int[ 3 ];
+                tilesPerDim[ 2 ] = zTiles;
+            }
+            tilesPerDim[ 0 ] = xTiles;
+            tilesPerDim[ 1 ] = yTiles;
+            
+            // apply classifier and get results (0 indicates number of threads is auto-detected)
+            result = segmentator.applyClassifier( image, tilesPerDim, 0, getProbs );
+
+            if( !getProbs )
+                // assign same LUT as in GUI
+                result.setLut( Utils.getGoldenAngleLUT() );
+             
+            // save result as TIFF in output folder
+            outputFileName = listOfFiles[ i ].getName().replaceFirst("[.][^.]+$", "") + ".tif";
+            new FileSaver( result ).saveAsTiff( outputDir.getPath() + File.separator + outputFileName );
+  
+            // force garbage collection (important for large images)
+            result = null; 
+            image = null;
+            System.gc();
+        }
+    }
+}
+// print elapsed time
+estimatedTime = System.currentTimeMillis() - startTime;
+IJ.log( "** Finished processing folder in " + estimatedTime + " ms **" );
+System.gc();
