@@ -73,7 +73,7 @@ macro "The -- True -- Count" {
 				
 			open(input2 + filename2);
 			roiManager("Add");
-			run("Measure");	
+			
 
 
 			//TODO
