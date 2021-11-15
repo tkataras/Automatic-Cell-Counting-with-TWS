@@ -88,6 +88,6 @@ for file in audit_set:
 
 #based on the order of these images, need to set up new genotypes file. 
 #because of randomly selecting images, the geno ratio will be the same, but order will likely not be
-
+#based on alphabetical file order, as they will be read in by imagej and python
 
 print("Finished audit.py")
