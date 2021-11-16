@@ -87,15 +87,12 @@ for file in audit_set.keys():
     shutil.copyfile("../training_area/testing_area/images/" + filename, os.path.join("../training_area/testing_area/Audit_Images/" + selectedClassifier +"/", filename))
     shutil.copyfile("../training_area/testing_area/Weka_Output_Counted/" + selectedClassifier +"/" + filename, os.path.join("../training_area/testing_area/Audit_Counted/"+ selectedClassifier +"/", filename))
 """
-#based on the order of these images, need to set up new genotypes file. 
-#because of randomly selecting images, the geno ratio will be the same, but order will likely not be
-#based on alphabetical file order, as they will be read in by imagej and python
+# Write a CSV for the geno data with images in alphabetical order
 genoCSV = []
 for key, value in sorted(audit_set.items()):
     genoCSV.append([value])
 print(genoCSV)
-# Write a CSV for the geno data
-with open("geno_audit.csv", 'w+', newline ='') as file:
+with open("../training_area/testing_area/geno_audit.csv", 'w+', newline ='') as file:
     write = csv.writer(file)
     write.writerow(["geno"])
     write.writerows(genoCSV)
