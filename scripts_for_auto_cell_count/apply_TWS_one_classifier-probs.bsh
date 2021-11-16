@@ -3,8 +3,8 @@
 #@ File(label="Weka model", description="Select the Weka model to apply") modelPath
 
 
-
-resultMode = "Labels";
+resultMode = "Probabilities";
+//resultMode = "Labels";
 xTiles = 3;
 yTiles = 3;
 zTiles = 0;
@@ -15,7 +15,10 @@ import trainableSegmentation.utils.Utils;
 import ij.io.FileSaver;
 import ij.IJ;
 import ij.ImagePlus;
-  
+import graphcut.Graph_Cut;
+
+gc = new Graph_Cut();
+
 // starting time
 startTime = System.currentTimeMillis();
   
@@ -53,10 +56,42 @@ for ( i = 0; i < listOfFiles.length; i++ )
             if( !getProbs )
                 // assign same LUT as in GUI
                 result.setLut( Utils.getGoldenAngleLUT() );
+//TODO: the result here is a stack of class 1 prob and class 2 prob and i cant use graph cut on anything but a single channel image
+
              
+			//get just the cell probablility
+			//IJ.run(result, "Stack Splitter", "number=2");
+			
+			
             // save result as TIFF in output folder
             outputFileName = listOfFiles[ i ].getName().replaceFirst("[.][^.]+$", "") + ".tif";
+            
+            //removes the non-cell pixel probablility, which is obligate inverse of the cell prob.
+            IJ.run(result, "Slice Remover", "first=2 last=2 increment=2");
+
+            
             new FileSaver( result ).saveAsTiff( outputDir.getPath() + File.separator + outputFileName );
+
+		//new FileSaver( result ).saveAsTiff( outputDir.getPath() + File.separator + outputFileName );
+
+			
+//graph cut to get segmented image and then save
+//gc.processSingleChannelImage(result, edge, dataWeight, pottsWeight, edgeWeight, seg);
+
+
+			// dataWeight - weight of data term (t-links) [0,1]
+			float dataWeight = 0.9;
+			// pottsWeight - or smoothness, weight of smoothness term (n-links) [0,10]
+			float pottsWeight = 1;
+			// optional input, else intialise to null
+			ImagePlus edge = null;
+			edgeWeight = 0;
+
+
+			seg = gc.processSingleChannelImage(result, edge, dataWeight, pottsWeight, edgeWeight);
+			
+
+			new FileSaver( seg ).saveAsTiff( outputDir.getPath() + File.separator + "SEG" + outputFileName);
   
             // force garbage collection (important for large images)
             result = null; 
