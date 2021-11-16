@@ -1,7 +1,7 @@
 ,name,tp,fp,fn,avg_area,avg_circularity
-0,BKO-426-S42-Iba-Syn-Cortex-10x-F2a_XY1562195154_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-3.png,7,2,1,155.77777777777777,0.5719876222222222
-0,BKO-426-S42-Iba-Syn-Cortex-10x-F3a_XY1562195154_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-1.png,6,0,0,140.66666666666666,0.6494488966666666
-0,BKO-426-S42-Iba-Syn-Cortex-10x-F4a_XY1562195154_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-2.png,4,0,0,111.5,0.7422313375
-0,BKO-460-S57-Iba-Syn-Cortex-10x-F1a_XY1562191200_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-1.png,3,1,0,166.0,0.759356785
-0,BKO-460-S57-Iba-Syn-Cortex-10x-F2a_XY1562191200_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-2.png,3,1,0,74.75,0.7808757075
-0,BKO-460-S57-Iba-Syn-Cortex-10x-F3a_XY1562191200_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-3.png,2,1,0,143.33333333333334,0.60902994
+0,BKO-426-S42-Iba-Syn-Cortex-10x-F2a_XY1562195154_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-3.png,5,1,1,558.3333333333334,0.6648663266666667
+0,BKO-426-S42-Iba-Syn-Cortex-10x-F3a_XY1562195154_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-1.png,6,0,-2,298.6666666666667,0.8651950433333333
+0,BKO-426-S42-Iba-Syn-Cortex-10x-F4a_XY1562195154_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-2.png,4,0,-1,931.0,0.88296361
+0,BKO-460-S57-Iba-Syn-Cortex-10x-F1a_XY1562191200_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-1.png,3,1,0,314.5,0.88171873
+0,BKO-460-S57-Iba-Syn-Cortex-10x-F2a_XY1562191200_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-2.png,3,1,-1,140.0,0.9194678325
+0,BKO-460-S57-Iba-Syn-Cortex-10x-F3a_XY1562191200_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3-3.png,2,2,6,217.0,0.7866573225

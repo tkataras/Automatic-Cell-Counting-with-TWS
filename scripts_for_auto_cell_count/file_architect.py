@@ -49,6 +49,7 @@ print(class_list)
     
 #make folders in locations
 OUTPUT = SOURCE + "Weka_Output/"
+OUTPUT_prob = SOURCE + "Weka_Probability/"
 OUTPUT_thresh = SOURCE + "Weka_Output_Thresholded/"
 OUTPUT_project = SOURCE + "Weka_Output_Projected/"
 OUTPUT_count = SOURCE + "Weka_Output_Counted/"
@@ -59,6 +60,8 @@ for class_ID in class_list:
     print(class_ID)
     if not os.path.isdir(OUTPUT + class_ID):
         os.mkdir(OUTPUT + class_ID)
+    if not os.path.isdir(OUTPUT_prob + class_ID):
+        os.mkdir(OUTPUT_prob + class_ID)    
     if not os.path.isdir(OUTPUT_thresh + class_ID):
         os.mkdir(OUTPUT_thresh + class_ID)
     if not os.path.isdir(OUTPUT_project + class_ID):
