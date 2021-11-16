@@ -23,8 +23,8 @@ macro "The -- True -- Count" {
 	// Get the classifier
 	x = split(input_dirs, "/");
 
-		// Weka Output Counted
-		output_dirs = input_dirs + "/../../Weka_Output_Counted/" + x[x.length-1];
+	// Weka Output Counted
+	output_dirs = input_dirs + "/../../Weka_Output_Counted/" + x[x.length-1];
 	print(output_dirs);
 	
 	// set size minimum for cells to exclude small radius noise

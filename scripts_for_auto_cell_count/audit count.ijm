@@ -24,41 +24,32 @@ macro "The -- Audit -- Count" {
 	//set input and output directories locations
 	
 	// Weka Output Projected if Projected, else Weka Output Thresholded
-	Arg1 = getArgument();
-	print(Arg1);
-	in_args = split(Arg1, ",,");
-	
-	print(in_args[0]);
-	print(in_args[1]);
-	
+	arg1 = getArgument();
 
-	//need the counted audit images
-	input = in_args[0] + "/../../Audit_Counted/" + in_args[1]+ "/";
+	// Get the classifier
+	x = split(arg1, "/");
+	selectedClassifier = x[x.length-1];
 	
+	//need the counted audit images
+	input = arg1 + "/../../Audit_Counted/" + selectedClassifier + "/";
 	
 	// Clear the results table
 	run("Clear Results");
 	
-	
-	
 	//the hand placed roi location will not change as it is applied to each classifier image set
 	//dir2 = getDirectory("_Choose source directory for the roi multipoint counts");
-	output = in_args[0] + "/../../Audit_Hand_Counts/" + in_args[1]+ "/";
+	output = arg1 + "/../../Audit_Hand_Counts/" + selectedClassifier + "/";
 	
-
-
-	
-			// ###################################################i have gotten thsi far
-		//holds all file names from input folder
-		list = getFileList(input);
-		list2 = getFileList(output);
+	//holds all file names from input folder
+	list = getFileList(input);
+	list2 = getFileList(output);
 			
-		n = 0;
+	n = 0;
 			
-		//iterate  macro over the images in the input folder
-		for (q = 0; q < list.length; q++) {
-			action(input, output, list[q], list2[q]);
-		}
+	//iterate  macro over the images in the input folder
+	for (q = 0; q < list.length; q++) {
+		action(input, output, list[q], list2[q]);
+	}
 			
 		//describes the actions for each image
 		function action(input, output, filename, filename2) {    
@@ -81,8 +72,6 @@ macro "The -- Audit -- Count" {
 
 	//this if statement is made to allow the program to cycle over image files saved in the hand count folder to signify empty image
 		if (endsWith(filename2, ".roi") > 0) {
-      			
-   			
 			open(output + filename2);
 			roiManager("Add");
 			
@@ -135,7 +124,7 @@ macro "The -- Audit -- Count" {
 		selectWindow("Results");
 		
 		
-		saveAs("Results", output + "/" +in_args[1]+ "_testing_Results.csv");
+		saveAs("Results", output + "/" + selectedClassifier + "_testing_Results.csv");
 		//run("Clear Results");
 	
 	// prints text in the log window after all files are processed

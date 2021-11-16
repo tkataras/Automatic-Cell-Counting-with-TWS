@@ -11,11 +11,18 @@ setBatchMode(true);
 
 // Validation Hand Counts
 input = getArgument();
-input = input + "../training_area/Validation_Hand_Counts/";
 
-// Results
-output = input + "../Results";
-
+firstStage = true
+if(input.contains("testing_area")) {
+	// Passed in Audit_Hand_Counts/Classifier
+	x = split(input, "/");
+	output = input + "../";
+} else {
+	
+	input = input + "../training_area/Validation_Hand_Counts/";
+	// Results
+	output = input + "../Results";
+}
 //output = getDirectory("Choose output directory (Not the same as the source directory)");
 //output = "../training_area/Results"
 
