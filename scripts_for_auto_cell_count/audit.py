@@ -92,7 +92,7 @@ genoCSV = []
 for key, value in sorted(audit_set.items()):
     genoCSV.append([value])
 print(genoCSV)
-with open("geno_audit.csv", 'w+', newline ='') as file:
+with open("../training_area/testing_area/geno_audit.csv", 'w+', newline ='') as file:
     write = csv.writer(file)
     write.writerow(["geno"])
     write.writerows(genoCSV)

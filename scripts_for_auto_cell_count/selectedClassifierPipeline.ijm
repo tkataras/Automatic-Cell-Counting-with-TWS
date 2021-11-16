@@ -46,6 +46,7 @@ if (result) {
 exec("python", input + "finalClassifierCheck.py", input, trimClassName[0]);
 
 runMacro(input + "count_from_roi.ijm", input + "../training_area/testing_area/Audit_Hand_Counts/" + trimClassName[0] + "/");
+exec("python", input + "audit.py", input, trimClassName[0]);
 runMacro(input + "audit count.ijm", testingPath + "," + trimClassName[0]);
 print("finished pipeline");
 
