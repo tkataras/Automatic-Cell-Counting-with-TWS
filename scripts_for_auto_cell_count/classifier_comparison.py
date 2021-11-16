@@ -1,7 +1,7 @@
 #!/usr/bin/python
 ###
 # Author: Tyler Jang, Theo Kataras
-# Date 10/26/2021
+# Date 11/16/2021
 # This file is the pipeline for comparing classifier accuracy on validation data
 #
 # Inputs: genotype file, hand count results file from Cout Roi, results of The Count.IJM in each classifier folder 
@@ -68,9 +68,9 @@ for f in range(0, len(class_list)):
     class_results = pd.read_csv(class_res_loc)
     curr_class = os.listdir(OUTPUT_count)[f]
 
-    ##if else loop for determining true positive, false positive and false negative cell counts
-    ##from levels present in the classifier results output, this should be the same each time, BUT IT WoNT BE IF ONE IMAGE HAS NO CELL OBJECtS
-    #need to go into the counted folder and pull out all image names, meaning ignorming the Results.csv files. images from tru_count with be .png
+    ## If else loop for determining true positive, false positive and false negative cell counts
+    ## from levels present in the classifier results output, this should be the same each time, BUT IT WoNT BE IF ONE IMAGE HAS NO CELL OBJECtS
+    ## need to go into the counted folder and pull out all image names, meaning ignorming the Results.csv files. images from tru_count with be .png
     folder_loc = counted_folder_dir + os.listdir(OUTPUT_count)[f]
 
     files = []
