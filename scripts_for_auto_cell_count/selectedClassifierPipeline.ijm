@@ -36,7 +36,7 @@ if (result) {
 }
 
 // Run ImageJ macros
-//runMacro(input + "count_full_dataset.ijm", searchDirectory);
+runMacro(input + "count_full_dataset.ijm", searchDirectory);
 
 // Run Python script
 //exec("python", input + "audit.py", input, trimClassName[0]);
@@ -47,7 +47,7 @@ exec("python", input + "finalClassifierCheck.py", input, trimClassName[0]);
 
 runMacro(input + "count_from_roi.ijm", input + "../training_area/testing_area/Audit_Hand_Counts/" + trimClassName[0] + "/");
 exec("python", input + "audit.py", input, trimClassName[0]);
-runMacro(input + "audit count.ijm", testingPath + "," + trimClassName[0]);
+runMacro(input + "audit count.ijm", searchDirectory);
 print("finished pipeline");
 
 
