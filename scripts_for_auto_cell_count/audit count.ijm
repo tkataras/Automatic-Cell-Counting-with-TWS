@@ -55,9 +55,6 @@ macro "The -- Audit -- Count" {
 		//describes the actions for each image
 		function action(input, output, filename, filename2) {    
 			//opens and thresholds binary images or Weka output directly       
-			print("hi");
-			print( input + filename);
-			print("hi");
 			open( input + filename);
 			run("8-bit");
 			setAutoThreshold("Default dark");

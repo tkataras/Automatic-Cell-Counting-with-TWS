@@ -98,8 +98,7 @@ for image in range (0, len(files)):
     this_row = pd.DataFrame([[name, tp, fp, fn, avg_area, avg_circular]], columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
     final_blah = final_blah.append(this_row)
     
-# TODO This is throwing a divide by 0 error I want to ignore
-# This is temp fix, but a negative * positive can still cause divide by 0
+# Method to catch divide by zeros 
 def catchDivideByZero(numer, denom):
     try:
         return numer/denom
@@ -170,13 +169,12 @@ p_g_tt_p = p_g_tt[1]
 r_g_tt_p = r_g_tt[1]
 F1_g_tt_p = F1_g_tt[1]
 
-# TODO why is this called F1 not F1_2, it's confusing me
 # Get means of F1_2
-mean_F1_gp = np.nanmean(groupOne["F1_2"])
-mean_F1_wt = np.nanmean(groupTwo["F1_2"])
+mean_F1_ev0 = np.nanmean(groupOne["F1_2"])
+mean_F1_ev1 = np.nanmean(groupTwo["F1_2"])
 
 # Prepare output csv file
-row_row = pd.DataFrame([[selectedClassifier, prec, reca, F1, F1_g_tt_p, mean_F1_gp, mean_F1_wt, p_g_tt_p, r_g_tt_p]], columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp", "mean_F1_wt", "p_g_tt_p", "r_g_tt_p"])
+row_row = pd.DataFrame([[selectedClassifier, prec, reca, F1, F1_g_tt_p, mean_F1_ev0, mean_F1_ev1, p_g_tt_p, r_g_tt_p]], columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_ev0", "mean_F1_ev1", "p_g_tt_p", "r_g_tt_p"])
 your_boat = your_boat.append(row_row)
 
 currTime = time.localtime(time.time())
