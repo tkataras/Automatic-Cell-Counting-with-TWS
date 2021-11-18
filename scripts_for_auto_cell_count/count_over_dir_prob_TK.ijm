@@ -24,7 +24,6 @@ macro "The -- True -- Count" {
 	prob_dirs = script_dirs + "../training_area/Weka_Probability_Projected/";
 
 	
-
 	// Clear the results table
 	run("Clear Results");
 	

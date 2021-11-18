@@ -34,11 +34,6 @@ else:
 
 print("in file architect py")
 
-
-type(class_list_pre_trim)
-
-##TODO decide if this should be taken out and trimClassName used as arg2 instead
-
 #trim the classifier names of the ".model" at the end
 class_list = []
 for x in class_list_pre_trim:
@@ -73,7 +68,7 @@ for class_ID in class_list:
         os.mkdir(OUTPUT_count + class_ID)
 
 
-#TODO need to have classifiers subfolder in audit images, hand count and counted
+# Generate classifier subfolders for audit directories
 if test_stage:
     if not os.path.isdir(SOURCE + "Audit_Images/"):
         os.mkdir(SOURCE + "Audit_Images/")
