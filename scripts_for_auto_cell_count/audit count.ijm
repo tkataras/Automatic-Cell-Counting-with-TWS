@@ -39,7 +39,8 @@ macro "The -- Audit -- Count" {
 	//the hand placed roi location will not change as it is applied to each classifier image set
 	//dir2 = getDirectory("_Choose source directory for the roi multipoint counts");
 	output = arg1 + "/../../Audit_Hand_Counts/" + selectedClassifier + "/";
-	
+	outResults = arg1 + "/../../Audit_Hand_Counts/"
+	// TODO tell it not to grab csv files
 	//holds all file names from input folder
 	list = getFileList(input);
 	list2 = getFileList(output);
@@ -124,7 +125,7 @@ macro "The -- Audit -- Count" {
 		selectWindow("Results");
 		
 		
-		saveAs("Results", output + "/" + selectedClassifier + "_testing_Results.csv");
+		saveAs("Results", outResults + "/" + selectedClassifier + "_testing_Results.csv");
 		//run("Clear Results");
 	
 	// prints text in the log window after all files are processed

@@ -42,8 +42,6 @@ for image in os.listdir(folder_loc):
     if image[-4:] == ".png":
             files.append(image)
 
-####TODO make rest of this work, i am this far
-
 # Determine number of draws by number of files in validation hand count folder
 val_loc = "../training_area/Validation_Hand_Counts/"
 val_files = os.listdir(val_loc)
@@ -68,16 +66,15 @@ LEV0 = len(ev0_files)
 LEV1 = len(ev1_files)
 
 # Randomly select images to be auditted
-# TODO may grab same image twice, I'm not sure
+# TODO may grab same image twice, I'm not sure. this may mess up audit since 
+# Wrong number of genotypes. Technically not since it would be the same as number of images
 audit_set = {}
 for incremenet in range(0, draws_per_geno):
     ev0_key, ev0_value = random.choice(list(ev0_files.items()))
     ev1_key, ev1_value = random.choice(list(ev1_files.items()))
     audit_set[ev0_key] = ev0_value
     audit_set[ev1_key] = ev1_value
-
 ###need to get these random variable numbers from oritional file directory, eg images, counted 
-
 """ Temp so I don't need to redo ROI stuff
 # Copy selected images into audit images directory
 for file in audit_set.keys():
@@ -92,11 +89,12 @@ genoCSV = []
 for key, value in sorted(audit_set.items()):
     genoCSV.append([value])
 print(genoCSV)
+"""
 with open("../training_area/testing_area/geno_audit.csv", 'w+', newline ='') as file:
     write = csv.writer(file)
     write.writerow(["geno"])
     write.writerows(genoCSV)
-
+"""
 hand_ini = pd.read_csv("../training_area/testing_area/Audit_Hand_Counts/roi_counts.csv", usecols=['Label'])
 lvl_h = np.unique(hand_ini)
 count_h = {}
