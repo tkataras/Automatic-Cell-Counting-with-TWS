@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+		http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.scijava</groupId>
+		<artifactId>pom-scijava</artifactId>
+		<version>29.2.1</version>
+		<relativePath />
+	</parent>
+
+	<groupId>ACCT</groupId>
+	<artifactId>imagej-tutorials-aggregator</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>ACCT</name>
+	<description>A collection of tutorials for ImageJ.</description>
+	<url>https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git</url>
+	<inceptionYear>2021</inceptionYear>
+	<organization>
+		<name>Kaul Lab</name>
+	<!-- 	<url>https://imagej.net/</url> -->
+	</organization>
+	<licenses>
+		<license>
+			<name>Unlicense</name>
+			<!--<url>https://unlicense.org/</url>-->
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>tkataras</id>
+			<name>Theo Kataras</name>
+			<!-- <url>https://imagej.net/User:Rueden</url> -->
+			<roles>
+				<role>founder</role>
+				<role>lead</role>
+				<role>developer</role>
+				<role>debugger</role>
+				<role>reviewer</role>
+				<role>support</role>
+				<role>maintainer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>tjang</id>
+			<name>Tyler Jang</name>
+			<!-- <url>https://imagej.net/User:Rueden</url> -->
+			<roles>
+				<role>lead</role>
+				<role>developer</role>
+				<role>debugger</role>
+				<role>reviewer</role>
+				<role>support</role>
+				<role>maintainer</role>
+			</roles>
+		</developer>
+	</developers>
+	<!--<contributors>
+		<contributor>
+			<name>Johannes Schindelin</name>
+			<url>https://imagej.net/User:Schindelin</url>
+			<properties><id>dscho</id></properties>
+		</contributor>
+		<contributor>
+			<name>Brian Northan</name>
+			<url>https://imagej.net/User:Bnorthan</url>
+			<properties><id>bnorthan</id></properties>
+		</contributor>
+		<contributor>
+			<name>Barry DeZonia</name>
+			<url>https://imagej.net/User:Bdezonia</url>
+			<properties><id>bdezonia</id></properties>
+		</contributor>
+		<contributor>
+			<name>Mark Hiner</name>
+			<url>https://imagej.net/User:Hinerm</url>
+			<properties><id>hinerm</id></properties>
+		</contributor>
+		<contributor>
+			<name>Ellen Arena</name>
+			<url>https://imagej.net/User:Etarena</url>
+			<properties><id>etarena</id></properties>
+		</contributor>
+		<contributor>
+			<name>Jan Eglinger</name>
+			<url>https://imagej.net/User:Eglinger</url>
+			<properties><id>imagejan</id></properties>
+		</contributor>
+		<contributor>
+			<name>Aparna Pal</name>
+			<url>https://imagej.net/User:Apal4</url>
+			<properties><id>apal4</id></properties>
+		</contributor>
+	</contributors> 
+	-->
+	<!-- 
+	<mailingLists>
+		<mailingList>
+			<name>Image.sc Forum</name>
+			<archive>https://forum.image.sc/tags/imagej</archive>
+		</mailingList>
+	</mailingLists>
+
+	<modules>
+		<module>howtos</module>
+		<module>maven-projects/add-two-datasets</module>
+		<module>maven-projects/custom-preprocessor-plugin</module>
+		<module>maven-projects/dynamic-commands</module>
+		<module>maven-projects/execute-commands</module>
+		<module>maven-projects/ij2-image-plus</module>
+		<module>maven-projects/listen-to-events</module>
+		<module>maven-projects/simple-commands</module>
+		<module>maven-projects/swing-example</module>
+		<module>maven-projects/working-with-modules</module>
+	</modules>
+
+	<scm>
+		<connection>scm:git:https://github.com/imagej/tutorials</connection>
+		<developerConnection>scm:git:git@github.com:imagej/tutorials</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/imagej/tutorials</url>
+	</scm>
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>http://github.com/imagej/tutorials/issues</url>
+	</issueManagement>
+	<ciManagement>
+		<system>GitHub Actions</system>
+		<url>https://github.com/imagej/tutorials/actions</url>
+	</ciManagement>
+
+	<properties>
+		<license.licenseName>unlicense</license.licenseName>
+		<license.copyrightOwners>N/A</license.copyrightOwners>
+		<license.projectName>ImageJ software for multidimensional image processing and analysis.</license.projectName>
+-->
+		<!-- NB: Deploy releases to the SciJava Maven repository. -->
+<!-- 		<releaseProfiles>sign,deploy-to-scijava</releaseProfiles>
+	</properties>
+-->
+	<repositories>
+		<repository>
+			<id>ACCT.public</id>
+			<url>https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git</url>
+		</repository>
+	</repositories>
+</project>
