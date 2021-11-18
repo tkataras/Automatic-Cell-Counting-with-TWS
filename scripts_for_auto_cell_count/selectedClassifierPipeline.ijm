@@ -26,12 +26,14 @@ Dialog.create("Question");
 Dialog.addCheckbox("Do you need to project multiple image segmentations?", false);
 Dialog.show();
 result = Dialog.getCheckbox();
+
+// Threshold the images
+runMacro(input + "just_thresh.ijm", testingPath);
+
 if (result) {
-	runMacro(input + "just_thresh.ijm", testingPath);
 	exec("python", input + "Project N Images by ID.py", input, trimClassName[0]);
 	searchDirectory = input + "../training_area/testing_area/Weka_Output_Projected/" + trimClassName[0];
 } else {
-	runMacro(input + "just_thresh.ijm", testingPath);
 	searchDirectory = input + "../training_area/testing_area/Weka_Output_Thresholded/" + trimClassName[0];
 }
 
@@ -48,7 +50,5 @@ exec("python", input + "finalClassifierCheck.py", input, trimClassName[0]);
 runMacro(input + "count_from_roi.ijm", input + "../training_area/testing_area/Audit_Hand_Counts/" + trimClassName[0] + "/");
 exec("python", input + "audit.py", input, trimClassName[0]);
 runMacro(input + "audit count.ijm", searchDirectory);
-print("finished pipeline");
-
-
-
+exec("python", input + "audit_classifier_comparison.py", input, trimClassName[0]);
+print("finished pipeline");
