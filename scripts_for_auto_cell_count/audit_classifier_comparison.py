@@ -48,7 +48,7 @@ for i in range(0, len(hand_ini)):
         count_h[hand_ini.loc[i].at["Label"]] = count_h[hand_ini.loc[i].at["Label"]] + 1
 hand_final = count_h
 
-class_res_loc = hand_count_dir + selectedClassifier + "/" + selectedClassifier + "_testing_Results.csv"
+class_res_loc = hand_count_dir + "/" + selectedClassifier + "_testing_Results.csv"
 class_results = pd.read_csv(class_res_loc)
 
 ##if else loop for determining true positive, false positive and false negative cell counts
@@ -126,7 +126,7 @@ else:
 print(selectedClassifier + " percision = " +  str(prec))
 print(selectedClassifier + " recall = " +  str(reca))
 print(selectedClassifier + " F1 = " +  str(F1))
-file_out_name = OUTPUT_count + "/" + selectedClassifier + "_Final.csv"
+file_out_name = "../training_area/testing_area/Audit_Counted/" + selectedClassifier + "_Final.csv"
 # Writes out the final file to save the output
 final_blah.to_csv(file_out_name)
 
@@ -186,5 +186,5 @@ date = str(currTime.tm_mday) + "-" + str(currTime.tm_hour) + "-" + str(currTime.
 out_name = "Audit_All_classifier_Comparison_" + date + ".csv"
 
 #write.csv(your_boat, paste(result_out,out_name, sep = ""))
-your_boat.to_csv(result_out + out_name)
+your_boat.to_csv("../training_area/testing_area/Audit_Counted/"  + out_name)
 print("Finished Audit Classifier Comparison")
