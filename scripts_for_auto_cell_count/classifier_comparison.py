@@ -133,10 +133,11 @@ for f in range(0, len(class_list)):
     tot_fp = sum(final_blah["fp"])
     tot_fn = sum(final_blah["fn"])
 
+    # TODO Need to catch divide by zero here 
     # precision is tp/(tp + fp)
-    prec = tot_tp/(tot_tp + tot_fp)
+    prec = catchDivideByZero(tot_tp, tot_tp + tot_fp)
     #recall is tp/(tp + fn)
-    reca = tot_tp/(tot_tp + tot_fn)
+    reca = catchDivideByZero(tot_tp, tot_tp + tot_fn)
     result = catchDivideByZero(prec*reca, prec + reca)
     if result == None:
         F1 = None
@@ -151,7 +152,6 @@ for f in range(0, len(class_list)):
     # Writes out the final file to save the output
     final_blah.to_csv(file_out_name)
   
-    # TODO it won't be an alternating pattern, just set the geno values to their rows
     # Add genotypes to csv file
     geno = pd.read_csv(geno_file)
     lvl_geno = np.unique(geno)
