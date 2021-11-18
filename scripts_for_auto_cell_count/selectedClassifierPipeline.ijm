@@ -51,7 +51,4 @@ runMacro(input + "count_from_roi.ijm", input + "../training_area/testing_area/Au
 exec("python", input + "audit.py", input, trimClassName[0]);
 runMacro(input + "audit count.ijm", searchDirectory);
 exec("python", input + "audit_classifier_comparison.py", input, trimClassName[0]);
-print("finished pipeline");
-
-
-
+print("finished pipeline");
