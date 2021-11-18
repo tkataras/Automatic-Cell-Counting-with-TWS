@@ -21,11 +21,17 @@ def setDir(arg1):
     os.chdir(currDir)
 setDir(sys.argv[1])
 
+
+##remove later)(*#)(*$09&)(75)))
+os.chdir("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/scripts_for_auto_cell_count/")
+
 # Input the genotype data as a .csv file
 geno_file = "../training_area/genotype.csv"
 
 # File output location
-OUTPUT_count = "../training_area/Weka_Output_Counted/"
+#OUTPUT_count = "../training_area/Weka_Output_Counted/"
+#i just changed this to work with the probability data, so the files will end up in the projected probability folders
+OUTPUT_count = "../training_area/Weka_Probability_Projected/"
 result_out = "../training_area/Results/"
 
 class_list = os.listdir(OUTPUT_count)
