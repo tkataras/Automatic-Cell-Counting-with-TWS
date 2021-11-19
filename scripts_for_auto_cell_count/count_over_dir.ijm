@@ -85,8 +85,8 @@ macro "The -- True -- Count" {
 			roiManager("Select", numroi - 1);
 			pts = Roi.getCoordinates(xpoints2, ypoints2); 
 			numpoints = lengthOf(ypoints2); // establish number of hand placed counts
-			print(numpoints + "_hand_placed_markers");
-			print("number auto count objects=" + numroi -1);
+			//print(numpoints + "_hand_placed_markers");
+			//print("number auto count objects=" + numroi -1);
 				
 			numroi2 = numroi -1;
 				

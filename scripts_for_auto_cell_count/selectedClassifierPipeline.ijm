@@ -1,4 +1,14 @@
 input = getDirectory("Choose source directory of the macro (Scripts for Auto Cell Count)");
+
+// Set measurements to calculate
+run("Set Measurements...", "area mean standard modal min centroid center perimeter bounding fit shape feret's integrated median skewness kurtosis area_fraction limit display redirect=None decimal=8");
+
+
+//making sure all folders exist
+exec("python", input + "file_architect.py", input);
+
+
+
 testingPath = input + "../training_area/testing_area/";
 classifierDir = input + "../training_area/Classifiers";
 searchDirectory = getFileList(classifierDir);

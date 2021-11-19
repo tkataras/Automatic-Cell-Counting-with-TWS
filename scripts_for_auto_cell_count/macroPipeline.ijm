@@ -8,14 +8,14 @@ print(input);
 File.setDefaultDir(input);
 print(File.getDefaultDir);
 
-
+//populate all foders, if folders already exist, selectively does not make those folders
 exec("python", input + "file_architect.py", input);
 
 // TODO need to find a way to put this bsh into user's plugins
 //fiji_dir = getDirectory("Select the plugins directory for fiji (fiji/plugins)");
 //Copy BS_TWS_apply.bsh into fiji_dir
 //File.copy(input + "BS_TWS_apply.bsh", getDirectory("plugins"));
-//run("BS TWS apply");
+run("BS TWS apply");
 
 runMacro(input + "just_thresh.ijm", input);
 
@@ -34,12 +34,11 @@ if (result) {
 
 // Run ImageJ macros
 runMacro(input + "count_from_roi.ijm", input);
-<<<<<<< HEAD
-runMacro(input + "count_over_dir_prob_TK.ijm", searchDirectory);
-=======
-runMacro(input + "count_over_dir_prob_TK.ijm", input);
+
+//runMacro(input + "count_over_dir_prob_TK.ijm", searchDirectory);
+
 runMacro(input + "count_over_dir.ijm", searchDirectory);
->>>>>>> 11f542b953626f0a25d783cb97e9f2789eaf7212
+
 
 z = input + "classifier_comparison.py";
 
