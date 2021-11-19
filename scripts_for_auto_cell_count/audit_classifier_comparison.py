@@ -1,0 +1,190 @@
+#!/usr/bin/python
+###
+# Author: Tyler Jang, Theo Kataras
+# Date 11/16/2021
+#
+# Inputs: 
+# Outputs: 
+###
+import pandas as pd
+import numpy as np
+import os
+import sys
+import time
+import scipy.stats
+
+# Method to change working directory from inputted ImageJ Macro
+currDir = os.getcwd()
+def setDir(arg1):
+    currDir = arg1
+    os.chdir(currDir)
+setDir(sys.argv[1])
+
+# Get the selected classifier 
+selectedClassifier = sys.argv[2]
+
+# Input the genotype data as a .csv file
+geno_file = "../training_area/testing_area/geno_audit.csv"
+
+# Input Hand Counts
+hand_count_dir = "../training_area/testing_area/Audit_Hand_Counts/"
+
+# File output location
+OUTPUT_count = "../training_area/testing_area/Audit_Counted/" + selectedClassifier + "/"
+result_out = "../training_area/testing_area/"
+
+class_list = os.listdir(OUTPUT_count)
+# Dataframe to store results
+your_boat = pd.DataFrame(columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp", "mean_F1_wt", "p_g_tt_p", "r_g_tt_p"]) #holds all accuracy values for classifiers
+
+### adding in the results of the hand_count_from_roi.ijm, this will not change by folder, and is generated manually by saving results in Imagej from Count ROI
+hand_ini = pd.read_csv("../training_area/testing_area/Audit_Hand_Counts/roi_counts.csv", usecols=['Label'])
+lvl_h = np.unique(hand_ini)
+count_h = {}
+for i in range(0, len(hand_ini)):
+    if count_h.get(hand_ini.loc[i].at["Label"]) == None:
+        count_h[hand_ini.loc[i].at["Label"]] = 1
+    else:
+        count_h[hand_ini.loc[i].at["Label"]] = count_h[hand_ini.loc[i].at["Label"]] + 1
+hand_final = count_h
+
+class_res_loc = hand_count_dir + "/" + selectedClassifier + "_testing_Results.csv"
+class_results = pd.read_csv(class_res_loc)
+
+##if else loop for determining true positive, false positive and false negative cell counts
+##from levels present in the classifier results output, this should be the same each time, BUT IT WoNT BE IF ONE IMAGE HAS NO CELL OBJECtS
+##need to go into the counted folder and pull out all image names, meaning ignorming the Results.csv files. images from tru_count with be .png
+files = []
+for image in os.listdir(OUTPUT_count):
+    if image[-4:] == ".png":
+        files.append(image)
+final_blah = pd.DataFrame(columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
+
+for image in range (0, len(files)):
+    current_img = files[image]
+    dftc = class_results[class_results["Label"].isin([current_img])]
+
+    # If the images are all empty
+    if dftc.size == 0:
+        name = files[image]
+        tp = 0
+        fp = 0
+        fn = count_h[lvl_h[image]]
+        avg_area = 0
+        avg_circular = 0
+        this_row = pd.DataFrame([[name, tp, fp, fn, avg_area, avg_circular]], columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
+    else: 
+        fp = 0
+        tp = 0
+        fn = 0
+        avg_area = np.mean(dftc["Area"])
+        avg_circular = np.mean(dftc["Circ."])
+        for autoCount in (dftc["points"]):
+            if autoCount == 0:
+                fp = fp + 1
+            elif autoCount == 1:
+                tp = tp + 1
+            else:
+                tp = tp + 1
+                fn = fn + autoCount - 1
+
+    #for each image add total number hand count - sum(dftc$points), the sum points must always be less than hand_final$count 
+    ## dtfc$points only counts the markers that fall within cell objects, hand_final$counts is the sum of all points in total. 
+    #when this is not true(eg there are negative values) check the image names of the hand count!!
+    missed = count_h[lvl_h[image]] - sum(dftc["points"]) 
+    fn = fn + missed
+    name = files[image]
+    
+    this_row = pd.DataFrame([[name, tp, fp, fn, avg_area, avg_circular]], columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
+    final_blah = final_blah.append(this_row)
+    
+# TODO This is throwing a divide by 0 error I want to ignore
+# This is temp fix, but a negative * positive can still cause divide by 0
+def catchDivideByZero(numer, denom):
+    try:
+        return numer/denom
+    except ZeroDivisionError:
+        return None
+# Need to calculate precision and recall
+tot_tp = sum(final_blah["tp"])
+tot_fp = sum(final_blah["fp"])
+tot_fn = sum(final_blah["fn"])
+
+# precision is tp/(tp + fp)
+prec = catchDivideByZero(tot_tp, tot_tp + tot_fp)
+
+#recall is tp/(tp + fn)
+reca = catchDivideByZero(tot_tp, tot_tp + tot_fn)
+if prec == None or reca == None:
+    F1 = None
+else:
+    result = catchDivideByZero(prec*reca, prec + reca)
+    if result == None:
+        F1 = None
+    else:
+        F1 = 2 * result
+print(selectedClassifier + " percision = " +  str(prec))
+print(selectedClassifier + " recall = " +  str(reca))
+print(selectedClassifier + " F1 = " +  str(F1))
+file_out_name = "../training_area/testing_area/Audit_Counted/" + selectedClassifier + "_Final.csv"
+# Writes out the final file to save the output
+final_blah.to_csv(file_out_name)
+
+# TODO audit genotype file needs to be matched to my testing run
+# Add genotypes to csv file
+geno = pd.read_csv(geno_file)
+lvl_geno = np.unique(geno)
+genoList = []
+for numRows in range(0, len(final_blah["name"])):
+    genoList.append(geno["geno"][numRows])
+final_blah["geno"] = genoList
+
+#precision and recall per image
+prec2 = final_blah["tp"]/(final_blah["tp"] + final_blah["fp"])    
+reca2 = final_blah["tp"]/(final_blah["tp"] + final_blah["fn"])
+
+# Calculate F1_2
+F1_2 = []
+for index in range(0, len(prec2)):
+    result = catchDivideByZero(list(prec2)[index] * list(reca2)[index], list(prec2)[index] + list(reca2)[index])
+    if result == None:
+        F1_2.append(None)
+    else:
+        F1_2.append(2 * result)
+# Insert prec2, reca2, and F1_2 into final blah
+final_blah["prec2"] = prec2
+final_blah["reca2"] = reca2
+final_blah["F1_2"] = F1_2
+
+if len(lvl_geno) != 2:
+    print("automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
+
+# Calculate the Welch 2 Sample T-test   
+groupOne = final_blah.query('geno == @lvl_geno[0]')
+groupTwo = final_blah.query('geno == @lvl_geno[1]')
+
+p_g_tt = scipy.stats.ttest_ind(groupOne["prec2"], groupTwo["prec2"], equal_var=False, nan_policy="omit")
+r_g_tt = scipy.stats.ttest_ind(groupOne["reca2"], groupTwo["reca2"], equal_var=False, nan_policy="omit")
+F1_g_tt = scipy.stats.ttest_ind(groupOne["F1_2"], groupTwo["F1_2"], equal_var=False, nan_policy="omit")
+p_g_tt_p = p_g_tt[1]
+r_g_tt_p = r_g_tt[1]
+F1_g_tt_p = F1_g_tt[1]
+
+# TODO why is this called F1 not F1_2, it's confusing me
+# Get means of F1_2
+mean_F1_gp = np.nanmean(groupOne["F1_2"])
+mean_F1_wt = np.nanmean(groupTwo["F1_2"])
+
+# Prepare output csv file
+row_row = pd.DataFrame([[selectedClassifier, prec, reca, F1, F1_g_tt_p, mean_F1_gp, mean_F1_wt, p_g_tt_p, r_g_tt_p]], columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp", "mean_F1_wt", "p_g_tt_p", "r_g_tt_p"])
+your_boat = your_boat.append(row_row)
+
+currTime = time.localtime(time.time())
+#generating a unique file name based on time and date
+date = str(currTime.tm_mday) + "-" + str(currTime.tm_hour) + "-" + str(currTime.tm_min) + "-" + str(currTime.tm_sec)
+
+out_name = "Audit_All_classifier_Comparison_" + date + ".csv"
+
+#write.csv(your_boat, paste(result_out,out_name, sep = ""))
+your_boat.to_csv("../training_area/testing_area/Audit_Counted/"  + out_name)
+print("Finished Audit Classifier Comparison")

@@ -34,7 +34,12 @@ if (result) {
 
 // Run ImageJ macros
 runMacro(input + "count_from_roi.ijm", input);
+<<<<<<< HEAD
 runMacro(input + "count_over_dir_prob_TK.ijm", searchDirectory);
+=======
+runMacro(input + "count_over_dir_prob_TK.ijm", input);
+runMacro(input + "count_over_dir.ijm", searchDirectory);
+>>>>>>> 11f542b953626f0a25d783cb97e9f2789eaf7212
 
 z = input + "classifier_comparison.py";
 
