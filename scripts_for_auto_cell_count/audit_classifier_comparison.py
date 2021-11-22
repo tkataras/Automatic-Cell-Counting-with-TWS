@@ -132,7 +132,7 @@ final_blah.to_csv(file_out_name)
 # TODO audit genotype file needs to be matched to my testing run
 # Add genotypes to csv file
 geno = pd.read_csv(geno_file)
-lvl_geno = np.unique(geno)
+lvl_geno = np.unique(geno["geno"])
 genoList = []
 for numRows in range(0, len(final_blah["name"])):
     genoList.append(geno["geno"][numRows])

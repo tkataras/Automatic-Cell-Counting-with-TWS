@@ -73,8 +73,8 @@ macro "The -- True -- Count" {
 				//update the results table
 				//setResult("points", n++, counts);	
 			//}
-			//roiManager("deselect")		
-			//roiManager("Delete");       
+			roiManager("deselect")		
+			roiManager("Delete");       
 		//}
 		selectWindow("Results");
 		//take / off end of folder name to get classifier ID

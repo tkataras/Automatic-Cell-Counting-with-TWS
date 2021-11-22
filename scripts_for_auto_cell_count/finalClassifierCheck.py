@@ -23,12 +23,13 @@ setDir(sys.argv[1])
 # Get the selected classifier by the user
 selectedClassifier = sys.argv[2]
 
+
 # Input the genotype data as a .csv file
 geno_file = "../training_area/testing_area/geno_full.csv"
 
 # File output location
 OUTPUT_count = "../training_area/testing_area/Weka_Output_Counted/"
-result_out = "../training_area/testing_area/Results/"
+result_out = "../training_area/testing_area/Results/" #this isnt called at all -TK
 class_list_temp = os.listdir(OUTPUT_count + selectedClassifier)
 
 class_list = []
@@ -54,9 +55,9 @@ for f in range(0, len(unique_img)):
 geno = pd.read_csv(geno_file)
 
 # Get the unique genotype labels
-lvl_geno = np.unique(geno)
+lvl_geno = np.unique(geno["geno"])
 if len(lvl_geno) != 2:
-    print("Automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
+    print("Automatic analysis can only be done with 2 levels, for alterative analysis results file in classifier folder")
 
 genoList = []
 for numRows in range(0, len(imgCounts["Label"])):
