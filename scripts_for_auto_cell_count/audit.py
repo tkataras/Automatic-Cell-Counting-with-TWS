@@ -66,15 +66,15 @@ LEV0 = len(ev0_files)
 LEV1 = len(ev1_files)
 
 # Randomly select images to be auditted
-# TODO may grab same image twice, I'm not sure. this may mess up audit since 
 # Wrong number of genotypes. Technically not since it would be the same as number of images
-# TODO Use random.sample instead
 audit_set = {}
-for incremenet in range(0, draws_per_geno):
-    ev0_key, ev0_value = random.choice(list(ev0_files.items()))
-    ev1_key, ev1_value = random.choice(list(ev1_files.items()))
-    audit_set[ev0_key] = ev0_value
-    audit_set[ev1_key] = ev1_value
+ev0_rand = random.sample((ev0_files.items()), draws_per_geno)
+ev1_rand = random.sample((ev1_files.items()), draws_per_geno)
+for elem in ev0_rand:
+    audit_set[elem[0]] = elem[1]
+for elem in ev1_rand:
+    audit_set[elem[0]] = elem[1]
+
 ###need to get these random variable numbers from oritional file directory, eg images, counted 
 """ Temp so I don't need to redo ROI stuff
 # Copy selected images into audit images directory
