@@ -43,6 +43,7 @@ for image in os.listdir(folder_loc):
             files.append(image)
 
 # Determine number of draws by number of files in validation hand count folder
+# TODO is this supposed to be validation hand counts folder?
 val_loc = "../training_area/Validation_Hand_Counts/"
 val_files = os.listdir(val_loc)
 draws = len(val_files)
@@ -66,7 +67,6 @@ LEV0 = len(ev0_files)
 LEV1 = len(ev1_files)
 
 # Randomly select images to be auditted
-# Wrong number of genotypes. Technically not since it would be the same as number of images
 audit_set = {}
 ev0_rand = random.sample((ev0_files.items()), draws_per_geno)
 ev1_rand = random.sample((ev1_files.items()), draws_per_geno)
@@ -76,7 +76,7 @@ for elem in ev1_rand:
     audit_set[elem[0]] = elem[1]
 
 ###need to get these random variable numbers from oritional file directory, eg images, counted 
-""" Temp so I don't need to redo ROI stuff
+""" TODO Temp so I don't need to redo ROI stuff
 # Copy selected images into audit images directory
 for file in audit_set.keys():
     filename =  os.path.basename(file)
@@ -90,7 +90,8 @@ genoCSV = []
 for key, value in sorted(audit_set.items()):
     genoCSV.append([value])
 print(genoCSV)
-"""
+
+""" TODO Temp so I don't need to redo ROI stuff
 with open("../training_area/testing_area/geno_audit.csv", 'w+', newline ='') as file:
     write = csv.writer(file)
     write.writerow(["geno"])
