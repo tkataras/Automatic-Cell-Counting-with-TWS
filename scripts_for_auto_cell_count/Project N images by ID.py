@@ -131,8 +131,6 @@ if firstStage:
     out_dir_list = os.listdir(id_for_out_dir)
 
     # Getting images names, can pick any folder with all images in question to do this
-    # TODO why do I need trim names? (I believe it was for R code limitations) Code runs faster without it.
-    #newsid1 = trim_names(id1, half="back")
     newsid1 = file_list
     id1_df_sep = sep_slidebook(newsid1, "-")
     id1_df_squish = squish(id1_df_sep)

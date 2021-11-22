@@ -39,8 +39,8 @@ class_list = os.listdir(OUTPUT_count)
 ############################## now we have binary projected images to work with and need to compare to roi for each classifier
 
 #initialize variables
-#row_row = pd.DataFrame(columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp,mean_F1_wt", "p_g_tt_p", "r_g_tt_p", "class"]) #holds row of accuracy values for each classifier one at a time
-your_boat = pd.DataFrame(columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp", "mean_F1_wt", "p_g_tt_p", "r_g_tt_p"]) #holds all accuracy values for classifiers
+#row_row = pd.DataFrame(columns=["class", "prec", "reca", "F1", "F1_geno_ttest_pval", "mean_F1_gp,mean_F1_wt", "perc_geno_ttest_pval", "recall_geno_ttest_pval", "class"]) #holds row of accuracy values for each classifier one at a time
+your_boat = pd.DataFrame(columns=["class", "prec", "reca", "F1", "F1_geno_ttest_pval", "mean_F1_gp", "mean_F1_wt", "perc_geno_ttest_pval", "recall_geno_ttest_pval"]) #holds all accuracy values for classifiers
 #count_h <- NA # holds hand count number per image
 
 ###################now need to proces the results files
@@ -127,8 +127,7 @@ for f in range(0, len(class_list)):
         this_row = pd.DataFrame([[name, tp, fp, fn, avg_area, avg_circular]], columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
         final_blah = final_blah.append(this_row)
             
-    # TODO This is throwing a divide by 0 error I want to ignore
-    # This is temp fix, but a negative * positive can still cause divide by 0
+    # Method to catch divide by zeros 
     def catchDivideByZero(numer, denom):
         try:
             return numer/denom
@@ -139,7 +138,6 @@ for f in range(0, len(class_list)):
     tot_fp = sum(final_blah["fp"])
     tot_fn = sum(final_blah["fn"])
 
-    # TODO Need to catch divide by zero here 
     # precision is tp/(tp + fp)
     prec = catchDivideByZero(tot_tp, tot_tp + tot_fp)
     #recall is tp/(tp + fn)
@@ -155,6 +153,7 @@ for f in range(0, len(class_list)):
 
     current_loc = counted_folder_dir + "/" + class_list[f]
     file_out_name = current_loc + "/" + curr_class + "_Final.csv"
+
     # Writes out the final file to save the output
     final_blah.to_csv(file_out_name)
   
@@ -190,21 +189,21 @@ for f in range(0, len(class_list)):
     groupOne = final_blah.query('geno == @lvl_geno[0]')
     groupTwo = final_blah.query('geno == @lvl_geno[1]')
 
-    p_g_tt = scipy.stats.ttest_ind(groupOne["prec2"], groupTwo["prec2"], equal_var=False, nan_policy="omit")
-    r_g_tt = scipy.stats.ttest_ind(groupOne["reca2"], groupTwo["reca2"], equal_var=False, nan_policy="omit")
-    F1_g_tt = scipy.stats.ttest_ind(groupOne["F1_2"], groupTwo["F1_2"], equal_var=False, nan_policy="omit")
-    p_g_tt_p = p_g_tt[1]
-    r_g_tt_p = r_g_tt[1]
-    F1_g_tt_p = F1_g_tt[1]
+    perc_geno_ttest = scipy.stats.ttest_ind(groupOne["prec2"], groupTwo["prec2"], equal_var=False, nan_policy="omit")
+    reca_geno_ttest = scipy.stats.ttest_ind(groupOne["reca2"], groupTwo["reca2"], equal_var=False, nan_policy="omit")
+    F1_geno_ttest = scipy.stats.ttest_ind(groupOne["F1_2"], groupTwo["F1_2"], equal_var=False, nan_policy="omit")
+    perc_geno_ttest_pval = perc_geno_ttest[1]
+    recall_geno_ttest_pval = reca_geno_ttest[1]
+    F1_geno_ttest_pval = F1_geno_ttest[1]
 
-    # TODO why is this called F1 not F1_2, it's confusing me
     # Get means of F1_2
-    mean_F1_gp = np.nanmean(groupOne["F1_2"])
-    mean_F1_wt = np.nanmean(groupTwo["F1_2"])
+    mean_F1_ev0 = np.nanmean(groupOne["F1_2"])
+    mean_F1_ev1 = np.nanmean(groupTwo["F1_2"])
 
     # Prepare output csv file
-    row_row = pd.DataFrame([[curr_class, prec, reca, F1, F1_g_tt_p, mean_F1_gp, mean_F1_wt, p_g_tt_p, r_g_tt_p]], columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp", "mean_F1_wt", "p_g_tt_p", "r_g_tt_p"])
+    row_row = pd.DataFrame([[curr_class, prec, reca, F1, F1_geno_ttest_pval, mean_F1_ev0, mean_F1_ev1, perc_geno_ttest_pval, recall_geno_ttest_pval]], columns=["class", "prec", "reca", "F1", "F1_geno_ttest_pval", "mean_F1_ev0", "mean_F1_ev1", "perc_geno_ttest_pval", "recall_geno_ttest_pval"])
     your_boat = your_boat.append(row_row)
+
 currTime = time.localtime(time.time())
 #generating a unique file name based on time and date
 date = str(currTime.tm_mday) + "-" + str(currTime.tm_hour) + "-" + str(currTime.tm_min) + "-" + str(currTime.tm_sec)

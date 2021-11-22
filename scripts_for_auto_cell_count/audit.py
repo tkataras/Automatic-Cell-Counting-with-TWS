@@ -68,6 +68,7 @@ LEV1 = len(ev1_files)
 # Randomly select images to be auditted
 # TODO may grab same image twice, I'm not sure. this may mess up audit since 
 # Wrong number of genotypes. Technically not since it would be the same as number of images
+# TODO Use random.sample instead
 audit_set = {}
 for incremenet in range(0, draws_per_geno):
     ev0_key, ev0_value = random.choice(list(ev0_files.items()))

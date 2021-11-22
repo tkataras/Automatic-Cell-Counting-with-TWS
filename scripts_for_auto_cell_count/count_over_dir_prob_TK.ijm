@@ -26,7 +26,6 @@ macro "The -- True -- probability -- Count" {
 	prob_dirs = input_dirs + "../Weka_Probability_Projected/";
 
 	
-
 	// Clear the results table
 	run("Clear Results");
 	
