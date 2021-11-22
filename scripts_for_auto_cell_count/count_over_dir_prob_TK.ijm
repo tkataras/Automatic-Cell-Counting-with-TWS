@@ -3,7 +3,7 @@
  * Date: 11/17/2021
  * Description:
  */
-macro "The -- True -- Count" {
+macro "The -- True -- probability -- Count" {
 	//Overview: uses hand placed markers and weka output images from each classifier to begin accuracy calculation
 	//Input: Binary images, hand placed markes in roi files, one file for each image
 	//Output: Binary image files including only cells counted, and .csv file in classifier folder with accuracy information
@@ -15,13 +15,15 @@ macro "The -- True -- Count" {
 	
 	// Weka Output Projected if Projected, else Weka Output Thresholded
 
-	script_dirs = getArgument();
-	input_dirs = script_dirs + "../training_area/Weka_Output_Projected/";
-	// Weka Output Counted
-	output_dirs = script_dirs + "../training_area/Weka_Output_Counted/";
+	input_dirs = getArgument();
 
-	//TODO or not projected if using single images
-	prob_dirs = script_dirs + "../training_area/Weka_Probability_Projected/";
+
+	
+	// Weka Output Counted
+	output_dirs = input_dirs + "../Weka_Output_Counted/";
+
+	
+	prob_dirs = input_dirs + "../Weka_Probability_Projected/";
 
 	
 	// Clear the results table
