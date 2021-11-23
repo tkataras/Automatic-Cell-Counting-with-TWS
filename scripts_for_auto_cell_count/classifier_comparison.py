@@ -31,7 +31,7 @@ geno_file = "../training_area/genotype.csv"
 # File output location
 #OUTPUT_count = "../training_area/Weka_Output_Counted/"
 #i just changed this to work with the probability data, so the files will end up in the projected probability folders
-OUTPUT_count = "../training_area/Weka_Probability_Projected/"
+OUTPUT_count = "../training_area/Weka_Output_Counted/"
 result_out = "../training_area/Results/"
 
 class_list = os.listdir(OUTPUT_count)

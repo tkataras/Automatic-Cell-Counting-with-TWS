@@ -31,7 +31,7 @@ geno_file = "../training_area/testing_area/geno_full.csv"
 
 geno = pd.read_csv(geno_file)
 # Get the unique genotype labels
-lvl_geno = np.unique(geno)
+lvl_geno = np.unique(geno["geno"])
 if len(lvl_geno) != 2:
     print("automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
 
@@ -76,7 +76,7 @@ for elem in ev1_rand:
     audit_set[elem[0]] = elem[1]
 
 ###need to get these random variable numbers from oritional file directory, eg images, counted 
-""" TODO Temp so I don't need to redo ROI stuff
+ TODO Temp so I don't need to redo ROI stuff
 # Copy selected images into audit images directory
 for file in audit_set.keys():
     filename =  os.path.basename(file)
@@ -84,19 +84,19 @@ for file in audit_set.keys():
     
     shutil.copyfile("../training_area/testing_area/images/" + filename, os.path.join("../training_area/testing_area/Audit_Images/" + selectedClassifier +"/", filename))
     shutil.copyfile("../training_area/testing_area/Weka_Output_Counted/" + selectedClassifier +"/" + filename, os.path.join("../training_area/testing_area/Audit_Counted/"+ selectedClassifier +"/", filename))
-"""
+
 # Write a CSV for the geno data with images in alphabetical order
 genoCSV = []
 for key, value in sorted(audit_set.items()):
     genoCSV.append([value])
 print(genoCSV)
 
-""" TODO Temp so I don't need to redo ROI stuff
+ TODO Temp so I don't need to redo ROI stuff
 with open("../training_area/testing_area/geno_audit.csv", 'w+', newline ='') as file:
     write = csv.writer(file)
     write.writerow(["geno"])
     write.writerows(genoCSV)
-"""
+
 hand_ini = pd.read_csv("../training_area/testing_area/Audit_Hand_Counts/roi_counts.csv", usecols=['Label'])
 lvl_h = np.unique(hand_ini)
 count_h = {}
