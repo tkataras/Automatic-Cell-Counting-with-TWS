@@ -21,10 +21,6 @@ def setDir(arg1):
     os.chdir(currDir)
 setDir(sys.argv[1])
 
-
-##remove later)(*#)(*$09&)(75)))
-os.chdir("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/scripts_for_auto_cell_count/")
-
 # Input the genotype data as a .csv file
 geno_file = "../training_area/genotype.csv"
 
