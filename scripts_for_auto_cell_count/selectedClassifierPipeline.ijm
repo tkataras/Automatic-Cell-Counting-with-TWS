@@ -7,8 +7,6 @@ run("Set Measurements...", "area mean standard modal min centroid center perimet
 //making sure all folders exist
 exec("python", input + "file_architect.py", input);
 
-
-
 testingPath = input + "../training_area/testing_area/";
 classifierDir = input + "../training_area/Classifiers";
 searchDirectory = getFileList(classifierDir);

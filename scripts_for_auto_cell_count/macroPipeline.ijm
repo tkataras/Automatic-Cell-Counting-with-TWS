@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 input = getDirectory("Choose source directory of the macro (Scripts for Auto Cell Count)");
 
 // Set measurements to calculate
@@ -16,7 +15,7 @@ exec("python", input + "file_architect.py", input);
 //fiji_dir = getDirectory("Select the plugins directory for fiji (fiji/plugins)");
 //Copy BS_TWS_apply.bsh into fiji_dir
 //File.copy(input + "BS_TWS_apply.bsh", getDirectory("plugins"));
-run("BS TWS apply");
+//run("BS TWS apply");
 
 runMacro(input + "just_thresh.ijm", input);
 
@@ -45,7 +44,7 @@ z = input + "classifier_comparison.py";
 
 // Next, run classifier comparison
 exec("python", z, input);
-=======
+
 input = getDirectory("Choose source directory of the macro (Scripts for Auto Cell Count)");
 
 // Set measurements to calculate
@@ -55,7 +54,6 @@ print(input);
 
 File.setDefaultDir(input);
 print(File.getDefaultDir);
-
 
 exec("python", input + "file_architect.py", input);
 
@@ -68,7 +66,7 @@ exec("python", input + "file_architect.py", input);
 runMacro(input + "just_thresh.ijm", input);
 
 // TODO Check if can run without projected images
-searchDirectory = input
+searchDirectory = input;
 Dialog.create("Multiple Image Segmentations?");
 Dialog.addCheckbox("Do you need to project multiple image segmentations?", false);
 Dialog.show();
@@ -90,5 +88,4 @@ z = input + "classifier_comparison.py";
 
 // Next, run classifier comparison
 exec("python", z, input);
->>>>>>> efdc3cb3ed345be33dccd6de2032ffa1332683ad
 print("finished pipeline");
