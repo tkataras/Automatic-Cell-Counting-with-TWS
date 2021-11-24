@@ -14,7 +14,7 @@ import sys
 import time
 import scipy.stats
 
-print("Start of classifier_comparison.py")
+print("Start of classifier_comparison.py\n")
 # Method to change working directory from inputted ImageJ Macro
 currDir = os.getcwd()
 def setDir(arg1):
@@ -40,7 +40,6 @@ your_boat = pd.DataFrame(columns=["class", "prec", "reca", "F1", "F1_geno_ttest_
 #iterate through the counted classifier folders folders, will save final output within each folder
 #setting working dir, needs to contain all counted output folders
 
-
 ##processing hand count roi to get count per image
 
 ### adding in the results of the hand_count_from_roi.ijm, this will not change by folder, and is generated manually by saving results in Imagej from Count ROI
@@ -52,23 +51,18 @@ for i in range(0, len(hand_ini)):
         count_h[hand_ini.loc[i].at["Label"]] = 1
     else:
         count_h[hand_ini.loc[i].at["Label"]] = count_h[hand_ini.loc[i].at["Label"]] + 1
-hand_final = count_h
 
-#location of folders holding The Count output
-counted_folder_dir = OUTPUT_count
-
-print("Got to start of iterating over classifiers")
 # Iterate through each classifier 
 for f in range(0, len(class_list)):
     class_name = os.listdir(OUTPUT_count)[f]
-    class_res_loc = counted_folder_dir + os.listdir(OUTPUT_count)[f] + "/" + class_name + "_Results.csv"
+    class_res_loc = OUTPUT_count + os.listdir(OUTPUT_count)[f] + "/" + class_name + "_Results.csv"
     class_results = pd.read_csv(class_res_loc)
     curr_class = os.listdir(OUTPUT_count)[f]
 
     ## If else loop for determining true positive, false positive and false negative cell counts
     ## from levels present in the classifier results output, this should be the same each time, BUT IT WoNT BE IF ONE IMAGE HAS NO CELL OBJECtS
     ## need to go into the counted folder and pull out all image names, meaning ignorming the Results.csv files. images from tru_count with be .png
-    folder_loc = counted_folder_dir + os.listdir(OUTPUT_count)[f]
+    folder_loc = OUTPUT_count + os.listdir(OUTPUT_count)[f]
     files = []
     for image in os.listdir(folder_loc):
         if image[-4:] == ".png":
@@ -106,8 +100,8 @@ for f in range(0, len(class_list)):
                     tp = tp + 1
                     fn = fn + autoCount - 1
         
-        #for each image add total number hand count - sum(dftc$points), the sum points must always be less than hand_final$count 
-        ## dtfc$points only counts the markers that fall within cell objects, hand_final$counts is the sum of all points in total. 
+        #for each image add total number hand count - sum(dftc$points), the sum points must always be less than count_h$count 
+        ## dtfc$points only counts the markers that fall within cell objects, count_h$counts is the sum of all points in total. 
         #when this is not true(eg there are negative values) check the image names of the hand count!!
         missed = count_h[lvl_h[image]] - sum(dftc["points"]) 
         fn = fn + missed
@@ -140,7 +134,7 @@ for f in range(0, len(class_list)):
     print(curr_class + " recall = " +  str(reca))
     print(curr_class + " F1 = " +  str(F1))
 
-    current_loc = counted_folder_dir + "/" + class_list[f]
+    current_loc = OUTPUT_count + "/" + class_list[f]
     file_out_name = current_loc + "/" + curr_class + "_Final.csv"
 
     # Writes out the final file to save the output
@@ -170,6 +164,10 @@ for f in range(0, len(class_list)):
     final_blah["prec2"] = prec2
     final_blah["reca2"] = reca2
     final_blah["F1_2"] = F1_2
+    
+    # Find the standard deviation of percision and recall
+    print(curr_class + " percision standard deviation = " + str(np.std(prec2)))
+    print(curr_class + " recall standard deviation = " + str(np.std(reca2)) + "\n")   
 
     if len(lvl_geno) != 2:
         print("automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")

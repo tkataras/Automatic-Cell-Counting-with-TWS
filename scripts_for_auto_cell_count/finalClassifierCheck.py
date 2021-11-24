@@ -13,6 +13,7 @@ import os
 import sys
 import scipy.stats
 
+print("Starting finalClassifierCheck.py\n")
 # Method to change working directory from inputted ImageJ Macro
 currDir = os.getcwd()
 def setDir(arg1):
@@ -23,13 +24,11 @@ setDir(sys.argv[1])
 # Get the selected classifier by the user
 selectedClassifier = sys.argv[2]
 
-
 # Input the genotype data as a .csv file
 geno_file = "../training_area/testing_area/geno_full.csv"
 
 # File output location
 OUTPUT_count = "../training_area/testing_area/Weka_Output_Counted/"
-result_out = "../training_area/testing_area/Results/" #this isnt called at all -TK
 class_list_temp = os.listdir(OUTPUT_count + selectedClassifier)
 
 class_list = []
@@ -40,7 +39,6 @@ for img in class_list_temp:
 
 unique_img = np.unique(class_list)
 
-print("Got to start iterating over classifier images")
 class_res_loc = OUTPUT_count + selectedClassifier + "/" + selectedClassifier + "_Results_test_data.csv"
 class_results = pd.read_csv(class_res_loc)
 
@@ -73,7 +71,14 @@ groupOne = imgCounts.query('geno == @lvl_geno[0]')
 groupTwo = imgCounts.query('geno == @lvl_geno[1]')
 t_test_calc = scipy.stats.ttest_ind(groupOne["Counts"], groupTwo["Counts"], equal_var=False, nan_policy="omit")
 
+# Calculate the mean counts
+print(str(lvl_geno[0]) + " Mean Counts: " + str(np.mean(groupOne["Counts"])))
+print(str(lvl_geno[1]) + " Mean Counts: " + str(np.mean(groupTwo["Counts"])))
+
+# Calculate the Standard Deviation 
 print(str(lvl_geno[0]) + " Standard Deviation: " + str(np.std(groupOne["Counts"])))
 print(str(lvl_geno[1]) + " Standard Deviation: " + str(np.std(groupTwo["Counts"])))
 print("T-test statistic: " + str(t_test_calc[0]))
 print("P-Value: " + str(t_test_calc[1]))
+
+print("\nFinished finalClassifierCheck.py")
