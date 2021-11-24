@@ -14,16 +14,13 @@ import sys
 import time
 import scipy.stats
 
+print("Start of classifier_comparison.py")
 # Method to change working directory from inputted ImageJ Macro
 currDir = os.getcwd()
 def setDir(arg1):
     currDir = arg1
     os.chdir(currDir)
 setDir(sys.argv[1])
-
-
-##remove later)(*#)(*$09&)(75)))
-os.chdir("F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/scripts_for_auto_cell_count/")
 
 # Input the genotype data as a .csv file
 geno_file = "../training_area/genotype.csv"
@@ -37,14 +34,8 @@ result_out = "../training_area/Results/"
 class_list = os.listdir(OUTPUT_count)
 
 ############################## now we have binary projected images to work with and need to compare to roi for each classifier
-
-#initialize variables
-#row_row = pd.DataFrame(columns=["class", "prec", "reca", "F1", "F1_geno_ttest_pval", "mean_F1_gp,mean_F1_wt", "perc_geno_ttest_pval", "recall_geno_ttest_pval", "class"]) #holds row of accuracy values for each classifier one at a time
-your_boat = pd.DataFrame(columns=["class", "prec", "reca", "F1", "F1_geno_ttest_pval", "mean_F1_gp", "mean_F1_wt", "perc_geno_ttest_pval", "recall_geno_ttest_pval"]) #holds all accuracy values for classifiers
-#count_h <- NA # holds hand count number per image
-
-###################now need to proces the results files
-
+# Holds all accuracy values for classifiers
+your_boat = pd.DataFrame(columns=["class", "prec", "reca", "F1", "F1_geno_ttest_pval", "mean_F1_ev0", "mean_F1_ev1", "perc_geno_ttest_pval", "recall_geno_ttest_pval"]) 
 
 #iterate through the counted classifier folders folders, will save final output within each folder
 #setting working dir, needs to contain all counted output folders
@@ -78,7 +69,6 @@ for f in range(0, len(class_list)):
     ## from levels present in the classifier results output, this should be the same each time, BUT IT WoNT BE IF ONE IMAGE HAS NO CELL OBJECtS
     ## need to go into the counted folder and pull out all image names, meaning ignorming the Results.csv files. images from tru_count with be .png
     folder_loc = counted_folder_dir + os.listdir(OUTPUT_count)[f]
-
     files = []
     for image in os.listdir(folder_loc):
         if image[-4:] == ".png":
@@ -87,7 +77,6 @@ for f in range(0, len(class_list)):
     img_names = files
 
     final_blah = pd.DataFrame(columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
-    
     for image in range(0, len(img_names)):
         current_img_plus_png = img_names[image]
         
@@ -212,3 +201,4 @@ out_name = "All_classifier_Comparison_" + date + ".csv"
 
 #write.csv(your_boat, paste(result_out,out_name, sep = ""))
 your_boat.to_csv(result_out + out_name)
+print("End of classifier_comparison.py")

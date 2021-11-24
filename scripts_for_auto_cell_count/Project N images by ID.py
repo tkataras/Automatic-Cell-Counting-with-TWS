@@ -105,6 +105,7 @@ def squish(input_df):
     return id1_df_squish_df
 
 # Start of main
+print("Starting Project N images by ID.py")
 # Method to change working directory from inputted ImageJ Macro
 currDir = os.getcwd()
 def setDir(arg1):

@@ -11,7 +11,7 @@ macro "The -- True -- Count" {
 	//this hides intermediary information and speeds processing
 	setBatchMode(true); 
 	
-	//set input and output directories locations
+	print("Starting count_over_dir.ijm");
 	
 	// Weka Output Projected if Projected, else Weka Output Thresholded
 	input_dirs = getArgument();
@@ -122,6 +122,7 @@ macro "The -- True -- Count" {
 		run("Clear Results");
 	}
 	// prints text in the log window after all files are processed
-	print("AH HA HA "+list.length+" images");
+	print("Counted over " + list.length + " images");
+	print("Finished count_over_dir.ijm\n");
 }
 updateResults();

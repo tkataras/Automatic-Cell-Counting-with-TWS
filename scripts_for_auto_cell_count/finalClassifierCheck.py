@@ -73,5 +73,7 @@ groupOne = imgCounts.query('geno == @lvl_geno[0]')
 groupTwo = imgCounts.query('geno == @lvl_geno[1]')
 t_test_calc = scipy.stats.ttest_ind(groupOne["Counts"], groupTwo["Counts"], equal_var=False, nan_policy="omit")
 
+print(str(lvl_geno[0]) + " Standard Deviation: " + str(np.std(groupOne["Counts"])))
+print(str(lvl_geno[1]) + " Standard Deviation: " + str(np.std(groupTwo["Counts"])))
 print("T-test statistic: " + str(t_test_calc[0]))
 print("P-Value: " + str(t_test_calc[1]))
