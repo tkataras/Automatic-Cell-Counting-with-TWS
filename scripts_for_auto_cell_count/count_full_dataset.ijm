@@ -1,6 +1,6 @@
 /*
  * Author: Theo, Tyler
- * Date: 10/21/2021
+ * Date: 11/23/2021
  * Description:
  */
 macro "The -- True -- Count" {
@@ -40,11 +40,11 @@ macro "The -- True -- Count" {
 		
 	//iterate  macro over the images in the input folder
 	for (q = 0; q < list.length; q++) {
-		actionTwo(input_dirs, output_dirs, list[q]);
+		action(input_dirs, output_dirs, list[q]);
 	}
 			
 	//describes the actions for each image
-	function actionTwo(input, output, filename) {    
+	function action(input, output, filename) {    
 		//opens and thresholds binary images or Weka output directly       
 		open(input + "/" + filename);
 		run("8-bit");
@@ -64,13 +64,11 @@ macro "The -- True -- Count" {
 		numroi = roiManager("count"); // establish number of objects
 		print("number auto count objects=" + numroi -1);	
 	}			
-			//update the results table
-			//setResult("points", n++, counts);	
-		//}
-		roiManager("deselect")		
-		roiManager("Delete");       
-	//}
+	roiManager("deselect")		
+	roiManager("Delete");       
+	
 	selectWindow("Results");
+	
 	//take / off end of folder name to get classifier ID
 	class_name = x[x.length-1];
 	saveAs("Results", output_dirs + "/" + class_name + "_Results_test_data.csv"); // **#*#*CANT FIND THIS FILE ANYWHERE*#*#*#*##*
