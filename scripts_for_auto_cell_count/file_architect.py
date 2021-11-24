@@ -8,6 +8,7 @@ File architect: creates the correct number of classifier folders in output folde
 import os
 import sys
 
+print("Starting file_architect.py")
 # Method to change working directory from inputted ImageJ Macro
 currDir = os.getcwd()
 def setDir(arg1):
@@ -32,8 +33,6 @@ else:
     #determing the number of classifiers
     class_list_pre_trim = os.listdir(CLASS_ORIGIN)
 
-print("in file architect py")
-
 #trim the classifier names of the ".model" at the end
 class_list = []
 for x in class_list_pre_trim:
@@ -50,7 +49,6 @@ OUTPUT_thresh = SOURCE + "Weka_Output_Thresholded/"
 OUTPUT_project = SOURCE + "Weka_Output_Projected/"
 OUTPUT_count = SOURCE + "Weka_Output_Counted/"
 
-    
 #create classifier folders in each prescribed location if it doesn't already exist
 for class_ID in class_list:
     print(class_ID)
@@ -85,3 +83,4 @@ if test_stage:
     if not os.path.isdir(SOURCE + "Audit_Counted/" + class_list[0]):
         os.mkdir(SOURCE + "Audit_Counted/" + class_list[0])
     
+print("Finished file_architect.py")

@@ -14,6 +14,7 @@ import sys
 import time
 import scipy.stats
 
+print("Start of classifier_comparison.py")
 # Method to change working directory from inputted ImageJ Macro
 currDir = os.getcwd()
 def setDir(arg1):
@@ -200,3 +201,4 @@ out_name = "All_classifier_Comparison_" + date + ".csv"
 
 #write.csv(your_boat, paste(result_out,out_name, sep = ""))
 your_boat.to_csv(result_out + out_name)
+print("End of classifier_comparison.py")

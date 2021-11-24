@@ -4,7 +4,7 @@
  * Description:
  */
 setBatchMode(true); 
-print("Started just_thresh.ijm");
+print("Starting just_thresh.ijm");
 // Weka Output
 input_dirs = getArgument();
 // Weka Output Thresholded
@@ -75,4 +75,4 @@ if(firstStage) {
 	}
 }
 
-print("Finished just_thresh.ijm");
+print("Finished just_thresh.ijm\n");

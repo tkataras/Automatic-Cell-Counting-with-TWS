@@ -6,7 +6,7 @@
  
 //hide details from user to minimize screen clutter
 setBatchMode(true);
-
+print("Starting count_from_roi.ijm");
 //macro for per image count from goi. also has xy location of all points
 
 // Validation Hand Counts
@@ -53,3 +53,4 @@ if(list.length < 2) {
 	//run("Summarize");
 	saveAs("Results", output +"/roi_counts.csv");
 }
+print("Finished count_from_roi.ijm\n");

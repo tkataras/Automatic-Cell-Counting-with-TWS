@@ -10,7 +10,7 @@ macro "The -- True -- probability -- Count" {
 	
 	//this hides intermediary information and speeds processing
 	setBatchMode(true); 
-	
+	print("Starting count_over_dir_prob_TK.ijm");
 	//set input and output directories locations
 	
 	// Weka Output Projected if Projected, else Weka Output Thresholded
@@ -152,6 +152,7 @@ print(inputP + input + filenameP);
 		run("Clear Results");
 	}
 	// prints text in the log window after all files are processed
-	print("AH HA HA "+list.length+" images");
+	print("Counted over " + list.length + " images");
+	print("Finished count_over_dir_prob_TK.ijm\n");
 }
 updateResults();
