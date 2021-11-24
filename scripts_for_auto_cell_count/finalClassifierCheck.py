@@ -78,6 +78,13 @@ print(str(lvl_geno[1]) + " Mean Counts: " + str(np.mean(groupTwo["Counts"])))
 # Calculate the Standard Deviation 
 print(str(lvl_geno[0]) + " Standard Deviation: " + str(np.std(groupOne["Counts"])))
 print(str(lvl_geno[1]) + " Standard Deviation: " + str(np.std(groupTwo["Counts"])))
+
+# Calculate the Confidence Interval
+print(str(lvl_geno[0]) + " 95% Confidence Interval: ")
+print(scipy.stats.norm.interval(alpha=0.95, loc=np.mean(groupOne["Counts"])))
+print(str(lvl_geno[1]) + " 95% Confidence Interval: ")
+print(scipy.stats.norm.interval(alpha=0.95, loc=np.mean(groupTwo["Counts"])))
+
 print("T-test statistic: " + str(t_test_calc[0]))
 print("P-Value: " + str(t_test_calc[1]))
 
