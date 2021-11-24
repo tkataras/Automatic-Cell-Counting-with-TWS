@@ -25,9 +25,7 @@ pip3 install imageio
 ```
 
 # Prerequisites:
--Current** version of FIJI distribution of Imagej
-
-https://imagej.net/software/fiji/
+-Current version of FIJI distribution of Imagej https://imagej.net/software/fiji/
 
 -R version https://www.r-project.org/
 
