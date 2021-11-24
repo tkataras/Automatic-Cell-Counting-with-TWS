@@ -57,4 +57,4 @@ exec("python", input + "finalClassifierCheck.py", input, trimClassName[0]);
 // select the audit set
 exec("python", input + "audit.py", input, trimClassName[0]);
 
-print("finished pipeline");
+print("Finished Act 2");
