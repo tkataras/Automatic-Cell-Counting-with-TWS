@@ -29,9 +29,9 @@ pip3 install imageio
 
 https://imagej.net/software/fiji/
 
--R version___
+-R version https://www.r-project.org/
 
--Need beanshell installation through terminal TODO
+-Need beanshell installation through terminal TODO is this even needed?
  
 # How To Use
 
