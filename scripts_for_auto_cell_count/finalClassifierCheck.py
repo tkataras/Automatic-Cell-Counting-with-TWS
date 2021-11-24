@@ -12,6 +12,7 @@ import numpy as np
 import os
 import sys
 import scipy.stats
+from scipy.stats.stats import pearsonr
 
 print("Starting finalClassifierCheck.py\n")
 # Method to change working directory from inputted ImageJ Macro
@@ -85,6 +86,7 @@ print(scipy.stats.norm.interval(alpha=0.95, loc=np.mean(groupOne["Counts"])))
 print(str(lvl_geno[1]) + " 95% Confidence Interval: ")
 print(scipy.stats.norm.interval(alpha=0.95, loc=np.mean(groupTwo["Counts"])))
 
+# Write the T Test results
 print("T-test statistic: " + str(t_test_calc[0]))
 print("P-Value: " + str(t_test_calc[1]))
 

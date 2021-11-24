@@ -170,7 +170,8 @@ for f in range(0, len(class_list)):
     print(curr_class + " recall standard deviation = " + str(np.std(reca2)) + "\n")   
 
     if len(lvl_geno) != 2:
-        print("automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
+        print("Automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
+        print("Program will default to the first two levels for analysis")
 
     # Calculate the Welch 2 Sample T-test   
     groupOne = final_blah.query('geno == @lvl_geno[0]')
