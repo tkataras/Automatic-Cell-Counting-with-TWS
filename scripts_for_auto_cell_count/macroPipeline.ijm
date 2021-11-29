@@ -39,9 +39,7 @@ runMacro(input + "count_from_roi.ijm", input);
 
 runMacro(input + "count_over_dir.ijm", searchDirectory);
 
-z = input + "classifier_comparison.py";
-
 // Next, run classifier comparison
-exec("python", z, input);
+exec("python", input + "classifier_comparison.py", input);
 
 print("Finished Act 1");

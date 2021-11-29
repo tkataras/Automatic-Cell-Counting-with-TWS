@@ -16,10 +16,10 @@ from scipy.stats.stats import pearsonr
 
 print("Starting finalClassifierCheck.py\n")
 # Method to change working directory from inputted ImageJ Macro
-currDir = os.getcwd()
+curr_dir = os.getcwd()
 def setDir(arg1):
-    currDir = arg1
-    os.chdir(currDir)
+    curr_dir = arg1
+    os.chdir(curr_dir)
 setDir(sys.argv[1])
     
 # Get the selected classifier by the user
@@ -43,13 +43,13 @@ unique_img = np.unique(class_list)
 class_res_loc = OUTPUT_count + selectedClassifier + "/" + selectedClassifier + "_Results_test_data.csv"
 class_results = pd.read_csv(class_res_loc)
 
-imgCounts = pd.DataFrame(columns=["Label", "Counts"])
-cellList = list(class_results["Label"])
+img_counts = pd.DataFrame(columns=["Label", "Counts"])
+cell_list = list(class_results["Label"])
 #iterate through each classifier 
 for f in range(0, len(unique_img)):
-    thisCount = cellList.count(unique_img[f]) - 1
-    newRow = pd.DataFrame([[unique_img[f], thisCount]], columns=["Label", "Counts"])
-    imgCounts = imgCounts.append(newRow)
+    this_count = cell_list.count(unique_img[f]) - 1
+    new_row = pd.DataFrame([[unique_img[f], this_count]], columns=["Label", "Counts"])
+    img_counts = img_counts.append(new_row)
 
 geno = pd.read_csv(geno_file)
 
@@ -58,33 +58,33 @@ lvl_geno = np.unique(geno["geno"])
 if len(lvl_geno) != 2:
     print("Automatic analysis can only be done with 2 levels, for alterative analysis results file in classifier folder")
 
-genoList = []
-for numRows in range(0, len(imgCounts["Label"])):
-    genoList.append(geno["geno"][numRows])
+geno_list = []
+for numRows in range(0, len(img_counts["Label"])):
+    geno_list.append(geno["geno"][numRows])
 
-imgCounts["geno"] = genoList
+img_counts["geno"] = geno_list
 
 # Save current img counts to the counted classifier folder as csv file
-imgCounts.to_csv(OUTPUT_count + selectedClassifier + "/" + selectedClassifier + "_final.csv")
+img_counts.to_csv(OUTPUT_count + selectedClassifier + "/" + selectedClassifier + "_final.csv")
 
 # Calculate the Welch 2 Sample T-test   
-groupOne = imgCounts.query('geno == @lvl_geno[0]')
-groupTwo = imgCounts.query('geno == @lvl_geno[1]')
-t_test_calc = scipy.stats.ttest_ind(groupOne["Counts"], groupTwo["Counts"], equal_var=False, nan_policy="omit")
+group_one = img_counts.query('geno == @lvl_geno[0]')
+group_two = img_counts.query('geno == @lvl_geno[1]')
+t_test_calc = scipy.stats.ttest_ind(group_one["Counts"], group_two["Counts"], equal_var=False, nan_policy="omit")
 
 # Calculate the mean counts
-print(str(lvl_geno[0]) + " Mean Counts: " + str(np.mean(groupOne["Counts"])))
-print(str(lvl_geno[1]) + " Mean Counts: " + str(np.mean(groupTwo["Counts"])))
+print(str(lvl_geno[0]) + " Mean Counts: " + str(np.mean(group_one["Counts"])))
+print(str(lvl_geno[1]) + " Mean Counts: " + str(np.mean(group_two["Counts"])))
 
 # Calculate the Standard Deviation 
-print(str(lvl_geno[0]) + " Standard Deviation: " + str(np.std(groupOne["Counts"])))
-print(str(lvl_geno[1]) + " Standard Deviation: " + str(np.std(groupTwo["Counts"])))
+print(str(lvl_geno[0]) + " Standard Deviation: " + str(np.std(group_one["Counts"])))
+print(str(lvl_geno[1]) + " Standard Deviation: " + str(np.std(group_two["Counts"])))
 
 # Calculate the Confidence Interval
 print(str(lvl_geno[0]) + " 95% Confidence Interval: ")
-print(scipy.stats.norm.interval(alpha=0.95, loc=np.mean(groupOne["Counts"])))
+print(scipy.stats.norm.interval(alpha=0.95, loc=np.mean(group_one["Counts"])))
 print(str(lvl_geno[1]) + " 95% Confidence Interval: ")
-print(scipy.stats.norm.interval(alpha=0.95, loc=np.mean(groupTwo["Counts"])))
+print(scipy.stats.norm.interval(alpha=0.95, loc=np.mean(group_two["Counts"])))
 
 # Write the T Test results
 print("T-test statistic: " + str(t_test_calc[0]))
