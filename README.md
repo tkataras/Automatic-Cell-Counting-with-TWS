@@ -11,7 +11,14 @@ A repository for the suit of scripts I use to perform automatic cell quantificat
 ```
 git clone https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
 ```
+Next you will have to manually copy and paste certain files.
 
+Navigate to scripts for auto cell count and copy paste the following files into your fiji/plugins directory.
+```
+macroPipeline.ijm
+selectedClassifierPipeline.ijm
+BS_TWS_apply.bsh
+```
 # Software Dependencies
 
 ```
