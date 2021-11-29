@@ -45,6 +45,8 @@ By downloading our Github repository you will have a set of folders for practice
 # Input Files
 -Your images in .PNG format
 
+These images should be of the same dimensions as each other. Place them in __TODO__
+
 -genotype.csv 
 
 -geno_full.csv
@@ -76,6 +78,8 @@ This will be located under training_area/Results.
 For the testing dataset, several classifiers should demonstrate the same accuracy statistics as the image size is very small as they contain at most 3 cells per image.
 
 # Stage 2
+Navigate and select _Plugins >> Macro >> Run >> selectedClassifierPipeline.ijm_
+
 __2.1__ Once again, the program must know where it is downloaded. Select the directory/folder named scripts_for_auto_cell_count.
 
 <img src = "figures/selectSource.PNG">
