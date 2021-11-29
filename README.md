@@ -43,6 +43,9 @@ By downloading our Github repository you will have a set of folders for practice
 -geno_full.csv
 
 # Stage 1
+
+Navigate and select _Plugins >> Macro >> Run >> macroPipeline.ijm_
+
 __1.1__ The first step is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference. This is so that our program knows where you have downloaded it. Select the directory/folder named scripts_for_auto_cell_count.
 
 <img src = "figures/selectSource.PNG">
