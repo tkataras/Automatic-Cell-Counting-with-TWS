@@ -11,7 +11,6 @@
 	<packaging>jar</packaging>
 
 	<name>ACCT</name>
-	<description>A collection of tutorials for ImageJ.</description>
 	<url>https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git</url>
 	<inceptionYear>2021</inceptionYear>
 	<organization>
@@ -120,9 +119,12 @@
                     <target>1.8</target>
                 </configuration>
 				<goals>
-					<goal>clean install</goal>
+					<goal>install</goal>
 				</goals>
             </plugin>
         </plugins>
 	</build>
+	<description>A repository for the suit of scripts I use to perform automatic cell quantification.
+
+</description>
 </project>
