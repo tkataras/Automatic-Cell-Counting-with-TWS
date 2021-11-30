@@ -7,6 +7,7 @@ A repository for the suit of scripts I use to perform automatic cell quantificat
 2. [Software Dependencies](#software-dependencies)
 3. [Prerequisites](#prerequisites)
 4. [How To Use](#how-to-use)
+5. [Creating hand count markers](#creating-hand-count-markers)
 # Installation Guide
 ```
 git clone https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
@@ -120,7 +121,7 @@ __2.4__ Repeat steps __1.3__ and __1.4__ with the parameters you used in stage 1
 Additionaly, the second step of the pipeline sets aside a random sample of images equal to the number of validation images and equally distributed between experimental groups to serve as the performance estimate on the unseen data. This performance analysis requires user input in the form of .roi hand counts. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison.
 ***
 
-__Creating hand count markers__
+# Creating hand count markers
 
 Hand count markers are created in Imagej using the Point Selection Tool, available in the toolbar, and the ROI manager.
 1.      Open an image and place one or two count markers
