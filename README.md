@@ -80,17 +80,19 @@ __1.1__ The first step is to initiate the pipeline. You will be prompted to loca
 
 __1.2__ The pipeline will then individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .roi files and the supplied genotypes.csv file. 
 
-__To generate your own genotype.csv file: TODO__
+__If not done yet, to generate your own genotype.csv file: TODO__
 
 __1.3__ Our data includes paired images in individual fields of view for increased context when counting, so intermediate steps are included to identify and project these image pairs for the final automatic count. If your data does not include paired images, do not select this option below:
 
 <img src = "figures/selectMultipleSegmentation.PNG">
 
-__1.4__ To count the number of objects in your data, the program defaults to a 20 pixel minimum size of the objects as countable. If you want a different minimum size threshold in order to be counted, you are able to adjust this value.
+__1.4__ To count the number of objects in your data, the program defaults to a 20 pixel minimum size to determine an object as countable. If you want a different minimum size threshold in order to be counted, you are able to adjust this value.
 
 <img src = "figures/selectSizeMin.PNG">
 
 After the pipeline completes a run, run times will vary by hardware capacity, open the All_Classifier_Comparison.csv file to compare the performance of the various classifiers. 
+
+More statistical information will be printed to the log window.
 
 This will be located under training_area/Results.
 
@@ -103,13 +105,13 @@ __2.1__ Once again, the program must know where it is downloaded. Select the dir
 
 <img src = "figures/selectSource.PNG">
 
-__2.2__ Now, select the most accurate classifier. Selecting the most accurate classifier is left to the user, but information is supplied in the form of accuracy values in Precision, Recall and F! score, as well as statistical outputs of mean accuracy comparison between two separate experimental conditions entered in the genotypes.csv file. With base functionality, the pipeline is set up to process a dataset with two experimental groups.
+__2.2__ Now, select the most accurate classifier (or any classifier of your choosing). Selecting the most accurate classifier is left to the user, but information is supplied in the form of accuracy values in Precision, Recall and F1 score, as well as statistical outputs of mean accuracy comparison between two separate experimental conditions entered in the genotypes.csv file. With base functionality, the pipeline is set up to process a dataset with two experimental groups.
 
 <img src = "figures/selectClassifier.PNG">
 
 __2.3__ After the best classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons. This step requires a second genotypes file named geno_full.csv from the user containing experimental grouping information for the unseen dataset.
 
-__To generate your own genotype.csv file: TODO__
+__If not done yet, to generate your own geno_full.csv file: TODO__
 
 
 __2.4__ Repeat steps __1.3__ and __1.4__ with the parameters you used in stage 1.
