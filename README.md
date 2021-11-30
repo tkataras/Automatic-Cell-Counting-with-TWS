@@ -126,7 +126,7 @@ Additionaly, the third step of the pipeline sets aside a random sample of images
 ***
 
 # Creating Hand Count Markers
-Hand count markers are created in Imagej using the Point Selection Tool, available in the toolbar, and the ROI manager.
+Hand count markers are created in Imagej using the Point Selection Tool, available in the toolbar, and the ROI manager, which is under Analyze >> Tools >> ROI Manager. You can also type ROI Manager in the search bar and select it.
 1.      Open an image and place one or two count markers
 2.      Add the selections to the ROI manager
 3.      Rename the new ROI with the image name (This is most easily done by using the following keyboard shortcuts: Ctrl+d -> Ctrl+c -> Ctrl+w -> right click the ROI and select Rename -> Ctrl+v -> Enter)
