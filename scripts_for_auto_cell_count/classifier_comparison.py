@@ -16,22 +16,22 @@ import scipy.stats
 
 print("Start of classifier_comparison.py\n")
 # Method to change working directory from inputted ImageJ Macro
-currDir = os.getcwd()
+curr_dir = os.getcwd()
 def setDir(arg1):
-    currDir = arg1
-    os.chdir(currDir)
+    curr_dir = arg1
+    os.chdir(curr_dir)
 setDir(sys.argv[1])
 
 # Input the genotype data as a .csv file
 geno_file = "../training_area/genotype.csv"
 
 # File output location
-#OUTPUT_count = "../training_area/Weka_Output_Counted/"
+#output_count = "../training_area/Weka_Output_Counted/"
 #i just changed this to work with the probability data, so the files will end up in the projected probability folders
-OUTPUT_count = "../training_area/Weka_Output_Counted/"
+output_count = "../training_area/Weka_Output_Counted/"
 result_out = "../training_area/Results/"
 
-class_list = os.listdir(OUTPUT_count)
+class_list = os.listdir(output_count)
 
 ############################## now we have binary projected images to work with and need to compare to roi for each classifier
 # Holds all accuracy values for classifiers
@@ -54,15 +54,15 @@ for i in range(0, len(hand_ini)):
 
 # Iterate through each classifier 
 for f in range(0, len(class_list)):
-    class_name = os.listdir(OUTPUT_count)[f]
-    class_res_loc = OUTPUT_count + os.listdir(OUTPUT_count)[f] + "/" + class_name + "_Results.csv"
+    class_name = os.listdir(output_count)[f]
+    class_res_loc = output_count + os.listdir(output_count)[f] + "/" + class_name + "_Results.csv"
     class_results = pd.read_csv(class_res_loc)
-    curr_class = os.listdir(OUTPUT_count)[f]
+    curr_class = os.listdir(output_count)[f]
 
     ## If else loop for determining true positive, false positive and false negative cell counts
     ## from levels present in the classifier results output, this should be the same each time, BUT IT WoNT BE IF ONE IMAGE HAS NO CELL OBJECtS
     ## need to go into the counted folder and pull out all image names, meaning ignorming the Results.csv files. images from tru_count with be .png
-    folder_loc = OUTPUT_count + os.listdir(OUTPUT_count)[f]
+    folder_loc = output_count + os.listdir(output_count)[f]
     files = []
     for image in os.listdir(folder_loc):
         if image[-4:] == ".png":
@@ -70,7 +70,7 @@ for f in range(0, len(class_list)):
 
     img_names = files
 
-    final_blah = pd.DataFrame(columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
+    final_result = pd.DataFrame(columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
     for image in range(0, len(img_names)):
         current_img_plus_png = img_names[image]
         
@@ -91,14 +91,14 @@ for f in range(0, len(class_list)):
             fn = 0
             avg_area = np.mean(dftc["Area"])
             avg_circular = np.mean(dftc["Circ."])
-            for autoCount in (dftc["points"]):
-                if autoCount == 0:
+            for auto_count in (dftc["points"]):
+                if auto_count == 0:
                     fp = fp + 1
-                elif autoCount == 1:
+                elif auto_count == 1:
                     tp = tp + 1
                 else:
                     tp = tp + 1
-                    fn = fn + autoCount - 1
+                    fn = fn + auto_count - 1
         
         #for each image add total number hand count - sum(dftc$points), the sum points must always be less than count_h$count 
         ## dtfc$points only counts the markers that fall within cell objects, count_h$counts is the sum of all points in total. 
@@ -108,7 +108,7 @@ for f in range(0, len(class_list)):
         name = img_names[image]
 
         this_row = pd.DataFrame([[name, tp, fp, fn, avg_area, avg_circular]], columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
-        final_blah = final_blah.append(this_row)
+        final_result = final_result.append(this_row)
             
     # Method to catch divide by zeros 
     def catchDivideByZero(numer, denom):
@@ -117,9 +117,9 @@ for f in range(0, len(class_list)):
         except ZeroDivisionError:
             return None
     # Need to calculate precision and recall
-    tot_tp = sum(final_blah["tp"])
-    tot_fp = sum(final_blah["fp"])
-    tot_fn = sum(final_blah["fn"])
+    tot_tp = sum(final_result["tp"])
+    tot_fp = sum(final_result["fp"])
+    tot_fn = sum(final_result["fn"])
 
     # precision is tp/(tp + fp)
     prec = catchDivideByZero(tot_tp, tot_tp + tot_fp)
@@ -134,23 +134,23 @@ for f in range(0, len(class_list)):
     print(curr_class + " recall = " +  str(reca))
     print(curr_class + " F1 = " +  str(F1))
 
-    current_loc = OUTPUT_count + "/" + class_list[f]
+    current_loc = output_count + "/" + class_list[f]
     file_out_name = current_loc + "/" + curr_class + "_Final.csv"
 
     # Writes out the final file to save the output
-    final_blah.to_csv(file_out_name)
+    final_result.to_csv(file_out_name)
   
     # Add genotypes to csv file
     geno = pd.read_csv(geno_file)
     lvl_geno = np.unique(geno)
-    genoList = []
-    for numRows in range(0, len(final_blah["name"])):
-        genoList.append(geno["geno"][numRows])
-    final_blah["geno"] = genoList
+    geno_list = []
+    for num_rows in range(0, len(final_result["name"])):
+        geno_list.append(geno["geno"][num_rows])
+    final_result["geno"] = geno_list
   
     #precision and recall per image
-    prec2 = final_blah["tp"]/(final_blah["tp"] + final_blah["fp"])    
-    reca2 = final_blah["tp"]/(final_blah["tp"] + final_blah["fn"])
+    prec2 = final_result["tp"]/(final_result["tp"] + final_result["fp"])    
+    reca2 = final_result["tp"]/(final_result["tp"] + final_result["fn"])
     
     # Calculate F1_2
     F1_2 = []
@@ -161,9 +161,9 @@ for f in range(0, len(class_list)):
         else:
             F1_2.append(2 * result)
     # Insert prec2, reca2, and F1_2 into final blah
-    final_blah["prec2"] = prec2
-    final_blah["reca2"] = reca2
-    final_blah["F1_2"] = F1_2
+    final_result["prec2"] = prec2
+    final_result["reca2"] = reca2
+    final_result["F1_2"] = F1_2
     
     # Find the standard deviation of percision and recall
     print(curr_class + " percision standard deviation = " + str(np.std(prec2)))
@@ -174,27 +174,27 @@ for f in range(0, len(class_list)):
         print("Program will default to the first two levels for analysis")
 
     # Calculate the Welch 2 Sample T-test   
-    groupOne = final_blah.query('geno == @lvl_geno[0]')
-    groupTwo = final_blah.query('geno == @lvl_geno[1]')
+    group_one = final_result.query('geno == @lvl_geno[0]')
+    group_two = final_result.query('geno == @lvl_geno[1]')
 
-    perc_geno_ttest = scipy.stats.ttest_ind(groupOne["prec2"], groupTwo["prec2"], equal_var=False, nan_policy="omit")
-    reca_geno_ttest = scipy.stats.ttest_ind(groupOne["reca2"], groupTwo["reca2"], equal_var=False, nan_policy="omit")
-    F1_geno_ttest = scipy.stats.ttest_ind(groupOne["F1_2"], groupTwo["F1_2"], equal_var=False, nan_policy="omit")
+    perc_geno_ttest = scipy.stats.ttest_ind(group_one["prec2"], group_two["prec2"], equal_var=False, nan_policy="omit")
+    reca_geno_ttest = scipy.stats.ttest_ind(group_one["reca2"], group_two["reca2"], equal_var=False, nan_policy="omit")
+    F1_geno_ttest = scipy.stats.ttest_ind(group_one["F1_2"], group_two["F1_2"], equal_var=False, nan_policy="omit")
     perc_geno_ttest_pval = perc_geno_ttest[1]
     recall_geno_ttest_pval = reca_geno_ttest[1]
     F1_geno_ttest_pval = F1_geno_ttest[1]
 
     # Get means of F1_2
-    mean_F1_ev0 = np.nanmean(groupOne["F1_2"])
-    mean_F1_ev1 = np.nanmean(groupTwo["F1_2"])
+    mean_F1_ev0 = np.nanmean(group_one["F1_2"])
+    mean_F1_ev1 = np.nanmean(group_two["F1_2"])
 
     # Prepare output csv file
     row_row = pd.DataFrame([[curr_class, prec, reca, F1, F1_geno_ttest_pval, mean_F1_ev0, mean_F1_ev1, perc_geno_ttest_pval, recall_geno_ttest_pval]], columns=["class", "prec", "reca", "F1", "F1_geno_ttest_pval", "mean_F1_ev0", "mean_F1_ev1", "perc_geno_ttest_pval", "recall_geno_ttest_pval"])
     your_boat = your_boat.append(row_row)
 
-currTime = time.localtime(time.time())
+curr_time = time.localtime(time.time())
 #generating a unique file name based on time and date
-date = str(currTime.tm_mday) + "-" + str(currTime.tm_hour) + "-" + str(currTime.tm_min) + "-" + str(currTime.tm_sec)
+date = str(curr_time.tm_mday) + "-" + str(curr_time.tm_hour) + "-" + str(curr_time.tm_min) + "-" + str(curr_time.tm_sec)
 
 out_name = "All_classifier_Comparison_" + date + ".csv"
 
