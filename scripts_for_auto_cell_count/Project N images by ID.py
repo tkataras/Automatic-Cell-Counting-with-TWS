@@ -21,17 +21,17 @@ def trim_names(file_names, half):
     delim = "_XY"
     
     # Split files from delim
-    splitFiles = []
+    split_files = []
     for file in file_names:
-        splitFiles.append(file.split(delim))
+        split_files.append(file.split(delim))
     
     # Get the front of back half of the split string
     newsid1 = []
-    for i in range(0, len(splitFiles)):
+    for i in range(0, len(split_files)):
         if half == "front":
-            newsid1.append(splitFiles[i][1])
+            newsid1.append(split_files[i][1])
         if half == "back":
-            newsid1.append(splitFiles[i][0])
+            newsid1.append(split_files[i][0])
     return newsid1
 
 ###
@@ -53,15 +53,15 @@ def parseit(file_names, object_num):
 ###
 def sep_slidebook(file_names, delim):
     # Split files from delim
-    splitFiles = []
+    split_files = []
     for file in file_names:
-        splitFiles.append(file.split(delim))
-    maxLen = len(splitFiles[1])
+        split_files.append(file.split(delim))
+    max_len = len(split_files[1])
     
     # These are what you need to adjust for different names of images!!!!####
-    newsid1_anum = parseit(splitFiles, 1)
-    newsid1_snum = parseit(splitFiles, 2)
-    newsid1_fnum = parseit(splitFiles, maxLen - 1)
+    newsid1_anum = parseit(split_files, 1)
+    newsid1_snum = parseit(split_files, 2)
+    newsid1_fnum = parseit(split_files, max_len - 1)
     
     # Sometimes another seperation step is required
     fnumsid1_s = []
@@ -78,8 +78,8 @@ def sep_slidebook(file_names, delim):
     # Make a dataframe
     id1_df = pd.DataFrame(columns=["newsid1_anum", "newsid1_snum", "newsid1_fnum3"])
     for index in range(0, len(newsid1_anum)):
-        newRow = pd.DataFrame([[newsid1_anum[index], newsid1_snum[index], newsid1_fnum3[index]]], columns=["newsid1_anum", "newsid1_snum", "newsid1_fnum3"])
-        id1_df = id1_df.append(newRow)
+        new_row = pd.DataFrame([[newsid1_anum[index], newsid1_snum[index], newsid1_fnum3[index]]], columns=["newsid1_anum", "newsid1_snum", "newsid1_fnum3"])
+        id1_df = id1_df.append(new_row)
     return id1_df
 
 ###
@@ -92,40 +92,40 @@ def squish(input_df):
     id1_df_squish = []
     m = input_df.to_numpy()
     for i in range(0, input_df.shape[0]):
-        currStr = ""
+        curr_str = ""
         for j in range(0, input_df.shape[1]):
-            currStr = currStr + m[i][j] + "-"
-        id1_df_squish.append(currStr)
+            curr_str = curr_str + m[i][j] + "-"
+        id1_df_squish.append(curr_str)
 
     # Convert list to dataframe
     id1_df_squish_df = pd.DataFrame(columns=["id1_df_squish"])
     for index in range(0, len(id1_df_squish)):
-        newRow = pd.DataFrame([[id1_df_squish[index]]], columns=["id1_df_squish"])
-        id1_df_squish_df = id1_df_squish_df.append(newRow)
+        new_row = pd.DataFrame([[id1_df_squish[index]]], columns=["id1_df_squish"])
+        id1_df_squish_df = id1_df_squish_df.append(new_row)
     return id1_df_squish_df
 
 # Start of main
 print("Starting Project N images by ID.py")
 # Method to change working directory from inputted ImageJ Macro
-currDir = os.getcwd()
+curr_dir = os.getcwd()
 def setDir(arg1):
-    currDir = arg1
-    os.chdir(currDir)
+    curr_dir = arg1
+    os.chdir(curr_dir)
 setDir(sys.argv[1])
 
-firstStage = True
+first_stage = True
 # If in the second stage of the pipeline, use the specified classifier
 if len(sys.argv) == 3:
     # Input and Output file directories
     id_for_in_dir = "../training_area/testing_area/Weka_Output_Thresholded/" + sys.argv[2] + "/"
     id_for_out_dir = "../training_area/testing_area/Weka_Output_Projected/" + sys.argv[2] + "/"
-    firstStage = False
+    first_stage = False
 else:
     # Input and Output file directories
     id_for_in_dir = "../training_area/Weka_Output_Thresholded/"
     id_for_out_dir = "../training_area/Weka_Output_Projected/"
 
-if firstStage:
+if first_stage:
     # Get the classifiers/files contained in these directories
     in_dir_list = os.listdir(id_for_in_dir)
     file_list = os.listdir(id_for_in_dir + "/" + in_dir_list[1] +"/")
@@ -139,8 +139,8 @@ if firstStage:
     # Specify: original file names, info columns, squished ID
     newsid1_df = pd.DataFrame(columns=["newsid1"])
     for index in range(0, len(newsid1)):
-            newRow = pd.DataFrame([[newsid1[index]]], columns=["newsid1"])
-            newsid1_df = newsid1_df.append(newRow)
+            new_row = pd.DataFrame([[newsid1[index]]], columns=["newsid1"])
+            newsid1_df = newsid1_df.append(new_row)
 
     # This df gives us access to varibles based on the images in several forms
     big_df = pd.concat([newsid1_df, id1_df_squish], axis=1)
@@ -164,9 +164,9 @@ if firstStage:
 
             # Sum projected as equal to the number of layers in the image
             projected = 0
-            maxLen = all_current_ID.shape[0]
+            max_len = all_current_ID.shape[0]
             # Project the image of the same ID onto one image
-            for k in range(0, maxLen):
+            for k in range(0, max_len):
                 path = rel_path + "/" + list(all_current_ID["File_name"])[k]
                 projected = projected + imageio.imread(path)
             file_out_loc = id_for_out_dir + out_dir_list[image] + "/" + list(all_current_ID["File_name"])[0]
@@ -186,8 +186,8 @@ else:
     # Specify: original file names, info columns, squished ID
     newsid1_df = pd.DataFrame(columns=["newsid1"])
     for index in range(0, len(newsid1)):
-            newRow = pd.DataFrame([[newsid1[index]]], columns=["newsid1"])
-            newsid1_df = newsid1_df.append(newRow)
+            new_row = pd.DataFrame([[newsid1[index]]], columns=["newsid1"])
+            newsid1_df = newsid1_df.append(new_row)
 
     # This df gives us access to varibles based on the images in several forms
     big_df = pd.concat([newsid1_df, id1_df_squish], axis=1)
@@ -205,9 +205,9 @@ else:
 
         # Sum projected as equal to the number of layers in the image
         projected = 0
-        maxLen = all_current_ID.shape[0]
+        max_len = all_current_ID.shape[0]
         # Project the image of the same ID onto one image
-        for k in range(0, maxLen):
+        for k in range(0, max_len):
             path = id_for_in_dir + "/" + list(all_current_ID["File_name"])[k]
             projected = projected + imageio.imread(path)
         file_out_loc = id_for_out_dir + "/" + list(all_current_ID["File_name"])[0]
