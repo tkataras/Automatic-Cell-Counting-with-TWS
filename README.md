@@ -122,11 +122,10 @@ __If not done yet, to generate your own geno_full.csv file: TODO__
 __2.4__ Repeat steps __1.3__ and __1.4__ with the parameters you used in stage 1.
 
 *** 
-Additionaly, the second step of the pipeline sets aside a random sample of images equal to the number of validation images and equally distributed between experimental groups to serve as the performance estimate on the unseen data. This performance analysis requires user input in the form of .roi hand counts. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison.
+Additionaly, the third step of the pipeline sets aside a random sample of images equal to the number of validation images and equally distributed between experimental groups to serve as the performance estimate on the unseen data. This performance analysis requires user input in the form of .roi hand counts, similar to what was done in the first step of the program. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison.
 ***
 
 # Creating Hand Count Markers
-
 Hand count markers are created in Imagej using the Point Selection Tool, available in the toolbar, and the ROI manager.
 1.      Open an image and place one or two count markers
 2.      Add the selections to the ROI manager
