@@ -100,6 +100,9 @@ This will be located under training_area/Results.
 
 For the testing dataset, several classifiers should demonstrate the same accuracy statistics as the image size is very small as they contain at most 3 cells per image.
 
+As an example, the output in log will look like this.
+<img src = "figures/act1ExpectedOut.PNG">
+
 # Stage 2
 Navigate and select _Plugins >> Macro >> Run >> selectedClassifierPipeline.ijm_
 
