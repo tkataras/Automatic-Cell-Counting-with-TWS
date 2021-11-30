@@ -8,6 +8,7 @@ A repository for the suit of scripts I use to perform automatic cell quantificat
 3. [Prerequisites](#prerequisites)
 4. [How To Use](#how-to-use)
 5. [Creating hand count markers](#creating-hand-count-markers)
+6. [Critical Notes](#critical-notes)
 # Installation Guide
 ```
 git clone https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
@@ -121,7 +122,7 @@ __2.4__ Repeat steps __1.3__ and __1.4__ with the parameters you used in stage 1
 Additionaly, the second step of the pipeline sets aside a random sample of images equal to the number of validation images and equally distributed between experimental groups to serve as the performance estimate on the unseen data. This performance analysis requires user input in the form of .roi hand counts. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison.
 ***
 
-# Creating hand count markers
+# Creating Hand Count Markers
 
 Hand count markers are created in Imagej using the Point Selection Tool, available in the toolbar, and the ROI manager.
 1.      Open an image and place one or two count markers
@@ -131,7 +132,7 @@ Hand count markers are created in Imagej using the Point Selection Tool, availab
 5.      When all cells are selected, save in Hand counts folder, or Audit hand counts folder for the audit image set.
 6.      Open new image and repeat until all validation or audit images are counted.
  
-__Critical notes:__
+# Critical Notes
 The image names much match exactly between the hand counts and the original images(except for the file extension).
 Each folder must only contain images or hand counts, with the exception of the Weka Output Counted folder, in which classifier subfolders will include calculation data files.
 At present, two experimental conditions, denoted in the genotypes.csv files, are expected. 
