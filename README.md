@@ -15,7 +15,7 @@ git clone https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
 ```
 Next you will have to manually copy and paste certain files.
 
-Navigate to scripts for auto cell count and copy paste the following files into your fiji/plugins directory.
+Find where you downloaded Fiji in your file directory. Next, navigate to scripts for auto cell count then copy and paste the following files into your Fiji.app/plugins directory. This is so you can run the program from ImageJ using the GUI.
 ```
 macroPipeline.ijm
 selectedClassifierPipeline.ijm
