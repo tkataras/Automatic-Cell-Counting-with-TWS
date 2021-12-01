@@ -1,9 +1,12 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/python
 """
-Created on Fri Oct 22 09:25:36 2021
+Author: Theo Kataras, Tyler Jang
+Date: 11/30/2021
 
-@author: Theo, Tyler
-File architect: creates the correct number of classifier folders in output folders
+Input: The source directory
+       (optional) The classifier selected by the user for the full dataset
+Output: Directories in training_area or testing_area
+Description: Creates the correct number of classifier folders in output folders
 """
 import os
 import sys

@@ -46,7 +46,7 @@ macro "The -- True -- Count" {
 		
 		n = 0;
 		
-		// Iterate macro over the images in the input folder
+		// Iterate macro over the images in the classifier folder
 		for (q = 0; q < list.length; q++) {
 			action(input, output, list[q], dirTwo, listTwo[q]);
 		}
@@ -76,7 +76,7 @@ macro "The -- True -- Count" {
 			numPoints = lengthOf(yPoints2); // establish number of hand placed counts	
 			numRoiTwo = numRoi - 1;
 
-			// For each object k
+			// For each object k in the image
 			for (k = 0; k < numRoiTwo; k++) {   
 				roiManager("Select", k);
 				// Get coords for all pixels in object
@@ -87,11 +87,14 @@ macro "The -- True -- Count" {
 				lenTwo = numPoints; 
 									
 				counts = 0;
+				// For each pixel in the object
 				for (i = 0 ; i < len ; i++) {
+					// For each hand placed count
 					for(j = 0; j < lenTwo ; j++) {
 						xPoints2rnd = round(xPoints2[j]);
 						yPoints2rnd = round(yPoints2[j]);
-							
+
+						// If the object contains the hand count, increment counts
 						if (xPoints[i] == xPoints2rnd && yPoints[i] == yPoints2rnd) {
 							counts = counts + 1;
 						}

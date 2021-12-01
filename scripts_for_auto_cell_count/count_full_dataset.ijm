@@ -58,8 +58,8 @@ macro "The -- True -- Count" {
 		run("Measure");	
 
 		// Establish number of objects
-		numroi = roiManager("count"); 
-		print("number auto count objects=" + numroi - 1);	
+		numRoi = roiManager("count"); 
+		print("Number of auto counted objects = " + numRoi - 1);	
 	}			
 	roiManager("deselect")		
 	roiManager("Delete");       
@@ -67,8 +67,8 @@ macro "The -- True -- Count" {
 	selectWindow("Results");
 	
 	// Takes / off end of folder name to get classifier ID
-	class_name = selectedClassifier[selectedClassifier.length - 1];
-	saveAs("Results", outputDirs + "/" + class_name + "_Results_test_data.csv"); // **#*#*CANT FIND THIS FILE ANYWHERE*#*#*#*##*
+	className = selectedClassifier[selectedClassifier.length - 1];
+	saveAs("Results", outputDirs + "/" + className + "_Results_test_data.csv"); // **#*#*CANT FIND THIS FILE ANYWHERE*#*#*#*##*
 	run("Clear Results");
 	
 	// Prints text in the log window after all files are processed

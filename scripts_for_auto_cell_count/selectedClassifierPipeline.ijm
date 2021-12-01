@@ -10,11 +10,10 @@ input = getDirectory("Choose source directory of the macro (Scripts for Auto Cel
 // Set measurements to calculate
 run("Set Measurements...", "area mean standard modal min centroid center perimeter bounding fit shape feret's integrated median skewness kurtosis area_fraction limit display redirect=None decimal=8");
 
+// Variables for needed file paths
 testingPath = input + "../training_area/testing_area/";
 classifierDir = input + "../training_area/Classifiers";
 searchDirectory = getFileList(classifierDir);
-
-print(classifierDir);
 
 // Ask the user to select the classifier they want to count the full dataset
 Dialog.create("Select Classifier to test on full dataset");
@@ -27,6 +26,7 @@ selectedClassifier = Dialog.getChoice();
 // Populate all folders. If folders already exist, selectively does not make those folders
 exec("python", input + "file_architect.py", input, selectedClassifier);
 
+// Trim .model off the selected classifier by the user
 trimClassName = split(selectedClassifier, ".");
 
 testingPath = testingPath + "Weka_Output/" + trimClassName[0];

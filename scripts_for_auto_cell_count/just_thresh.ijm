@@ -30,7 +30,7 @@ if(firstStage) {
 	inputDirList = getFileList(inputDirs);
 	outputDirList = getFileList(outputDirs);
 
-	// Call threshold over each image in the input
+	// Call threshold over each classifier in Weka Output
 	for (z = 0; z< inputDirList.length; z++) {	
 		input = inputDirList[z];
 		output = outputDirList[z];
@@ -38,7 +38,7 @@ if(firstStage) {
 		// Holds all file names from input folder
 		list = getFileList(inputDirs + input);
 		
-		// Iterate macro over each image in the input folder
+		// Iterate macro over each image in the classifier folder
 		for (q = 0; q < list.length; q++) {
 			action(input, output, list[q]);
 		}
