@@ -6,73 +6,70 @@
 setBatchMode(true); 
 print("Starting just_thresh.ijm");
 // Weka Output
-input_dirs = getArgument();
+inputDirs = getArgument();
 // Weka Output Thresholded
-output_dirs = "";
+outputDirs = "";
 
 // Get the classifier
-x = split(input_dirs, "/");
+selectedClassifier = split(inputDirs, "/");
 
 firstStage = true;
+
 // Check if the argument is from testing or training area
-if(input_dirs.contains("testing_area")) {
-	output_dirs = input_dirs + "/../../Weka_Output_Thresholded/" + x[x.length-1] + "/";
+if(inputDirs.contains("testing_area")) {
+	outputDirs = inputDirs + "/../../Weka_Output_Thresholded/" + selectedClassifier[selectedClassifier.length-1] + "/";
 	firstStage = false;
 } else {
-	input_dirs = input_dirs + "../training_area/Weka_Output/";
-	output_dirs = input_dirs + "../Weka_Output_Thresholded/";
+	inputDirs = inputDirs + "../training_area/Weka_Output/";
+	outputDirs = inputDirs + "../Weka_Output_Thresholded/";
 	firstStage = true;
 }
 
 // Code for the first half of the pipeline
 if(firstStage) {
-	input_dir_list = getFileList(input_dirs);
-	output_dir_list = getFileList(output_dirs);
+	inputDirList = getFileList(inputDirs);
+	outputDirList = getFileList(outputDirs);
 
-	for (z = 0; z< input_dir_list.length; z++) {	
-		input = input_dir_list[z];
-		output = output_dir_list[z];
+	// Call threshold over each classifier in Weka Output
+	for (z = 0; z< inputDirList.length; z++) {	
+		input = inputDirList[z];
+		output = outputDirList[z];
 		
-		//holds all file names from input folder
-		list = getFileList(input_dirs + input);
+		// Holds all file names from input folder
+		list = getFileList(inputDirs + input);
 		
-		//iterate  macro over the objects in the input folder
+		// Iterate macro over each image in the classifier folder
 		for (q = 0; q < list.length; q++) {
 			action(input, output, list[q]);
 		}
 			
-		//describes the actions for each image
+		// Threshold each image and convert to black-white image
 		function action(input, output, filename) {      
-			open(input_dirs + input + filename);
+			open(inputDirs + input + filename);
 			run("8-bit");
 			setAutoThreshold("Default");
-			//run("Threshold...");
-			//setThreshold(8, 132);
 			setOption("BlackBackground", true);
 			run("Convert to Mask");
-			saveAs("Png",output_dirs + output + filename);	
+			saveAs("Png", outputDirs + output + filename);	
 		}
 	}
 } else {
-	//holds all file names from input folder
-	list = getFileList(input_dirs);
+	// Holds all file names from input folder
+	list = getFileList(inputDirs);
 		
-	//iterate  macro over the objects in the input folder
+	// Iterate macro over each image in the input folder for this specific classifier
 	for (q = 0; q < list.length; q++) {
-		actionTwo(input_dirs, output_dirs, list[q]);
+		actionTwo(inputDirs, outputDirs, list[q]);
 	}
 	
-	//describes the actions for each image
+	// Threshold each image and convert to black-white image
 	function actionTwo(input, output, filename) {       
 		open(input + "/" + filename);
 		run("8-bit");
 		setAutoThreshold("Default");
-		//run("Threshold...");
-		//setThreshold(8, 132);
 		setOption("BlackBackground", true);
 		run("Convert to Mask");
-		saveAs("Png",output + filename);	
+		saveAs("Png", output + filename);	
 	}
 }
-
 print("Finished just_thresh.ijm\n");

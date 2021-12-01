@@ -1,128 +1,121 @@
-/*
- * Author: Theo, Tyler
- * Date: 10/21/2021
- * Description:
+/**
+ * Author: Theo Kataras, Tyler Jang
+ * Date: 11/30/2021
+ * 
+ * Input: Binary images, hand placed markes in roi files, one file for each image
+ * Output: Binary image files including only cells counted, and .csv file in classifier folder with accuracy information
+ * Description: Uses hand placed markers and weka output images from each classifier to begin accuracy calculation
  */
 macro "The -- True -- Count" {
-	//Overview: uses hand placed markers and weka output images from each classifier to begin accuracy calculation
-	//Input: Binary images, hand placed markes in roi files, one file for each image
-	//Output: Binary image files including only cells counted, and .csv file in classifier folder with accuracy information
-	
-	//this hides intermediary information and speeds processing
+	// This hides intermediary information and speeds processing
 	setBatchMode(true); 
 	
 	print("Starting count_over_dir.ijm");
 	
 	// Weka Output Projected if Projected, else Weka Output Thresholded
-	input_dirs = getArgument();
+	inputDirs = getArgument();
 	
 	// Weka Output Counted
-	output_dirs = input_dirs + "../Weka_Output_Counted/";
+	outputDirs = inputDirs + "../Weka_Output_Counted/";
 	
 	// Clear the results table
 	run("Clear Results");
 	
-	// set size minimum for cells to exclude small radius noise
+	// Set size minimum for cells to exclude small radius noise
 	size_min=20;
 	Dialog.create("Size Min");
 	Dialog.addNumber("Minimum pixel size for object count:", size_min);
 	Dialog.show();
 	size_min = Dialog.getNumber();
 	
+	// Validation Hand Counts
+	dirTwo = inputDirs + "../Validation_Hand_Counts/";
 	
-	//the hand placed roi location will not change as it is applied to each classifier image set
-	//dir2 = getDirectory("_Choose source directory for the roi multipoint counts");
-	dir2 = input_dirs + "../Validation_Hand_Counts/";
-	
-	// gets the folders for each classifier
-	input_dir_list = getFileList(input_dirs);
+	// Gets the folders for each classifier
+	inputDirList = getFileList(inputDirs);
+	outputDirList = getFileList(outputDirs);
 		
-	output_dir_list = getFileList(output_dirs);
+	// This loop iterates through classifier folders
+	for (z = 0; z < inputDirList.length; z++) {		
+		input = inputDirList[z];
+		output = outputDirList[z];
+			
+		// Holds all file names from input folder
+		list = getFileList(inputDirs + input);
+		listTwo = getFileList(dirTwo);
 		
-	// this loop iterates through classifier folders
-	for (z = 0; z< input_dir_list.length; z++) {		
-		input = input_dir_list[z];
-		output = output_dir_list[z];
-			
-		//holds all file names from input folder
-		list = getFileList(input_dirs + input);
-		list2 = getFileList(dir2);
-			
 		n = 0;
-			
-		//iterate  macro over the images in the input folder
+		
+		// Iterate macro over the images in the classifier folder
 		for (q = 0; q < list.length; q++) {
-			action(input, output, list[q], dir2, list2[q]);
+			action(input, output, list[q], dirTwo, listTwo[q]);
 		}
 			
-		//describes the actions for each image
-		function action(input, output, filename, input2, filename2) {    
-			//opens and thresholds binary images or Weka output directly       
-			open(input_dirs + input + filename);
+		// Opens and thresholds binary images or Weka output directly       
+		function action(input, output, filename, inputTwo, filenameTwo) {    	
+			open(inputDirs + input + filename);
 			run("8-bit");
 			setAutoThreshold("Default dark");
 			run("Threshold...");
 			setThreshold(6, 255);
-			//setOption("BlackBackground", true);	
 			run("Convert to Mask");
-			//run("Invert");
 					
-			// this imageJ plugin creates the results file and image of the count cells based on the size exclusion		
-			run("Analyze Particles...", "size="+size_min+"-Infinity pixel show=Masks display summarize add");
-			saveAs("Png",output_dirs + output + filename);
+			// This imageJ plugin creates the results file and image of the count cells based on the size exclusion		
+			run("Analyze Particles...", "size=" + size_min + "-Infinity pixel show=Masks display summarize add");
+			saveAs("Png", outputDirs + output + filename);
 				
-			open(input2 + filename2);
+			open(inputTwo + filenameTwo);
 			roiManager("Add");
 			
+			//TODO need to save the exact roi info for each auto object
+		 	// Establish number of objects
+			numRoi = roiManager("count"); 
+				
+			roiManager("Select", numRoi - 1);
+			pts = Roi.getCoordinates(xPoints2, yPoints2); 
+			numPoints = lengthOf(yPoints2); // establish number of hand placed counts	
+			numRoiTwo = numRoi - 1;
 
-
-			//TODO
-			//need to save the exact roi info for each auto object
-			
-			
-			numroi = roiManager("count"); // establish number of objects
-				
-			roiManager("Select", numroi - 1);
-			pts = Roi.getCoordinates(xpoints2, ypoints2); 
-			numpoints = lengthOf(ypoints2); // establish number of hand placed counts
-			//print(numpoints + "_hand_placed_markers");
-			//print("number auto count objects=" + numroi -1);
-				
-			numroi2 = numroi -1;
-				
-				
-			for (k = 0; k < numroi2; k++) {   //k is repeated for each object
+			// For each object k in the image
+			for (k = 0; k < numRoiTwo; k++) {   
 				roiManager("Select", k);
-				test = Roi.getContainedPoints(xpoints, ypoints); // get coords for all pixels in object
-				lng = lengthOf(xpoints); //length of all pixels in current object, this varies
-				lng2 = numpoints; //length of hand placed counts, this does not vary
+				// Get coords for all pixels in object
+				test = Roi.getContainedPoints(xPoints, yPoints); 
+				// Length of all pixels in current object, this varies
+				len = lengthOf(xPoints);
+				// Length of hand placed counts, this does not vary 
+				lenTwo = numPoints; 
 									
 				counts = 0;
-				for (i = 0 ; i < lng ; i++) {
-					for(j = 0; j < lng2 ; j++) {
-						xpoints2rnd = round(xpoints2[j]);
-						ypoints2rnd = round(ypoints2[j]);
-							
-						if (xpoints[i] == xpoints2rnd && ypoints[i] == ypoints2rnd) {
+				// For each pixel in the object
+				for (i = 0 ; i < len ; i++) {
+					// For each hand placed count
+					for(j = 0; j < lenTwo ; j++) {
+						xPoints2rnd = round(xPoints2[j]);
+						yPoints2rnd = round(yPoints2[j]);
+
+						// If the object contains the hand count, increment counts
+						if (xPoints[i] == xPoints2rnd && yPoints[i] == yPoints2rnd) {
 							counts = counts + 1;
 						}
 					}
 				}
 					
-				//update the results table
+				// Update the results table
 				setResult("points", n++, counts);	
 			}
 			roiManager("deselect")		
 			roiManager("Delete");       
 		}
 		selectWindow("Results");
-		//take / off end of folder name to get classifier ID
-		class_name = substring(output_dir_list[z],0,lengthOf(output_dir_list[z]) -1);
-		saveAs("Results", output_dirs + output + class_name + "_Results.csv");
+		
+		// Take / off end of folder name to get classifier ID
+		class_name = substring(outputDirList[z], 0, lengthOf(outputDirList[z]) -1);
+		saveAs("Results", outputDirs + output + class_name + "_Results.csv");
 		run("Clear Results");
 	}
-	// prints text in the log window after all files are processed
-	print("Counted over " + list.length + " images");
+	// Prints text in the log window after all files are processed
+	print("Counted " + list.length + " images");
 	print("Finished count_over_dir.ijm\n");
 }
 updateResults();

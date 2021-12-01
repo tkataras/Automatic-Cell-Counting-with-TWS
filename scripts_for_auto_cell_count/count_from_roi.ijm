@@ -1,13 +1,13 @@
 /*
  * Author: Theo, Tyler
- * Date: 10/20/2021
- * Description:
+ * Date: 11/30/2021
+ * Description: This macro gets the counts for each hand counted image, plus their coordinate position.
  */
  
-//hide details from user to minimize screen clutter
+// Hide details from user to minimize screen clutter
 setBatchMode(true);
+
 print("Starting count_from_roi.ijm");
-//macro for per image count from goi. also has xy location of all points
 
 // Validation Hand Counts
 input = getArgument();
@@ -22,13 +22,10 @@ if(input.contains("testing_area")) {
 	// Results
 	output = input + "../Results";
 }
-//output = getDirectory("Choose output directory (Not the same as the source directory)");
-//output = "../training_area/Results"
 
-//CLOSES old Results and Summary to avoid mixing with new results
+// CLOSES old Results and Summary to avoid mixing with new results
 run("Clear Results"); 
  
-
 //holds all file names from input folder
 list = getFileList(input);
 
@@ -36,21 +33,20 @@ list = getFileList(input);
 if(list.length < 2) {
 	print("Need at least two input roi files");
 } else {
-//iterate macro over the objects in the input folder
+	// Iterate macro over the objects in the input folder
 	for (i = 0; i < list.length; i++) {
 		action(input, list[i]);
 	}	
 	
-	//describes the actions for each image
+	// Measure the information about each image
 	function action(input, filename) {
 		open(input + filename);
 		run("Measure");
 	    close();	
 	}
 	
-	// prints text in the log window after all files are processed
-	print("counts from "+list.length+" rois");
-	//run("Summarize");
+	// Prints text in the log window after all files are processed
+	print("Counts from "+list.length+" ROIs");
 	saveAs("Results", output +"/roi_counts.csv");
 }
 print("Finished count_from_roi.ijm\n");
