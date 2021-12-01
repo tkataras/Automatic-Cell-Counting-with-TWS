@@ -1,14 +1,17 @@
+/**
+ * Author: Theo Kataras, Tyler Jang
+ * Date: 11/30/2021
+ * 
+ * Description:
+ */
+
+// The user needs to select the source directory of the code so that the program knows where the user has downloaded the program.
 input = getDirectory("Choose source directory of the macro (Scripts for Auto Cell Count)");
 
 // Set measurements to calculate
 run("Set Measurements...", "area mean standard modal min centroid center perimeter bounding fit shape feret's integrated median skewness kurtosis area_fraction limit display redirect=None decimal=8");
 
-print(input);
-
-File.setDefaultDir(input);
-print(File.getDefaultDir);
-
-//populate all foders, if folders already exist, selectively does not make those folders
+// Populate all folders. If folders already exist, selectively does not make those folders
 exec("python", input + "file_architect.py", input);
 
 // TODO need to find a way to put this bsh into user's plugins
@@ -17,6 +20,7 @@ exec("python", input + "file_architect.py", input);
 //File.copy(input + "BS_TWS_apply.bsh", getDirectory("plugins"));
 //run("BS TWS apply");
 
+// Threshold the images into distinct values
 runMacro(input + "just_thresh.ijm", input);
 
 // TODO Check if can run without projected images

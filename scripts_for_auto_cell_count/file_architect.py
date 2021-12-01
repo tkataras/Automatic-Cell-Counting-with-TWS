@@ -64,7 +64,6 @@ for class_ID in class_list:
     if not os.path.isdir(output_count + class_ID):
         os.mkdir(output_count + class_ID)
 
-
 # Generate classifier subfolders for audit directories
 if test_stage:
     if not os.path.isdir(source + "Audit_Images/"):

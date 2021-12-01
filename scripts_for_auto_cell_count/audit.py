@@ -14,18 +14,19 @@ import random
 import shutil
 import csv
 
+print("Starting audit.py")
 # Method to change working directory from inputted ImageJ Macro
-currDir = os.getcwd()
+curr_dir = os.getcwd()
 def setDir(arg1):
-    currDir = arg1
-    os.chdir(currDir)
+    curr_dir = arg1
+    os.chdir(curr_dir)
 setDir(sys.argv[1])
 
 # Output file location
 OUTPUT_count = "../training_area/Audit_Counted/"
 
 # Get the selected classifier by the user
-selectedClassifier = sys.argv[2]
+selected_classifier = sys.argv[2]
 #read in genotype.csv
 geno_file = "../training_area/testing_area/geno_full.csv"
 
@@ -36,7 +37,7 @@ if len(lvl_geno) != 2:
     print("automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
 
 # Read in file names from the counted/projected experimental dataset
-folder_loc = "../training_area/testing_area/Weka_Output_Counted/" +  selectedClassifier
+folder_loc = "../training_area/testing_area/Weka_Output_Counted/" +  selected_classifier
 files = []
 for image in os.listdir(folder_loc):
     if image[-4:] == ".png":
@@ -74,29 +75,30 @@ for elem in ev0_rand:
     audit_set[elem[0]] = elem[1]
 for elem in ev1_rand:
     audit_set[elem[0]] = elem[1]
-
+""""
 ###need to get these random variable numbers from oritional file directory, eg images, counted 
- TODO Temp so I don't need to redo ROI stuff
+# TODO Temp so I don't need to redo ROI stuff
 # Copy selected images into audit images directory
 for file in audit_set.keys():
     filename =  os.path.basename(file)
     print(filename)
     
-    shutil.copyfile("../training_area/testing_area/images/" + filename, os.path.join("../training_area/testing_area/Audit_Images/" + selectedClassifier +"/", filename))
-    shutil.copyfile("../training_area/testing_area/Weka_Output_Counted/" + selectedClassifier +"/" + filename, os.path.join("../training_area/testing_area/Audit_Counted/"+ selectedClassifier +"/", filename))
-
+    shutil.copyfile("../training_area/testing_area/images/" + filename, os.path.join("../training_area/testing_area/Audit_Images/" + selected_classifier +"/", filename))
+    shutil.copyfile("../training_area/testing_area/Weka_Output_Counted/" + selected_classifier +"/" + filename, os.path.join("../training_area/testing_area/Audit_Counted/"+ selected_classifier +"/", filename))
+"""
 # Write a CSV for the geno data with images in alphabetical order
-genoCSV = []
+geno_csv = []
 for key, value in sorted(audit_set.items()):
-    genoCSV.append([value])
-print(genoCSV)
+    geno_csv.append([value])
+print(geno_csv)
 
- TODO Temp so I don't need to redo ROI stuff
+# TODO Temp so I don't need to redo ROI stuff
+"""
 with open("../training_area/testing_area/geno_audit.csv", 'w+', newline ='') as file:
     write = csv.writer(file)
     write.writerow(["geno"])
-    write.writerows(genoCSV)
-
+    write.writerows(geno_csv)
+"""
 hand_ini = pd.read_csv("../training_area/testing_area/Audit_Hand_Counts/roi_counts.csv", usecols=['Label'])
 lvl_h = np.unique(hand_ini)
 count_h = {}
