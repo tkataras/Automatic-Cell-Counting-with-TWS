@@ -56,7 +56,7 @@ class_results = pd.read_csv(class_res_loc)
 ##need to go into the counted folder and pull out all image names, meaning ignorming the Results.csv files. images from tru_count with be .png
 files = []
 for image in os.listdir(OUTPUT_count):
-    if image[-4:] == ".png":
+    if image[-4:] == ".png" or image[-4:] == ".jpg" or image[-5:] == ".tiff":
         files.append(image)
 final_blah = pd.DataFrame(columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
 

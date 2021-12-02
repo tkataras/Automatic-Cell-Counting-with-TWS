@@ -1,11 +1,13 @@
 #!/usr/bin/python
-"""
-Created on Mon Oct 25 10:59:36 2021
-
-@author: Theo, Tyler
-Audit: randomly selects number of images equal to validation set and copies images to Audit folder
-inputs: genetypes.csv file for unseen data, location of Validation images folder
-"""
+###
+# Author: Theo Kataras, Tyler Jang
+# Date: 12/1/2021
+#
+# Input: The source directory
+#        The classifier selected by the user for the full dataset
+# Output: Randomly selected images to audit placed in Audit Images and Audit Counted
+# Description: This program randomly selects images to be audited by the third act of the pipeline
+###
 import pandas as pd
 import numpy as np
 import os
@@ -22,9 +24,6 @@ def setDir(arg1):
     os.chdir(curr_dir)
 setDir(sys.argv[1])
 
-# Output file location
-OUTPUT_count = "../training_area/Audit_Counted/"
-
 # Get the selected classifier by the user
 selected_classifier = sys.argv[2]
 #read in genotype.csv
@@ -40,7 +39,7 @@ if len(lvl_geno) != 2:
 folder_loc = "../training_area/testing_area/Weka_Output_Counted/" +  selected_classifier
 files = []
 for image in os.listdir(folder_loc):
-    if image[-4:] == ".png":
+    if image[-4:] == ".png" or image[-4:] == ".jpg":
             files.append(image)
 
 # Determine number of draws by number of files in validation hand count folder
@@ -75,15 +74,16 @@ for elem in ev0_rand:
     audit_set[elem[0]] = elem[1]
 for elem in ev1_rand:
     audit_set[elem[0]] = elem[1]
-""""
+
 ###need to get these random variable numbers from oritional file directory, eg images, counted 
 # TODO Temp so I don't need to redo ROI stuff
+"""
 # Copy selected images into audit images directory
 for file in audit_set.keys():
     filename =  os.path.basename(file)
     print(filename)
     
-    shutil.copyfile("../training_area/testing_area/images/" + filename, os.path.join("../training_area/testing_area/Audit_Images/" + selected_classifier +"/", filename))
+    shutil.copyfile("../training_area/testing_area/Images/" + filename, os.path.join("../training_area/testing_area/Audit_Images/" + selected_classifier +"/", filename))
     shutil.copyfile("../training_area/testing_area/Weka_Output_Counted/" + selected_classifier +"/" + filename, os.path.join("../training_area/testing_area/Audit_Counted/"+ selected_classifier +"/", filename))
 """
 # Write a CSV for the geno data with images in alphabetical order
@@ -99,6 +99,7 @@ with open("../training_area/testing_area/geno_audit.csv", 'w+', newline ='') as 
     write.writerow(["geno"])
     write.writerows(geno_csv)
 """
+"""
 hand_ini = pd.read_csv("../training_area/testing_area/Audit_Hand_Counts/roi_counts.csv", usecols=['Label'])
 lvl_h = np.unique(hand_ini)
 count_h = {}
@@ -109,4 +110,5 @@ for i in range(0, len(hand_ini)):
         count_h[hand_ini.loc[i].at["Label"]] = count_h[hand_ini.loc[i].at["Label"]] + 1
 
 print(count_h)
+"""
 print("Finished audit.py") 

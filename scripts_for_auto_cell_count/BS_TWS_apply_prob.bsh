@@ -1,0 +1,145 @@
+/*
+ * Author: Tyler Jang, Theo 
+ * Date: 10/20/2021
+ * Description: This macro applies each Weka classifier onto each validated training image.
+ */
+// The user will have to select the directory that contains the script they are running.
+#@ File(label="Source directory", description="Select the directory with the source of the scripts", style="directory") srcDir
+
+//#@ File(label="Output directories", description="Select the output directories", style="directory") outputDirs
+//#@ File(label="Weka models", description="Select the folder of Weka models to apply", style="directory") modelsDir
+//#@ String(label="Result mode",choices={"Labels","Probabilities"}) resultMode
+//#@ Integer(label="Number of tiles in X:", description="Number of image subdivisions in the X direction", value=3) xTiles
+//#@ Integer(label="Number of tiles in Y:", description="Number of image subdivisions in the Y direction", value=3) yTiles
+//#@ Integer(label="Number of tiles in Z (set to 0 for 2D processing):", description="Number of image subdivisions in the Z direction (ignored when using 2D images)", value=0) zTiles
+
+// This individual line works fine, but it returns the content of the file
+// instead of the file name
+//path=( getSourceFileInfo() );
+
+// Set the working directory to the directory with the script
+//srcDir = "C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/scripts_for_auto_cell_count";
+bsh.cwd = srcDir;
+inputDir = bsh.cwd + "/../training_area/Validation_data/";
+outputDirs = bsh.cwd + "/../training_area/Weka_Output";
+outputprobDirs = bsh.cwd + "/../training_area/Weka_Probability";
+modelsDir = bsh.cwd + "/../training_area/Classifiers";
+
+print("Past the dirs");
+// Get to the current directory with the script
+//resultMode="Labels";
+resultMode = "Probabilities";
+xTiles=3;
+yTiles=3;
+zTiles=0;
+
+import trainableSegmentation.WekaSegmentation;
+import trainableSegmentation.utils.Utils;
+import ij.io.FileSaver;
+import ij.IJ;
+import ij.ImagePlus;
+import graphcut.Graph_Cut;
+
+gc = new Graph_Cut();
+
+  
+// starting time
+startTime = System.currentTimeMillis();
+  
+// caculate probabilities?
+getProbs = resultMode.equals( "Probabilities" );
+ 
+
+///iterate through classifiers
+listOfMod = pathToFile(modelsDir).listFiles();
+
+//listOfMod = modelsDir.listFiles();
+
+//iterate through output folders
+listOfOut = pathToFile(outputDirs).listFiles();
+listOfprobOut = pathToFile(outputprobDirs).listFiles();
+//listOfOut = outputDirs.listFiles();
+//print(listOfOut);
+
+//if (listOfMod.length != listOfOut.length)
+//{
+//	print("classifier / output folder legnth missmatch!!!!");
+//}
+
+
+for ( z = 0; z < listOfMod.length; z++ ) {	
+	modelPath = listOfMod[ z ];
+	//print(modelPath.getCanonicalPath());
+		
+	segmentator = new WekaSegmentation( zTiles > 0 );
+	segmentator.loadClassifier( modelPath.getCanonicalPath() );
+	  
+	// get list of input images
+	listOfFiles = pathToFile(inputDir).listFiles();
+	print(listOfFiles);
+	//listOfFiles = inputDir.listFiles();
+	for ( i = 0; i < listOfFiles.length; i++ ) {
+	    // process only files (do not go into sub-folders)
+	    if( listOfFiles[ i ].isFile() ) {
+	        // try to read file as image
+	        image = IJ.openImage( listOfFiles[i].getCanonicalPath() );
+	        if( image != null ) {
+	            tilesPerDim = new int[ 2 ];
+	            if( image.getNSlices() > 1 ) {
+	                tilesPerDim = new int[ 3 ];
+	                tilesPerDim[ 2 ] = zTiles;
+	            }
+	            tilesPerDim[ 0 ] = xTiles;
+	            tilesPerDim[ 1 ] = yTiles;
+	            
+	            // apply classifier and get results (0 indicates number of threads is auto-detected)
+	            result = segmentator.applyClassifier( image, tilesPerDim, 0, getProbs );
+	
+	            if( !getProbs ) {
+	                // assign same LUT as in GUI
+	                result.setLut( Utils.getGoldenAngleLUT() );
+	            }	             
+	            
+	            //removes the non-cell pixel probablility, which is obligate inverse of the cell prob.
+            	IJ.run(result, "Slice Remover", "first=2 last=2 increment=2");
+
+	            
+	            // save result as TIFF in output folder
+	            outputFileName = listOfFiles[ i ].getName().replaceFirst("[.][^.]+$", "") + ".tif";
+	            //print(listOfOut[ z ].getPath());
+	            print(listOfprobOut[ z ].getPath());
+	            print(outputFileName);
+	            new FileSaver( result ).saveAsTiff( listOfprobOut[ z ].getPath() + File.separator + outputFileName );
+	  		
+				//graph cut to get segmented image and then save
+				// dataWeight - weight of data term (t-links) [0,1]
+				float dataWeight = 0.9;
+				// pottsWeight - or smoothness, weight of smoothness term (n-links) [0,10]
+				float pottsWeight = 1;
+				// optional input, else intialise to null
+				ImagePlus edge = null;
+				edgeWeight = 0;
+
+				seg = gc.processSingleChannelImage(result, edge, dataWeight, pottsWeight, edgeWeight);
+
+				print(listOfOut[ z ].getPath());
+				print(outputFileName);
+				new FileSaver( seg ).saveAsTiff( listOfOut[ z ].getPath() + File.separator + "SEG" + outputFileName);
+  
+	            // force garbage collection (important for large images)
+	            result = null; 
+	            image = null;
+	            
+	            System.gc();
+	            
+	        }
+	    }
+	}
+	segmentator = null;
+	System.gc();
+}
+
+// print elapsed time
+estimatedTime = System.currentTimeMillis() - startTime;
+IJ.log( "** Finished processing folders in " + estimatedTime + " ms **" );
+System.gc();

@@ -72,6 +72,7 @@ Place these classifiers inside of training_area/Classifiers. These should be .mo
 # How to create classifiers using Weka
 ACCT uses Weka Classifiers to count images, which the user will initially need to create. In order to generate classifiers..... __TODO__
 
+The program expects at least 2 classifiers to compare performance against.
 # Stage 1
 
 Navigate and select _Plugins >> Macro >> Run >> macroPipeline.ijm_

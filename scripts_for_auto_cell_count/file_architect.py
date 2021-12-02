@@ -1,13 +1,13 @@
 #!/usr/bin/python
-"""
-Author: Theo Kataras, Tyler Jang
-Date: 11/30/2021
-
-Input: The source directory
-       (optional) The classifier selected by the user for the full dataset
-Output: Directories in training_area or testing_area
-Description: Creates the correct number of classifier folders in output folders
-"""
+###
+# Author: Theo Kataras, Tyler Jang
+# Date: 12/1/2021
+#
+# Input: The source directory
+#       (optional) The classifier selected by the user for the full dataset
+# Output: Directories in training_area or testing_area
+# Description: Creates the correct number of classifier folders in output folders
+###
 import os
 import sys
 
@@ -24,19 +24,19 @@ if len(sys.argv) == 3:
     class_list_pre_trim = []
     class_list_pre_trim.append(sys.argv[2])
 
-    #set the location of the source folder where the folder is installed. 
+    # Set the location of the source folder where the folder is installed. 
     source = "../training_area/testing_area/"
     class_origin =  source + "Classifiers/"
     test_stage = True
 else:
-    #set the location of the source folder where the folder is installed. 
+    # Set the location of the source folder where the folder is installed. 
     source = "../training_area/"
-    #locate classifiers
+    # Locate classifiers
     class_origin =  source + "Classifiers/"
-    #determing the number of classifiers
+    # Determin the number of classifiers
     class_list_pre_trim = os.listdir(class_origin)
 
-#trim the classifier names of the ".model" at the end
+# Trim the classifier names of the ".model" at the end
 class_list = []
 for x in class_list_pre_trim:
     name = x.split('.model')
@@ -44,7 +44,7 @@ for x in class_list_pre_trim:
     class_list += class_current
 print(class_list)
     
-#make folders in locations
+# Make folders in locations
 output = source + "Weka_Output/"
 output_prob = source + "Weka_Probability/"
 output_prob2 = source + "Weka_Probability_Projected/"
@@ -52,7 +52,7 @@ output_thresh = source + "Weka_Output_Thresholded/"
 output_project = source + "Weka_Output_Projected/"
 output_count = source + "Weka_Output_Counted/"
 
-#create classifier folders in each prescribed location if it doesn't already exist
+# Create classifier folders in each prescribed location if it doesn't already exist
 for class_ID in class_list:
     if not os.path.isdir(output + class_ID):
         os.mkdir(output + class_ID)
