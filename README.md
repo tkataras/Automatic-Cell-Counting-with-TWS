@@ -13,7 +13,7 @@ A repository for the suit of scripts I use to perform automatic cell quantificat
 ```
 git clone https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
 ```
-Next you will have to manually copy and paste certain files.
+Next you will have to manually copy and paste certain files into a terminal such as Git.
 
 Find where you downloaded Fiji in your file directory. Next, navigate to scripts for auto cell count then copy and paste the following files into your Fiji.app/plugins directory. This is so you can run the program from ImageJ using the GUI.
 ```
