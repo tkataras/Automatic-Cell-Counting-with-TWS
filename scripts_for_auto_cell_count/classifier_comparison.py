@@ -119,11 +119,12 @@ for f in range(0, len(class_list)):
     total_fp = sum(final_result["fp"])
     total_fn = sum(final_result["fn"])
 
+    # Accuracy = tp / (tp + fp + fn)
+    accuracy = catchDivideByZero(total_tp, total_tp + total_fp + total_fn)
     # Precision = tp/(tp + fp)
     prec = catchDivideByZero(total_tp, total_tp + total_fp)
     # Recall = tp/(tp + fn)
     reca = catchDivideByZero(total_tp, total_tp + total_fn)
-    
     # F1 = 2 * (percision * recall / percision + recall)
     result = catchDivideByZero(prec*reca, prec + reca)
     if result == None:
@@ -131,10 +132,19 @@ for f in range(0, len(class_list)):
     else:
         F1 = 2 * result
     
+    # Absolute Error = (tp + fn) - (tp + fp)
+    total_absolute_error = (total_tp + total_fn) - (total_tp + total_fp)
+
+    # Percent Error = ((tp + fn) - (tp + fp)) / (tp + fn)
+    total_percent_error = ((total_tp + total_fn) - (total_tp + total_fp)) / (total_tp + total_fn)
+
     # Print resulting values to the log
     print(curr_class + " percision = " +  str(prec))
     print(curr_class + " recall = " +  str(reca))
+    print(curr_class + " accuracy = " +  str(accuracy))
     print(curr_class + " F1 = " +  str(F1))
+    print(curr_class + " total absolute error = " +  str(total_absolute_error))
+    print(curr_class + " total percent error = " +  str(total_percent_error))
 
     # Writes out the final file to save the output
     file_out_name = output_count + "/" + class_list[f] + "/" + curr_class + "_Final.csv"
