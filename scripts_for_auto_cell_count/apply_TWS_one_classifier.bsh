@@ -6,7 +6,7 @@
 // Set the working directory to the directory with the script
 bsh.cwd = srcDir;
 inputDir = bsh.cwd + "/../training_area/testing_area/images/";
-outputDirs = bsh.cwd + "/../training_area/testing_area/Weka_Output";
+outputDir = bsh.cwd + "/../training_area/testing_area/Weka_Output";
 
 resultMode = "Labels";
 xTiles = 3;
@@ -31,7 +31,7 @@ segmentator = new WekaSegmentation(zTiles > 0);
 segmentator.loadClassifier(modelPath.getCanonicalPath());
   
 // get list of input images
-listOfFiles = inputDir.listFiles();
+listOfFiles = pathToFile(inputDir).listFiles();
 for (currMod = 0; currMod < listOfFiles.length; currMod++)
 {
     // process only files (do not go into sub-folders)
@@ -60,7 +60,7 @@ for (currMod = 0; currMod < listOfFiles.length; currMod++)
             
             // save result as TIFF in output folder
             outputFileName = listOfFiles[currMod].getName().replaceFirst("[.][^.]+$", "") + ".tif";
-            new FileSaver(result).saveAsTiff(outputDir.getPath() + File.separator + outputFileName);
+            new FileSaver(result).saveAsTiff(pathToFile(outputDir).getPath() + File.separator + outputFileName);
   
             // force garbage collection (important for large images)
             result = null; 
