@@ -68,6 +68,7 @@ img_counts["geno"] = geno_list
 img_counts.to_csv(output_count + selectedClassifier + "/" + selectedClassifier + "_final.csv")
 
 # Calculate the Welch 2 Sample T-test   
+# TODO won't this crash on only 1 level?
 group_one = img_counts.query('geno == @lvl_geno[0]')
 group_two = img_counts.query('geno == @lvl_geno[1]')
 t_test_calc = scipy.stats.ttest_ind(group_one["Counts"], group_two["Counts"], equal_var=False, nan_policy="omit")

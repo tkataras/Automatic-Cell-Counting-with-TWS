@@ -17,7 +17,7 @@ exec("python", input + "file_architect.py", input);
 //fiji_dir = getDirectory("Select the plugins directory for fiji (fiji/plugins)");
 //Copy BS_TWS_apply.bsh into fiji_dir
 //File.copy(input + "BS_TWS_apply.bsh", getDirectory("plugins"));
-//run("BS TWS apply");
+run("BS TWS apply");
 
 // Threshold the images into distinct values
 runMacro(input + "just_thresh.ijm", input);

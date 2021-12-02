@@ -2,7 +2,9 @@
  * Author: Theo Kataras, Tyler Jang
  * Date: 12/1/2021
  * 
- * Description:
+ * Input: Several user created classifiers, a set of images.
+ * Description: This second stage of the pipeline uses a selected classifier by the user to count the number of objects
+ * 				in each image as well as give statistical and morphological information. 
  */
  // The user needs to select the source directory of the code so that the program knows where the user has downloaded the program.
 input = getDirectory("Choose source directory of the macro (Scripts for Auto Cell Count)");
