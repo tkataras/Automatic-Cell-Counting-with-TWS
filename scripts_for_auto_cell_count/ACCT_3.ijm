@@ -7,8 +7,6 @@ run("Set Measurements...", "area mean standard modal min centroid center perimet
 //making sure all folders exist
 exec("python", input + "file_architect.py", input);
 
-
-
 testingPath = input + "../training_area/testing_area/";
 classifierDir = input + "../training_area/Classifiers";
 searchDirectory = getFileList(classifierDir);
@@ -24,9 +22,11 @@ selectedClassifier = Dialog.getChoice();
 print(selectedClassifier);
 
 
-//count and analysis of audit images
-runMacro(input + "count_from_roi.ijm", input + "../training_area/testing_area/Audit_Hand_Counts/" + trimClassName[0] + "/");
+// Randomly select images for analysis
+exec("python", input + "audit.py", input, trimClassName[0]);
 
+// Count and analysis of audit images
+runMacro(input + "count_from_roi.ijm", input + "../training_area/testing_area/Audit_Hand_Counts/" + trimClassName[0] + "/");
 
 runMacro(input + "audit count.ijm", searchDirectory);
 exec("python", input + "audit_classifier_comparison.py", input, trimClassName[0]);

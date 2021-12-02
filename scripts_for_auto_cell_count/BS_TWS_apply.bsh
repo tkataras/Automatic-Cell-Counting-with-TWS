@@ -86,15 +86,15 @@ for (currMod = 0; currMod < listOfMod.length; currMod++) {
 	            // TODO Idk about this Theo, forcing garbage collection seems bad
 	            result = null; 
 	            image = null;     
-	            System.gc();
+	            //System.gc();
 	        }
 	    }
 	}
 	segmentator = null;
-	System.gc();
+	//System.gc();
 }
 
 // Print elapsed time
 estimatedTime = System.currentTimeMillis() - startTime;
 IJ.log("** Finished processing folders in " + estimatedTime + " ms **");
-System.gc();
+//System.gc();

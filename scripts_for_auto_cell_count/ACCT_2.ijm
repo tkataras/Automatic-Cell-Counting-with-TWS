@@ -1,6 +1,6 @@
 /**
  * Author: Theo Kataras, Tyler Jang
- * Date: 11/30/2021
+ * Date: 12/1/2021
  * 
  * Description:
  */
@@ -31,8 +31,8 @@ trimClassName = split(selectedClassifier, ".");
 
 testingPath = testingPath + "Weka_Output/" + trimClassName[0];
 
-// TODO Will need to be run to create weka output for selected classifier
-//run("apply TWS one classifier");
+// Create weka output for selected classifier
+run("apply TWS one classifier");
 
 // TODO Check if can run without projected images
 searchDirectory = input

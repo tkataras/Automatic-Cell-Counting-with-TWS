@@ -40,7 +40,7 @@ if len(lvl_geno) != 2:
 folder_loc = "../training_area/testing_area/Weka_Output_Counted/" +  selected_classifier
 files = []
 for image in os.listdir(folder_loc):
-    if image[-4:] == ".png":
+    if image[-4:] == ".png" or image[-4:] == ".jpg":
             files.append(image)
 
 # Determine number of draws by number of files in validation hand count folder

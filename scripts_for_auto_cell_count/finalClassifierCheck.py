@@ -29,18 +29,18 @@ selectedClassifier = sys.argv[2]
 geno_file = "../training_area/testing_area/geno_full.csv"
 
 # File output location
-OUTPUT_count = "../training_area/testing_area/Weka_Output_Counted/"
-class_list_temp = os.listdir(OUTPUT_count + selectedClassifier)
+output_count = "../training_area/testing_area/Weka_Output_Counted/"
+class_list_temp = os.listdir(output_count + selectedClassifier)
 
 class_list = []
 # Select only the images in the classifier
 for img in class_list_temp:
-    if img[-4:] == ".png":
+    if img[-4:] == ".png" or img[-4:] == ".jpg":
         class_list.append(img)
 
 unique_img = np.unique(class_list)
 
-class_res_loc = OUTPUT_count + selectedClassifier + "/" + selectedClassifier + "_Results_test_data.csv"
+class_res_loc = output_count + selectedClassifier + "/" + selectedClassifier + "_Results_test_data.csv"
 class_results = pd.read_csv(class_res_loc)
 
 img_counts = pd.DataFrame(columns=["Label", "Counts"])
@@ -65,7 +65,7 @@ for numRows in range(0, len(img_counts["Label"])):
 img_counts["geno"] = geno_list
 
 # Save current img counts to the counted classifier folder as csv file
-img_counts.to_csv(OUTPUT_count + selectedClassifier + "/" + selectedClassifier + "_final.csv")
+img_counts.to_csv(output_count + selectedClassifier + "/" + selectedClassifier + "_final.csv")
 
 # Calculate the Welch 2 Sample T-test   
 group_one = img_counts.query('geno == @lvl_geno[0]')
