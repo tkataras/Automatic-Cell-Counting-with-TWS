@@ -10,16 +10,17 @@ A repository for the suit of scripts I use to perform automatic cell quantificat
 5. [Creating hand count markers](#creating-hand-count-markers)
 6. [Critical Notes](#critical-notes)
 # Installation Guide
+
+First you will have to aquire this directory, can be done through a terminal such as Git with the following line of code.
 ```
 git clone https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
 ```
-Next you will have to manually copy and paste certain files into a terminal such as Git.
+Next you will have to manually copy and paste certain files into the plugins folder of your Fiji instalation of Imagej.
 
 Find where you downloaded Fiji in your file directory. Next, navigate to scripts for auto cell count then copy and paste the following files into your Fiji.app/plugins directory. This is so you can run the program from ImageJ using the GUI.
 ```
-macroPipeline.ijm
-selectedClassifierPipeline.ijm
 BS_TWS_apply.bsh
+apply_TWS_one_classifier.bsh
 ```
 # Software Dependencies
 
