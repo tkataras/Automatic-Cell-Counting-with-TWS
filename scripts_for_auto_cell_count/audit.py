@@ -1,11 +1,13 @@
 #!/usr/bin/python
-"""
-Created on Mon Oct 25 10:59:36 2021
-
-@author: Theo, Tyler
-Audit: randomly selects number of images equal to validation set and copies images to Audit folder
-inputs: genetypes.csv file for unseen data, location of Validation images folder
-"""
+###
+# Author: Theo Kataras, Tyler Jang
+# Date: 12/1/2021
+#
+# Input: The source directory
+#        The classifier selected by the user for the full dataset
+# Output: Randomly selected images to audit placed in Audit Images and Audit Counted
+# Description: This program randomly selects images to be audited by the third act of the pipeline
+###
 import pandas as pd
 import numpy as np
 import os
@@ -21,9 +23,6 @@ def setDir(arg1):
     curr_dir = arg1
     os.chdir(curr_dir)
 setDir(sys.argv[1])
-
-# Output file location
-OUTPUT_count = "../training_area/Audit_Counted/"
 
 # Get the selected classifier by the user
 selected_classifier = sys.argv[2]

@@ -1,9 +1,11 @@
 #!/usr/bin/python
 ###
-# Author: Theo, Tyler Jang
-# Date 11/2/2021
-# This file in the pipeline.....
-#
+# Author: Theo Kataras, Tyler Jang
+# Date 12/1/2021
+# 
+# Input: A set of thresholded, projected images
+# Output: A set of merged images
+# Description: This file in the pipeline.....
 ###
 import os
 import sys

@@ -1,11 +1,11 @@
 #!/usr/bin/python
 ###
 # Author: Tyler Jang, Theo Kataras
-# Date 11/30/2021
-# This file is the pipeline for comparing classifier accuracy on validation data
+# Date 12/1/2021
 #
-# Inputs: genotype file, hand count results file from Cout Roi, results of The Count.IJM in each classifier folder 
+# Inputs: genotype csv file, hand count results file from count over roi, results of count over dir in each classifier folder 
 # Outputs: csv table with accuracy measurements for each classifier
+# Description: This file compares statistical information about each classifier against each other
 ###
 import pandas as pd
 import numpy as np
@@ -26,7 +26,6 @@ setDir(sys.argv[1])
 geno_file = "../training_area/genotype.csv"
 
 # File output location
-#output_count = "../training_area/Weka_Output_Counted/"
 # TODO I just changed this to work with the probability data, so the files will end up in the projected probability folders
 output_count = "../training_area/Weka_Output_Counted/"
 result_out = "../training_area/Results/"
@@ -59,7 +58,7 @@ for f in range(0, len(class_list)):
     folder_loc = output_count + curr_class
     img_names = []
     for image in os.listdir(folder_loc):
-        if image[-4:] == ".png" or image[-4:] == ".jpg":
+        if image[-4:] == ".png" or image[-4:] == ".jpg" or image[-5:] == ".tiff":
             img_names.append(image)
 
     # Dataframe to store the results of autocounting performance

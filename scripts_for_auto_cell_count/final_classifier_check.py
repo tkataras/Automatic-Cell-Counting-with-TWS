@@ -35,7 +35,7 @@ class_list_temp = os.listdir(output_count + selectedClassifier)
 class_list = []
 # Select only the images in the classifier
 for img in class_list_temp:
-    if img[-4:] == ".png" or img[-4:] == ".jpg":
+    if img[-4:] == ".png" or img[-4:] == ".jpg" or img[-5:] == ".tiff":
         class_list.append(img)
 
 unique_img = np.unique(class_list)
