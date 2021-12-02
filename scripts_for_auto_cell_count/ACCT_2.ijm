@@ -31,8 +31,11 @@ trimClassName = split(selectedClassifier, ".");
 
 testingPath = testingPath + "Weka_Output/" + trimClassName[0];
 
-// Create weka output for selected classifier
-run("apply TWS one classifier");
+// Create Weka output for the selected classifier
+//run("apply TWS one classifier");
+
+// Threshold the images
+runMacro(input + "just_thresh.ijm", testingPath);
 
 // TODO Check if can run without projected images
 searchDirectory = input
@@ -41,11 +44,8 @@ Dialog.addCheckbox("Do you need to project multiple image segmentations?", false
 Dialog.show();
 result = Dialog.getCheckbox();
 
-// Threshold the images
-runMacro(input + "just_thresh.ijm", testingPath);
-
 if (result) {
-	exec("python", input + "Project N Images by ID.py", input, trimClassName[0]);
+	exec("python", input + "project_N_images_by_ID.py", input, trimClassName[0]);
 	searchDirectory = input + "../training_area/testing_area/Weka_Output_Projected/" + trimClassName[0];
 } else {
 	searchDirectory = input + "../training_area/testing_area/Weka_Output_Thresholded/" + trimClassName[0];
@@ -54,14 +54,7 @@ if (result) {
 // Count the number of objects in each image
 runMacro(input + "count_full_dataset.ijm", searchDirectory);
 
-// Begin the third act of the pipeline
-//exec("python", input + "audit.py", input, trimClassName[0]);
-//runMacro(input + "audit_count.ijm", testingPath + "," + trimClassName[0]);
-
-// Next, run get statistical information about the classifier's performance
-exec("python", input + "finalClassifierCheck.py", input, trimClassName[0]);
-
-// select the random images for the audit set
-//exec("python", input + "audit.py", input, trimClassName[0]);
+// Finally, get statistical information about the classifier's performance
+exec("python", input + "final_classifier_check.py", input, trimClassName[0]);
 
 print("Finished Act 2");

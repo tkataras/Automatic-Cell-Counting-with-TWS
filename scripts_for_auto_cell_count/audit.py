@@ -84,7 +84,7 @@ for file in audit_set.keys():
     filename =  os.path.basename(file)
     print(filename)
     
-    shutil.copyfile("../training_area/testing_area/images/" + filename, os.path.join("../training_area/testing_area/Audit_Images/" + selected_classifier +"/", filename))
+    shutil.copyfile("../training_area/testing_area/Images/" + filename, os.path.join("../training_area/testing_area/Audit_Images/" + selected_classifier +"/", filename))
     shutil.copyfile("../training_area/testing_area/Weka_Output_Counted/" + selected_classifier +"/" + filename, os.path.join("../training_area/testing_area/Audit_Counted/"+ selected_classifier +"/", filename))
 """
 # Write a CSV for the geno data with images in alphabetical order

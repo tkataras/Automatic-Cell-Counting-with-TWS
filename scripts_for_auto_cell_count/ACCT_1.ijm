@@ -4,7 +4,6 @@
  * 
  * Description:
  */
-
 // The user needs to select the source directory of the code so that the program knows where the user has downloaded the program.
 input = getDirectory("Choose source directory of the macro (Scripts for Auto Cell Count)");
 
@@ -18,7 +17,7 @@ exec("python", input + "file_architect.py", input);
 //fiji_dir = getDirectory("Select the plugins directory for fiji (fiji/plugins)");
 //Copy BS_TWS_apply.bsh into fiji_dir
 //File.copy(input + "BS_TWS_apply.bsh", getDirectory("plugins"));
-run("BS TWS apply");
+//run("BS TWS apply");
 
 // Threshold the images into distinct values
 runMacro(input + "just_thresh.ijm", input);
@@ -30,7 +29,7 @@ Dialog.addCheckbox("Do you need to project multiple image segmentations?", false
 Dialog.show();
 result = Dialog.getCheckbox();
 if (result) {
-	exec("python", input + "Project N Images by ID.py", input);
+	exec("python", input + "project_N_images_by_ID.py", input);
 	searchDirectory = input + "../training_area/Weka_Output_Projected/";
 } else {
 	searchDirectory = input + "../training_area/Weka_Output_Thresholded/";
