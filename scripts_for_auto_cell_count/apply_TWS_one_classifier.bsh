@@ -1,14 +1,17 @@
-#@ File(label="Input directory", description="Select the directory with input images", style="directory") inputDir
-#@ File(label="Output directory", description="Select the output directory", style="directory") outputDir
-#@ File(label="Weka model", description="Select the Weka model to apply") modelPath
+//#@ File(label="Input directory", description="Select the directory with input images", style="directory") inputDir
+//#@ File(label="Output directory", description="Select the output directory", style="directory") outputDir
+#@ File(label="Source directory", description="Select the directory with the source of the scripts", style="directory") srcDir
+#@ File(label="Weka model", description="_Select the Weka model to apply") modelPath
 
-
+// Set the working directory to the directory with the script
+bsh.cwd = srcDir;
+inputDir = bsh.cwd + "/../training_area/testing_area/images/";
+outputDirs = bsh.cwd + "/../training_area/testing_area/Weka_Output";
 
 resultMode = "Labels";
 xTiles = 3;
 yTiles = 3;
 zTiles = 0;
-
 
 import trainableSegmentation.WekaSegmentation;
 import trainableSegmentation.utils.Utils;
@@ -20,43 +23,44 @@ import ij.ImagePlus;
 startTime = System.currentTimeMillis();
   
 // caculate probabilities?
-getProbs = resultMode.equals( "Probabilities" );
+getProbs = resultMode.equals("Probabilities");
  
 // create segmentator
-segmentator = new WekaSegmentation( zTiles > 0 );
+segmentator = new WekaSegmentation(zTiles > 0);
 // load classifier
-segmentator.loadClassifier( modelPath.getCanonicalPath() );
+segmentator.loadClassifier(modelPath.getCanonicalPath());
   
 // get list of input images
 listOfFiles = inputDir.listFiles();
-for ( i = 0; i < listOfFiles.length; i++ )
+for (currMod = 0; currMod < listOfFiles.length; currMod++)
 {
     // process only files (do not go into sub-folders)
-    if( listOfFiles[ i ].isFile() )
+    if(listOfFiles[currMod].isFile())
     {
         // try to read file as image
-        image = IJ.openImage( listOfFiles[i].getCanonicalPath() );
-        if( image != null )
+        image = IJ.openImage( listOfFiles[currMod].getCanonicalPath());
+        if(image != null)
         {
             tilesPerDim = new int[ 2 ];
-            if( image.getNSlices() > 1 )
+            if(image.getNSlices() > 1)
             {
-                tilesPerDim = new int[ 3 ];
-                tilesPerDim[ 2 ] = zTiles;
+                tilesPerDim = new int[3];
+                tilesPerDim[2] = zTiles;
             }
-            tilesPerDim[ 0 ] = xTiles;
-            tilesPerDim[ 1 ] = yTiles;
+            tilesPerDim[0] = xTiles;
+            tilesPerDim[1] = yTiles;
             
             // apply classifier and get results (0 indicates number of threads is auto-detected)
-            result = segmentator.applyClassifier( image, tilesPerDim, 0, getProbs );
+            result = segmentator.applyClassifier(image, tilesPerDim, 0, getProbs);
 
-            if( !getProbs )
+            if(!getProbs) {
                 // assign same LUT as in GUI
-                result.setLut( Utils.getGoldenAngleLUT() );
-             
+                result.setLut(Utils.getGoldenAngleLUT());
+            }
+            
             // save result as TIFF in output folder
-            outputFileName = listOfFiles[ i ].getName().replaceFirst("[.][^.]+$", "") + ".tif";
-            new FileSaver( result ).saveAsTiff( outputDir.getPath() + File.separator + outputFileName );
+            outputFileName = listOfFiles[currMod].getName().replaceFirst("[.][^.]+$", "") + ".tif";
+            new FileSaver(result).saveAsTiff(outputDir.getPath() + File.separator + outputFileName);
   
             // force garbage collection (important for large images)
             result = null; 
@@ -67,5 +71,5 @@ for ( i = 0; i < listOfFiles.length; i++ )
 }
 // print elapsed time
 estimatedTime = System.currentTimeMillis() - startTime;
-IJ.log( "** Finished processing folder in " + estimatedTime + " ms **" );
+IJ.log("** Finished processing folder in " + estimatedTime + " ms **");
 System.gc();

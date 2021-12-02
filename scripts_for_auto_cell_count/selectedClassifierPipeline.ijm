@@ -32,7 +32,7 @@ trimClassName = split(selectedClassifier, ".");
 testingPath = testingPath + "Weka_Output/" + trimClassName[0];
 
 // TODO Will need to be run to create weka output for selected classifier
-//runMacro(input + "apply_TWS_one_classifier.bsh);
+//run("apply TWS one classifier");
 
 // TODO Check if can run without projected images
 searchDirectory = input

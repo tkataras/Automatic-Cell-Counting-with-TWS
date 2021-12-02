@@ -96,5 +96,5 @@ for (currMod = 0; currMod < listOfMod.length; currMod++) {
 
 // Print elapsed time
 estimatedTime = System.currentTimeMillis() - startTime;
-IJ.log( "** Finished processing folders in " + estimatedTime + " ms **" );
+IJ.log("** Finished processing folders in " + estimatedTime + " ms **");
 System.gc();
