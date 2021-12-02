@@ -127,13 +127,14 @@ Additionaly, the third step of the pipeline sets aside a random sample of images
 
 # Creating Hand Count Markers
 Hand count markers are created in Imagej using the Point Selection Tool, available in the toolbar, and the ROI manager, which is under Analyze >> Tools >> ROI Manager. You can also type ROI Manager in the search bar and select it.
-1.      Open an image and place one or two count markers
+1.      Open an image and place one or two count markers 
 2.      Add the selections to the ROI manager
 3.      Rename the new ROI with the image name (This is most easily done by using the following keyboard shortcuts: Ctrl+d -> Ctrl+c -> Ctrl+w -> right click the ROI and select Rename -> Ctrl+v -> Enter)
 4.      Continue selecting cell locations, peridocally updating via the Update button in the ROI Manager
 5.      When all cells are selected, save in Hand counts folder, or Audit hand counts folder for the audit image set.
 6.      Open new image and repeat until all validation or audit images are counted.
- 
+<img src = "figures/fijiMultiPoint.PNG">
+<img src = "figures/roiManager.PNG">
 # Critical Notes
 The image names much match exactly between the hand counts and the original images(except for the file extension).
 Each folder must only contain images or hand counts, with the exception of the Weka Output Counted folder, in which classifier subfolders will include calculation data files.
