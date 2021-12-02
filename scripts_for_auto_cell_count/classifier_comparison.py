@@ -133,18 +133,18 @@ for f in range(0, len(class_list)):
         F1 = 2 * result
     
     # Absolute Error = (tp + fn) - (tp + fp)
-    total_absolute_error = (total_tp + total_fn) - (total_tp + total_fp)
+    mean_absolute_error = ((total_tp + total_fn) - (total_tp + total_fp)) / len(img_names)
 
     # Percent Error = ((tp + fn) - (tp + fp)) / (tp + fn)
-    total_percent_error = ((total_tp + total_fn) - (total_tp + total_fp)) / (total_tp + total_fn)
+    mean_percent_error = (((total_tp + total_fn) - (total_tp + total_fp)) / (total_tp + total_fn)) / len(img_names)
 
     # Print resulting values to the log
     print(curr_class + " percision = " +  str(prec))
     print(curr_class + " recall = " +  str(reca))
     print(curr_class + " accuracy = " +  str(accuracy))
     print(curr_class + " F1 = " +  str(F1))
-    print(curr_class + " total absolute error = " +  str(total_absolute_error))
-    print(curr_class + " total percent error = " +  str(total_percent_error))
+    print(curr_class + " mean absolute error = " +  str(mean_absolute_error))
+    print(curr_class + " mean percent error = " +  str(mean_percent_error))
 
     # Writes out the final file to save the output
     file_out_name = output_count + "/" + class_list[f] + "/" + curr_class + "_Final.csv"
