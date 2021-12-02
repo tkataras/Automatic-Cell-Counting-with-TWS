@@ -56,7 +56,7 @@ runMacro(input + "count_full_dataset.ijm", searchDirectory);
 
 // Begin the third act of the pipeline
 //exec("python", input + "audit.py", input, trimClassName[0]);
-//runMacro(input + "audit count.ijm", testingPath + "," + trimClassName[0]);
+//runMacro(input + "audit_count.ijm", testingPath + "," + trimClassName[0]);
 
 // Next, run get statistical information about the classifier's performance
 exec("python", input + "finalClassifierCheck.py", input, trimClassName[0]);

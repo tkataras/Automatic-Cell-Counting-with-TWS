@@ -75,9 +75,10 @@ for elem in ev0_rand:
     audit_set[elem[0]] = elem[1]
 for elem in ev1_rand:
     audit_set[elem[0]] = elem[1]
-""""
+
 ###need to get these random variable numbers from oritional file directory, eg images, counted 
 # TODO Temp so I don't need to redo ROI stuff
+"""
 # Copy selected images into audit images directory
 for file in audit_set.keys():
     filename =  os.path.basename(file)
@@ -99,6 +100,7 @@ with open("../training_area/testing_area/geno_audit.csv", 'w+', newline ='') as 
     write.writerow(["geno"])
     write.writerows(geno_csv)
 """
+"""
 hand_ini = pd.read_csv("../training_area/testing_area/Audit_Hand_Counts/roi_counts.csv", usecols=['Label'])
 lvl_h = np.unique(hand_ini)
 count_h = {}
@@ -109,4 +111,5 @@ for i in range(0, len(hand_ini)):
         count_h[hand_ini.loc[i].at["Label"]] = count_h[hand_ini.loc[i].at["Label"]] + 1
 
 print(count_h)
+"""
 print("Finished audit.py") 

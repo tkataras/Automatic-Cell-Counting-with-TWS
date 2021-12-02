@@ -19,14 +19,18 @@ Dialog.show();
 
 selectedClassifier = Dialog.getChoice();
 
-print(selectedClassifier);
-
+// Trim .model off the selected classifier by the user
+trimClassName = split(selectedClassifier, ".");
 
 // Randomly select images for analysis
 exec("python", input + "audit.py", input, trimClassName[0]);
 
+Dialog.create("Question");
+Dialog.addCheckbox("Now hand count the randomly selected audit images inside of training_area/testing_area/Audit_Images. Select this box when you are ready to continue.", false);
+Dialog.show();
+
 // Count and analysis of audit images
 runMacro(input + "count_from_roi.ijm", input + "../training_area/testing_area/Audit_Hand_Counts/" + trimClassName[0] + "/");
 
-runMacro(input + "audit count.ijm", searchDirectory);
+runMacro(input + "audit_count.ijm", searchDirectory);
 exec("python", input + "audit_classifier_comparison.py", input, trimClassName[0]);

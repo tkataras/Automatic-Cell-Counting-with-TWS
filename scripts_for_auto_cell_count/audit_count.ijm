@@ -1,9 +1,7 @@
-//count of dir for the audit
-
-/*
+/**
  * Author: Theo, Tyler
  * Date: 10/21/2021
- * Description:
+ * Description: Version of count over dir for the audit set
  */
 macro "The -- Audit -- Count" {
 	//Overview: uses hand placed markers and weka output images from each classifier to begin accuracy calculation
@@ -13,7 +11,7 @@ macro "The -- Audit -- Count" {
 	//this hides intermediary information and speeds processing
 	setBatchMode(true); 
 
-		// set size minimum for cells to exclude small radius noise
+	// Set size minimum for cells to exclude small radius noise
 	size_min=20;
 	Dialog.create("Size Min");
 	Dialog.addNumber("Minimum pixel size for object count:", size_min);
@@ -47,7 +45,7 @@ macro "The -- Audit -- Count" {
 			
 	n = 0;
 			
-	//iterate  macro over the images in the input folder
+	//iterate macro over the images in the input folder
 	for (q = 0; q < list.length; q++) {
 		action(input, output, list[q], list2[q]);
 	}
@@ -126,6 +124,6 @@ macro "The -- Audit -- Count" {
 		//run("Clear Results");
 	
 	// prints text in the log window after all files are processed
-	print("AH HA HA "+list.length+" audit images");
+	print("AH HA HA " + list.length + " audit images");
 }
 updateResults();
