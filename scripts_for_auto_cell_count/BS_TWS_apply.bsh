@@ -1,9 +1,3 @@
-/*
- * Author: Tyler Jang, Theo 
- * Date: 11/30/2021
- * Description: This macro applies each Weka classifier onto each validated training image.
- */
-print("Starting BS_TWS_apply.bsh");
 // The user will have to select the directory that contains the script they are running.
 #@ File(label="Source directory", description="Select the directory with the source of the scripts", style="directory") srcDir
 
@@ -104,4 +98,3 @@ for (currMod = 0; currMod < listOfMod.length; currMod++) {
 estimatedTime = System.currentTimeMillis() - startTime;
 IJ.log( "** Finished processing folders in " + estimatedTime + " ms **" );
 System.gc();
-print("Finished BS_TWS_apply.bsh");
