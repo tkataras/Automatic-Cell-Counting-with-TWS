@@ -84,7 +84,7 @@ def sep_slidebook(file_names, delim):
         id1_df = id1_df.append(new_row)
     return id1_df
 
-###
+### 
 # Method: squish 
 # Input: data from of grouping variables
 # Output: list of unique image IDs contining specific grouping information
