@@ -204,13 +204,14 @@ for f in range(0, len(class_list)):
         row_row = pd.DataFrame([[curr_class, prec, reca, F1, F1_geno_ttest_pval, mean_F1_ev0, mean_F1_ev1, perc_geno_ttest_pval, recall_geno_ttest_pval]], columns=["class", "prec", "reca", "F1", "F1_geno_ttest_pval", "mean_F1_ev0", "mean_F1_ev1", "perc_geno_ttest_pval", "recall_geno_ttest_pval"])
         your_boat = your_boat.append(row_row)
 
-    # If more than two levels
+    # Else, if more than two levels
     elif len(lvl_geno) > 2:
         print("Automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
         # Create as many groups as there are levels
         group_n = []
         for index in range(0, len(lvl_geno)):
             group_n[index] = final_result.query('geno == @lvl_geno[index]')
+    # Else there are only two levels
     else:    
         # Calculate the Welch 2 Sample T-test   
         group_one = final_result.query('geno == @lvl_geno[0]')
