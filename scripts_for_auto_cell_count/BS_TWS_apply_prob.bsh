@@ -101,18 +101,16 @@ for ( z = 0; z < listOfMod.length; z++ ) {
 	            }	             
 	            
 	            //removes the non-cell pixel probablility, which is obligate inverse of the cell prob.
-            IJ.run(result, "Slice Remover", "first=2 last=2 increment=2");
+            	IJ.run(result, "Slice Remover", "first=2 last=2 increment=2");
 
 	            
 	            // save result as TIFF in output folder
 	            outputFileName = listOfFiles[ i ].getName().replaceFirst("[.][^.]+$", "") + ".tif";
 	            //print(listOfOut[ z ].getPath());
+	            print(listOfprobOut[ z ].getPath());
+	            print(outputFileName);
 	            new FileSaver( result ).saveAsTiff( listOfprobOut[ z ].getPath() + File.separator + outputFileName );
-	  
-
-
-
-	  				
+	  		
 				//graph cut to get segmented image and then save
 				// dataWeight - weight of data term (t-links) [0,1]
 				float dataWeight = 0.9;
@@ -122,10 +120,10 @@ for ( z = 0; z < listOfMod.length; z++ ) {
 				ImagePlus edge = null;
 				edgeWeight = 0;
 
-
 				seg = gc.processSingleChannelImage(result, edge, dataWeight, pottsWeight, edgeWeight);
-			
 
+				print(listOfOut[ z ].getPath());
+				print(outputFileName);
 				new FileSaver( seg ).saveAsTiff( listOfOut[ z ].getPath() + File.separator + "SEG" + outputFileName);
   
 	            // force garbage collection (important for large images)

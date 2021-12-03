@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+//#@ File(label="Input directory", description="Select the directory with input images", style="directory") inputDir
+//#@ File(label="Output directory", description="Select the output directory", style="directory") outputDir
+#@ File(label="Source directory", description="Select the directory with the source of the scripts", style="directory") srcDir
+#@ File(label="Weka model", description="_Select the Weka model to apply") modelPath
+
+// Set the working directory to the directory with the script
+bsh.cwd = srcDir;
+inputDir = bsh.cwd + "/../training_area/testing_area/images/";
+outputDir = bsh.cwd + "/../training_area/testing_area/Weka_Output";
+=======
 #@ File(label="Source directory", description="Select the directory with the source of the scripts", style="directory") srcDir
 #@ File(label="Weka model", description="_Select the Weka model to apply") modelPath
 
@@ -12,6 +23,7 @@ modelFileName = modelPathString.split("\\\\");
 selectedClassifier = (modelFileName[modelFileName.length - 1]);
 selectedClassifier = selectedClassifier.split(".model")[0];
 outputDir = outputDir + selectedClassifier;
+>>>>>>> 1a1d53a1666c204d1e327efdda76bc48a4a0214a
 
 resultMode = "Labels";
 xTiles = 3;
@@ -27,7 +39,11 @@ import ij.ImagePlus;
 // Starting time
 startTime = System.currentTimeMillis();
   
+<<<<<<< HEAD
+// caculate probabilities?
+=======
 // Caculate probabilities?
+>>>>>>> 1a1d53a1666c204d1e327efdda76bc48a4a0214a
 getProbs = resultMode.equals("Probabilities");
  
 // create segmentator

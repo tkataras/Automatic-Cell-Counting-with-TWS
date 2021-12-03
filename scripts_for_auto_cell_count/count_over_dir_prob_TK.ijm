@@ -14,17 +14,13 @@ macro "The -- True -- probability -- Count" {
 	//set input and output directories locations
 	
 	// Weka Output Projected if Projected, else Weka Output Thresholded
-
 	input_dirs = getArgument();
-
-
 	
 	// Weka Output Counted
 	output_dirs = input_dirs + "../Weka_Output_Counted/";
 
-	
+	// Weka Probability Projected
 	prob_dirs = input_dirs + "../Weka_Probability_Projected/";
-
 	
 	// Clear the results table
 	run("Clear Results");
@@ -147,8 +143,8 @@ print(inputP + input + filenameP);
 		class_name = substring(output_dir_list[z],0,lengthOf(output_dir_list[z]) -1);
 		
 		print("saving location");
-		print( prob_dirs + prob + class_name + "_Results.csv");
-		saveAs("Results", prob_dirs + prob + class_name + "_Results.csv");
+		print( output_dirs + prob + class_name + "_Results.csv");
+		saveAs("Results", output_dirs + prob + class_name + "_Results.csv");
 		run("Clear Results");
 	}
 	// prints text in the log window after all files are processed

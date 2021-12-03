@@ -3,9 +3,11 @@
 # Author: Tyler Jang, Theo Kataras
 # Date 12/1/2021
 #
-# Inputs: genotype csv file, hand count results file from count over roi, results of count over dir in each classifier folder 
-# Outputs: csv table with accuracy measurements for each classifier
-# Description: This file compares statistical information about each classifier against each other
+# Inputs: genotype csv file, hand count results file from count over roi,
+# results of count over dir in each classifier folder. 
+# Outputs: csv table with accuracy measurements for each classifier.
+# Description: This file compares statistical information about each classifier
+# against each other.
 ###
 import pandas as pd
 import numpy as np
@@ -34,7 +36,7 @@ result_out = "../training_area/Results/"
 class_list = os.listdir(output_count)
 
 # Holds all accuracy values for classifiers
-your_boat = pd.DataFrame(columns=["class", "prec", "reca", "F1", "F1_geno_ttest_pval", "mean_F1_ev0", "mean_F1_ev1", "perc_geno_ttest_pval", "recall_geno_ttest_pval"]) 
+your_boat = pd.DataFrame(columns=["class", "precision", "recall", "F1", "accuracy", "MAE", "MPE", "mean_F1_ev0", "mean_F1_ev1", "precision_geno_ttest_pval", "recall_geno_ttest_pval", "F1_geno_ttest_pval"]) 
 
 # Getting in the results of count_from_roi.ijm
 hand_ini = pd.read_csv("../training_area/Results/roi_counts.csv", usecols=['Label'])
@@ -122,11 +124,14 @@ for f in range(0, len(class_list)):
     # Accuracy = tp / (tp + fp + fn)
     accuracy = catchDivideByZero(total_tp, total_tp + total_fp + total_fn)
     # Precision = tp/(tp + fp)
-    prec = catchDivideByZero(total_tp, total_tp + total_fp)
+    precision = catchDivideByZero(total_tp, total_tp + total_fp)
     # Recall = tp/(tp + fn)
-    reca = catchDivideByZero(total_tp, total_tp + total_fn)
+    recall = catchDivideByZero(total_tp, total_tp + total_fn)
     # F1 = 2 * (percision * recall / percision + recall)
-    result = catchDivideByZero(prec*reca, prec + reca)
+    if precision != None and recall != None:
+        result = catchDivideByZero(precision*recall, precision + recall)
+    else:
+        result = None
     if result == None:
         F1 = None
     else:
@@ -139,10 +144,10 @@ for f in range(0, len(class_list)):
     mean_percent_error = (((total_tp + total_fn) - (total_tp + total_fp)) / (total_tp + total_fn)) / len(img_names)
 
     # Print resulting values to the log
-    print(curr_class + " percision = " +  str(prec))
-    print(curr_class + " recall = " +  str(reca))
-    print(curr_class + " accuracy = " +  str(accuracy))
+    print(curr_class + " percision = " +  str(precision))
+    print(curr_class + " recall = " +  str(recall))
     print(curr_class + " F1 = " +  str(F1))
+    print(curr_class + " accuracy = " +  str(accuracy))
     print(curr_class + " mean absolute error = " +  str(mean_absolute_error))
     print(curr_class + " mean percent error = " +  str(mean_percent_error))
 
@@ -159,50 +164,94 @@ for f in range(0, len(class_list)):
     final_result["geno"] = geno_list
   
     # Precision and recall per image
-    prec2 = final_result["tp"]/(final_result["tp"] + final_result["fp"])    
-    reca2 = final_result["tp"]/(final_result["tp"] + final_result["fn"])
+    precision2 = final_result["tp"]/(final_result["tp"] + final_result["fp"])    
+    recall2 = final_result["tp"]/(final_result["tp"] + final_result["fn"])
     
     # Calculate F1_2
     F1_2 = []
-    for index in range(0, len(prec2)):
-        result = catchDivideByZero(list(prec2)[index] * list(reca2)[index], list(prec2)[index] + list(reca2)[index])
+    for index in range(0, len(precision2)):
+        result = catchDivideByZero(list(precision2)[index] * list(recall2)[index], list(precision2)[index] + list(recall2)[index])
         if result == None:
             F1_2.append(None)
         else:
             F1_2.append(2 * result)
-    # Insert prec2, reca2, and F1_2 into final blah
-    final_result["prec2"] = prec2
-    final_result["reca2"] = reca2
+    # Insert precision2, recall2, and F1_2 into final csv
+    final_result["precision2"] = precision2
+    final_result["recall2"] = recall2
     final_result["F1_2"] = F1_2
     
     # Find the standard deviation of percision and recall
-    print(curr_class + " percision standard deviation = " + str(np.std(prec2)))
-    print(curr_class + " recall standard deviation = " + str(np.std(reca2)) + "\n")   
+    print(curr_class + " percision standard deviation = " + str(np.std(precision2)))
+    print(curr_class + " recall standard deviation = " + str(np.std(recall2)))   
 
-    if len(lvl_geno) != 2:
+    # If only 1 level
+    if len(lvl_geno) == 1:
+        group_one = final_result.query('geno == @lvl_geno[0]')
+        
+        # Calculate 1 Sample T Test
+        precision_mean = np.mean(group_one["precision2"])
+        recall_mean = np.mean(group_one["recall2"])
+        F1_mean = np.mean(group_one["F1_2"])
+
+        # TODO I don't know what the popmean should be equal to, what is the expected mean of our pop vs actual mean
+        precision_geno_ttest = scipy.stats.ttest_1samp(group_one["precision2"], popmean=1, nan_policy="omit")
+        recall_geno_ttest = scipy.stats.ttest_1samp(group_one["recall2"], popmean=recall_mean, nan_policy="omit")
+        F1_geno_ttest = scipy.stats.ttest_1samp(group_one["F1_2"], popmean=F1_mean, nan_policy="omit")
+        print(precision_geno_ttest)
+        print(recall_geno_ttest)
+        print(str(F1_geno_ttest) + "\n")
+
+        # Get the p values of each T test
+        precision_geno_ttest_pval = precision_geno_ttest[1]
+        recall_geno_ttest_pval = recall_geno_ttest[1]
+        F1_geno_ttest_pval = F1_geno_ttest[1]
+
+        # Get means of F1_2
+        mean_F1_ev0 = np.nanmean(group_one["F1_2"])
+  
+        # TODO adjust columns of frame
+        # Prepare output csv file
+        # TODO is putting it over 5 lines any better than it was, code looks awful either way
+        row_row = pd.DataFrame([[curr_class, precision, recall, F1, accuracy, \
+        mean_absolute_error, mean_percent_error, mean_F1_ev0, None, \
+        precision_geno_ttest_pval, recall_geno_ttest_pval, \
+        F1_geno_ttest_pval]], columns=["class", "precision", "recall", "F1",\
+        "accuracy", "MAE", "MPE", "mean_F1_ev0", "mean_F1_ev1", \
+        "precision_geno_ttest_pval", "recall_geno_ttest_pval", \
+        "F1_geno_ttest_pval"])
+        
+        your_boat = your_boat.append(row_row)
+
+    # Else, if more than two levels
+    elif len(lvl_geno) > 2:
         print("Automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
-        print("Program will default to the first two levels for analysis")
+        # Create as many groups as there are levels
+        group_n = []
+        for index in range(0, len(lvl_geno)):
+            group_n[index] = final_result.query('geno == @lvl_geno[index]')
+    # Else there are only two levels
+    else:    
+        print('\n')
+        # Calculate the Welch 2 Sample T-test   
+        group_one = final_result.query('geno == @lvl_geno[0]')
+        group_two = final_result.query('geno == @lvl_geno[1]')
 
-    # Calculate the Welch 2 Sample T-test   
-    group_one = final_result.query('geno == @lvl_geno[0]')
-    group_two = final_result.query('geno == @lvl_geno[1]')
+        precision_geno_ttest = scipy.stats.ttest_ind(group_one["precision2"], group_two["precision2"], equal_var=False, nan_policy="omit")
+        recall_geno_ttest = scipy.stats.ttest_ind(group_one["recall2"], group_two["recall2"], equal_var=False, nan_policy="omit")
+        F1_geno_ttest = scipy.stats.ttest_ind(group_one["F1_2"], group_two["F1_2"], equal_var=False, nan_policy="omit")
+        
+        # Get the p values of each T test
+        precision_geno_ttest_pval = precision_geno_ttest[1]
+        recall_geno_ttest_pval = recall_geno_ttest[1]
+        F1_geno_ttest_pval = F1_geno_ttest[1]
 
-    perc_geno_ttest = scipy.stats.ttest_ind(group_one["prec2"], group_two["prec2"], equal_var=False, nan_policy="omit")
-    reca_geno_ttest = scipy.stats.ttest_ind(group_one["reca2"], group_two["reca2"], equal_var=False, nan_policy="omit")
-    F1_geno_ttest = scipy.stats.ttest_ind(group_one["F1_2"], group_two["F1_2"], equal_var=False, nan_policy="omit")
-    
-    # Get the p values of each T test
-    perc_geno_ttest_pval = perc_geno_ttest[1]
-    recall_geno_ttest_pval = reca_geno_ttest[1]
-    F1_geno_ttest_pval = F1_geno_ttest[1]
+        # Get means of F1_2
+        mean_F1_ev0 = np.nanmean(group_one["F1_2"])
+        mean_F1_ev1 = np.nanmean(group_two["F1_2"])
 
-    # Get means of F1_2
-    mean_F1_ev0 = np.nanmean(group_one["F1_2"])
-    mean_F1_ev1 = np.nanmean(group_two["F1_2"])
-
-    # Prepare output csv file
-    row_row = pd.DataFrame([[curr_class, prec, reca, F1, F1_geno_ttest_pval, mean_F1_ev0, mean_F1_ev1, perc_geno_ttest_pval, recall_geno_ttest_pval]], columns=["class", "prec", "reca", "F1", "F1_geno_ttest_pval", "mean_F1_ev0", "mean_F1_ev1", "perc_geno_ttest_pval", "recall_geno_ttest_pval"])
-    your_boat = your_boat.append(row_row)
+        # Prepare output csv file
+        row_row = pd.DataFrame([[curr_class, precision, recall, F1, accuracy, mean_absolute_error, mean_percent_error, F1_geno_ttest_pval, mean_F1_ev0, mean_F1_ev1, precision_geno_ttest_pval, recall_geno_ttest_pval]], columns=["class", "precision", "recall", "F1", "accuracy", "MAE", "MPE", "F1_geno_ttest_pval", "mean_F1_ev0", "mean_F1_ev1", "precision_geno_ttest_pval", "recall_geno_ttest_pval"])
+        your_boat = your_boat.append(row_row)
 
 # Generating a unique result file based on time and date
 curr_time = time.localtime(time.time())
