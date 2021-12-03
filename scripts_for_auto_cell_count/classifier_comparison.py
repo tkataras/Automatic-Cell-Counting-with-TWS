@@ -164,7 +164,7 @@ for f in range(0, len(class_list)):
     for num_rows in range(0, len(final_result["name"])):
         geno_list.append(geno["geno"][num_rows])
     final_result["geno"] = geno_list
-  
+    
     # Precision and recall per image
     precision2 = final_result["tp"]/(final_result["tp"] + final_result["fp"])    
     recall2 = final_result["tp"]/(final_result["tp"] + final_result["fn"])
@@ -253,6 +253,11 @@ for f in range(0, len(class_list)):
             precision_df.loc[:,[curr_group]] = curr_precision[[curr_group]]
             recall_df.loc[:,[curr_group]] = curr_recall[[curr_group]]
             F1_df.loc[:,[curr_group]] = curr_F1[[curr_group]]
+        
+        # Remove NA rows from dataframe, the size of each condition should be equal
+        precision_df = precision_df.dropna()
+        recall_df = recall_df.dropna()
+        F1_df = F1_df.dropna()
 
         # Calculate ANOVA
         precision_f_val, precision_p_val = scipy.stats.f_oneway(*precision_df.iloc[:,0:len(lvl_geno)].T.values)
@@ -266,6 +271,7 @@ for f in range(0, len(class_list)):
         print(curr_class + " ANOVA Recall P-Value over " + str(len(lvl_geno)) + " conditions = " + str(recall_p_val))
         print(curr_class + " ANOVA F1 F-Value over " + str(len(lvl_geno)) + " conditions = " + str(F1_f_val))
         print(curr_class + " ANOVA F1 P-Value over " + str(len(lvl_geno)) + " conditions = " + str(F1_p_val) + "\n")
+  
     # Else there are only two levels
     else:    
         print()
