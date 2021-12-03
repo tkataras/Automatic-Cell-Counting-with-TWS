@@ -173,7 +173,7 @@ for f in range(0, len(class_list)):
             F1_2.append(None)
         else:
             F1_2.append(2 * result)
-    # Insert prec2, reca2, and F1_2 into final blah
+    # Insert prec2, reca2, and F1_2 into final csv
     final_result["prec2"] = prec2
     final_result["reca2"] = reca2
     final_result["F1_2"] = F1_2
@@ -182,30 +182,56 @@ for f in range(0, len(class_list)):
     print(curr_class + " percision standard deviation = " + str(np.std(prec2)))
     print(curr_class + " recall standard deviation = " + str(np.std(reca2)) + "\n")   
 
-    if len(lvl_geno) != 2:
+    # If only 1 level
+    if len(lvl_geno) == 1:
+        print("Automatic analysis with 1 level")
+        group_one = final_result.query('geno == @lvl_geno[0]')
+
+        perc_geno_ttest = scipy.stats.ttest_1samp(group_one["prec2"], nan_policy="omit")
+        reca_geno_ttest = scipy.stats.ttest_1samp(group_one["reca2"], nan_policy="omit")
+        F1_geno_ttest = scipy.stats.ttest_1samp(group_one["F1_2"], nan_policy="omit")
+        
+        # Get the p values of each T test
+        perc_geno_ttest_pval = perc_geno_ttest[1]
+        recall_geno_ttest_pval = reca_geno_ttest[1]
+        F1_geno_ttest_pval = F1_geno_ttest[1]
+
+        # Get means of F1_2
+        mean_F1_ev0 = np.nanmean(group_one["F1_2"])
+  
+        # TODO adjust columns of frame
+        # Prepare output csv file
+        row_row = pd.DataFrame([[curr_class, prec, reca, F1, F1_geno_ttest_pval, mean_F1_ev0, mean_F1_ev1, perc_geno_ttest_pval, recall_geno_ttest_pval]], columns=["class", "prec", "reca", "F1", "F1_geno_ttest_pval", "mean_F1_ev0", "mean_F1_ev1", "perc_geno_ttest_pval", "recall_geno_ttest_pval"])
+        your_boat = your_boat.append(row_row)
+
+    # If more than two levels
+    elif len(lvl_geno) > 2:
         print("Automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
-        print("Program will default to the first two levels for analysis")
+        # Create as many groups as there are levels
+        group_n = []
+        for index in range(0, len(lvl_geno)):
+            group_n[index] = final_result.query('geno == @lvl_geno[index]')
+    else:    
+        # Calculate the Welch 2 Sample T-test   
+        group_one = final_result.query('geno == @lvl_geno[0]')
+        group_two = final_result.query('geno == @lvl_geno[1]')
 
-    # Calculate the Welch 2 Sample T-test   
-    group_one = final_result.query('geno == @lvl_geno[0]')
-    group_two = final_result.query('geno == @lvl_geno[1]')
+        perc_geno_ttest = scipy.stats.ttest_ind(group_one["prec2"], group_two["prec2"], equal_var=False, nan_policy="omit")
+        reca_geno_ttest = scipy.stats.ttest_ind(group_one["reca2"], group_two["reca2"], equal_var=False, nan_policy="omit")
+        F1_geno_ttest = scipy.stats.ttest_ind(group_one["F1_2"], group_two["F1_2"], equal_var=False, nan_policy="omit")
+        
+        # Get the p values of each T test
+        perc_geno_ttest_pval = perc_geno_ttest[1]
+        recall_geno_ttest_pval = reca_geno_ttest[1]
+        F1_geno_ttest_pval = F1_geno_ttest[1]
 
-    perc_geno_ttest = scipy.stats.ttest_ind(group_one["prec2"], group_two["prec2"], equal_var=False, nan_policy="omit")
-    reca_geno_ttest = scipy.stats.ttest_ind(group_one["reca2"], group_two["reca2"], equal_var=False, nan_policy="omit")
-    F1_geno_ttest = scipy.stats.ttest_ind(group_one["F1_2"], group_two["F1_2"], equal_var=False, nan_policy="omit")
-    
-    # Get the p values of each T test
-    perc_geno_ttest_pval = perc_geno_ttest[1]
-    recall_geno_ttest_pval = reca_geno_ttest[1]
-    F1_geno_ttest_pval = F1_geno_ttest[1]
+        # Get means of F1_2
+        mean_F1_ev0 = np.nanmean(group_one["F1_2"])
+        mean_F1_ev1 = np.nanmean(group_two["F1_2"])
 
-    # Get means of F1_2
-    mean_F1_ev0 = np.nanmean(group_one["F1_2"])
-    mean_F1_ev1 = np.nanmean(group_two["F1_2"])
-
-    # Prepare output csv file
-    row_row = pd.DataFrame([[curr_class, prec, reca, F1, F1_geno_ttest_pval, mean_F1_ev0, mean_F1_ev1, perc_geno_ttest_pval, recall_geno_ttest_pval]], columns=["class", "prec", "reca", "F1", "F1_geno_ttest_pval", "mean_F1_ev0", "mean_F1_ev1", "perc_geno_ttest_pval", "recall_geno_ttest_pval"])
-    your_boat = your_boat.append(row_row)
+        # Prepare output csv file
+        row_row = pd.DataFrame([[curr_class, prec, reca, F1, F1_geno_ttest_pval, mean_F1_ev0, mean_F1_ev1, perc_geno_ttest_pval, recall_geno_ttest_pval]], columns=["class", "prec", "reca", "F1", "F1_geno_ttest_pval", "mean_F1_ev0", "mean_F1_ev1", "perc_geno_ttest_pval", "recall_geno_ttest_pval"])
+        your_boat = your_boat.append(row_row)
 
 # Generating a unique result file based on time and date
 curr_time = time.localtime(time.time())
