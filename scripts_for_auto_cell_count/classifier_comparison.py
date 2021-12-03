@@ -182,20 +182,28 @@ for f in range(0, len(class_list)):
     
     # Find the standard deviation of percision and recall
     print(curr_class + " percision standard deviation = " + str(np.std(precision2)))
-    print(curr_class + " recall standard deviation = " + str(np.std(recall2)) + "\n")   
+    print(curr_class + " recall standard deviation = " + str(np.std(recall2)))   
 
     # If only 1 level
     if len(lvl_geno) == 1:
-        print("Automatic analysis with 1 level")
         group_one = final_result.query('geno == @lvl_geno[0]')
-
-        perc_geno_ttest = scipy.stats.ttest_1samp(group_one["precision2"], nan_policy="omit")
-        reca_geno_ttest = scipy.stats.ttest_1samp(group_one["recall2"], nan_policy="omit")
-        F1_geno_ttest = scipy.stats.ttest_1samp(group_one["F1_2"], nan_policy="omit")
         
+        # Calculate 1 Sample T Test
+        precision_mean = np.mean(group_one["precision2"])
+        recall_mean = np.mean(group_one["recall2"])
+        F1_mean = np.mean(group_one["F1_2"])
+
+        # TODO I don't know what the popmean should be equal to, what is the expected mean of our pop vs actual mean
+        precision_geno_ttest = scipy.stats.ttest_1samp(group_one["precision2"], popmean=1, nan_policy="omit")
+        recall_geno_ttest = scipy.stats.ttest_1samp(group_one["recall2"], popmean=recall_mean, nan_policy="omit")
+        F1_geno_ttest = scipy.stats.ttest_1samp(group_one["F1_2"], popmean=F1_mean, nan_policy="omit")
+        print(precision_geno_ttest)
+        print(recall_geno_ttest)
+        print(str(F1_geno_ttest) + "\n")
+
         # Get the p values of each T test
-        precision_geno_ttest_pval = perc_geno_ttest[1]
-        recall_geno_ttest_pval = reca_geno_ttest[1]
+        precision_geno_ttest_pval = precision_geno_ttest[1]
+        recall_geno_ttest_pval = recall_geno_ttest[1]
         F1_geno_ttest_pval = F1_geno_ttest[1]
 
         # Get means of F1_2
@@ -205,11 +213,12 @@ for f in range(0, len(class_list)):
         # Prepare output csv file
         # TODO is putting it over 5 lines any better than it was, code looks awful either way
         row_row = pd.DataFrame([[curr_class, precision, recall, F1, accuracy, \
-        mean_absolute_error, mean_percent_error, F1_geno_ttest_pval, \
-        mean_F1_ev0, mean_F1_ev1, precision_geno_ttest_pval, \
-        recall_geno_ttest_pval]], columns=["class", "precision", "recall", "F1",\
+        mean_absolute_error, mean_percent_error, mean_F1_ev0, None, \
+        precision_geno_ttest_pval, recall_geno_ttest_pval, \
+        F1_geno_ttest_pval]], columns=["class", "precision", "recall", "F1",\
         "accuracy", "MAE", "MPE", "mean_F1_ev0", "mean_F1_ev1", \
-        "precision_geno_ttest_pval", "recall_geno_ttest_pval", "F1_geno_ttest_pval"])
+        "precision_geno_ttest_pval", "recall_geno_ttest_pval", \
+        "F1_geno_ttest_pval"])
         
         your_boat = your_boat.append(row_row)
 
@@ -222,17 +231,18 @@ for f in range(0, len(class_list)):
             group_n[index] = final_result.query('geno == @lvl_geno[index]')
     # Else there are only two levels
     else:    
+        print('\n')
         # Calculate the Welch 2 Sample T-test   
         group_one = final_result.query('geno == @lvl_geno[0]')
         group_two = final_result.query('geno == @lvl_geno[1]')
 
-        perc_geno_ttest = scipy.stats.ttest_ind(group_one["precision2"], group_two["precision2"], equal_var=False, nan_policy="omit")
-        reca_geno_ttest = scipy.stats.ttest_ind(group_one["recall2"], group_two["recall2"], equal_var=False, nan_policy="omit")
+        precision_geno_ttest = scipy.stats.ttest_ind(group_one["precision2"], group_two["precision2"], equal_var=False, nan_policy="omit")
+        recall_geno_ttest = scipy.stats.ttest_ind(group_one["recall2"], group_two["recall2"], equal_var=False, nan_policy="omit")
         F1_geno_ttest = scipy.stats.ttest_ind(group_one["F1_2"], group_two["F1_2"], equal_var=False, nan_policy="omit")
         
         # Get the p values of each T test
-        precision_geno_ttest_pval = perc_geno_ttest[1]
-        recall_geno_ttest_pval = reca_geno_ttest[1]
+        precision_geno_ttest_pval = precision_geno_ttest[1]
+        recall_geno_ttest_pval = recall_geno_ttest[1]
         F1_geno_ttest_pval = F1_geno_ttest[1]
 
         # Get means of F1_2
