@@ -112,7 +112,7 @@ __2.1__ Once again, the program must know where it is downloaded. Select the dir
 
 <img src = "figures/selectSource.PNG">
 
-__2.2__ Now, select the most accurate classifier (or any classifier of your choosing). Selecting the most accurate classifier is left to the user, but information is supplied in the form of accuracy values in Precision, Recall and F1 score, as well as statistical outputs of mean accuracy comparison between two separate experimental conditions entered in the genotypes.csv file. With base functionality, the pipeline is set up to process a dataset with two experimental groups.
+__2.2__ Now, select the most accurate classifier (or any classifier of your choosing). Selecting the most accurate classifier is left to the user, but information is supplied in the form of accuracy values in Precision, Recall and F1 score, as well as statistical outputs of mean accuracy comparison between two separate experimental conditions entered in the genotypes.csv file. With base functionality, the pipeline is set up to process a dataset with one or two experimental groups.
 
 <img src = "figures/selectClassifier.PNG">
 
