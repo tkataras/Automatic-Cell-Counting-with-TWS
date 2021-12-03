@@ -3,9 +3,11 @@
 # Author: Tyler Jang, Theo Kataras
 # Date 12/1/2021
 #
-# Inputs: genotype csv file, hand count results file from count over roi, results of count over dir in each classifier folder 
-# Outputs: csv table with accuracy measurements for each classifier
-# Description: This file compares statistical information about each classifier against each other
+# Inputs: genotype csv file, hand count results file from count over roi,
+# results of count over dir in each classifier folder. 
+# Outputs: csv table with accuracy measurements for each classifier.
+# Description: This file compares statistical information about each classifier
+# against each other.
 ###
 import pandas as pd
 import numpy as np
@@ -34,7 +36,7 @@ result_out = "../training_area/Results/"
 class_list = os.listdir(output_count)
 
 # Holds all accuracy values for classifiers
-your_boat = pd.DataFrame(columns=["class", "prec", "reca", "F1", "F1_geno_ttest_pval", "mean_F1_ev0", "mean_F1_ev1", "perc_geno_ttest_pval", "recall_geno_ttest_pval"]) 
+your_boat = pd.DataFrame(columns=["class", "prec", "reca", "F1", "accuracy", "MAE", "MPE", "mean_F1_ev0", "mean_F1_ev1", "perc_geno_ttest_pval", "recall_geno_ttest_pval", "F1_geno_ttest_pval"]) 
 
 # Getting in the results of count_from_roi.ijm
 hand_ini = pd.read_csv("../training_area/Results/roi_counts.csv", usecols=['Label'])
@@ -144,8 +146,8 @@ for f in range(0, len(class_list)):
     # Print resulting values to the log
     print(curr_class + " percision = " +  str(prec))
     print(curr_class + " recall = " +  str(reca))
-    print(curr_class + " accuracy = " +  str(accuracy))
     print(curr_class + " F1 = " +  str(F1))
+    print(curr_class + " accuracy = " +  str(accuracy))
     print(curr_class + " mean absolute error = " +  str(mean_absolute_error))
     print(curr_class + " mean percent error = " +  str(mean_percent_error))
 
@@ -201,7 +203,14 @@ for f in range(0, len(class_list)):
   
         # TODO adjust columns of frame
         # Prepare output csv file
-        row_row = pd.DataFrame([[curr_class, prec, reca, F1, F1_geno_ttest_pval, mean_F1_ev0, mean_F1_ev1, perc_geno_ttest_pval, recall_geno_ttest_pval]], columns=["class", "prec", "reca", "F1", "F1_geno_ttest_pval", "mean_F1_ev0", "mean_F1_ev1", "perc_geno_ttest_pval", "recall_geno_ttest_pval"])
+        # TODO is putting it over 5 lines any better than it was, code looks awful either way
+        row_row = pd.DataFrame([[curr_class, prec, reca, F1, accuracy, \
+        mean_absolute_error, mean_percent_error, F1_geno_ttest_pval, \
+        mean_F1_ev0, mean_F1_ev1, perc_geno_ttest_pval, \
+        recall_geno_ttest_pval]], columns=["class", "prec", "reca", "F1",\
+        "accuracy", "MAE", "MPE", "F1_geno_ttest_pval", "mean_F1_ev0", \
+        "mean_F1_ev1", "perc_geno_ttest_pval", "recall_geno_ttest_pval"])
+        
         your_boat = your_boat.append(row_row)
 
     # Else, if more than two levels
@@ -231,7 +240,7 @@ for f in range(0, len(class_list)):
         mean_F1_ev1 = np.nanmean(group_two["F1_2"])
 
         # Prepare output csv file
-        row_row = pd.DataFrame([[curr_class, prec, reca, F1, F1_geno_ttest_pval, mean_F1_ev0, mean_F1_ev1, perc_geno_ttest_pval, recall_geno_ttest_pval]], columns=["class", "prec", "reca", "F1", "F1_geno_ttest_pval", "mean_F1_ev0", "mean_F1_ev1", "perc_geno_ttest_pval", "recall_geno_ttest_pval"])
+        row_row = pd.DataFrame([[curr_class, prec, reca, F1, accuracy, mean_absolute_error, mean_percent_error, F1_geno_ttest_pval, mean_F1_ev0, mean_F1_ev1, perc_geno_ttest_pval, recall_geno_ttest_pval]], columns=["class", "prec", "reca", "F1", "accuracy", "MAE", "MPE", "F1_geno_ttest_pval", "mean_F1_ev0", "mean_F1_ev1", "perc_geno_ttest_pval", "recall_geno_ttest_pval"])
         your_boat = your_boat.append(row_row)
 
 # Generating a unique result file based on time and date
