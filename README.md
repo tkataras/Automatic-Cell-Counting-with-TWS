@@ -41,9 +41,7 @@ pip3 install imageio
 # Prerequisites:
 -Current version of FIJI distribution of Imagej https://imagej.net/software/fiji/
 
--R version https://www.r-project.org/
-
--Need beanshell installation through terminal TODO is this even needed?
+-Python https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe
  
 # How To Use
 
