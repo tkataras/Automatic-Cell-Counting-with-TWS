@@ -1,6 +1,5 @@
 # ACCT: Automatic-Cell-counting-with-TWS
-A repository for the suit of scripts I use to perform automatic cell quantification.
-
+A user friendly program for automated object counting using Trainable WEKA Segmentation.
 
 ## Table of Contents
 1. [Installation Guide](#installation-guide)
