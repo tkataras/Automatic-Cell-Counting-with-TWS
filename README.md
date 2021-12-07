@@ -10,19 +10,20 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 6. [Critical Notes](#critical-notes)
 # Installation Guide
 
-First you will have to aquire this directory, can be done through a terminal such as Git, or Microsoft Powershell with the following line of code.
+First you will have to acquire this directory, can be done through a terminal such as Git, Ubuntu, or Microsoft Powershell with the following line of code.
 ```
 git clone https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
 ```
-Next you will have to manually copy and paste certain files into the plugins folder of your Fiji instalation of Imagej. 
+Next, ensure you have downloaded the software located in the __Prerequisites__ section.
 
-
+Finally, you will have to manually copy and paste certain files into the plugins folder of your Fiji instalation of Imagej. 
 
 Find where you downloaded Fiji in your file directory. Next, navigate to scripts for auto cell count then copy and paste the following files into your Fiji.app/plugins directory. This is so you can run the program from ImageJ using the GUI.
 ```
 BS_TWS_apply.bsh
 apply_TWS_one_classifier.bsh
 ```
+
 # Software Dependencies
 
 __Windows:__ In order to install the neccessary Python packages, the Python Scripts folder must be added to the terminal's knowelege of working areas designated by the PATH file. The easiest way to do this is to locate the Python install directory through the Windows search and copy the adress of the scripts folder. Then access Edit system environment variables, select Environment variables, select Path, Edit and new. Then paste the copied python scrips location into the new path line. Now open Windows Powershell from the search menu and the packages can be installed by copying the install scripts line by line and right clicking on the working line of the termnial to paste.
