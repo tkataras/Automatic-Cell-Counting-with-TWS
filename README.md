@@ -25,8 +25,9 @@ apply_TWS_one_classifier.bsh
 ```
 # Software Dependencies
 
-In order to install the neccessary Python packages, the Python Scripts folder must be added to the terminal's knowelege of working areas designated by the PATH file. The easiest way to do this is to locate the Python install directory through the Windows search and copy the adress of the scripts folder. Then access Edit system environment variables, select Environment variables, select Path, Edit and new. Then paste the copied python scrips location into the new path line. Now open Windows Powershell from the search menu and the packages can be installed by copying the install scripts line by line and right clicking on the working line of the termnial to paste.
+__Windows:__ In order to install the neccessary Python packages, the Python Scripts folder must be added to the terminal's knowelege of working areas designated by the PATH file. The easiest way to do this is to locate the Python install directory through the Windows search and copy the adress of the scripts folder. Then access Edit system environment variables, select Environment variables, select Path, Edit and new. Then paste the copied python scrips location into the new path line. Now open Windows Powershell from the search menu and the packages can be installed by copying the install scripts line by line and right clicking on the working line of the termnial to paste.
 
+__Linux/Mac:__ Open your terminal and copy paste the following into the command line.
 ```
 sudo apt-get update
 sudo apt-get install python3-pip
