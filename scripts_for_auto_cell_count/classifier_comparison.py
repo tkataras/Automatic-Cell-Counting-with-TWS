@@ -38,7 +38,7 @@ result_out = "../training_area/Results/"
 class_list = os.listdir(output_count)
 
 # Holds all accuracy values for classifiers
-your_boat = pd.DataFrame(columns=["class", "precision", "recall", "F1", "accuracy", "MAE", "MPE", "mean_F1_ev0", "mean_F1_ev1", "precision_geno_ttest_pval", "recall_geno_ttest_pval", "F1_geno_ttest_pval"]) 
+your_boat = pd.DataFrame(columns=["class", "precision", "recall", "F1", "accuracy", "MAE", "MPE"]) 
 
 # Getting in the results of count_from_roi.ijm
 hand_ini = pd.read_csv("../training_area/Results/roi_counts.csv", usecols=['Label'])
@@ -203,6 +203,8 @@ for f in range(0, len(class_list)):
         print(recall_geno_ttest)
         print(str(F1_geno_ttest) + "\n")
 
+        # TODO also write the F values out to log
+        
         # Get the p values of each T test
         precision_geno_ttest_pval = precision_geno_ttest[1]
         recall_geno_ttest_pval = recall_geno_ttest[1]
@@ -215,10 +217,10 @@ for f in range(0, len(class_list)):
         # Prepare output csv file
         # TODO is putting it over 5 lines any better than it was, code looks awful either way
         row_row = pd.DataFrame([[curr_class, precision, recall, F1, accuracy, \
-        mean_absolute_error, mean_percent_error, mean_F1_ev0, None, \
+        mean_absolute_error, mean_percent_error, mean_F1_ev0, \
         precision_geno_ttest_pval, recall_geno_ttest_pval, \
         F1_geno_ttest_pval]], columns=["class", "precision", "recall", "F1",\
-        "accuracy", "MAE", "MPE", "mean_F1_ev0", "mean_F1_ev1", \
+        "accuracy", "MAE", "MPE", "mean_F1_ev0", \
         "precision_geno_ttest_pval", "recall_geno_ttest_pval", \
         "F1_geno_ttest_pval"])
         
@@ -272,6 +274,10 @@ for f in range(0, len(class_list)):
         print(curr_class + " ANOVA F1 F-Value over " + str(len(lvl_geno)) + " conditions = " + str(F1_f_val))
         print(curr_class + " ANOVA F1 P-Value over " + str(len(lvl_geno)) + " conditions = " + str(F1_p_val) + "\n")
   
+        # Store results in output csv file
+        row_row = pd.DataFrame([[curr_class, precision, recall, F1, accuracy, mean_absolute_error, mean_percent_error, precision_f_val, precision_p_val, recall_f_val, recall_p_val, F1_f_val, F1_p_val]], columns=["class", "precision", "recall", "F1", "accuracy", "MAE", "MPE", "precision_F_value", "precision_P_value", "recall_F_value", "recall_P_value", "F1_F_value", "F1_P_value"])
+        your_boat = your_boat.append(row_row)
+
     # Else there are only two levels
     else:    
         print()

@@ -52,7 +52,21 @@ output_thresh = source + "Weka_Output_Thresholded/"
 output_project = source + "Weka_Output_Projected/"
 output_count = source + "Weka_Output_Counted/"
 
-# Create classifier folders in each prescribed location if it doesn't already exist
+# Create folders in described paths
+if not os.path.isdir(output):
+    os.mkdir(output)
+if not os.path.isdir(output_prob):
+    os.mkdir(output_prob)    
+if not os.path.isdir(output_prob2):
+    os.mkdir(output_prob2)    
+if not os.path.isdir(output_thresh):
+    os.mkdir(output_thresh)
+if not os.path.isdir(output_project):
+    os.mkdir(output_project)
+if not os.path.isdir(output_count):
+    os.mkdir(output_count)
+
+# Create classifier folders in each prescribed location if it doesn't exist
 for class_ID in class_list:
     if not os.path.isdir(output + class_ID):
         os.mkdir(output + class_ID)

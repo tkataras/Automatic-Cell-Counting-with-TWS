@@ -55,40 +55,71 @@ geno = pd.read_csv(geno_file)
 
 # Get the unique genotype labels
 lvl_geno = np.unique(geno["geno"])
-if len(lvl_geno) != 2:
+
+# Only 1 level
+if len(lvl_geno) == 1:
+    print("1 level")
+    geno_list = []
+    for numRows in range(0, len(img_counts["Label"])):
+        geno_list.append(geno["geno"][numRows])
+
+    img_counts["geno"] = geno_list
+
+    # Save current img counts to the counted classifier folder as csv file
+    img_counts.to_csv(output_count + selectedClassifier + "/" + selectedClassifier + "_final.csv")
+
+    # Calculate the 1 Sample T-test   
+    group_one = img_counts.query('geno == @lvl_geno[0]')
+    t_test_calc = scipy.stats.ttest_1samp(group_one["Counts"],  popmean=1, nan_policy="omit")
+ 
+    # Calculate the mean counts
+    print(str(lvl_geno[0]) + " Mean Counts: " + str(np.mean(group_one["Counts"])))
+ 
+    # Calculate the Standard Deviation 
+    print(str(lvl_geno[0]) + " Standard Deviation: " + str(np.std(group_one["Counts"])))
+
+    # Calculate the Confidence Interval
+    print(str(lvl_geno[0]) + " 95% Confidence Interval: ")
+    print(scipy.stats.norm.interval(alpha=0.95, loc=np.mean(group_one["Counts"])))
+
+
+
+
+
+# 2+ levels
+elif len(lvl_geno) > 2:
     print("Automatic analysis can only be done with 2 levels, for alterative analysis results file in classifier folder")
+else:
+    geno_list = []
+    for numRows in range(0, len(img_counts["Label"])):
+        geno_list.append(geno["geno"][numRows])
 
-geno_list = []
-for numRows in range(0, len(img_counts["Label"])):
-    geno_list.append(geno["geno"][numRows])
+    img_counts["geno"] = geno_list
 
-img_counts["geno"] = geno_list
+    # Save current img counts to the counted classifier folder as csv file
+    img_counts.to_csv(output_count + selectedClassifier + "/" + selectedClassifier + "_final.csv")
 
-# Save current img counts to the counted classifier folder as csv file
-img_counts.to_csv(output_count + selectedClassifier + "/" + selectedClassifier + "_final.csv")
+    # Calculate the Welch 2 Sample T-test   
+    group_one = img_counts.query('geno == @lvl_geno[0]')
+    group_two = img_counts.query('geno == @lvl_geno[1]')
+    t_test_calc = scipy.stats.ttest_ind(group_one["Counts"], group_two["Counts"], equal_var=False, nan_policy="omit")
 
-# Calculate the Welch 2 Sample T-test   
-# TODO won't this crash on only 1 level?
-group_one = img_counts.query('geno == @lvl_geno[0]')
-group_two = img_counts.query('geno == @lvl_geno[1]')
-t_test_calc = scipy.stats.ttest_ind(group_one["Counts"], group_two["Counts"], equal_var=False, nan_policy="omit")
+    # Calculate the mean counts
+    print(str(lvl_geno[0]) + " Mean Counts: " + str(np.mean(group_one["Counts"])))
+    print(str(lvl_geno[1]) + " Mean Counts: " + str(np.mean(group_two["Counts"])))
 
-# Calculate the mean counts
-print(str(lvl_geno[0]) + " Mean Counts: " + str(np.mean(group_one["Counts"])))
-print(str(lvl_geno[1]) + " Mean Counts: " + str(np.mean(group_two["Counts"])))
+    # Calculate the Standard Deviation 
+    print(str(lvl_geno[0]) + " Standard Deviation: " + str(np.std(group_one["Counts"])))
+    print(str(lvl_geno[1]) + " Standard Deviation: " + str(np.std(group_two["Counts"])))
 
-# Calculate the Standard Deviation 
-print(str(lvl_geno[0]) + " Standard Deviation: " + str(np.std(group_one["Counts"])))
-print(str(lvl_geno[1]) + " Standard Deviation: " + str(np.std(group_two["Counts"])))
+    # Calculate the Confidence Interval
+    print(str(lvl_geno[0]) + " 95% Confidence Interval: ")
+    print(scipy.stats.norm.interval(alpha=0.95, loc=np.mean(group_one["Counts"])))
+    print(str(lvl_geno[1]) + " 95% Confidence Interval: ")
+    print(scipy.stats.norm.interval(alpha=0.95, loc=np.mean(group_two["Counts"])))
 
-# Calculate the Confidence Interval
-print(str(lvl_geno[0]) + " 95% Confidence Interval: ")
-print(scipy.stats.norm.interval(alpha=0.95, loc=np.mean(group_one["Counts"])))
-print(str(lvl_geno[1]) + " 95% Confidence Interval: ")
-print(scipy.stats.norm.interval(alpha=0.95, loc=np.mean(group_two["Counts"])))
-
-# Write the T Test results
-print("T-test statistic: " + str(t_test_calc[0]))
-print("P-Value: " + str(t_test_calc[1]))
+    # Write the T Test results
+    print("T-test statistic: " + str(t_test_calc[0]))
+    print("P-Value: " + str(t_test_calc[1]))
 
 print("\nFinished finalClassifierCheck.py")
