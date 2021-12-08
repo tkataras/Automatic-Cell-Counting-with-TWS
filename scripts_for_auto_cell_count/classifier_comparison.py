@@ -203,6 +203,8 @@ for f in range(0, len(class_list)):
         print(recall_geno_ttest)
         print(str(F1_geno_ttest) + "\n")
 
+        # TODO also write the F values out to log
+        
         # Get the p values of each T test
         precision_geno_ttest_pval = precision_geno_ttest[1]
         recall_geno_ttest_pval = recall_geno_ttest[1]
