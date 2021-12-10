@@ -232,9 +232,9 @@ for f in range(0, len(class_list)):
         print("Automatic analysis with more than 2 levels")
         # Create as many groups as there are levels
         group_n = []
-        precision_df = pd.DataFrame(index=range(len(lvl_geno)), columns=lvl_geno)
-        recall_df = pd.DataFrame(index=range(len(lvl_geno)), columns=lvl_geno)
-        F1_df = pd.DataFrame(index=range(len(lvl_geno)), columns=lvl_geno)
+        precision_df = pd.DataFrame(index=range(len(geno_list)), columns=lvl_geno)
+        recall_df = pd.DataFrame(index=range(len(geno_list)), columns=lvl_geno)
+        F1_df = pd.DataFrame(index=range(len(geno_list)), columns=lvl_geno)
 
         # Set up ANOVA calculation
         for index in range(0, len(lvl_geno)):
