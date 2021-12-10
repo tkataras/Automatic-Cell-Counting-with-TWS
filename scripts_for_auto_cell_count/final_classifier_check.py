@@ -58,7 +58,7 @@ lvl_geno = np.unique(geno["geno"])
 
 # Only 1 level
 if len(lvl_geno) == 1:
-    print("1 level")
+    print("Analysis with 1 level")
     geno_list = []
     for numRows in range(0, len(img_counts["Label"])):
         geno_list.append(geno["geno"][numRows])
@@ -82,13 +82,52 @@ if len(lvl_geno) == 1:
     print(str(lvl_geno[0]) + " 95% Confidence Interval: ")
     print(scipy.stats.norm.interval(alpha=0.95, loc=np.mean(group_one["Counts"])))
 
-
-
-
-
+    # Write the T Test results
+    print("T-test statistic: " + str(t_test_calc[0]))
+    print("P-Value: " + str(t_test_calc[1]))
 # 2+ levels
 elif len(lvl_geno) > 2:
-    print("Automatic analysis can only be done with 2 levels, for alterative analysis results file in classifier folder")
+    geno_list = []
+    for numRows in range(0, len(img_counts["Label"])):
+        geno_list.append(geno["geno"][numRows])
+
+    img_counts["geno"] = geno_list
+
+    # Save current img counts to the counted classifier folder as csv file
+    img_counts.to_csv(output_count + selectedClassifier + "/" + selectedClassifier + "_final.csv")
+    # Create as many groups as there are levels
+    group_n = []
+    counts_df = pd.DataFrame(index=range(len(geno_list)), columns=lvl_geno)
+    # Set up ANOVA calculation
+    for index in range(0, len(lvl_geno)):
+        # Get the current condition
+        curr_group = lvl_geno[index]
+        group_n.append(img_counts.query('geno == @curr_group'))
+        
+        # Set up values of current condition as a dataframe
+        curr_counts = list(group_n[index]["Counts"])
+        curr_counts = pd.DataFrame(curr_counts, columns=[curr_group])
+
+        # Append current condition values to ANOVA dataframe
+        counts_df.loc[:,[curr_group]] = curr_counts[[curr_group]]
+        
+    # Remove NA rows from dataframe, the size of each condition should be equal
+    counts_df = counts_df.dropna()
+            
+    # Calculate ANOVA
+    counts_f_val, counts_p_val = scipy.stats.f_oneway(*counts_df.iloc[:,0:len(lvl_geno)].T.values)
+
+    # Print mean counted, standard deviation, and confidence interval
+    for group in lvl_geno:
+        print(str(group) + " Mean Counts: " + str(np.mean(counts_df[str(group)])))
+        print(str(group) + " Standard Deviation: " + str(np.std(counts_df[str(group)])))
+        print(str(group) + " 95% Confidence Interval: ")
+        print(scipy.stats.norm.interval(alpha=0.95, loc=np.mean(counts_df[str(group)])))
+
+    # Write out ANOVA results
+    print(selectedClassifier + " ANOVA Object Count F-Value over " + str(len(lvl_geno)) + " conditions = " + str(counts_f_val))
+    print(selectedClassifier + " ANOVA Object Count P-Value over " + str(len(lvl_geno)) + " conditions = " + str(counts_p_val))
+# Else, only two levels
 else:
     geno_list = []
     for numRows in range(0, len(img_counts["Label"])):
