@@ -36,10 +36,10 @@ if len(lvl_geno) != 2:
     print("automatic analysis can only be done with 2 levels, for alterative analysis use _Final.csv files in classifier folders")
 
 # Read in file names from the counted/projected experimental dataset
-folder_loc = "../training_area/testing_area/Weka_Output_Counted/" +  selected_classifier
+folder_loc = "../training_area/testing_area/Weka_Output_Counted/" + selected_classifier
 files = []
 for image in os.listdir(folder_loc):
-    if image[-4:] == ".png" or image[-4:] == ".jpg":
+    if image[-4:] == ".png" or image[-4:] == ".jpg" or image[-5:] == ".tiff":
             files.append(image)
 
 # Determine number of draws by number of files in validation hand count folder

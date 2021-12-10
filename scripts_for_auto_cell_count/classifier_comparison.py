@@ -195,6 +195,7 @@ for f in range(0, len(class_list)):
         recall_mean = np.mean(group_one["recall2"])
         F1_mean = np.mean(group_one["F1_2"])
 
+        # TODO remove the 1 sample T test since it only matters when user expects an expected mean
         # TODO I don't know what the popmean should be equal to, what is the expected mean of our pop vs actual mean
         precision_geno_ttest = scipy.stats.ttest_1samp(group_one["precision2"], popmean=1, nan_policy="omit")
         recall_geno_ttest = scipy.stats.ttest_1samp(group_one["recall2"], popmean=recall_mean, nan_policy="omit")

@@ -58,7 +58,7 @@ lvl_geno = np.unique(geno["geno"])
 
 # Only 1 level
 if len(lvl_geno) == 1:
-    print("1 level")
+    print("Analysis with 1 level")
     geno_list = []
     for numRows in range(0, len(img_counts["Label"])):
         geno_list.append(geno["geno"][numRows])
@@ -82,13 +82,65 @@ if len(lvl_geno) == 1:
     print(str(lvl_geno[0]) + " 95% Confidence Interval: ")
     print(scipy.stats.norm.interval(alpha=0.95, loc=np.mean(group_one["Counts"])))
 
-
-
-
-
+    # Write the T Test results
+    print("T-test statistic: " + str(t_test_calc[0]))
+    print("P-Value: " + str(t_test_calc[1]))
 # 2+ levels
 elif len(lvl_geno) > 2:
-    print("Automatic analysis can only be done with 2 levels, for alterative analysis results file in classifier folder")
+    geno_list = []
+    for numRows in range(0, len(img_counts["Label"])):
+        geno_list.append(geno["geno"][numRows])
+
+    img_counts["geno"] = geno_list
+
+    # Save current img counts to the counted classifier folder as csv file
+    img_counts.to_csv(output_count + selectedClassifier + "/" + selectedClassifier + "_final.csv")
+    # Create as many groups as there are levels
+    group_n = []
+    precision_df = pd.DataFrame(index=range(len(lvl_geno)), columns=lvl_geno)
+    recall_df = pd.DataFrame(index=range(len(lvl_geno)), columns=lvl_geno)
+    F1_df = pd.DataFrame(index=range(len(lvl_geno)), columns=lvl_geno)
+
+    # Set up ANOVA calculation
+    for index in range(0, len(lvl_geno)):
+        # Get the current condition
+        curr_group = lvl_geno[index]
+        group_n.append(img_counts.query('geno == @curr_group'))
+
+        # Set up values of current condition as a dataframe
+        curr_precision = list(group_n[index]["precision2"])
+        curr_precision = pd.DataFrame(curr_precision, columns=[curr_group])
+
+        curr_recall = list(group_n[index]["recall2"])
+        curr_recall = pd.DataFrame(curr_recall, columns=[curr_group])
+
+        curr_F1 = list(group_n[index]["F1_2"])
+        curr_F1 = pd.DataFrame(curr_F1, columns=[curr_group])
+
+        # Append current condition values to ANOVA dataframe
+        precision_df.loc[:,[curr_group]] = curr_precision[[curr_group]]
+        recall_df.loc[:,[curr_group]] = curr_recall[[curr_group]]
+        F1_df.loc[:,[curr_group]] = curr_F1[[curr_group]]
+        
+        # Remove NA rows from dataframe, the size of each condition should be equal
+        precision_df = precision_df.dropna()
+        recall_df = recall_df.dropna()
+        F1_df = F1_df.dropna()
+    """
+        # Calculate ANOVA
+        precision_f_val, precision_p_val = scipy.stats.f_oneway(*precision_df.iloc[:,0:len(lvl_geno)].T.values)
+        recall_f_val, recall_p_val = scipy.stats.f_oneway(*recall_df.iloc[:,0:len(lvl_geno)].T.values)
+        F1_f_val, F1_p_val = scipy.stats.f_oneway(*F1_df.iloc[:,0:len(lvl_geno)].T.values)
+
+        # Write out ANOVA results
+        print(curr_class + " ANOVA Precision F-Value over " + str(len(lvl_geno)) + " conditions = " + str(precision_f_val))
+        print(curr_class + " ANOVA Precision P-Value over " + str(len(lvl_geno)) + " conditions = " + str(precision_p_val))
+        print(curr_class + " ANOVA Recall F-Value over " + str(len(lvl_geno)) + " conditions = " + str(recall_f_val))
+        print(curr_class + " ANOVA Recall P-Value over " + str(len(lvl_geno)) + " conditions = " + str(recall_p_val))
+        print(curr_class + " ANOVA F1 F-Value over " + str(len(lvl_geno)) + " conditions = " + str(F1_f_val))
+        print(curr_class + " ANOVA F1 P-Value over " + str(len(lvl_geno)) + " conditions = " + str(F1_p_val) + "\n")
+  """
+# Else, only two levels
 else:
     geno_list = []
     for numRows in range(0, len(img_counts["Label"])):
