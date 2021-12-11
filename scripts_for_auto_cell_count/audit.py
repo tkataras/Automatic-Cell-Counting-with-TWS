@@ -1,7 +1,7 @@
 #!/usr/bin/python
 ###
 # Author: Theo Kataras, Tyler Jang
-# Date: 12/1/2021
+# Date: 12/10/2021
 #
 # Input: The source directory
 #        The classifier selected by the user for the full dataset
@@ -96,9 +96,9 @@ setDir(sys.argv[1])
 
 # Get the selected classifier by the user
 selected_classifier = sys.argv[2]
-#read in genotype.csv
-geno_file = "../training_area/testing_area/geno_full.csv"
 
+# Read in geno_full.csv
+geno_file = "../training_area/testing_area/geno_full.csv"
 geno = pd.read_csv(geno_file)
 # Get the unique genotype labels
 lvl_geno = np.unique(geno["geno"])
@@ -115,6 +115,7 @@ val_files = os.listdir(val_loc)
 draws = len(val_files)
 draws_per_geno = int(draws/len(lvl_geno))
 
+# Get file information for projected images
 id1_df_sep = sep_slidebook(full_files, "-")
 id1_df_squish = squish(id1_df_sep)
 
@@ -168,7 +169,7 @@ for id in audit_set:
         selected_images.append(path)
 
 ###need to get these random variable numbers from oritional file directory, eg images, counted 
-# TODO Temp so I don't need to redo ROI stuff
+# TODO Temp comment out so I don't need to redo ROI stuff
 # Copy selected images into audit images directory
 for file in selected_images:
     filename =  os.path.basename(file)
@@ -183,7 +184,7 @@ for key, value in sorted(audit_set.items()):
     geno_csv.append([value])
 print(geno_csv)
 
-# TODO Temp so I don't need to redo ROI stuff
+# TODO Temp comment out so I don't need to redo ROI stuff
 with open("../training_area/testing_area/geno_audit.csv", 'w+', newline ='') as file:
     write = csv.writer(file)
     write.writerow(["geno"])
