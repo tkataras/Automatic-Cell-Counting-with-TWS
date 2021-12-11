@@ -3,7 +3,6 @@ input = getDirectory("Choose source directory of the macro (Scripts for Auto Cel
 // Set measurements to calculate
 run("Set Measurements...", "area mean standard modal min centroid center perimeter bounding fit shape feret's integrated median skewness kurtosis area_fraction limit display redirect=None decimal=8");
 
-
 //making sure all folders exist
 exec("python", input + "file_architect.py", input);
 
