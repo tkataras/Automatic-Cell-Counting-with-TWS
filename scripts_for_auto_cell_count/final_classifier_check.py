@@ -17,10 +17,10 @@ from scipy.stats.stats import pearsonr
 print("Starting finalClassifierCheck.py\n")
 # Method to change working directory from inputted ImageJ Macro
 curr_dir = os.getcwd()
-def setDir(arg1):
+def set_dir(arg1):
     curr_dir = arg1
     os.chdir(curr_dir)
-setDir(sys.argv[1])
+set_dir(sys.argv[1])
     
 # Get the selected classifier by the user
 selectedClassifier = sys.argv[2]

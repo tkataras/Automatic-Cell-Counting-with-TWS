@@ -37,12 +37,12 @@ def trim_names(file_names, half):
     return newsid1
 
 ###
-# Method: parseit 
+# Method: parse_it 
 # Input: list of seperated relevent name elements from every image
 # Output: TODO
 # Description: 
 ###
-def parseit(file_names, object_num):
+def parse_it(file_names, object_num):
     newsid1_anum = []
     for i in range(0, len(file_names)):
         newsid1_anum.append(file_names[i][object_num])
@@ -61,17 +61,17 @@ def sep_slidebook(file_names, delim):
     max_len = len(split_files[1])
     
     # These are what you need to adjust for different names of images!!!!####
-    newsid1_anum = parseit(split_files, 1)
-    newsid1_snum = parseit(split_files, 2)
-    newsid1_fnum = parseit(split_files, max_len - 1)
+    newsid1_anum = parse_it(split_files, 1)
+    newsid1_snum = parse_it(split_files, 2)
+    newsid1_fnum = parse_it(split_files, max_len - 1)
     
     # Sometimes another seperation step is required
     fnumsid1_s = []
     for file in newsid1_fnum:
         fnumsid1_s.append(list(file))
 
-    newsid1_fnum1 = parseit(fnumsid1_s, 0)
-    newsid1_fnum2 = parseit(fnumsid1_s, 1)
+    newsid1_fnum1 = parse_it(fnumsid1_s, 0)
+    newsid1_fnum2 = parse_it(fnumsid1_s, 1)
     # Recombine seperated objects
     newsid1_fnum3 = []
     for index in range(0, len(newsid1_fnum1)):
@@ -110,10 +110,10 @@ def squish(input_df):
 print("Starting Project N images by ID.py")
 # Method to change working directory from inputted ImageJ Macro
 curr_dir = os.getcwd()
-def setDir(arg1):
+def set_dir(arg1):
     curr_dir = arg1
     os.chdir(curr_dir)
-setDir(sys.argv[1])
+set_dir(sys.argv[1])
 
 first_stage = True
 # If in the second stage of the pipeline, use the specified classifier

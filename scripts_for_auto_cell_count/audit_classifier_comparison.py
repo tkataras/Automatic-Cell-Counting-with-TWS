@@ -15,10 +15,10 @@ import scipy.stats
 
 # Method to change working directory from inputted ImageJ Macro
 currDir = os.getcwd()
-def setDir(arg1):
+def set_dir(arg1):
     currDir = arg1
     os.chdir(currDir)
-setDir(sys.argv[1])
+set_dir(sys.argv[1])
 
 # Get the selected classifier 
 selectedClassifier = sys.argv[2]
