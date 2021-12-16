@@ -19,14 +19,15 @@ import csv
 ###
 # Method: parse_it 
 # Input: list of seperated relevent name elements from every image
-# Output: TODO
-# Description: 
+# Output: Bisected file names based on split
+# Description: TODO
 ###
 def parse_it(file_names, object_num):
     newsid1_anum = []
     for i in range(0, len(file_names)):
         newsid1_anum.append(file_names[i][object_num])
     return newsid1_anum
+
 ###
 # Method: sep_slidebook 
 # Input: File names containng all relevant image info (animal #, slice #, field #)

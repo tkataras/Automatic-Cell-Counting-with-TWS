@@ -15,7 +15,7 @@ import imageio
 
 # Method: trim_names 
 # Input: File names
-# Output: bisected file names based on split
+# Output: Bisected file names based on split
 # Description:useful if information in automatic file name from microscope is repetitive
 ###
 def trim_names(file_names, half):
@@ -47,8 +47,9 @@ def parse_it(file_names, object_num):
     for i in range(0, len(file_names)):
         newsid1_anum.append(file_names[i][object_num])
     return newsid1_anum
+
 ###
-# Method: Sep_slidebook 
+# Method: sep_slidebook 
 # Input: file names containng all relevant image info (animal #, slice #, field #)
 # Output: data frame with each type of info as it own column
 # Description: parses out individual grouping variables
