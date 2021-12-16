@@ -17,21 +17,21 @@ import shutil
 import csv
 
 ###
-# Method: parseit 
+# Method: parse_it 
 # Input: list of seperated relevent name elements from every image
 # Output: TODO
 # Description: 
 ###
-def parseit(file_names, object_num):
+def parse_it(file_names, object_num):
     newsid1_anum = []
     for i in range(0, len(file_names)):
         newsid1_anum.append(file_names[i][object_num])
     return newsid1_anum
 ###
-# Method: Sep_slidebook 
-# Input: file names containng all relevant image info (animal #, slice #, field #)
-# Output: data frame with each type of info as it own column
-# Description: parses out individual grouping variables
+# Method: sep_slidebook 
+# Input: File names containng all relevant image info (animal #, slice #, field #)
+# Output: Data frame with each type of info as it own column
+# Description: Parses out individual grouping variables
 ###
 def sep_slidebook(file_names, delim):
     # Split files from delim
@@ -41,17 +41,17 @@ def sep_slidebook(file_names, delim):
     max_len = len(split_files[1])
     
     # These are what you need to adjust for different names of images!!!!####
-    newsid1_anum = parseit(split_files, 1)
-    newsid1_snum = parseit(split_files, 2)
-    newsid1_fnum = parseit(split_files, max_len - 1)
+    newsid1_anum = parse_it(split_files, 1)
+    newsid1_snum = parse_it(split_files, 2)
+    newsid1_fnum = parse_it(split_files, max_len - 1)
     
     # Sometimes another seperation step is required
     fnumsid1_s = []
     for file in newsid1_fnum:
         fnumsid1_s.append(list(file))
 
-    newsid1_fnum1 = parseit(fnumsid1_s, 0)
-    newsid1_fnum2 = parseit(fnumsid1_s, 1)
+    newsid1_fnum1 = parse_it(fnumsid1_s, 0)
+    newsid1_fnum2 = parse_it(fnumsid1_s, 1)
     # Recombine seperated objects
     newsid1_fnum3 = []
     for index in range(0, len(newsid1_fnum1)):
@@ -66,9 +66,9 @@ def sep_slidebook(file_names, delim):
 
 ### 
 # Method: squish 
-# Input: data from of grouping variables
-# Output: list of unique image IDs contining specific grouping information
-# Description: creates one grouping object for each image that can be compared across other iterations of the images with slightly different file names
+# Input: Data from grouping of variables
+# Output: List of unique image IDs contining specific grouping information
+# Description: Creates one grouping object for each image that can be compared across other iterations of the images with slightly different file names
 ###
 def squish(input_df):
     id1_df_squish = []
@@ -89,16 +89,16 @@ def squish(input_df):
 print("Starting audit.py")
 # Method to change working directory from inputted ImageJ Macro
 curr_dir = os.getcwd()
-def setDir(arg1):
+def set_dir(arg1):
     curr_dir = arg1
     os.chdir(curr_dir)
-setDir(sys.argv[1])
+set_dir(sys.argv[1])
 
 # Get the selected classifier by the user
 selected_classifier = sys.argv[2]
 
-isProjected = "False"
-isProjected = sys.argv[3]
+is_projected = "False"
+is_projected = sys.argv[3]
 
 # Read in geno_full.csv
 geno_file = "../training_area/testing_area/geno_full.csv"
@@ -119,7 +119,7 @@ draws = len(val_files)
 draws_per_geno = int(draws/len(lvl_geno))
 
 # Usig projected images
-if isProjected == "True":
+if is_projected == "True":
     # Get file information for projected images
     id1_df_sep = sep_slidebook(full_files, "-")
     id1_df_squish = squish(id1_df_sep)
@@ -186,10 +186,6 @@ else:
     for i in range(len(full_files)):
         if geno["geno"][i] == lvl_geno[1]:
             ev1_files[full_files[i]] = lvl_geno[1]
-
-    #make random selections for level 1
-    LEV0 = len(ev0_files)
-    LEV1 = len(ev1_files)
 
     # Randomly select images to be auditted
     audit_set = {}
