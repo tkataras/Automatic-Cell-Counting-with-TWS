@@ -14,7 +14,7 @@ import numpy as np
 import imageio
 
 # Method: trim_names 
-# Input: file names
+# Input: File names
 # Output: bisected file names based on split
 # Description:useful if information in automatic file name from microscope is repetitive
 ###
