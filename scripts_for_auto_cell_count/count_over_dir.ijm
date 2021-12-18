@@ -22,11 +22,11 @@ macro "The -- True -- Count" {
 	run("Clear Results");
 	
 	// Set size minimum for cells to exclude small radius noise
-	size_min=20;
+	sizeMin = 20;
 	Dialog.create("Size Min");
-	Dialog.addNumber("Minimum pixel size for object count:", size_min);
+	Dialog.addNumber("Minimum pixel size for object count:", sizeMin);
 	Dialog.show();
-	size_min = Dialog.getNumber();
+	sizeMin = Dialog.getNumber();
 	
 	// Validation Hand Counts
 	dirTwo = inputDirs + "../Validation_Hand_Counts/";
@@ -61,7 +61,7 @@ macro "The -- True -- Count" {
 			run("Convert to Mask");
 					
 			// This imageJ plugin creates the results file and image of the count cells based on the size exclusion		
-			run("Analyze Particles...", "size=" + size_min + "-Infinity pixel show=Masks display summarize add");
+			run("Analyze Particles...", "size=" + sizeMin + "-Infinity pixel show=Masks display summarize add");
 			saveAs("Png", outputDirs + output + filename);
 				
 			open(inputTwo + filenameTwo);
@@ -110,8 +110,8 @@ macro "The -- True -- Count" {
 		selectWindow("Results");
 		
 		// Take / off end of folder name to get classifier ID
-		class_name = substring(outputDirList[z], 0, lengthOf(outputDirList[z]) -1);
-		saveAs("Results", outputDirs + output + class_name + "_Results.csv");
+		className = substring(outputDirList[z], 0, lengthOf(outputDirList[z]) -1);
+		saveAs("Results", outputDirs + output + className + "_Results.csv");
 		run("Clear Results");
 	}
 	// Prints text in the log window after all files are processed
