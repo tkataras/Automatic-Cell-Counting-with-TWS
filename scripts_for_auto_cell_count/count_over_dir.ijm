@@ -36,7 +36,9 @@ macro "The -- True -- Count" {
 	outputDirList = getFileList(outputDirs);
 		
 	// This loop iterates through classifier folders
-	for (z = 0; z < inputDirList.length; z++) {		
+	//!!!!!!!!!!!!!!!!!!!!!!!I CHANGED THIS TO ONLY USE 2 CLASS FOLDERS FoR teSTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//for (z = 0; z < inputDirList.length; z++) {
+	for (z = 0; z < 2; z++) {
 		input = inputDirList[z];
 		output = outputDirList[z];
 			
@@ -59,24 +61,59 @@ macro "The -- True -- Count" {
 			run("Threshold...");
 			setThreshold(6, 255);
 			run("Convert to Mask");
-					
+
+			
+					//size_min = 20
 			// This imageJ plugin creates the results file and image of the count cells based on the size exclusion		
 			run("Analyze Particles...", "size=" + size_min + "-Infinity pixel show=Masks display summarize add");
+			selectImage("Mask of " + filename);
 			saveAs("Png", outputDirs + output + filename);
+
+			
+			//stop empty images here and save image instead as placeholder
+			getRawStatistics(nPixels, mean, min, max, std, histogram);
+			if (max == 0) {
+				numRoi = 0;
+				counts = 0;
+				run("Measure");
+				setResult("points", n++, counts);
+				//roiManager("deselect");
+				//roiManager("Delete"); 
+				print(filename + " this was an empty image");
+			}else {
+print(filename + " this was an image with cells after the else");
+			run("Measure");//measuring a full image after the objects, to keep parity with the empty images
+			print(filenameTwo + "=filename2");
+
+			//need to deal with case where human marked no cells and saved placeholder, but program has objects
+			if (endsWith(filenameTwo, ".roi")) {
 				
 			open(inputTwo + filenameTwo);
 			roiManager("Add");
-			
+
 			//TODO need to save the exact roi info for each auto object
 		 	// Establish number of objects
 			numRoi = roiManager("count"); 
 				
 			roiManager("Select", numRoi - 1);
-			pts = Roi.getCoordinates(xPoints2, yPoints2); 
+			pts = Roi.getCoordinates(xPoints2, yPoints2); //get info for all hand places counts
 			numPoints = lengthOf(yPoints2); // establish number of hand placed counts	
-			numRoiTwo = numRoi - 1;
+			numRoiTwo = numRoi - 1;//subtract one for the multipoint ROI containing the hand count info
 
-			// For each object k in the image
+			
+			} else {
+				//this is the case where the hand count found no cells, but the auto count did
+				numPoints = 0;//set the number of hand counts to 0
+				print("this is the case where the hand count found no cells, but the auto count did");
+				numRoiTwo = roiManager("count");
+			}
+
+			
+			
+			
+			
+
+			// For each object k in the hnad count???
 			for (k = 0; k < numRoiTwo; k++) {   
 				roiManager("Select", k);
 				// Get coords for all pixels in object
@@ -100,20 +137,23 @@ macro "The -- True -- Count" {
 						}
 					}
 				}
+				
 					
 				// Update the results table
 				setResult("points", n++, counts);	
-			}
+			}//each object in image
 			roiManager("deselect")		
 			roiManager("Delete");       
-		}
+			}//else
+		}//function endpoint
+		//}//for z input dir list length
 		selectWindow("Results");
 		
 		// Take / off end of folder name to get classifier ID
 		class_name = substring(outputDirList[z], 0, lengthOf(outputDirList[z]) -1);
 		saveAs("Results", outputDirs + output + class_name + "_Results.csv");
 		run("Clear Results");
-	}
+	}//
 	// Prints text in the log window after all files are processed
 	print("Counted " + list.length + " images");
 	print("Finished count_over_dir.ijm\n");
