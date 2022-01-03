@@ -101,9 +101,14 @@ macro "The -- True -- Count" {
 					roiManager("Select", numRoi - 1);
 					print("this is roi name being used for hand count coords"  + Roi.getName); //I THINK THE ISSUE MAY BE HERE IN THE assignment of the hand count roi coords???!?!?!?!?!
 					pts = Roi.getCoordinates(xPoints2, yPoints2); //get info for all hand places counts
+
+					
 					//roiManager("Delete"); //just added this to test !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!312312313
 					numPoints = lengthOf(yPoints2); // establish number of hand placed counts	
 					numRoiTwo = numRoi - 1;//subtract one for the multipoint ROI containing the hand count info
+					for(temp = 0; temp < numPoints; temp++) {
+						print("roi at " + round(xPoints2[temp]) + ", " + round(yPoints2[temp]));
+					}
 				} else {
 					//this is the case where the hand count found no cells, but the auto count did
 					numPoints = 0;//set the number of hand counts to 0
@@ -133,7 +138,7 @@ macro "The -- True -- Count" {
 						for(j = 0; j < lenTwo ; j++) {
 							xPoints2rnd = round(xPoints2[j]);
 							yPoints2rnd = round(yPoints2[j]);
-	
+							
 							// If the object contains the hand count, increment counts
 							if (xPoints[i] == xPoints2rnd && yPoints[i] == yPoints2rnd) {
 								counts = counts + 1;
