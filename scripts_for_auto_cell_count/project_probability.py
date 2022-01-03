@@ -219,14 +219,26 @@ else:
         # Identify images belonging to each unique image ID
         all_current_ID = big_df.query('Img_ID == @u_img[@id]')
 
-        # Sum projected as equal to the number of layers in the image
-        projected = 0
+        # Projected as equal to the maximum probability at each pixel location
+        path = id_for_in_dir + "/" + list(all_current_ID["File_name"])[0]
+        temp_image = imageio.imread(path)
+        x_axis = len(temp_image)
+        y_axis = len(temp_image[0])
+        projected = temp_image
         max_len = all_current_ID.shape[0]
+        
         # Project the image of the same ID onto one image
         for k in range(0, max_len):
             path = id_for_in_dir + "/" + list(all_current_ID["File_name"])[k]
-            projected = projected + imageio.imread(path)
+            curr_probability = projected + imageio.imread(path)
+            # For each row
+            for y_inc in range(y_axis):
+                # For each column
+                for x_inc in range(x_axis):
+                    if projected[x_inc][y_inc] < curr_probability[x_inc][y_inc]:
+                        projected[x_inc][y_inc] = curr_probability[x_inc][y_inc]
         file_out_loc = id_for_out_dir + "/" + list(all_current_ID["File_name"])[0]
         imageio.imwrite(file_out_loc, projected)
-
+        projected = [[0] * y_axis] * x_axis
+            
 print("Finished project_probability.py")
