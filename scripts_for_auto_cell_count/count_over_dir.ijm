@@ -80,7 +80,7 @@ macro "The -- True -- Count" {
 			for (k = 0; k < numRoiTwo; k++) {   
 				roiManager("Select", k);
 				// Get coords for all pixels in object
-				test = Roi.getContainedPoints(xPoints, yPoints); 
+				// TODO this line is useless test = Roi.getContainedPoints(xPoints, yPoints); 
 				// Length of all pixels in current object, this varies
 				len = lengthOf(xPoints);
 				// Length of hand placed counts, this does not vary 
