@@ -188,6 +188,7 @@ for f in range(0, len(class_list)):
 
     # If only 1 level
     if len(lvl_geno) == 1:
+        """
         group_one = final_result.query('geno == @lvl_geno[0]')
         
         # Calculate 1 Sample T Test
@@ -197,9 +198,10 @@ for f in range(0, len(class_list)):
 
         # TODO remove the 1 sample T test since it only matters when user expects an expected mean
         # TODO I don't know what the popmean should be equal to, what is the expected mean of our pop vs actual mean
+        """"""
         precision_geno_ttest = scipy.stats.ttest_1samp(group_one["precision2"], popmean=1, nan_policy="omit")
-        recall_geno_ttest = scipy.stats.ttest_1samp(group_one["recall2"], popmean=recall_mean, nan_policy="omit")
-        F1_geno_ttest = scipy.stats.ttest_1samp(group_one["F1_2"], popmean=F1_mean, nan_policy="omit")
+        recall_geno_ttest = scipy.stats.ttest_1samp(group_one["recall2"], popmean=1, nan_policy="omit")
+        F1_geno_ttest = scipy.stats.ttest_1samp(group_one["F1_2"], popmean=1, nan_policy="omit")
         print(precision_geno_ttest)
         print(recall_geno_ttest)
         print(str(F1_geno_ttest) + "\n")
@@ -226,7 +228,7 @@ for f in range(0, len(class_list)):
         "F1_geno_ttest_pval"])
         
         your_boat = your_boat.append(row_row)
-
+        """
     # Else, if more than two levels
     elif len(lvl_geno) > 2:
         print("Automatic analysis with more than 2 levels")

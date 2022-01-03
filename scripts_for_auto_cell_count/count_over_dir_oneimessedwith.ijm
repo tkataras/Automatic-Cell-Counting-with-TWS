@@ -83,7 +83,7 @@ macro "The -- True -- Count" {
 				print(filename + " this was an image with cells (after the else)");
 
 				// TODO this doesn't line up with original count over dir ijm
-				//run("Measure");//measuring a full image after the objects, to keep parity with the empty images
+				run("Measure");//measuring a full image after the objects, to keep parity with the empty images
 				
 				print(filenameTwo + "=filename2 the hand count");
 	
@@ -124,7 +124,7 @@ macro "The -- True -- Count" {
 					len = lengthOf(xPoints);
 					// Length of hand placed counts, this does not vary 
 					lenTwo = numPoints; 
-										
+
 					counts = 0;
 					// For each pixel in the object
 					for (i = 0 ; i < len ; i++) {

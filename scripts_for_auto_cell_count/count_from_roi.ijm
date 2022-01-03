@@ -18,7 +18,7 @@ if(input.contains("testing_area")) {
 	x = split(input, "/");
 	output = input + "../";
 } else {
-	input = input + "../training_area/Validation_Hand_Counts/";
+	input = input + "../training_area/Validation_Hand_Counts - Copy/";
 	// Results
 	output = input + "../Results";
 }
