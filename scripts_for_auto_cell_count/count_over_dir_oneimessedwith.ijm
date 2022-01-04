@@ -29,7 +29,10 @@ macro "The -- True -- Count" {
 	size_min = Dialog.getNumber();
 	
 	// Validation Hand Counts
-	dirTwo = inputDirs + "../Validation_Hand_Counts - Copy/";
+	//dirTwo = inputDirs + "../Validation_Hand_Counts - Copy/";
+	//ThiS SHOULD BE USING THE IMAGE SUBSET included in validation hand counts to match subset in weka output
+	dirTwo = inputDirs + "../Validation_Hand_Counts/";
+
 	
 	// Gets the folders for each classifier
 	inputDirList = getFileList(inputDirs);
@@ -38,6 +41,8 @@ macro "The -- True -- Count" {
 	// This loop iterates through classifier folders
 	//!!!!!!!!!!!!!!!!!!!!!!!I CHANGED THIS TO ONLY USE 2 CLASS FOLDERS FoR teSTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	for (z = 0; z < inputDirList.length; z++) {
+	//for (z = 0; z < 1; z++) {
+
 		input = inputDirList[z];
 		output = outputDirList[z];
 			
@@ -45,7 +50,7 @@ macro "The -- True -- Count" {
 		list = getFileList(inputDirs + input);
 		listTwo = getFileList(dirTwo);
 		
-		n = 0;
+		n = -1;
 //do i need this???
 		
 		// Iterate macro over the images in the classifier folder
@@ -61,18 +66,23 @@ macro "The -- True -- Count" {
 			run("Threshold...");
 			setThreshold(6, 255);
 			run("Convert to Mask");
+			
+			run("Watershed");
 
 			// This imageJ plugin creates the results file and image of the count cells based on the size exclusion		
 			run("Analyze Particles...", "size=" + size_min + "-Infinity pixel show=Masks display summarize add");
+			
 			//selectImage("Mask of " + filename);     //JUST COMMENteD OUT TO TEST !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			saveAs("Png", outputDirs + output + filename);
 
-			
+			counts = 0;
 			//stop empty auto count images here 
 			getRawStatistics(nPixels, mean, min, max, std, histogram);
 			if (max == 0) {
+			
+			if (n == -1) {n = 0;}
+			
 				numRoi = 0;
-				counts = 0;
 				run("Measure");
 				setResult("points", n++, counts);
 				
@@ -84,6 +94,8 @@ macro "The -- True -- Count" {
 
 				// TODO this doesn't line up with original count over dir ijm
 				run("Measure");//measuring a full image after the objects, to keep parity with the empty images
+				//setResult("points", n++, counts);
+				n++;
 				
 				print(filenameTwo + "=filename2 the hand count");
 	

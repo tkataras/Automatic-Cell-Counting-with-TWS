@@ -53,6 +53,8 @@ runMacro(input + "count_from_roi.ijm", input);
 //runMacro(input + "count_over_dir_prob_TK.ijm", searchDirectory);
 
 runMacro(input + "count_over_dir_oneimessedwith.ijm", searchDirectory);
+//runMacro(input + "old_count_over_dir_TK.ijm", searchDirectory);
+
 
 // Next, run classifier comparison
 exec("python", input + "classifier_comparison.py", input);
