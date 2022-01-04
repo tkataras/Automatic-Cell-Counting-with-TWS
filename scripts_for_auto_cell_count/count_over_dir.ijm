@@ -51,7 +51,6 @@ macro "The -- True -- Count" {
 		listTwo = getFileList(dirTwo);
 		
 		rowNumber = -1;
-//do i need this???
 		
 		// Iterate macro over the images in the classifier folder
 		for (q = 0; q < list.length; q++) {
@@ -66,7 +65,8 @@ macro "The -- True -- Count" {
 			run("Threshold...");
 			setThreshold(6, 255);
 			run("Convert to Mask");
-			
+
+			// Call the watershed algorithm to split objects
 			run("Watershed");
 
 			// This imageJ plugin creates the results file and image of the count cells based on the size exclusion		
@@ -94,9 +94,8 @@ macro "The -- True -- Count" {
 			} else {	
 				print(filename + " this was an image with cells (after the else)");
 
-				// TODO this doesn't line up with original count over dir ijm
-				run("Measure");//measuring a full image after the objects, to keep parity with the empty images
-				//setResult("points", rowNumber++, counts);
+				// Measuring a full image after the objects, to keep parity with the empty images
+				run("Measure");
 				rowNumber++;
 				
 				print(filenameTwo + "=filename2 the hand count");
