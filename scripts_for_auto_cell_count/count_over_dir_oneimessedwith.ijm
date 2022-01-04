@@ -106,6 +106,7 @@ macro "The -- True -- Count" {
 					//roiManager("Delete"); //just added this to test !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!312312313
 					numPoints = lengthOf(yPoints2); // establish number of hand placed counts	
 					numRoiTwo = numRoi - 1;//subtract one for the multipoint ROI containing the hand count info
+					// Testing
 					for(temp = 0; temp < numPoints; temp++) {
 						print("roi at " + round(xPoints2[temp]) + ", " + round(yPoints2[temp]));
 					}
