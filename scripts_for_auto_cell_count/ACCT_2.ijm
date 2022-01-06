@@ -34,7 +34,7 @@ trimClassName = split(selectedClassifier, ".");
 testingPath = testingPath + "Weka_Output/" + trimClassName[0];
 
 // Create Weka output for the selected classifier
-//run("apply TWS one classifier");
+run("apply TWS one classifier");
 
 // Threshold the images
 runMacro(input + "just_thresh.ijm", testingPath);
@@ -54,7 +54,7 @@ if (result) {
 }
 
 // Count the number of objects in each image
-runMacro(input + "count_full_dataset.ijm", searchDirectory);
+runMacro(input + "count_full_dataset_oneImessedwith.ijm", searchDirectory);
 
 // Finally, get statistical information about the classifier's performance
 exec("python", input + "final_classifier_check.py", input, trimClassName[0]);
