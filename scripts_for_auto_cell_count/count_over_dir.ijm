@@ -39,10 +39,7 @@ macro "The -- True -- Count" {
 	outputDirList = getFileList(outputDirs);
 		
 	// This loop iterates through classifier folders
-	//!!!!!!!!!!!!!!!!!!!!!!!I CHANGED THIS TO ONLY USE 2 CLASS FOLDERS FoR teSTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	for (z = 0; z < inputDirList.length; z++) {
-	//for (z = 0; z < 1; z++) {
-
 		input = inputDirList[z];
 		output = outputDirList[z];
 			
@@ -164,7 +161,6 @@ macro "The -- True -- Count" {
 				roiManager("Delete");       
 			} //else
 		} //function endpoint
-		//}//for z input dir list length
 		selectWindow("Results");
 		
 		// Take / off end of folder name to get classifier ID
