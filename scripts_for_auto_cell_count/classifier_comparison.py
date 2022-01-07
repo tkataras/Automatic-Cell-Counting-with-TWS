@@ -43,9 +43,11 @@ your_boat = pd.DataFrame(columns=["class", "precision", "recall", "F1", "accurac
 # Getting in the results of count_from_roi.ijm
 hand_ini = pd.read_csv("../training_area/Results/roi_counts.csv", usecols=['Label'])
 lvl_h = np.unique(hand_ini)
+lvl_h = sorted(lvl_h, key=str.swapcase)
 count_h = {}
 for i in range(0, len(hand_ini)):
     if count_h.get(hand_ini.loc[i].at["Label"]) == None:
+        # may need to be 0
         count_h[hand_ini.loc[i].at["Label"]] = 1
     else:
         count_h[hand_ini.loc[i].at["Label"]] = count_h[hand_ini.loc[i].at["Label"]] + 1
@@ -71,12 +73,11 @@ for f in range(0, len(class_list)):
     # Go through each image to see how the classifier performed on that image
     for image in range(0, len(img_names)):
         current_img_plus_png = img_names[image]
-        
         # Get the information about the image automatic count
         dftc = class_results[class_results["Label"].isin([current_img_plus_png])]
-        
+
         # If the images are all empty, store this images results as all zero
-        if dftc.size == 0:
+        if dftc.size == 0 or dftc.shape[0] == 1:
             name = img_names[image]
             tp = 0
             fp = 0
@@ -89,9 +90,11 @@ for f in range(0, len(class_list)):
             fp = 0
             tp = 0
             fn = 0
-            avg_area = np.mean(dftc["Area"])
-            avg_circular = np.mean(dftc["Circ."])
-            for auto_count in (dftc["points"]):
+            avg_area = np.mean(dftc["Area"][:-1])
+            avg_circular = np.mean(dftc["Circ."][:-1])
+            
+            # Count points, except last row for overall image
+            for auto_count in (dftc["points"][:-1]):   
                 if auto_count == 0:
                     fp = fp + 1
                 elif auto_count == 1:
@@ -104,8 +107,8 @@ for f in range(0, len(class_list)):
         # dtfc$points only counts the markers that fall within cell objects, count_h$counts is the sum of all points in total. 
         # When this is not true(e.g. there are negative values) check the image names of the hand count!!
         # TODO print statement for this above comment
-        missed = count_h[lvl_h[image]] - sum(dftc["points"]) 
-        fn = fn + missed
+        missed = count_h[lvl_h[image]] - sum(dftc["points"][:-1]) 
+        fn = fn + missed      
         name = img_names[image]
 
         # Store data for final result
@@ -166,9 +169,10 @@ for f in range(0, len(class_list)):
     final_result["geno"] = geno_list
     
     # Precision and recall per image
-    precision2 = final_result["tp"]/(final_result["tp"] + final_result["fp"])    
-    recall2 = final_result["tp"]/(final_result["tp"] + final_result["fn"])
+    precision2 = catchDivideByZero(final_result["tp"], (final_result["tp"] + final_result["fp"]))    
+    recall2 = catchDivideByZero(final_result["tp"], (final_result["tp"] + final_result["fn"]))
     
+    """
     # Calculate F1_2
     F1_2 = []
     for index in range(0, len(precision2)):
@@ -185,7 +189,7 @@ for f in range(0, len(class_list)):
     # Find the standard deviation of percision and recall
     print(curr_class + " percision standard deviation = " + str(np.std(precision2)))
     print(curr_class + " recall standard deviation = " + str(np.std(recall2)))   
-
+    """
     # If only 1 level
     if len(lvl_geno) == 1:
         """
