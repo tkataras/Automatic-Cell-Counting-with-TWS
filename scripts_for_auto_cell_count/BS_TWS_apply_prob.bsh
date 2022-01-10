@@ -122,9 +122,9 @@ for ( z = 0; z < listOfMod.length; z++ ) {
 
 				seg = gc.processSingleChannelImage(result, edge, dataWeight, pottsWeight, edgeWeight);
 
-				// print(listOfOut[ z ].getPath());
-				// print(outputFileName);
-				// new FileSaver( seg ).saveAsTiff( listOfOut[ z ].getPath() + File.separator + "SEG" + outputFileName);
+				print(listOfOut[ z ].getPath());
+				print(outputFileName);
+				new FileSaver( seg ).saveAsTiff( listOfOut[ z ].getPath() + File.separator + "SEG" + outputFileName);
   
 	            // force garbage collection (important for large images)
 	            result = null; 

@@ -14,10 +14,10 @@ import sys
 print("Starting file_architect.py")
 # Method to change working directory from inputted ImageJ Macro
 curr_dir = os.getcwd()
-def setDir(arg1):
+def set_dir(arg1):
     curr_dir = arg1
     os.chdir(curr_dir)
-setDir(sys.argv[1])
+set_dir(sys.argv[1])
 
 test_stage = False
 if len(sys.argv) == 3:

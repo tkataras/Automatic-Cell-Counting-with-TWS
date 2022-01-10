@@ -21,10 +21,10 @@ import scipy.stats
 print("Start of classifier_comparison.py\n")
 # Method to change working directory from inputted ImageJ Macro
 curr_dir = os.getcwd()
-def setDir(arg1):
+def set_dir(arg1):
     curr_dir = arg1
     os.chdir(curr_dir)
-setDir(sys.argv[1])
+set_dir(sys.argv[1])
 
 # Input the genotype data as a .csv file
 geno_file = "../training_area/genotype.csv"

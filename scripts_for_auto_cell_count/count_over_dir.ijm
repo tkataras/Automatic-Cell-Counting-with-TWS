@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
  * Author: Theo Kataras, Tyler Jang
  * Date: 11/30/2021
@@ -31,6 +32,39 @@ macro "The -- True -- Count" {
 	// Validation Hand Counts
 	//dirTwo = inputDirs + "../Validation_Hand_Counts - Copy/";
 	//ThiS SHOULD BE USING THE IMAGE SUBSET included in validation hand counts to match subset in weka output
+=======
+/**
+ * Author: Theo Kataras, Tyler Jang
+ * Date: 11/30/2021
+ * 
+ * Input: Binary images, hand placed markes in roi files, one file for each image
+ * Output: Binary image files including only cells counted, and .csv file in classifier folder with accuracy information
+ * Description: Uses hand placed markers and weka output images from each classifier to begin accuracy calculation
+ */
+macro "The -- True -- Count" {
+	// This hides intermediary information and speeds processing
+	setBatchMode(true); 
+	
+	print("Starting count_over_dir.ijm");
+	
+	// Weka Output Projected if Projected, else Weka Output Thresholded
+	inputDirs = getArgument();
+	
+	// Weka Output Counted
+	outputDirs = inputDirs + "../Weka_Output_Counted/";
+	
+	// Clear the results table
+	run("Clear Results");
+	
+	// Set size minimum for cells to exclude small radius noise
+	sizeMin = 20;
+	Dialog.create("Size Min");
+	Dialog.addNumber("Minimum pixel size for object count:", sizeMin);
+	Dialog.show();
+	sizeMin = Dialog.getNumber();
+	
+	// Validation Hand Counts
+>>>>>>> f0c6486255ca5b7ff80ec18d2ea1bf8bb1ca00f9
 	dirTwo = inputDirs + "../Validation_Hand_Counts/";
 
 	
@@ -77,9 +111,27 @@ macro "The -- True -- Count" {
 			getRawStatistics(nPixels, mean, min, max, std, histogram);
 			if (max == 0) {
 			
+<<<<<<< HEAD
 				if (rowNumber == -1) {
 					rowNumber = 0;
 				}
+=======
+		// Opens and thresholds binary images or Weka output directly       
+		function action(input, output, filename, inputTwo, filenameTwo) {    	
+			open(inputDirs + input + filename);
+			run("8-bit");
+			setAutoThreshold("Default dark");
+			run("Threshold...");
+			setThreshold(6, 255);
+			run("Convert to Mask");
+					
+			// This imageJ plugin creates the results file and image of the count cells based on the size exclusion		
+			run("Analyze Particles...", "size=" + sizeMin + "-Infinity pixel show=Masks display summarize add");
+			saveAs("Png", outputDirs + output + filename);
+				
+			open(inputTwo + filenameTwo);
+			roiManager("Add");
+>>>>>>> f0c6486255ca5b7ff80ec18d2ea1bf8bb1ca00f9
 			
 				numRoi = 0;
 				run("Measure");
@@ -95,6 +147,7 @@ macro "The -- True -- Count" {
 				run("Measure");
 				rowNumber++;
 				
+<<<<<<< HEAD
 				print(filenameTwo + "=filename2 the hand count");
 	
 				//need to deal with case where human marked no cells and saved placeholder, but program has objects
@@ -173,4 +226,53 @@ macro "The -- True -- Count" {
 	print("Counted " + list.length + " images");
 	print("Finished count_over_dir.ijm\n");
 }
+=======
+			roiManager("Select", numRoi - 1);
+			pts = Roi.getCoordinates(xPoints2, yPoints2); 
+			numPoints = lengthOf(yPoints2); // establish number of hand placed counts	
+			numRoiTwo = numRoi - 1;
+
+			// For each object k in the image
+			for (k = 0; k < numRoiTwo; k++) {   
+				roiManager("Select", k);
+				// Get coords for all pixels in object
+				test = Roi.getContainedPoints(xPoints, yPoints); 
+				// Length of all pixels in current object, this varies
+				len = lengthOf(xPoints);
+				// Length of hand placed counts, this does not vary 
+				lenTwo = numPoints; 
+									
+				counts = 0;
+				// For each pixel in the object
+				for (i = 0 ; i < len ; i++) {
+					// For each hand placed count
+					for(j = 0; j < lenTwo ; j++) {
+						xPoints2rnd = round(xPoints2[j]);
+						yPoints2rnd = round(yPoints2[j]);
+
+						// If the object contains the hand count, increment counts
+						if (xPoints[i] == xPoints2rnd && yPoints[i] == yPoints2rnd) {
+							counts = counts + 1;
+						}
+					}
+				}
+					
+				// Update the results table
+				setResult("points", n++, counts);	
+			}
+			roiManager("deselect")		
+			roiManager("Delete");       
+		}
+		selectWindow("Results");
+		
+		// Take / off end of folder name to get classifier ID
+		className = substring(outputDirList[z], 0, lengthOf(outputDirList[z]) -1);
+		saveAs("Results", outputDirs + output + className + "_Results.csv");
+		run("Clear Results");
+	}
+	// Prints text in the log window after all files are processed
+	print("Counted " + list.length + " images");
+	print("Finished count_over_dir.ijm\n");
+}
+>>>>>>> f0c6486255ca5b7ff80ec18d2ea1bf8bb1ca00f9
 updateResults();

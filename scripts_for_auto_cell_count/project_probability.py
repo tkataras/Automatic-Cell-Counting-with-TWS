@@ -1,7 +1,7 @@
 #!/usr/bin/python
 ###
 # Author: Theo Kataras, Tyler Jang
-# Date 12/1/2021
+# Date 12/17/2021
 # 
 # Input: A set of thresholded, projected images
 # Output: A set of merged images
@@ -108,7 +108,7 @@ def squish(input_df):
     return id1_df_squish_df
 
 # Start of main
-print("Starting Project N images by ID.py")
+print("Starting project_probability.py")
 # Method to change working directory from inputted ImageJ Macro
 curr_dir = os.getcwd()
 def set_dir(arg1):
@@ -120,13 +120,13 @@ first_stage = True
 # If in the second stage of the pipeline, use the specified classifier
 if len(sys.argv) == 3:
     # Input and Output file directories
-    id_for_in_dir = "../training_area/testing_area/Weka_Output_Thresholded/" + sys.argv[2] + "/"
-    id_for_out_dir = "../training_area/testing_area/Weka_Output_Projected/" + sys.argv[2] + "/"
+    id_for_in_dir = "../training_area/testing_area/Weka_Probability/" + sys.argv[2] + "/"
+    id_for_out_dir = "../training_area/testing_area/Weka_Probability_Projected/" + sys.argv[2] + "/"
     first_stage = False
 else:
     # Input and Output file directories
-    id_for_in_dir = "../training_area/Weka_Output_Thresholded/"
-    id_for_out_dir = "../training_area/Weka_Output_Projected/"
+    id_for_in_dir = "../training_area/Weka_Probability/"
+    id_for_out_dir = "../training_area/Weka_Probability_Projected/"
 
 if first_stage:
     # Get the classifiers/files contained in these directories
@@ -144,7 +144,7 @@ if first_stage:
     for index in range(0, len(newsid1)):
             new_row = pd.DataFrame([[newsid1[index]]], columns=["newsid1"])
             newsid1_df = newsid1_df.append(new_row)
-
+    
     # This df gives us access to varibles based on the images in several forms
     big_df = pd.concat([newsid1_df, id1_df_squish], axis=1)
     big_df = pd.concat([big_df, id1_df_sep], axis=1)
@@ -165,16 +165,28 @@ if first_stage:
             # Identify images belonging to each unique image ID
             all_current_ID = big_df.query('Img_ID == @u_img[@id]')
 
-            # Sum projected as equal to the number of layers in the image
-            projected = 0
+            # Projected as equal to the maximum probability at each pixel location
+            path = rel_path + "/" + list(all_current_ID["File_name"])[0]
+            temp_image = imageio.imread(path)
+            x_axis = len(temp_image)
+            y_axis = len(temp_image[0])
+            projected = temp_image
             max_len = all_current_ID.shape[0]
+
             # Project the image of the same ID onto one image
             for k in range(0, max_len):
                 path = rel_path + "/" + list(all_current_ID["File_name"])[k]
-                projected = projected + imageio.imread(path)
+                curr_probability = imageio.imread(path)
+                # For each row
+                for y_inc in range(y_axis):
+                    # For each column
+                    for x_inc in range(x_axis):
+                        if projected[x_inc][y_inc] < curr_probability[x_inc][y_inc]:
+                            projected[x_inc][y_inc] = curr_probability[x_inc][y_inc]
             file_out_loc = id_for_out_dir + out_dir_list[image] + "/" + list(all_current_ID["File_name"])[0]
             imageio.imwrite(file_out_loc, projected)
-# Second half of the pipeline
+            projected = [[0] * y_axis] * x_axis
+# Second half of the pipeline TODO Make it project onto probability map
 else:
     # Get the classifiers/files contained in these directories
     in_dir_list = os.listdir(id_for_in_dir)
@@ -201,19 +213,32 @@ else:
     # Need to start working in directory that holds all image folders
     u_img = np.unique(big_df["Img_ID"])
 
+    print(u_img)
     # Project the n images in the classifier
     for id in range(0, len(u_img)):
         # Identify images belonging to each unique image ID
         all_current_ID = big_df.query('Img_ID == @u_img[@id]')
 
-        # Sum projected as equal to the number of layers in the image
-        projected = 0
+        # Projected as equal to the maximum probability at each pixel location
+        path = id_for_in_dir + "/" + list(all_current_ID["File_name"])[0]
+        temp_image = imageio.imread(path)
+        x_axis = len(temp_image)
+        y_axis = len(temp_image[0])
+        projected = temp_image
         max_len = all_current_ID.shape[0]
+        
         # Project the image of the same ID onto one image
         for k in range(0, max_len):
             path = id_for_in_dir + "/" + list(all_current_ID["File_name"])[k]
-            projected = projected + imageio.imread(path)
+            curr_probability = projected + imageio.imread(path)
+            # For each row
+            for y_inc in range(y_axis):
+                # For each column
+                for x_inc in range(x_axis):
+                    if projected[x_inc][y_inc] < curr_probability[x_inc][y_inc]:
+                        projected[x_inc][y_inc] = curr_probability[x_inc][y_inc]
         file_out_loc = id_for_out_dir + "/" + list(all_current_ID["File_name"])[0]
         imageio.imwrite(file_out_loc, projected)
-
-print("Finished Projecting N images by ID")
+        projected = [[0] * y_axis] * x_axis
+            
+print("Finished project_probability.py")
