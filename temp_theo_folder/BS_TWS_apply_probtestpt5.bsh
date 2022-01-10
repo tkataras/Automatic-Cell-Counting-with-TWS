@@ -28,11 +28,12 @@
 //outputprobDirs = bsh.cwd + "/../training_area/Weka_Probability";
 //modelsDir = bsh.cwd + "/../training_area/Classifiers";
 
-
-inputDir = "C:/Users/User/Downloads/Automatic-Cell-counting-with-TWS/temp_theo_folder/test_image/";
-outputDirs = "C:/Users/User/Downloads/Automatic-Cell-counting-with-TWS/temp_theo_folder/output";
-modelsDir =  "C:/Users/User/Downloads/Automatic-Cell-counting-with-TWS/temp_theo_folder/classifier";
-outputprobDirs ="C:/Users/User/Downloads/Automatic-Cell-counting-with-TWS/temp_theo_folder/prob";
+#@ File(label="Source directory", description="Select the directory with the source of the scripts", style="directory") srcDir
+bsh.cwd = srcDir;
+inputDir =  bsh.cwd + "/../temp_theo_folder/test_image/";
+outputDirs = bsh.cwd + "/../temp_theo_folder/output";
+modelsDir =  bsh.cwd + "/../temp_theo_folder/classifier";
+outputprobDirs = bsh.cwd + "/../temp_theo_folder/prob";
 
 
 print("Past the dirs");
@@ -43,8 +44,8 @@ resultMode = "Probabilities";
 //yTiles=3;
 zTiles=0;
 
-xTiles=1;
-yTiles=1;
+xTiles=10;
+yTiles=10;
 
 
 
@@ -59,16 +60,15 @@ import graphcut.Graph_Cut;
 gc = new Graph_Cut();
 
 
-print(getModelVersion().startsWith("segment") ));
-  
+//print(getModelVersion().startsWith("segment") );
+
 // starting time
 startTime = System.currentTimeMillis();
   
 // caculate probabilities?
 getProbs = resultMode.equals( "Probabilities" );
  
-
-///iterate through classifiers
+// Iterate through classifiers
 listOfMod = pathToFile(modelsDir).listFiles();
 print(listOfMod);
 
