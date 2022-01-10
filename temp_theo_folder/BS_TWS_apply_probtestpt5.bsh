@@ -44,8 +44,8 @@ resultMode = "Probabilities";
 //yTiles=3;
 zTiles=0;
 
-xTiles=10;
-yTiles=10;
+xTiles=1;
+yTiles=1;
 
 
 
