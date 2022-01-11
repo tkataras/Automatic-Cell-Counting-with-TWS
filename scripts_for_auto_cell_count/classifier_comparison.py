@@ -9,6 +9,7 @@
 # Description: This file compares statistical information about each classifier
 # against each other.
 ###
+from numpy.ma import count
 import pandas as pd
 import numpy as np
 import os
@@ -42,16 +43,28 @@ your_boat = pd.DataFrame(columns=["class", "precision", "recall", "F1", "accurac
 
 # Getting in the results of count_from_roi.ijm
 hand_ini = pd.read_csv("../training_area/Results/roi_counts.csv", usecols=['Label'])
+
+# Reformat ROI names for use by selecting file name only, removing point name
+for i in range(0, len(hand_ini)):
+    row_name = hand_ini.loc[i].at["Label"]
+    row_name = row_name.split(":")[0]
+    hand_ini.loc[i].at["Label"] = row_name
+print(hand_ini)
+
+# TODO For testing that the column was renamed correctly
+hand_ini.to_csv("../training_area/Results/roi_counts_temp.csv")
 lvl_h = np.unique(hand_ini)
+
+# TODO May mess with non fluoset names
 lvl_h = sorted(lvl_h, key=str.swapcase)
 count_h = {}
 for i in range(0, len(hand_ini)):
     if count_h.get(hand_ini.loc[i].at["Label"]) == None:
         # may need to be 0
-        count_h[hand_ini.loc[i].at["Label"]] = 1
+        count_h[hand_ini.loc[i].at["Label"]] = 0
     else:
         count_h[hand_ini.loc[i].at["Label"]] = count_h[hand_ini.loc[i].at["Label"]] + 1
-
+print(count_h)
 # Iterate through each classifier 
 for f in range(0, len(class_list)):
     curr_class = os.listdir(output_count)[f]

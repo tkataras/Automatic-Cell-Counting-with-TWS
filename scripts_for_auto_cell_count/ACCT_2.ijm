@@ -34,7 +34,7 @@ trimClassName = split(selectedClassifier, ".");
 testingPath = testingPath + "Weka_Output/" + trimClassName[0];
 
 // Create Weka output for the selected classifier
-run("apply TWS one classifier");
+//run("apply TWS one classifier");
 
 // Threshold the images
 runMacro(input + "just_thresh.ijm", testingPath);

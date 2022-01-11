@@ -40,25 +40,24 @@ if(list.length < 2) {
 	
 	// Measure the information about each image
 	function action(input, filename) {
-		
-			open(input + filename);
+		open(input + filename);
+		// Measure full image
+		run("Measure"); 
 			
-			run("Measure"); // measure full image
-			
-			if (endsWith(filename, ".roi")){
-				print("the if has activated");
-				run("Select All");  
-				
-			run("Measure"); // measure full image
+		if (endsWith(filename, ".roi")){
+			// Select all points in the image
+			run("Select All");  
+
+			// Measure full image
+			run("Measure"); 
 			getImageID();
-			} 
+		} 
 		    
-		    close();	
-		
+	    close();			
 	}
 	
 	// Prints text in the log window after all files are processed
 	print("Counts from " + list.length + " ROIs");
-	saveAs("Results", output +"/roi_countstest.csv");
+	saveAs("Results", output +"/roi_counts.csv");
 }
 print("Finished count_from_roi.ijm\n");

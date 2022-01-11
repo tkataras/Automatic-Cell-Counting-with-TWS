@@ -37,18 +37,17 @@ segmentator.loadClassifier(modelPath.getCanonicalPath());
   
 // get list of input images
 listOfFiles = pathToFile(inputDir).listFiles();
-for (currMod = 0; currMod < listOfFiles.length; currMod++)
-{
+for (currMod = 0; currMod < listOfFiles.length; currMod++) {
     // process only files (do not go into sub-folders)
-    if(listOfFiles[currMod].isFile())
-    {
+    if(listOfFiles[currMod].isFile()) {
         // try to read file as image
         image = IJ.openImage( listOfFiles[currMod].getCanonicalPath());
-        if(image != null)
-        {
+        if(image != null) {
+        	// Ensure the image is in 8-bit format for grey scaling
+	        IJ.run(image, "8-bit", "");
+	        
             tilesPerDim = new int[ 2 ];
-            if(image.getNSlices() > 1)
-            {
+            if(image.getNSlices() > 1) {
                 tilesPerDim = new int[3];
                 tilesPerDim[2] = zTiles;
             }

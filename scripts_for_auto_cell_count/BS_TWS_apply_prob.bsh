@@ -84,6 +84,9 @@ for ( z = 0; z < listOfMod.length; z++ ) {
 	        // try to read file as image
 	        image = IJ.openImage( listOfFiles[i].getCanonicalPath() );
 	        if( image != null ) {
+	        	// Ensure the image is in 8-bit format for grey scaling
+	        	IJ.run(image, "8-bit", "");
+	        	
 	            tilesPerDim = new int[ 2 ];
 	            if( image.getNSlices() > 1 ) {
 	                tilesPerDim = new int[ 3 ];
