@@ -43,6 +43,7 @@ your_boat = pd.DataFrame(columns=["class", "precision", "recall", "F1", "accurac
 # Getting in the results of count_from_roi.ijm
 hand_ini = pd.read_csv("../training_area/Results/roi_counts.csv", usecols=['Label'])
 lvl_h = np.unique(hand_ini)
+# TODO May mess with non fluoset names
 lvl_h = sorted(lvl_h, key=str.swapcase)
 count_h = {}
 for i in range(0, len(hand_ini)):

@@ -54,6 +54,10 @@ if(list.length < 2) {
 			} 
 		    
 		    close();	
+<<<<<<< Updated upstream
+=======
+		}
+>>>>>>> Stashed changes
 		
 	}
 	
