@@ -29,7 +29,7 @@ if(result) {
 //	run("BS TWS apply");
 }
 */
-//run("BS TWS apply");
+run("BS TWS apply");
 
 // Threshold the images into distinct values
 //runMacro(input + "just_thresh.ijm", input);
@@ -49,7 +49,7 @@ if (result) {
 
 // Run ImageJ macros
 runMacro(input + "count_from_roi.ijm", input);
-/*
+
 //runMacro(input + "count_over_dir_prob_TK.ijm", searchDirectory);
 
 runMacro(input + "count_over_dir.ijm", searchDirectory);
@@ -60,4 +60,3 @@ runMacro(input + "count_over_dir.ijm", searchDirectory);
 exec("python", input + "classifier_comparison.py", input);
 
 print("Finished Act 1");
-*/

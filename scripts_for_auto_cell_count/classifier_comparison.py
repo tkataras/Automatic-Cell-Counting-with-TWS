@@ -1,7 +1,7 @@
 #!/usr/bin/python
 ###
 # Author: Tyler Jang, Theo Kataras
-# Date 12/1/2021
+# Date 1/11/2022
 #
 # Inputs: genotype csv file, hand count results file from count over roi,
 # results of count over dir in each classifier folder. 
@@ -9,14 +9,11 @@
 # Description: This file compares statistical information about each classifier
 # against each other.
 ###
-from numpy.ma import count
 import pandas as pd
 import numpy as np
 import os
 import sys
 import time
-from pandas.core.base import DataError
-from pandas.core.frame import DataFrame
 import scipy.stats
 
 print("Start of classifier_comparison.py\n")
@@ -49,7 +46,6 @@ for i in range(0, len(hand_ini)):
     row_name = hand_ini.loc[i].at["Label"]
     row_name = row_name.split(":")[0]
     hand_ini.loc[i].at["Label"] = row_name
-print(hand_ini)
 
 # TODO For testing that the column was renamed correctly
 hand_ini.to_csv("../training_area/Results/roi_counts_temp.csv")
@@ -57,14 +53,15 @@ lvl_h = np.unique(hand_ini)
 
 # TODO May mess with non fluoset names
 lvl_h = sorted(lvl_h, key=str.swapcase)
+
 count_h = {}
 for i in range(0, len(hand_ini)):
     if count_h.get(hand_ini.loc[i].at["Label"]) == None:
-        # may need to be 0
+        # Start the count at 0 since there is 1 more line than hand counts in the file
         count_h[hand_ini.loc[i].at["Label"]] = 0
     else:
         count_h[hand_ini.loc[i].at["Label"]] = count_h[hand_ini.loc[i].at["Label"]] + 1
-print(count_h)
+
 # Iterate through each classifier 
 for f in range(0, len(class_list)):
     curr_class = os.listdir(output_count)[f]

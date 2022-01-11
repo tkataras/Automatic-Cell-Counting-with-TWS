@@ -88,15 +88,15 @@ macro "The -- True -- Count" {
 				
 				//roiManager("deselect");
 				//roiManager("Delete"); 
-				print(filename + " this was an empty image");
+//				print(filename + " this was an empty image");
 			} else {	
-				print(filename + " this was an image with cells (after the else)");
+//				print(filename + " this was an image with cells (after the else)");
 
 				// Measuring a full image after the objects, to keep parity with the empty images
 				run("Measure");
 				rowNumber++;
 				
-				print(filenameTwo + "=filename2 the hand count");
+//				print(filenameTwo + "=filename2 the hand count");
 	
 				//need to deal with case where human marked no cells and saved placeholder, but program has objects
 				// This is with hand counts and auto counts
@@ -121,7 +121,7 @@ macro "The -- True -- Count" {
 				} else {
 					//this is the case where the hand count found no cells, but the auto count did
 					numPoints = 0;//set the number of hand counts to 0
-					print("this is the case where the hand count found no cells, but the auto count did");
+//					print("this is the case where the hand count found no cells, but the auto count did");
 					numRoiTwo = roiManager("count");
 					xPoints2 = 99999;//these need to be a point that will never overlap with objects in the image
 					yPoints2 = 99999;
@@ -156,7 +156,6 @@ macro "The -- True -- Count" {
 						 // each hand placed count
 					} // each pixel in object
 					// Update the results table
-					print("actual count sum " + counts);
 					setResult("points", rowNumber++, counts);
 				}//each object in image	
 				roiManager("deselect");		
