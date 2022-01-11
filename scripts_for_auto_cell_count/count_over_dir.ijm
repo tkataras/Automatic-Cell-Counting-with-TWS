@@ -159,7 +159,7 @@ macro "The -- True -- Count" {
 					print("actual count sum " + counts);
 					setResult("points", rowNumber++, counts);
 				}//each object in image	
-				roiManager("deselect")		
+				roiManager("deselect");		
 				roiManager("Delete");       
 			} //else
 		} //function endpoint

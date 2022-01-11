@@ -40,18 +40,25 @@ if(list.length < 2) {
 	
 	// Measure the information about each image
 	function action(input, filename) {
-		// If the hand counted image is empty, the roi count will be 0
-		if(!endsWith(filename, ".roi")) {
-			roiManager("count") = 0; 
-		} else {
+		
 			open(input + filename);
-			run("Measure");
+			
+			run("Measure"); // measure full image
+			
+			if (endsWith(filename, ".roi")){
+				print("the if has activated");
+				run("Select All");  
+				
+			run("Measure"); // measure full image
+			getImageID();
+			} 
+		    
 		    close();	
-		}
+		
 	}
 	
 	// Prints text in the log window after all files are processed
 	print("Counts from " + list.length + " ROIs");
-	saveAs("Results", output +"/roi_counts.csv");
+	saveAs("Results", output +"/roi_countstest.csv");
 }
 print("Finished count_from_roi.ijm\n");
