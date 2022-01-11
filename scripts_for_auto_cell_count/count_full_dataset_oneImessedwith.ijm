@@ -68,11 +68,11 @@ macro "The -- True -- Count" {
 			}
 			numRoi = 0;
 			run("Measure");
-			setResult("points", rowNumber++, counts);
+			setResult("points", rowNumber++, numRoi);
 				
 			//roiManager("deselect");
 			//roiManager("Delete"); 
-				print(filename + " this was an empty image");
+			print(filename + " this was an empty image");
 		} else {
 			run("Measure");	
 
