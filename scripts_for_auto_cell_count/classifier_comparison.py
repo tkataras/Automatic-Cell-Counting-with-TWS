@@ -182,27 +182,35 @@ for f in range(0, len(class_list)):
     precision2 = catchDivideByZero(final_result["tp"], (final_result["tp"] + final_result["fp"]))    
     recall2 = catchDivideByZero(final_result["tp"], (final_result["tp"] + final_result["fn"]))
     
-    """
-    # Calculate F1_2
-    F1_2 = []
-    for index in range(0, len(precision2)):
-        result = catchDivideByZero(list(precision2)[index] * list(recall2)[index], list(precision2)[index] + list(recall2)[index])
-        if result == None:
-            F1_2.append(None)
-        else:
-            F1_2.append(2 * result)
+    if precision2 != None:
+        # Calculate F1_2
+        F1_2 = []
+        for index in range(0, len(precision2)):
+            result = catchDivideByZero(list(precision2)[index] * list(recall2)[index], list(precision2)[index] + list(recall2)[index])
+            if result == None:
+                F1_2.append(None)
+            else:
+                F1_2.append(2 * result)
+    else: 
+        F1_2 = None
     # Insert precision2, recall2, and F1_2 into final csv
     final_result["precision2"] = precision2
     final_result["recall2"] = recall2
     final_result["F1_2"] = F1_2
     
     # Find the standard deviation of percision and recall
-    print(curr_class + " percision standard deviation = " + str(np.std(precision2)))
-    print(curr_class + " recall standard deviation = " + str(np.std(recall2)))   
-    """
+    if precision2 != None:
+        print(curr_class + " percision standard deviation = " + str(np.std(precision2)))
+    else:
+        print(curr_class + " percision standard deviation = None")
+
+    if recall2 != None:
+        print(curr_class + " recall standard deviation = " + str(np.std(recall2)))   
+    else:
+        print(curr_class + " recall standard deviation = None")   
+
     # If only 1 level
     if len(lvl_geno) == 1:
-        """
         group_one = final_result.query('geno == @lvl_geno[0]')
         
         # Calculate 1 Sample T Test
@@ -210,25 +218,39 @@ for f in range(0, len(class_list)):
         recall_mean = np.mean(group_one["recall2"])
         F1_mean = np.mean(group_one["F1_2"])
 
+        precision_geno_ttest = None
+        recall_geno_ttest = None 
+        F1_geno_ttest = None
+
         # TODO remove the 1 sample T test since it only matters when user expects an expected mean
         # TODO I don't know what the popmean should be equal to, what is the expected mean of our pop vs actual mean
-        """"""
-        precision_geno_ttest = scipy.stats.ttest_1samp(group_one["precision2"], popmean=1, nan_policy="omit")
-        recall_geno_ttest = scipy.stats.ttest_1samp(group_one["recall2"], popmean=1, nan_policy="omit")
-        F1_geno_ttest = scipy.stats.ttest_1samp(group_one["F1_2"], popmean=1, nan_policy="omit")
-        print(precision_geno_ttest)
-        print(recall_geno_ttest)
-        print(str(F1_geno_ttest) + "\n")
+        if precision2 != None:
+            precision_geno_ttest = scipy.stats.ttest_1samp(group_one["precision2"], popmean=1, nan_policy="omit")
+            print(precision_geno_ttest)
+        if recall2 != None:
+            recall_geno_ttest = scipy.stats.ttest_1samp(group_one["recall2"], popmean=1, nan_policy="omit")
+            print(recall_geno_ttest)
+        if F1_2 != None:
+            F1_geno_ttest = scipy.stats.ttest_1samp(group_one["F1_2"], popmean=1, nan_policy="omit")
+            print(str(F1_geno_ttest) + "\n")
 
         # TODO also write the F values out to log
-        
+        precision_geno_ttest_pval = None
+        recall_geno_ttest_pval = None
+        F1_geno_ttest_pval = None
+
         # Get the p values of each T test
-        precision_geno_ttest_pval = precision_geno_ttest[1]
-        recall_geno_ttest_pval = recall_geno_ttest[1]
-        F1_geno_ttest_pval = F1_geno_ttest[1]
+        if precision2 != None:
+            precision_geno_ttest_pval = precision_geno_ttest[1]
+        if recall2 != None:
+            recall_geno_ttest_pval = recall_geno_ttest[1]
+        if F1_2 != None:
+            F1_geno_ttest_pval = F1_geno_ttest[1]
 
         # Get means of F1_2
-        mean_F1_ev0 = np.nanmean(group_one["F1_2"])
+        mean_F1_ev0 = None
+        if F1_2 != None:
+            mean_F1_ev0 = np.nanmean(group_one["F1_2"])
   
         # TODO adjust columns of frame
         # Prepare output csv file
@@ -242,7 +264,7 @@ for f in range(0, len(class_list)):
         "F1_geno_ttest_pval"])
         
         your_boat = your_boat.append(row_row)
-        """
+       
     # Else, if more than two levels
     elif len(lvl_geno) > 2:
         print("Automatic analysis with more than 2 levels")

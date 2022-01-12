@@ -22,12 +22,17 @@ macro "The -- True -- Count" {
 	run("Clear Results");
 	
 	// Set size minimum for cells to exclude small radius noise
-	size_min=20;
-	Dialog.create("Size Min");
-	Dialog.addNumber("Minimum pixel size for object count:", size_min);
+	sizeMin=20;
+	sizeMax = 1000;
+	Dialog.create("Size Values");
+	Dialog.addNumber("Minimum pixel size for object count:", sizeMin);
+	Dialog.addNumber("Maximum pixel size for object count:", sizeMax);
 	Dialog.show();
-	size_min = Dialog.getNumber();
-	
+	sizeMin = Dialog.getNumber();
+	sizeMax = Dialog.getNumber();
+
+	print(sizeMin);
+	print(sizeMax);
 	// Validation Hand Counts
 	//dirTwo = inputDirs + "../Validation_Hand_Counts - Copy/";
 	//ThiS SHOULD BE USING THE IMAGE SUBSET included in validation hand counts to match subset in weka output
@@ -64,10 +69,10 @@ macro "The -- True -- Count" {
 			run("Convert to Mask");
 
 			// Call the watershed algorithm to split objects
-			run("Watershed");
+			//run("Watershed");
 
 			// This imageJ plugin creates the results file and image of the count cells based on the size exclusion		
-			run("Analyze Particles...", "size=" + size_min + "-Infinity pixel show=Masks display summarize add");
+			run("Analyze Particles...", "size=" + sizeMin + "-" + sizeMax + " pixel show=Masks display summarize add");
 			
 			//selectImage("Mask of " + filename);     //JUST COMMENteD OUT TO TEST !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			saveAs("Png", outputDirs + output + filename);

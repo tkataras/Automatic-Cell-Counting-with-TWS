@@ -29,10 +29,10 @@ if(result) {
 //	run("BS TWS apply");
 }
 */
-run("BS TWS apply");
+//run("BS TWS apply");
 
 // Threshold the images into distinct values
-//runMacro(input + "just_thresh.ijm", input);
+runMacro(input + "just_thresh.ijm", input);
 
 // TODO Check if can run without projected images
 searchDirectory = input
