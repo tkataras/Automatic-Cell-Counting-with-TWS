@@ -182,7 +182,8 @@ for f in range(0, len(class_list)):
     precision2 = catchDivideByZero(final_result["tp"], (final_result["tp"] + final_result["fp"]))    
     recall2 = catchDivideByZero(final_result["tp"], (final_result["tp"] + final_result["fn"]))
     
-    if precision2 != None:
+
+    if precision2 is not None and recall2 is not None:
         # Calculate F1_2
         F1_2 = []
         for index in range(0, len(precision2)):
@@ -199,12 +200,12 @@ for f in range(0, len(class_list)):
     final_result["F1_2"] = F1_2
     
     # Find the standard deviation of percision and recall
-    if precision2 != None:
+    if precision2 is not None:
         print(curr_class + " percision standard deviation = " + str(np.std(precision2)))
     else:
         print(curr_class + " percision standard deviation = None")
 
-    if recall2 != None:
+    if recall2 is not None:
         print(curr_class + " recall standard deviation = " + str(np.std(recall2)))   
     else:
         print(curr_class + " recall standard deviation = None")   
@@ -224,13 +225,13 @@ for f in range(0, len(class_list)):
 
         # TODO remove the 1 sample T test since it only matters when user expects an expected mean
         # TODO I don't know what the popmean should be equal to, what is the expected mean of our pop vs actual mean
-        if precision2 != None:
+        if precision2 is not None:
             precision_geno_ttest = scipy.stats.ttest_1samp(group_one["precision2"], popmean=1, nan_policy="omit")
             print(precision_geno_ttest)
-        if recall2 != None:
+        if recall2 is not None:
             recall_geno_ttest = scipy.stats.ttest_1samp(group_one["recall2"], popmean=1, nan_policy="omit")
             print(recall_geno_ttest)
-        if F1_2 != None:
+        if F1_2 is not None:
             F1_geno_ttest = scipy.stats.ttest_1samp(group_one["F1_2"], popmean=1, nan_policy="omit")
             print(str(F1_geno_ttest) + "\n")
 
@@ -240,16 +241,16 @@ for f in range(0, len(class_list)):
         F1_geno_ttest_pval = None
 
         # Get the p values of each T test
-        if precision2 != None:
+        if precision2 is not None:
             precision_geno_ttest_pval = precision_geno_ttest[1]
-        if recall2 != None:
+        if recall2 is not None:
             recall_geno_ttest_pval = recall_geno_ttest[1]
-        if F1_2 != None:
+        if F1_2 is not None:
             F1_geno_ttest_pval = F1_geno_ttest[1]
 
         # Get means of F1_2
         mean_F1_ev0 = None
-        if F1_2 != None:
+        if F1_2 is not None:
             mean_F1_ev0 = np.nanmean(group_one["F1_2"])
   
         # TODO adjust columns of frame
