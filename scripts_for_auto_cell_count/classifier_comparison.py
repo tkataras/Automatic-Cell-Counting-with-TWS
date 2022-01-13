@@ -48,7 +48,7 @@ for i in range(0, len(hand_ini)):
     hand_ini.loc[i].at["Label"] = row_name
 
 # TODO For testing that the column was renamed correctly
-hand_ini.to_csv("../training_area/Results/roi_counts_temp.csv")
+# hand_ini.to_csv("../training_area/Results/roi_counts_temp.csv")
 lvl_h = np.unique(hand_ini)
 
 # TODO May mess with non fluoset names
