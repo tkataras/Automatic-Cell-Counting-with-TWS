@@ -48,7 +48,7 @@ for i in range(0, len(hand_ini)):
     hand_ini.loc[i].at["Label"] = row_name
 
 # TODO For testing that the column was renamed correctly
-# hand_ini.to_csv("../training_area/Results/roi_counts_temp.csv")
+hand_ini.to_csv("../training_area/Results/roi_counts_temp.csv")
 lvl_h = np.unique(hand_ini)
 
 # TODO May mess with non fluoset names
@@ -61,7 +61,7 @@ for i in range(0, len(hand_ini)):
         count_h[hand_ini.loc[i].at["Label"]] = 0
     else:
         count_h[hand_ini.loc[i].at["Label"]] = count_h[hand_ini.loc[i].at["Label"]] + 1
-
+print(count_h)
 # Iterate through each classifier 
 for f in range(0, len(class_list)):
     curr_class = os.listdir(output_count)[f]
