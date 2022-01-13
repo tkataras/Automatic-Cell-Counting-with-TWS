@@ -30,7 +30,9 @@ macro "The -- True -- Count" {
 	Dialog.show();
 	sizeMin = Dialog.getNumber();
 	sizeMax = Dialog.getNumber();
-
+	print(sizeMin);
+	print(sizeMax);
+	
 	// Validation Hand Counts
 	//dirTwo = inputDirs + "../Validation_Hand_Counts - Copy/";
 	//ThiS SHOULD BE USING THE IMAGE SUBSET included in validation hand counts to match subset in weka output
