@@ -25,12 +25,16 @@ macro "The -- True -- Count" {
 	outputDirs = inputDirs + "/../../Weka_Output_Counted/" + selectedClassifier[selectedClassifier.length - 1];
 	
 	// Set size minimum for cells to exclude small radius noise
-	size_min=20;
-	Dialog.create("Size Min");
-	Dialog.addNumber("Minimum pixel size for object count:", size_min);
+	sizeMin=20;
+	sizeMax = 1000;
+	Dialog.create("Size Values");
+	Dialog.addNumber("Minimum pixel size for object count:", sizeMin);
+	Dialog.addNumber("Maximum pixel size for object count:", sizeMax);
 	Dialog.show();
-	size_min = Dialog.getNumber();
-	
+	sizeMin = Dialog.getNumber();
+	sizeMax = Dialog.getNumber();
+	print(sizeMin);
+	print(sizeMax);
 	
 	// Holds all file names from input folder
 	list = getFileList(inputDirs);	
@@ -55,7 +59,7 @@ macro "The -- True -- Count" {
 		//run("Watershed");
 		
 		// This imageJ plugin creates the results file and image of the count cells based on the size exclusion		
-		run("Analyze Particles...", "size=" + size_min + "-Infinity pixel show=Masks display summarize add");
+		run("Analyze Particles...", "size=" + sizeMin + "-" + sizeMax + " pixel show=Masks display summarize add");
 
 		print("ran analyze particles");
 		// Save the resulting counted image
