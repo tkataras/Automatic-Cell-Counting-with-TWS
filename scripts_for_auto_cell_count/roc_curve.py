@@ -7,20 +7,12 @@
 # Inputs: 
 # Outputs: 
 ###
-from unittest import result
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import os
 import sys
-import time
-import scipy.stats
-
-from sklearn.datasets import make_classification
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import roc_curve
+from sklearn.metrics import f1_score, roc_curve
 from sklearn.metrics import roc_auc_score
 
 print("Start of roc_curve.py\n")
@@ -42,33 +34,55 @@ result_out = "../training_area/Results/"
 
 # Reformat ROI names for use by selecting file name only, removing point name
 label_col = []
+to_delete = []
 for i in range(0, len(results)):
     row_name = results.loc[i].at["Label"]
-    row_name = row_name.split(":")[0]
-    label_col.append(row_name)
+    row_name = row_name.split(":")
+
+    # Remove the one line to represent the image
+    if len(row_name) == 1:
+        to_delete.append(i)
+    else:
+        row_name = row_name[0]
+        label_col.append(row_name)
+
+# Remove lines representing a whole image      
+results = results.drop(index = to_delete)
 
 results["Label"] = label_col
 
-def plot_roc_curve(fpr, tpr):
-    plt.plot(fpr, tpr, color='orange', label='ROC')
-    plt.plot([0, 1], [0, 1], color='darkblue', linestyle='--')
-    plt.xlabel('False Positive Rate')
-    plt.ylabel('True Positive Rate')
-    plt.title('Receiver Operating Characteristic (ROC) Curve')
-    plt.legend()
-    plt.show()
+#print(results)
+#results.to_csv("test.csv")
 
+# Get the true or false count
 binary_y = np.array(results["points"])
+# Need to mark 2 as a 1 so it is not a multiclass array 
+binary_y[binary_y == 2] = 1
+
 y_score = np.array(results["Mean"])
 
-fpr, tpr, thresholds = roc_curve(binary_y, y_score, pos_label=0)
-print(fpr)
-print(tpr)
-print(thresholds)
+# NOTE in the method implementation, threshold will be made to have a value of max(y_score) + 1 to ensure it has a data point that is fpr, tpr = 0
+fpr, tpr, thresholds = roc_curve(binary_y, y_score, pos_label=1, drop_intermediate=False)
 
-plt.plot(fpr, tpr, marker=".", label="ROC Curve")
+print(thresholds)
+auc = roc_auc_score(binary_y, y_score, multi_class="ovo")
+print("AUC = " + str(auc))
+#precision = tpr / (tpr + fpr)
+#recall = tpr / 
+# F1 = f1_score(binary_y, y_score)
+#print(F1)
+
+plt.title("Receiver Operating Characteristic")
+plt.plot(thresholds, fpr, color="blue", marker=".", label="False Positive")
+plt.plot(thresholds, tpr, color="red", marker=".", label="True Positive")
+
+# Set x axis limit
+plt.xlim([0.5, 1])
 # Axis labels
-plt.xlabel('False Positive Rate')
-plt.ylabel('True Positive Rate')
+plt.xlabel('Threshold')
+plt.ylabel('Rate')
 plt.legend()
 plt.show()
+
+plt.savefig("roc_curve.png")
+print("Finished roc_curve.py\n")
