@@ -133,28 +133,47 @@ for ( z = 0; z < listOfMod.length; z++ ) {
 	            print(outputFileName);
 	            new FileSaver( result ).saveAsTiff( listOfprobOut[ z ].getPath() + File.separator + outputFileName );
 	  		
-				//graph cut to get segmented image and then save
-				// dataWeight - weight of data term (t-links) [0,1]
-				float dataWeight = 0.9;
-				// pottsWeight - or smoothness, weight of smoothness term (n-links) [0,10]
-				float pottsWeight = 1;
-				// optional input, else intialise to null
-				ImagePlus edge = null;
-				edgeWeight = 0;
+				
 
-				seg = gc.processSingleChannelImage(result, edge, dataWeight, pottsWeight, edgeWeight);
-
-				// print(listOfOut[ z ].getPath());
-				// print(outputFileName);
-				//new FileSaver( seg ).saveAsTiff( listOfOut[ z ].getPath() + File.separator + "SEG" + outputFileName);
+				
 
 				//trying the .5 threshold
-				//IJ.setThreshold(result, 0, 0.5000);
-				//Prefs.blackBackground = true;
-				//IJ.run(result, "Convert to Mask", "");
+				IJ.setThreshold(result, 0, 0.5000);
+				Prefs.blackBackground = true;
+				IJ.run(result, "Convert to Mask", "");
 				IJ.run(result, "Convert to Mask", "method=Default background=Light calculate black");
 				
-				new FileSaver( result ).saveAsTiff( listOfOut[ z ].getPath() + File.separator + "SEG_auto_thresh" + outputFileName);
+				new FileSaver( result ).saveAsTiff( listOfOut[ z ].getPath() + File.separator + "Segmented_image" + outputFileName);
+
+//graph cut to get segmented image and then save
+				// dataWeight - weight of data term (t-links) [0,1]
+				float dataWeight = .75;
+				// pottsWeight - or smoothness, weight of smoothness term (n-links) [0,10]
+				float pottsWeight = 3; //600 is reccomended in the vignette on imagej.net??? produces a white image
+				// optional input, else intialise to null
+				
+				
+				
+				
+				//right now the results file should be carried through creating as probabilty and then thresholding
+				//IJ.run(result, "Find Edges", ""); //testing having the edges highlighted, dont really know what image the program is expecting
+				IJ.run(result, "Fill Holes", "");
+				Prefs.blackBackground = false;
+				IJ.run(result, "Erode", "");
+				
+				ImagePlus edge = result;
+				ImagePlus edge = null; // TRYING TO WORK WITH JUST THE ORIGIONAL VARs AGAIN
+				
+				edgeWeight = 0;// this seems to crash with decimals
+
+prob = IJ.openImage( listOfprobOut[ z ].getPath() + File.separator + outputFileName);
+
+				seg = gc.processSingleChannelImage(prob, edge, dataWeight, pottsWeight, edgeWeight);
+
+// print(listOfOut[ z ].getPath());
+				// print(outputFileName);
+				new FileSaver( seg ).saveAsTiff( listOfOut[ z ].getPath() + File.separator + "SEG_via_GC" + outputFileName);
+
 
   
 	            // force garbage collection (important for large images)

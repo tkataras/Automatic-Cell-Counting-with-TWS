@@ -37,7 +37,7 @@ testingPath = testingPath + "Weka_Output/" + trimClassName[0];
 //run("apply TWS one classifier");
 
 // Threshold the images
-runMacro(input + "just_thresh.ijm", testingPath);
+//runMacro(input + "just_thresh.ijm", testingPath);
 
 // TODO Check if can run without projected images
 searchDirectory = input

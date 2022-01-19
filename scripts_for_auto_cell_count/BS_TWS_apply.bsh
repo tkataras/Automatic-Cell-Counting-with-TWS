@@ -35,7 +35,9 @@ listOfMod = pathToFile(modelsDir).listFiles();
 listOfOut = pathToFile(outputDirs).listFiles();
 
 // For each classifier model
-for (currMod = 0; currMod < listOfMod.length; currMod++) {	
+//for (currMod = 0; currMod < listOfMod.length; currMod++) {	
+//limited for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!S
+for (currMod = 0; currMod < 1; currMod++) {		
 	// Path to classifier model
 	modelPath = listOfMod[currMod];
 	print(modelPath);

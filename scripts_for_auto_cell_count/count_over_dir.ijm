@@ -77,6 +77,8 @@ macro "The -- True -- Count" {
 			//selectImage("Mask of " + filename);     //JUST COMMENteD OUT TO TEST !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			saveAs("Png", outputDirs + output + filename);
 
+
+
 			
 			counts = 0;
 			//stop empty auto count images here 

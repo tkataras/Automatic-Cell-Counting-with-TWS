@@ -13,14 +13,23 @@ run("Set Measurements...", "area mean standard modal min centroid center perimet
 // Populate all folders. If folders already exist, selectively does not make those folders
 //exec("python", input + "file_architect.py", input);
 
+//run("BS TWS apply");	
+//run("BS TWS apply prob");
+
+
+
+
+
 /*
 Dialog.create("Label or Probability?");
 Dialog.addCheckbox("Probability?", false);
 Dialog.show();
 result = Dialog.getCheckbox();
 
+
+
 if(result) {
-//	run("BS TWS apply prob");
+	run("BS TWS apply prob");
 } else {
 	// TODO need to find a way to put this bsh into user's plugins
 	//fiji_dir = getDirectory("Select the plugins directory for fiji (fiji/plugins)");
@@ -47,16 +56,16 @@ if (result) {
 	searchDirectory = input + "../training_area/Weka_Output_Thresholded/";
 }
 
-// Run ImageJ macros
+// Run ImageJ  macros 
 //runMacro(input + "count_from_roi.ijm", input);
 
 //runMacro(input + "count_over_dir_prob_TK.ijm", searchDirectory);
 
-runMacro(input + "count_over_dir.ijm", searchDirectory);
-//runMacro(input + "old_count_over_dir_TK.ijm", searchDirectory);
+//runMacro(input + "count_over_dir.ijm", searchDirectory);
+runMacro(input + "count_over_dir_prob_TK.ijm", searchDirectory);
 
 
 // Next, run classifier comparison
-exec("python", input + "classifier_comparison.py", input);
+//exec("python", input + "classifier_comparison.py", input);
 
 print("Finished Act 1");

@@ -9,6 +9,7 @@
 # Description: This file compares statistical information about each classifier
 # against each other.
 ###
+from cmath import nan
 import pandas as pd
 import numpy as np
 import os
@@ -62,7 +63,7 @@ for i in range(0, len(hand_ini)):
         count_h[hand_ini.loc[i].at["Label"]] = 0
     else:
         count_h[hand_ini.loc[i].at["Label"]] = count_h[hand_ini.loc[i].at["Label"]] + 1
-print(count_h)
+
 # Iterate through each classifier 
 for f in range(0, len(class_list)):
     curr_class = os.listdir(output_count)[f]
@@ -129,8 +130,18 @@ for f in range(0, len(class_list)):
     # Method to catch divide by zeros 
     def catchDivideByZero(numer, denom):
         try:
-            return numer/denom
+            # Don't print the error message to stderr
+            with np.errstate(divide='ignore', invalid='ignore'):
+                return numer/denom
         except ZeroDivisionError:
+            # Divide dataframe elements by elements that are not 0, those that are will be None values
+            if isinstance(numer, pd.Series) and isinstance(denom, pd.Series):
+                numer = list(numer)
+                denom = list(denom)
+
+                # Don't print the error message for the where statement evaluation
+                with np.errstate(divide='ignore', invalid='ignore'):
+                    return np.divide(numer, denom, out=None, where=(denom!=0))
             return None
     # Need to calculate precision and recall
     total_tp = sum(final_result["tp"])
@@ -182,8 +193,6 @@ for f in range(0, len(class_list)):
     # Precision and recall per image
     precision2 = catchDivideByZero(final_result["tp"], (final_result["tp"] + final_result["fp"]))    
     recall2 = catchDivideByZero(final_result["tp"], (final_result["tp"] + final_result["fn"]))
-    
-
     if precision2 is not None and recall2 is not None:
         # Calculate F1_2
         F1_2 = []
@@ -195,19 +204,19 @@ for f in range(0, len(class_list)):
                 F1_2.append(2 * result)
     else: 
         F1_2 = None
+
     # Insert precision2, recall2, and F1_2 into final csv
     final_result["precision2"] = precision2
     final_result["recall2"] = recall2
     final_result["F1_2"] = F1_2
-    
     # Find the standard deviation of percision and recall
     if precision2 is not None:
-        print(curr_class + " percision standard deviation = " + str(np.std(precision2)))
+        print(curr_class + " percision standard deviation = " + str(np.nanstd(precision2)))
     else:
         print(curr_class + " percision standard deviation = None")
 
     if recall2 is not None:
-        print(curr_class + " recall standard deviation = " + str(np.std(recall2)))   
+        print(curr_class + " recall standard deviation = " + str(np.nanstd(recall2)))   
     else:
         print(curr_class + " recall standard deviation = None")   
 
@@ -228,13 +237,13 @@ for f in range(0, len(class_list)):
         # TODO I don't know what the popmean should be equal to, what is the expected mean of our pop vs actual mean
         if precision2 is not None:
             precision_geno_ttest = scipy.stats.ttest_1samp(group_one["precision2"], popmean=1, nan_policy="omit")
-            print(precision_geno_ttest)
+            print("Precision T Test " + str(precision_geno_ttest))
         if recall2 is not None:
             recall_geno_ttest = scipy.stats.ttest_1samp(group_one["recall2"], popmean=1, nan_policy="omit")
-            print(recall_geno_ttest)
+            print("Recall T Test " + str(recall_geno_ttest))
         if F1_2 is not None:
             F1_geno_ttest = scipy.stats.ttest_1samp(group_one["F1_2"], popmean=1, nan_policy="omit")
-            print(str(F1_geno_ttest) + "\n")
+            print("F1 T Test " + str(F1_geno_ttest) + "\n")
 
         # TODO also write the F values out to log
         precision_geno_ttest_pval = None
@@ -325,19 +334,31 @@ for f in range(0, len(class_list)):
         # Calculate the Welch 2 Sample T-test   
         group_one = final_result.query('geno == @lvl_geno[0]')
         group_two = final_result.query('geno == @lvl_geno[1]')
-
-        precision_geno_ttest = scipy.stats.ttest_ind(group_one["precision2"], group_two["precision2"], equal_var=False, nan_policy="omit")
-        recall_geno_ttest = scipy.stats.ttest_ind(group_one["recall2"], group_two["recall2"], equal_var=False, nan_policy="omit")
-        F1_geno_ttest = scipy.stats.ttest_ind(group_one["F1_2"], group_two["F1_2"], equal_var=False, nan_policy="omit")
+        precision_geno_ttest = None
+        precision_geno_ttest_pval = None
+        recall_geno_ttest = None 
+        recall_geno_ttest_pval = None
+        F1_geno_ttest = None
+        F1_geno_ttest_pval = None
         
-        # Get the p values of each T test
-        precision_geno_ttest_pval = precision_geno_ttest[1]
-        recall_geno_ttest_pval = recall_geno_ttest[1]
-        F1_geno_ttest_pval = F1_geno_ttest[1]
+        if precision2 is not None:
+            precision_geno_ttest = scipy.stats.ttest_ind(group_one["precision2"], group_two["precision2"], equal_var=False, nan_policy="omit")
+            precision_geno_ttest_pval = precision_geno_ttest[1]
+
+        if recall2 is not None:
+            recall_geno_ttest = scipy.stats.ttest_ind(group_one["recall2"], group_two["recall2"], equal_var=False, nan_policy="omit")
+            recall_geno_ttest_pval = recall_geno_ttest[1]
+
+        if F1_2 is not None:
+            F1_geno_ttest = scipy.stats.ttest_ind(group_one["F1_2"], group_two["F1_2"], equal_var=False, nan_policy="omit")
+            F1_geno_ttest_pval = F1_geno_ttest[1]
 
         # Get means of F1_2
-        mean_F1_ev0 = np.nanmean(group_one["F1_2"])
-        mean_F1_ev1 = np.nanmean(group_two["F1_2"])
+        mean_F1_ev0 = None
+        mean_F1_ev1 = None
+        if F1_2 is not None:
+            mean_F1_ev0 = np.nanmean(group_one["F1_2"])
+            mean_F1_ev1 = np.nanmean(group_two["F1_2"])
 
         # Prepare output csv file
         row_row = pd.DataFrame([[curr_class, precision, recall, F1, accuracy, mean_absolute_error, mean_percent_error, F1_geno_ttest_pval, mean_F1_ev0, mean_F1_ev1, precision_geno_ttest_pval, recall_geno_ttest_pval]], columns=["class", "precision", "recall", "F1", "accuracy", "MAE", "MPE", "F1_geno_ttest_pval", "mean_F1_ev0", "mean_F1_ev1", "precision_geno_ttest_pval", "recall_geno_ttest_pval"])
