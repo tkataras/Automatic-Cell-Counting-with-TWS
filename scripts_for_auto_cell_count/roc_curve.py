@@ -64,17 +64,20 @@ y_score = np.array(results["Mean"])
 # NOTE in the method implementation, threshold will be made to have a value of max(y_score) + 1 to ensure it has a data point that is fpr, tpr = 0
 fpr, tpr, thresholds = roc_curve(binary_y, y_score, pos_label=1, drop_intermediate=False)
 
-print(thresholds)
+# Calculate the area under the curve
 auc = roc_auc_score(binary_y, y_score, multi_class="ovo")
 print("AUC = " + str(auc))
+
+# TODO TO make f1 score, I need the tp, fp, and fn values specifically
+# Probabily can get it out of the classifierN_final.csv, if I had one
 #precision = tpr / (tpr + fpr)
 #recall = tpr / 
 # F1 = f1_score(binary_y, y_score)
 #print(F1)
 
-plt.title("Receiver Operating Characteristic")
-plt.plot(thresholds, fpr, color="blue", marker=".", label="False Positive")
-plt.plot(thresholds, tpr, color="red", marker=".", label="True Positive")
+plt.title(selectedClassifier + " Receiver Operating Characteristic")
+plt.plot(thresholds, fpr, color="red", marker=".", label="False Positive")
+plt.plot(thresholds, tpr, color="blue", marker=".", label="True Positive")
 
 # Set x axis limit
 plt.xlim([0.5, 1])
@@ -82,7 +85,6 @@ plt.xlim([0.5, 1])
 plt.xlabel('Threshold')
 plt.ylabel('Rate')
 plt.legend()
-plt.show()
-
 plt.savefig("roc_curve.png")
+plt.show()
 print("Finished roc_curve.py\n")
