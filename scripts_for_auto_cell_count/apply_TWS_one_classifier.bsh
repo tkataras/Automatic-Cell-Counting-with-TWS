@@ -3,7 +3,7 @@
 
 // Set the working directory to the directory with the script
 bsh.cwd = srcDir;
-inputDir = bsh.cwd + "/../training_area/testing_area/Images/";
+inputDir = bsh.cwd + "/../training_area/testing_area/images/";
 outputDir = bsh.cwd + "/../training_area/testing_area/Weka_Output/";
 
 // Get the selected classifier as a string
