@@ -2,10 +2,10 @@
 ###
 # Author: Tyler Jang, Theo Kataras
 # Date: 1/19/2021
-# 
+# This file creates a threshold optimization and ROC curve plot for each classifier 
 #
-# Inputs: 
-# Outputs: 
+# Inputs: Results csv file containing the probability of each object
+# Outputs: A plot for threshold optimization and a ROC plot.
 ###
 import pandas as pd
 import numpy as np
@@ -57,7 +57,7 @@ results["Label"] = label_col
 # Get the true or false count
 binary_y = np.array(results["points"])
 # Need to mark 2 as a 1 so it is not a multiclass array 
-binary_y[binary_y == 2] = 1
+binary_y[binary_y >= 2] = 1
 
 y_score = np.array(results["Mean"])
 
@@ -74,17 +74,28 @@ print("AUC = " + str(auc))
 #recall = tpr / 
 # F1 = f1_score(binary_y, y_score)
 #print(F1)
-
-plt.title(selectedClassifier + " Receiver Operating Characteristic")
+plt.subplot(1,2,1)
+plt.title(selectedClassifier + " Threshold Optimization")
 plt.plot(thresholds, fpr, color="red", marker=".", label="False Positive")
 plt.plot(thresholds, tpr, color="blue", marker=".", label="True Positive")
 
 # Set x axis limit
 plt.xlim([0.5, 1])
+
 # Axis labels
 plt.xlabel('Threshold')
 plt.ylabel('Rate')
 plt.legend()
-plt.savefig("roc_curve.png")
+
+# Show the ROC Curve
+plt.subplot(1,2,2)
+plt.plot(fpr, tpr, color="blue", marker=".", label="ROC Curve")
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title(selectedClassifier + " Receiver Operating Characteristic")
+
+plt.tight_layout(w_pad=5)
+plt.savefig("roc_curve.png", bbox_inches='tight')
 plt.show()
+
 print("Finished roc_curve.py\n")
