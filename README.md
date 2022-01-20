@@ -41,6 +41,8 @@ pip3 install imageio
 # Prerequisites:
 -Current version of FIJI distribution of Imagej https://imagej.net/software/fiji/
 
+-***In ImageJ enable update site for Featurej**
+
 -Python https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe
  
 # How To Use
