@@ -29,7 +29,16 @@ if(result) {
 //	run("BS TWS apply");
 }
 */
-//run("BS TWS apply");
+Dialog.create("Run Weka to create new probability output?");
+Dialog.addCheckbox("Do you need to run Weka?", true);
+Dialog.show();
+ifWeka = Dialog.getCheckbox();
+if (ifWeka) {
+	//run("BS TWS apply prob");
+} else {}
+
+
+//run("BS TWS apply prob");
 
 // Threshold the images into distinct values
 //runMacro(input + "just_thresh.ijm", input);

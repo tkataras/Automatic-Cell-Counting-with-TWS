@@ -6,6 +6,10 @@
 // The user will have to select the directory that contains the script they are running.
 #@ File(label="Source directory", description="Select the directory with the source of the scripts", style="directory") srcDir
 
+#@ Float (label="Set cutoff[0,1], default = 0.5", description="Choose a cutoff from ACCT2 or leave as default 0.5",value=0.5) cutoff
+
+#@ Integer(label="Number of tiles in X:", description="Number of image subdivisions in the X direction", value=3) xTiles
+
 //#@ File(label="Output directories", description="Select the output directories", style="directory") outputDirs
 //#@ File(label="Weka models", description="Select the folder of Weka models to apply", style="directory") modelsDir
 //#@ String(label="Result mode",choices={"Labels","Probabilities"}) resultMode
@@ -107,33 +111,39 @@ for ( z = 0; z < listOfMod.length; z++ ) {
             	IJ.run(result, "Slice Remover", "first=2 last=2 increment=2");
 
 	            
+				
 	            // save result as TIFF in output folder
 	            outputFileName = listOfFiles[ i ].getName().replaceFirst("[.][^.]+$", "") + ".tif";
 	            //print(listOfOut[ z ].getPath());
 	            print(listOfprobOut[ z ].getPath());
 	            print(outputFileName);
 	            new FileSaver( result ).saveAsTiff( listOfprobOut[ z ].getPath() + File.separator + outputFileName );
+
+	            //thresholding the probaility image just like the imageJ GUI. (only works with 2 classes eg. cell & non-cell)
+				IJ.setThreshold(result, 0, cutoff);
+				IJ.run(result, "Convert to Mask", "");
+
 	  		
 				//graph cut to get segmented image and then save
 				// dataWeight - weight of data term (t-links) [0,1]
-				float dataWeight = 0.9;
+				//float dataWeight = 0.9;
 				// pottsWeight - or smoothness, weight of smoothness term (n-links) [0,10]
-				float pottsWeight = 1;
+				//float pottsWeight = 1;
 				// optional input, else intialise to null
-				ImagePlus edge = null;
-				edgeWeight = 0;
+				//ImagePlus edge = null;
+				//edgeWeight = 0;
 
-				seg = gc.processSingleChannelImage(result, edge, dataWeight, pottsWeight, edgeWeight);
+				//seg = gc.processSingleChannelImage(result, edge, dataWeight, pottsWeight, edgeWeight);
 
 				print(listOfOut[ z ].getPath());
 				print(outputFileName);
-				new FileSaver( seg ).saveAsTiff( listOfOut[ z ].getPath() + File.separator + "SEG" + outputFileName);
+				new FileSaver( result ).saveAsTiff( listOfOut[ z ].getPath() + File.separator + "SEG" + outputFileName);
   
 	            // force garbage collection (important for large images)
 	            result = null; 
 	            image = null;
 	            
-	            System.gc();
+	            //System.gc();
 	            
 	        }
 	    }
