@@ -61,7 +61,6 @@ macro "The -- True -- Count" {
 		// This imageJ plugin creates the results file and image of the count cells based on the size exclusion		
 		run("Analyze Particles...", "size=" + sizeMin + "-" + sizeMax + " pixel show=Masks display summarize add");
 
-		print("ran analyze particles");
 		// Save the resulting counted image
 		saveAs("Png", output + "/" + filename);
 		//stop empty auto count images here 
