@@ -57,6 +57,9 @@ for (currMod = 0; currMod < listOfMod.length; currMod++) {
 	        print(image);
 	        print(getProbs);
 	        if(image != null) {
+	        	// Ensure the image is in 8-bit format for grey scaling
+	        	IJ.run(image, "8-bit", "");
+	        	
 	            // TODO have Theo explain why these are hard coded numbers
 	            tilesPerDim = new int[2];
 	            if(image.getNSlices() > 1) {

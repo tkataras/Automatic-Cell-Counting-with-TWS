@@ -37,7 +37,7 @@ testingPath = testingPath + "Weka_Output/" + trimClassName[0];
 //run("apply TWS one classifier");
 
 // Threshold the images
-runMacro(input + "just_thresh.ijm", testingPath);
+//runMacro(input + "just_thresh.ijm", testingPath);
 
 // TODO Check if can run without projected images
 searchDirectory = input
@@ -54,7 +54,7 @@ if (result) {
 }
 
 // Count the number of objects in each image
-runMacro(input + "count_full_dataset.ijm", searchDirectory);
+runMacro(input + "count_full_dataset_oneImessedwith.ijm", searchDirectory);
 
 // Finally, get statistical information about the classifier's performance
 exec("python", input + "final_classifier_check.py", input, trimClassName[0]);

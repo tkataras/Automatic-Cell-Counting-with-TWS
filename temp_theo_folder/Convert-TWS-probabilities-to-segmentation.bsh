@@ -1,0 +1,45 @@
+import ij.IJ;
+import ij.ImagePlus;
+import ij.ImageStack;
+import ij.process.FloatProcessor;
+
+// assume probability image as the currently selected one
+probs = IJ.getImage();
+
+// read image dimensions
+width = probs.getWidth();
+height = probs.getHeight();
+nSlices = probs.getNSlices();
+nClasses = probs.getNChannels();
+
+// create stack to store segmentation
+segmentation = new ImageStack( width, height );
+
+// for each slice
+for( s = 1; s <= nSlices; s++ )
+{
+	probs.setSlice( s );
+	probStack = probs.getImageStack();
+
+	segSlice = new FloatProcessor( width, height );
+	
+	for( x=0; x<width; x++ )
+	  for( y=0; y<height; y++ )
+	  {
+	  	max = 0f;
+	  	cIndex = 0;
+	  	// select class with higher probability
+	  	for( c=0; c<nClasses; c++ )
+	  		if( probStack.getVoxel( x, y, c ) > max )
+	  		{
+	  			max = probStack.getVoxel( x, y, c );
+	  			cIndex = c;
+	  		}
+	  	segSlice.setf( x, y, (float) cIndex );
+	  }
+	  segmentation.addSlice( "", segSlice ); 
+}
+
+// create and display segmentation image
+result = new ImagePlus( "Thresholded probabilities", segmentation );
+result.show();

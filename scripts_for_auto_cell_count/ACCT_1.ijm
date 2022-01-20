@@ -11,7 +11,7 @@ input = getDirectory("Choose source directory of the macro (Scripts for Auto Cel
 run("Set Measurements...", "area mean standard modal min centroid center perimeter bounding fit shape feret's integrated median skewness kurtosis area_fraction limit display redirect=None decimal=8");
 
 // Populate all folders. If folders already exist, selectively does not make those folders
-exec("python", input + "file_architect.py", input);
+//exec("python", input + "file_architect.py", input);
 
 /*
 Dialog.create("Label or Probability?");
@@ -29,10 +29,10 @@ if(result) {
 //	run("BS TWS apply");
 }
 */
-run("BS TWS apply");
+//run("BS TWS apply");
 
 // Threshold the images into distinct values
-runMacro(input + "just_thresh.ijm", input);
+//runMacro(input + "just_thresh.ijm", input);
 
 // TODO Check if can run without projected images
 searchDirectory = input
@@ -48,11 +48,13 @@ if (result) {
 }
 
 // Run ImageJ macros
-runMacro(input + "count_from_roi.ijm", input);
+//runMacro(input + "count_from_roi.ijm", input);
 
 //runMacro(input + "count_over_dir_prob_TK.ijm", searchDirectory);
 
 runMacro(input + "count_over_dir.ijm", searchDirectory);
+//runMacro(input + "old_count_over_dir_TK.ijm", searchDirectory);
+
 
 // Next, run classifier comparison
 exec("python", input + "classifier_comparison.py", input);

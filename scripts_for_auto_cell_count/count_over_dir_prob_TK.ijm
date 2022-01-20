@@ -45,7 +45,10 @@ macro "The -- True -- probability -- Count" {
 	prob_dir_list = getFileList(prob_dirs);
 		
 	// this loop iterates through classifier folders
-	for (z = 0; z< input_dir_list.length; z++) {		
+//	for (z = 0; z< input_dir_list.length; z++) {		
+	//MAKING THIS SHORTER FOR TeSTING TO ONLY WORK with CLASS1
+	for (z = 0; z< 1; z++) {		
+
 		input = input_dir_list[z];
 		output = output_dir_list[z];
 		prob = prob_dir_list[z];
@@ -85,14 +88,15 @@ macro "The -- True -- probability -- Count" {
 			close();
 			
 			
+			
 
-print("rpob input");
+print("prob input");
 print(inputP + input + filenameP);
 //using the classifier from input, not prob, should be fine, could be used elsewehre
 			open(inputP + input + filenameP);
 			roiManager("Measure");
 				
-				
+				//adds the hand count info
 			open(input2 + filename2);
 			roiManager("Add");
 			
@@ -143,8 +147,8 @@ print(inputP + input + filenameP);
 		class_name = substring(output_dir_list[z],0,lengthOf(output_dir_list[z]) -1);
 		
 		print("saving location");
-		print( output_dirs + prob + class_name + "_Results.csv");
-		saveAs("Results", output_dirs + prob + class_name + "_Results.csv");
+		print( output_dirs + output + class_name + "_Results.csv");
+		saveAs("Results", output_dirs + output + class_name + "_Results.csv");
 		run("Clear Results");
 	}
 	// prints text in the log window after all files are processed
