@@ -8,7 +8,7 @@
 
 #@ Float (label="Set cutoff[0,1], default = 0.5", description="Choose a cutoff from ACCT2 or leave as default 0.5",value=0.5) cutoff
 
-#@ Integer(label="Number of tiles in X:", description="Number of image subdivisions in the X direction", value=3) xTiles
+
 
 //#@ File(label="Output directories", description="Select the output directories", style="directory") outputDirs
 //#@ File(label="Weka models", description="Select the folder of Weka models to apply", style="directory") modelsDir
