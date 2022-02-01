@@ -1,0 +1,11 @@
+,name,tp,fp,fn,avg_area,avg_circularity
+0,SEG37_y.png,0,0,10,0,0
+0,SEGMar19bS1C1R3_VLPAGl_200x_y.png,0,0,0,0,0
+0,SEGMar19bS2C1R1_LHl_200x_y.png,0,0,4,0,0
+0,SEGMar20bS1C1R3_VLPAGl_200x_y.png,0,0,2,0,0
+0,SEGMar23bS1C1R4_VLPAGl_200x_y.png,0,0,0,0,0
+0,SEGMar23bS1C5R2_DMr_200x_y.png,0,0,4,0,0
+0,SEGMar26bS2C1R1_LHr_200x_y.png,0,0,4,0,0
+0,SEGMar27bS1C2R2_LHr_200x_y.png,0,0,26,0,0
+0,SEGMAR38S1C3R1_DMR_20_o.png,0,0,122,0,0
+0,SEGMAR55S3C2R2_VLPAGR_20_o.png,0,0,40,0,0
