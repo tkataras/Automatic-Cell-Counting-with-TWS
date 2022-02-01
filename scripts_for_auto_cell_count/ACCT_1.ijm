@@ -59,7 +59,7 @@ if (result) {
 // Run ImageJ macros
 runMacro(input + "count_from_roi.ijm", input);
 
-//runMacro(input + "count_over_dir_prob_TK.ijm", searchDirectory);
+runMacro(input + "count_over_dir_prob_TK.ijm", searchDirectory);
 
 
 
