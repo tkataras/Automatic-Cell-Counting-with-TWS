@@ -10,6 +10,7 @@
 # against each other.
 ###
 from cmath import nan
+from typing import final
 import pandas as pd
 import numpy as np
 import os
@@ -70,6 +71,9 @@ for f in range(0, len(class_list)):
     class_res_loc = output_count + curr_class + "/" + curr_class + "_Results.csv"
     class_results = pd.read_csv(class_res_loc)
 
+    # Replace broken column
+    class_results["Label"] = hand_ini
+
     ## If else loop for determining true positive, false positive and false negative cell counts
     ## from levels present in the classifier results output, this should be the same each time, BUT IT WoNT BE IF ONE IMAGE HAS NO CELL OBJECtS
     ## need to go into the counted folder and pull out all image names, meaning ignorming the Results.csv files. images from tru_count with be .png
@@ -88,6 +92,7 @@ for f in range(0, len(class_list)):
         # Get the information about the image automatic count
         dftc = class_results[class_results["Label"].isin([current_img_plus_png])]
 
+        print(current_img_plus_png)
         # If the images are all empty, store this images results as all zero
         if dftc.size == 0 or dftc.shape[0] == 1:
             name = img_names[image]
@@ -147,7 +152,6 @@ for f in range(0, len(class_list)):
     total_tp = sum(final_result["tp"])
     total_fp = sum(final_result["fp"])
     total_fn = sum(final_result["fn"])
-
     # Accuracy = tp / (tp + fp + fn)
     accuracy = catchDivideByZero(total_tp, total_tp + total_fp + total_fn)
     # Precision = tp/(tp + fp)
