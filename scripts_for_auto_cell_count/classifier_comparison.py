@@ -98,7 +98,7 @@ for f in range(0, len(class_list)):
         dftc = class_results[class_results["Label"].isin([current_img_plus_png])]
 
         # If the images are all empty, store this images results as all zero
-        if dftc.size == 0 or dftc.shape[0] == 1:
+        if dftc.size == 0 or dftc.shape[0] == 1 or "points" not in dftc:
             name = img_names[image]
             tp = 0
             fp = 0
@@ -127,10 +127,11 @@ for f in range(0, len(class_list)):
         # For each image add total number hand count - sum(dftc$points), the sum points must always be less than count_h$count 
         # dtfc$points only counts the markers that fall within cell objects, count_h$counts is the sum of all points in total. 
         # When this is not true(e.g. there are negative values) check the image names of the hand count!!
-        # TODO print statement for this above comment
-        missed = count_h[lvl_h[image]] - sum(dftc["points"][:-1]) 
-        fn = fn + missed      
-        name = img_names[image]
+        # TODO print statement for this above comment TODO make this error handling better
+        if "points" in dftc:
+            missed = count_h[lvl_h[image]] - sum(dftc["points"][:-1]) 
+            fn = fn + missed      
+            name = img_names[image]
 
         # Store data for final result
         this_row = pd.DataFrame([[name, tp, fp, fn, avg_area, avg_circular]], columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
