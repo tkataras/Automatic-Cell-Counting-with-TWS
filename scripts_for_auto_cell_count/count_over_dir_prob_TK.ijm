@@ -78,10 +78,10 @@ macro "The -- True -- Count" {
 			//run("Watershed");
 
 			//clear any existing rois
-			if (roiManager("count") > 0){
+			if (roiManager("count") > 0) {
 				roiManager("deselect");		
 				roiManager("Delete");
-				}  
+			}  
 			
 			
 			// This imageJ plugin creates the results file and image of the count cells based on the size exclusion		

@@ -47,6 +47,7 @@ hand_ini = pd.read_csv("../training_area/Results/roi_counts.csv", usecols=['Labe
 for i in range(0, len(hand_ini)):
     row_name = hand_ini.loc[i].at["Label"]
     row_name = row_name.split(":")[0]
+    row_name = row_name.split(".")[0]
     hand_ini.loc[i].at["Label"] = row_name
 
 # TODO For testing that the column was renamed correctly
@@ -89,10 +90,13 @@ for f in range(0, len(class_list)):
     # Go through each image to see how the classifier performed on that image
     for image in range(0, len(img_names)):
         current_img_plus_png = img_names[image]
+
+        # Get the file itself without extension
+        current_img_plus_png = current_img_plus_png.split(".")[0]
+
         # Get the information about the image automatic count
         dftc = class_results[class_results["Label"].isin([current_img_plus_png])]
 
-        print(current_img_plus_png)
         # If the images are all empty, store this images results as all zero
         if dftc.size == 0 or dftc.shape[0] == 1:
             name = img_names[image]
