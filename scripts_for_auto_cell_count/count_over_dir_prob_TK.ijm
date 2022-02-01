@@ -1,158 +1,204 @@
-/*
- * Author: Theo, Tyler
- * Date: 11/17/2021
- * Description:
+/**
+ * Author: Theo Kataras, Tyler Jang
+ * Date: 11/30/2021
+ * 
+ * Input: Binary images, hand placed markes in roi files, one file for each image
+ * Output: Binary image files including only cells counted, and .csv file in classifier folder with accuracy information
+ * Description: Uses hand placed markers and weka output images from each classifier to begin accuracy calculation
  */
-macro "The -- True -- probability -- Count" {
-	//Overview: uses hand placed markers and weka output images from each classifier to begin accuracy calculation
-	//Input: Binary images, hand placed markes in roi files, one file for each image
-	//Output: Binary image files including only cells counted, and .csv file in classifier folder with accuracy information
-	
-	//this hides intermediary information and speeds processing
+macro "The -- True -- Count" {
+	// This hides intermediary information and speeds processing
 	setBatchMode(true); 
-	print("Starting count_over_dir_prob_TK.ijm");
-	//set input and output directories locations
+	
+	print("Starting count_over_dir.ijm");
 	
 	// Weka Output Projected if Projected, else Weka Output Thresholded
-	input_dirs = getArgument();
+	inputDirs = getArgument();
 	
 	// Weka Output Counted
-	output_dirs = input_dirs + "../Weka_Output_Counted/";
-
+	outputDirs = inputDirs + "../Weka_Output_Counted/";
+	
 	// Weka Probability Projected
-	prob_dirs = input_dirs + "../Weka_Probability_Projected/";
+	probDirs = inputDirs + "../Weka_Probability/";
 	
 	// Clear the results table
 	run("Clear Results");
 	
-	// set size minimum for cells to exclude small radius noise
-	size_min=20;
-	Dialog.create("Size Min");
-	Dialog.addNumber("Minimum pixel size for object count:", size_min);
+	// Set size minimum for cells to exclude small radius noise and large artifacts
+	sizeMin=20;
+	sizeMax = 1000;
+	Dialog.create("Size Values");
+	Dialog.addNumber("Minimum pixel size for object count:", sizeMin);
+	Dialog.addNumber("Maximum pixel size for object count:", sizeMax);
 	Dialog.show();
-	size_min = Dialog.getNumber();
+	sizeMin = Dialog.getNumber();
+	sizeMax = Dialog.getNumber();
+	print(sizeMin);
+	print(sizeMax);
 	
+	// Validation Hand Counts
+	dirVal = inputDirs + "../Validation_Hand_Counts/";
+
 	
-	//the hand placed roi location will not change as it is applied to each classifier image set
-	//dir2 = getDirectory("_Choose source directory for the roi multipoint counts");
-	dir2 = input_dirs + "../Validation_Hand_Counts/";
-	
-	// gets the folders for each classifier
-	input_dir_list = getFileList(input_dirs);
+	// Gets the folders for each classifier
+	inputDirList = getFileList(inputDirs);
+	outputDirList = getFileList(outputDirs);
+	probDirList = getFileList(probDirs);
 		
-	output_dir_list = getFileList(output_dirs);
-
-	prob_dir_list = getFileList(prob_dirs);
+	// This loop iterates through classifier folders
+	for (z = 0; z < inputDirList.length; z++) {
+		input = inputDirList[z];
+		output = outputDirList[z];
+		prob =  probDirList[z];
+			
+		// Holds all file names from input folders
+		list = getFileList(inputDirs + input);
+		listVal = getFileList(dirVal);
+		listProb = getFileList(probDirs + prob);
 		
-	// this loop iterates through classifier folders
-//	for (z = 0; z< input_dir_list.length; z++) {		
-	//MAKING THIS SHORTER FOR TeSTING TO ONLY WORK with CLASS1
-	for (z = 0; z< 1; z++) {		
-
-		input = input_dir_list[z];
-		output = output_dir_list[z];
-		prob = prob_dir_list[z];
-			
-		//holds all file names from input folder
-		list = getFileList(input_dirs + input);
-		list2 = getFileList(dir2);
-		list3 = getFileList(prob_dirs + prob);
-
-		n = 0;
-			
-		//iterate  macro over the images in the input folder
+		//have to initialize at -1 to start correctly at 0
+		rowNumber = -1;
+		
+		// Iterate macro over the images in the classifier folder
 		for (q = 0; q < list.length; q++) {
-			action(input, output, list[q], dir2, list2[q], list3[q], prob_dirs);
+			action(input, output, list[q], dirVal, listVal[q], listProb[q], probDirs);
 		}
 			
-		//describes the actions for each image
-		function action(input, output, filename, input2, filename2, filenameP, inputP) {    
-			//opens and thresholds binary images or Weka output directly       
-			open(input_dirs + input + filename);
+		// Opens and thresholds binary images or Weka output directly       
+		function action(input, output, filename, inputTwo, filenameTwo, filenameP, inputP) {    	
+			open(inputDirs + input + filename);
 			run("8-bit");
 			setAutoThreshold("Default dark");
 			run("Threshold...");
 			setThreshold(6, 255);
-			//setOption("BlackBackground", true);	
 			run("Convert to Mask");
-			//run("Invert");
-					
-					
-			// this imageJ plugin creates the results file and image of the count cells based on the size exclusion		
-			run("Analyze Particles...", "size="+size_min+"-Infinity pixel show=Masks summarize add");
-			saveAs("Png",output_dirs + output + filename);
+			run("Invert");
 
+			// Call the watershed algorithm to split objects
+			//run("Watershed");
 
-//here is the probability part. we need to close the segmented image and open the probability image to measure on it
-
-			close();
+			//clear any existing rois
+			if (roiManager("count") > 0) {
+				roiManager("deselect");		
+				roiManager("Delete");
+			}  
 			
 			
-			
-
-print("prob input");
-print(inputP + input + filenameP);
-//using the classifier from input, not prob, should be fine, could be used elsewehre
-			open(inputP + input + filenameP);
-			roiManager("Measure");
-				
-				//adds the hand count info
-			open(input2 + filename2);
-			roiManager("Add");
-			
-
-
-			//TODO
-			//need to save the exact roi info for each auto object
-			//is that not what happens here??? -TK
-			
-			
-			numroi = roiManager("count"); // establish number of objects
-				
-			roiManager("Select", numroi - 1);
-			pts = Roi.getCoordinates(xpoints2, ypoints2); 
-			numpoints = lengthOf(ypoints2); // establish number of hand placed counts
-			print(numpoints + "_hand_placed_markers");
-			print("number auto count objects=" + numroi -1);
-				
-			numroi2 = numroi -1;
-				
-				
-			for (k = 0; k < numroi2; k++) {   //k is repeated for each object
-				roiManager("Select", k);
-				test = Roi.getContainedPoints(xpoints, ypoints); // get coords for all pixels in object
-				lng = lengthOf(xpoints); //length of all pixels in current object, this varies
-				lng2 = numpoints; //length of hand placed counts, this does not vary
-									
-				counts = 0;
-				for (i = 0 ; i < lng ; i++) {
-					for(j = 0; j < lng2 ; j++) {
-						xpoints2rnd = round(xpoints2[j]);
-						ypoints2rnd = round(ypoints2[j]);
-							
-						if (xpoints[i] == xpoints2rnd && ypoints[i] == ypoints2rnd) {
-							counts = counts + 1;
-						}
-					}
-				}
-					
-				//update the results table
-				setResult("points", n++, counts);	
-			}
-			roiManager("deselect")		
-			roiManager("Delete");       
-		}
-		selectWindow("Results");
-		//take / off end of folder name to get classifier ID
-		class_name = substring(output_dir_list[z],0,lengthOf(output_dir_list[z]) -1);
+			// This imageJ plugin creates the results file and image of the count cells based on the size exclusion		
+			run("Analyze Particles...", "size=" + sizeMin + "-" + sizeMax + " pixel show=Masks summarize add");
+			//saving the image of the counted objects
+			saveAs("Png", outputDirs + output + filename);
 		
-		print("saving location");
-		print( output_dirs + output + class_name + "_Results.csv");
-		saveAs("Results", output_dirs + output + class_name + "_Results.csv");
+			//close the counted image, open the probaility image and measure the objects on it instead
+			close();
+		
+			print("prob input");
+			print(inputP + input + filenameP);
+			
+			//using the classifier from input, not prob, should be fine, could be used elsewehre
+			open(inputP + input + filenameP);
+			roiManager("measure");
+
+			
+			counts = 0;
+			//stop empty auto count images here 
+			getRawStatistics(nPixels, mean, min, max, std, histogram);
+			if (max == 0) {
+			
+				if (rowNumber == -1) {
+					rowNumber = 0;
+				}
+			
+				numRoi = 0;
+				run("Measure");
+				setResult("points", rowNumber++, counts);
+				
+				//roiManager("deselect");
+				//roiManager("Delete"); 
+				//print(filename + " this was an empty image");
+			} else {	
+				//print(filename + " this was an image with cells (after the else)");
+
+				// Measuring a full image after the objects, to keep parity with the empty images
+				run("Measure");
+				rowNumber++;
+				
+				//print(filenameTwo + "=filename2 the hand count");
+	
+				//need to deal with case where human marked no cells and saved placeholder, but program has objects
+				// This is with hand counts and auto counts
+				if (endsWith(filenameTwo, ".roi")) {
+					
+					open(inputTwo + filenameTwo);
+					roiManager("Add");
+
+					//TODO need to save the exact roi info for each auto object
+				 	// Establish number of objects
+					numRoi = roiManager("count"); 
+						
+					roiManager("Select", numRoi - 1);
+//					print("this is roi name being used for hand count coords"  + Roi.getName); //I THINK THE ISSUE MAY BE HERE IN THE assignment of the hand count roi coords???!?!?!?!?!
+					pts = Roi.getCoordinates(xPoints2, yPoints2); //get info for all hand places counts
+
+					
+					//roiManager("Delete"); //just added this to test !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!312312313
+					numPoints = lengthOf(yPoints2); // establish number of hand placed counts	
+					numRoiTwo = numRoi - 1;//subtract one for the multipoint ROI containing the hand count info
+
+				} else {
+					//this is the case where the hand count found no cells, but the auto count did
+					numPoints = 0;//set the number of hand counts to 0
+//					print("this is the case where the hand count found no cells, but the auto count did");
+					numRoiTwo = roiManager("count");
+					xPoints2 = 99999;//these need to be a point that will never overlap with objects in the image
+					yPoints2 = 99999;
+				}
+		
+				// For each object k in the image
+				for (k = 0; k < numRoiTwo; k++) {   
+					roiManager("Select", k);
+//					print("this is roi name being examined"  + Roi.getName); //I THINK THE ISSUE MAY BE HERE IN THE assignment of the hand count roi coords???!?!?!?!?!
+
+					// Get coords for all pixels in object
+					Roi.getContainedPoints(xPoints, yPoints); 
+					// Length of all pixels in current object, this varies
+					len = lengthOf(xPoints);
+					// Length of hand placed counts, this does not vary 
+					lenTwo = numPoints; 
+
+					counts = 0;
+					// For each pixel in the object
+					for (i = 0 ; i < len ; i++) {
+					
+						// For each hand placed count
+						for(j = 0; j < lenTwo ; j++) {
+							xPoints2rnd = round(xPoints2[j]);
+							yPoints2rnd = round(yPoints2[j]);
+							
+							// If the object contains the hand count, increment counts
+							if (xPoints[i] == xPoints2rnd && yPoints[i] == yPoints2rnd) {
+								counts = counts + 1;
+							} 
+						}
+						 // each hand placed count
+					} // each pixel in object
+					// Update the results table
+					setResult("points", rowNumber++, counts);
+				}//each object in image	
+				
+			    
+			} //else
+		} //function endpoint
+		selectWindow("Results");
+		
+		// Take / off end of folder name to get classifier ID
+		class_name = substring(outputDirList[z], 0, lengthOf(outputDirList[z]) -1);
+		saveAs("Results", outputDirs + output + class_name + "_Results.csv");
 		run("Clear Results");
-	}
-	// prints text in the log window after all files are processed
-	print("Counted over " + list.length + " images");
-	print("Finished count_over_dir_prob_TK.ijm\n");
+	}// iterate through folders
+	
+	// Prints text in the log window after all files are processed
+	print("Counted " + list.length + " images");
+	print("Finished count_over_dir.ijm\n");
 }
 updateResults();

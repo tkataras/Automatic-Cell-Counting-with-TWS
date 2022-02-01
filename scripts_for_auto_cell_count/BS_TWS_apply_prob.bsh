@@ -137,7 +137,7 @@ for ( z = 0; z < listOfMod.length; z++ ) {
 
 				print(listOfOut[ z ].getPath());
 				print(outputFileName);
-				new FileSaver( result ).saveAsTiff( listOfOut[ z ].getPath() + File.separator + "SEG" + outputFileName);
+				new FileSaver( result ).saveAsTiff( listOfOut[ z ].getPath() + File.separator +  outputFileName);
   
 	            // force garbage collection (important for large images)
 	            result = null; 

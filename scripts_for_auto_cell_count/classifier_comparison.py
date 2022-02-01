@@ -10,6 +10,7 @@
 # against each other.
 ###
 from cmath import nan
+from typing import final
 import pandas as pd
 import numpy as np
 import os
@@ -46,6 +47,7 @@ hand_ini = pd.read_csv("../training_area/Results/roi_counts.csv", usecols=['Labe
 for i in range(0, len(hand_ini)):
     row_name = hand_ini.loc[i].at["Label"]
     row_name = row_name.split(":")[0]
+    row_name = row_name.split(".")[0]
     hand_ini.loc[i].at["Label"] = row_name
 
 # TODO For testing that the column was renamed correctly
@@ -70,6 +72,9 @@ for f in range(0, len(class_list)):
     class_res_loc = output_count + curr_class + "/" + curr_class + "_Results.csv"
     class_results = pd.read_csv(class_res_loc)
 
+    # Replace broken column
+    class_results["Label"] = hand_ini
+
     ## If else loop for determining true positive, false positive and false negative cell counts
     ## from levels present in the classifier results output, this should be the same each time, BUT IT WoNT BE IF ONE IMAGE HAS NO CELL OBJECtS
     ## need to go into the counted folder and pull out all image names, meaning ignorming the Results.csv files. images from tru_count with be .png
@@ -85,11 +90,15 @@ for f in range(0, len(class_list)):
     # Go through each image to see how the classifier performed on that image
     for image in range(0, len(img_names)):
         current_img_plus_png = img_names[image]
+
+        # Get the file itself without extension
+        current_img_plus_png = current_img_plus_png.split(".")[0]
+
         # Get the information about the image automatic count
         dftc = class_results[class_results["Label"].isin([current_img_plus_png])]
 
         # If the images are all empty, store this images results as all zero
-        if dftc.size == 0 or dftc.shape[0] == 1:
+        if dftc.size == 0 or dftc.shape[0] == 1 or "points" not in dftc:
             name = img_names[image]
             tp = 0
             fp = 0
@@ -118,10 +127,11 @@ for f in range(0, len(class_list)):
         # For each image add total number hand count - sum(dftc$points), the sum points must always be less than count_h$count 
         # dtfc$points only counts the markers that fall within cell objects, count_h$counts is the sum of all points in total. 
         # When this is not true(e.g. there are negative values) check the image names of the hand count!!
-        # TODO print statement for this above comment
-        missed = count_h[lvl_h[image]] - sum(dftc["points"][:-1]) 
-        fn = fn + missed      
-        name = img_names[image]
+        # TODO print statement for this above comment TODO make this error handling better
+        if "points" in dftc:
+            missed = count_h[lvl_h[image]] - sum(dftc["points"][:-1]) 
+            fn = fn + missed      
+            name = img_names[image]
 
         # Store data for final result
         this_row = pd.DataFrame([[name, tp, fp, fn, avg_area, avg_circular]], columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
@@ -147,7 +157,6 @@ for f in range(0, len(class_list)):
     total_tp = sum(final_result["tp"])
     total_fp = sum(final_result["fp"])
     total_fn = sum(final_result["fn"])
-
     # Accuracy = tp / (tp + fp + fn)
     accuracy = catchDivideByZero(total_tp, total_tp + total_fp + total_fn)
     # Precision = tp/(tp + fp)
