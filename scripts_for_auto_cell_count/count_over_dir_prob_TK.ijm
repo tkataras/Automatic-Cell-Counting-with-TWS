@@ -73,6 +73,7 @@ macro "The -- True -- Count" {
 			setThreshold(6, 255);
 			run("Convert to Mask");
 			run("Invert");
+			run("Fill Holes"); //prevents any measurement discrepancies in Imagej
 
 			// Call the watershed algorithm to split objects
 			//run("Watershed");
