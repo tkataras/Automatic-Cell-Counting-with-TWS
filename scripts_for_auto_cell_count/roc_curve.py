@@ -20,7 +20,10 @@ curr_dir = os.getcwd()
 def set_dir(arg1):
     curr_dir = arg1
     os.chdir(curr_dir)
-set_dir(sys.argv[1])
+#   set_dir(sys.argv[1])
+
+newDir = "F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/scripts_for_auto_cell_count/"
+set_dir((newDir))
 
 # Input and Output location
 result_out = "../training_area/Weka_Output_Counted/"

@@ -119,7 +119,8 @@ macro "The -- True -- Count" {
 				//print(filename + " this was an empty image");
 			} else {	
 				//print(filename + " this was an image with cells (after the else)");
-
+				
+					
 				// Measuring a full image after the objects, to keep parity with the empty images
 				run("Measure");
 				rowNumber++;
@@ -136,8 +137,9 @@ macro "The -- True -- Count" {
 					//TODO need to save the exact roi info for each auto object
 				 	// Establish number of objects
 					numRoi = roiManager("count"); 
-						
-					roiManager("Select", numRoi - 1);
+					print(numRoi);
+				
+					roiManager("select", numRoi - 1);
 //					print("this is roi name being used for hand count coords"  + Roi.getName); //I THINK THE ISSUE MAY BE HERE IN THE assignment of the hand count roi coords???!?!?!?!?!
 					pts = Roi.getCoordinates(xPoints2, yPoints2); //get info for all hand places counts
 
