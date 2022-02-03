@@ -9,8 +9,6 @@
 # Description: This file compares statistical information about each classifier
 # against each other.
 ###
-from cmath import nan
-from typing import final
 import pandas as pd
 import numpy as np
 import os
@@ -64,7 +62,7 @@ for i in range(0, len(hand_ini)):
         count_h[hand_ini.loc[i].at["Label"]] = 0
     else:
         count_h[hand_ini.loc[i].at["Label"]] = count_h[hand_ini.loc[i].at["Label"]] + 1
-print(count_h)
+
 # Iterate through each classifier 
 for f in range(0, len(class_list)):
     curr_class = os.listdir(output_count)[f]
@@ -113,10 +111,6 @@ for f in range(0, len(class_list)):
             # TODO check this math out fn = count_h[lvl_h[image]]
             # fn = 0
             fn = count_h[lvl_h[image]]
-
-            if curr_class == "classifier9" and current_img_plus_png == "Mar19bS2C1R1_LHl_200x_y":
-                print("classifier 9 enters the empty image case")
-                print(dftc)
             avg_area = 0
             avg_circular = 0
             this_row = pd.DataFrame([[name, tp, fp, fn, avg_area, avg_circular]], columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
@@ -127,16 +121,9 @@ for f in range(0, len(class_list)):
             fn = 0
             avg_area = np.mean(dftc["Area"])
             avg_circular = np.mean(dftc["Circ."])
-            
-            if curr_class == "classifier9" and current_img_plus_png == "Mar19bS2C1R1_LHl_200x_y":
-                print(dftc)
-                print("hello obi won")
+
             # Count points, except last row for overall image
             for auto_count in (dftc["points"]):   
-                if curr_class == "classifier9" and current_img_plus_png == "Mar19bS2C1R1_LHl_200x_y":
-                    print("for auto")
-                    print(auto_count)
-                    print("for auto")
                 if auto_count == 0:
                     fp = fp + 1
                 elif auto_count == 1:
@@ -151,19 +138,10 @@ for f in range(0, len(class_list)):
         # TODO print statement for this above comment TODO make this error handling better
         if dftc.size != 0:
             missed = count_h[lvl_h[image]] - sum(dftc["points"]) 
-            if curr_class == "classifier9":
-                print(current_img_plus_png)
-                print(fn)
-                print(missed)
-                print(count_h[lvl_h[image]])
-                print(sum(dftc["points"]) )
             fn = fn + missed      
-
             name = img_names[image]
 
         # Store data for final result
-        if curr_class == "classifier9" and current_img_plus_png == "Mar19bS2C1R1_LHl_200x_y":
-            print(fp)
         this_row = pd.DataFrame([[name, tp, fp, fn, avg_area, avg_circular]], columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
         final_result = final_result.append(this_row)
             

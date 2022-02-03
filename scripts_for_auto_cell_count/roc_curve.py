@@ -20,10 +20,7 @@ curr_dir = os.getcwd()
 def set_dir(arg1):
     curr_dir = arg1
     os.chdir(curr_dir)
-#   set_dir(sys.argv[1])
-
-newDir = "F:/Theo/full_backup_3_23_2021/Kaul_lab_work/bin_general/scripts_for_auto_cell_count/"
-set_dir((newDir))
+set_dir(sys.argv[1])
 
 # Input and Output location
 result_out = "../training_area/Weka_Output_Counted/"
@@ -70,9 +67,13 @@ for selectedClassifier in class_list:
         new_row = pd.DataFrame([["hello there", 0, 1]], columns=["Label", "Mean", "points"])
         results = results.append(new_row, ignore_index=True)
 
-    #print(results)
     # Get the true or false autocount
     binary_y = np.array(results["points"])
+
+    # Handle the only empty image case, and 100% true positive case
+    if len(np.unique(binary_y)) == 1:
+        print("Only positive or negative samples in the result, no graph generated")
+        continue
 
     # Need to mark 2 as a 1 so it is not a multiclass array 
     binary_y[binary_y >= 2] = 1
@@ -95,7 +96,8 @@ for selectedClassifier in class_list:
     # TODO I don't know how it figures out the number of false negatives
     precision, recall, pr_thresholds = precision_recall_curve(binary_y, y_score, pos_label=1)
 
-    print(average_precision_score(binary_y, y_score))
+    # Average precision recall score (AP)
+    print("AP = " + str(average_precision_score(binary_y, y_score)))
     # Method precision_recall_curve adds a single interger to the end of these arrays that must be removed
     recall = recall[0:-1]
     precision = precision[0:-1]
