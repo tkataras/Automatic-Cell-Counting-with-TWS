@@ -13,32 +13,14 @@ run("Set Measurements...", "area mean standard modal min centroid center perimet
 // Populate all folders. If folders already exist, selectively does not make those folders
 exec("python", input + "file_architect.py", input);
 
-/*
-Dialog.create("Label or Probability?");
-Dialog.addCheckbox("Probability?", false);
-Dialog.show();
-result = Dialog.getCheckbox();
-
-if(result) {
-//	run("BS TWS apply prob");
-} else {
-	// TODO need to find a way to put this bsh into user's plugins
-	//fiji_dir = getDirectory("Select the plugins directory for fiji (fiji/plugins)");
-	//Copy BS_TWS_apply.bsh into fiji_dir
-	//File.copy(input + "BS_TWS_apply.bsh", getDirectory("plugins"));
-//	run("BS TWS apply");
-}
-*/
+// Ask if the user needs to run Weka 
 Dialog.create("Run Weka to create new probability output?");
 Dialog.addCheckbox("Do you need to run Weka?", true);
 Dialog.show();
 ifWeka = Dialog.getCheckbox();
 if (ifWeka) {
 	run("BS TWS apply prob");
-} else {}
-
-
-//run("BS TWS apply prob");
+} 
 
 // Threshold the images into distinct values
 //runMacro(input + "just_thresh.ijm", input);

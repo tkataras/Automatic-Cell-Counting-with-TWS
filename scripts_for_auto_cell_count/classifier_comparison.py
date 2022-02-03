@@ -52,7 +52,6 @@ for i in range(0, len(hand_ini)):
 
 # TODO For testing that the column was renamed correctly
 #hand_ini.to_csv("../training_area/Results/roi_counts_temp.csv")
-
 lvl_h = np.unique(hand_ini)
 
 # TODO May mess with non fluoset names
@@ -65,15 +64,21 @@ for i in range(0, len(hand_ini)):
         count_h[hand_ini.loc[i].at["Label"]] = 0
     else:
         count_h[hand_ini.loc[i].at["Label"]] = count_h[hand_ini.loc[i].at["Label"]] + 1
-
+print(count_h)
 # Iterate through each classifier 
 for f in range(0, len(class_list)):
     curr_class = os.listdir(output_count)[f]
     class_res_loc = output_count + curr_class + "/" + curr_class + "_Results.csv"
     class_results = pd.read_csv(class_res_loc)
 
-    # Replace broken column
-    class_results["Label"] = hand_ini
+    # Replace label column to remove file extensions and point
+    label_col = class_results["Label"]
+    for row in range(0, len(label_col)):
+        row_name = label_col.loc[row]
+        row_name = row_name.split(":")[0]
+        row_name = row_name.split(".")[0]
+        label_col.loc[row] = row_name
+    class_results["Label"] = label_col
 
     ## If else loop for determining true positive, false positive and false negative cell counts
     ## from levels present in the classifier results output, this should be the same each time, BUT IT WoNT BE IF ONE IMAGE HAS NO CELL OBJECtS
@@ -86,7 +91,7 @@ for f in range(0, len(class_list)):
 
     # Dataframe to store the results of autocounting performance
     final_result = pd.DataFrame(columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
-    
+
     # Go through each image to see how the classifier performed on that image
     for image in range(0, len(img_names)):
         current_img_plus_png = img_names[image]
@@ -96,13 +101,22 @@ for f in range(0, len(class_list)):
 
         # Get the information about the image automatic count
         dftc = class_results[class_results["Label"].isin([current_img_plus_png])]
+        
+        # Remove the row representing the full image
+        dftc = dftc.iloc[:-1,:]
 
-        # If the images are all empty, store this images results as all zero
-        if dftc.size == 0 or dftc.shape[0] == 1 or "points" not in dftc:
+        # If the image is all empty, store this images results as all zero
+        if dftc.size == 0:
             name = img_names[image]
             tp = 0
             fp = 0
+            # TODO check this math out fn = count_h[lvl_h[image]]
+            # fn = 0
             fn = count_h[lvl_h[image]]
+
+            if curr_class == "classifier9" and current_img_plus_png == "Mar19bS2C1R1_LHl_200x_y":
+                print("classifier 9 enters the empty image case")
+                print(dftc)
             avg_area = 0
             avg_circular = 0
             this_row = pd.DataFrame([[name, tp, fp, fn, avg_area, avg_circular]], columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
@@ -111,11 +125,18 @@ for f in range(0, len(class_list)):
             fp = 0
             tp = 0
             fn = 0
-            avg_area = np.mean(dftc["Area"][:-1])
-            avg_circular = np.mean(dftc["Circ."][:-1])
+            avg_area = np.mean(dftc["Area"])
+            avg_circular = np.mean(dftc["Circ."])
             
+            if curr_class == "classifier9" and current_img_plus_png == "Mar19bS2C1R1_LHl_200x_y":
+                print(dftc)
+                print("hello obi won")
             # Count points, except last row for overall image
-            for auto_count in (dftc["points"][:-1]):   
+            for auto_count in (dftc["points"]):   
+                if curr_class == "classifier9" and current_img_plus_png == "Mar19bS2C1R1_LHl_200x_y":
+                    print("for auto")
+                    print(auto_count)
+                    print("for auto")
                 if auto_count == 0:
                     fp = fp + 1
                 elif auto_count == 1:
@@ -128,12 +149,21 @@ for f in range(0, len(class_list)):
         # dtfc$points only counts the markers that fall within cell objects, count_h$counts is the sum of all points in total. 
         # When this is not true(e.g. there are negative values) check the image names of the hand count!!
         # TODO print statement for this above comment TODO make this error handling better
-        if "points" in dftc:
-            missed = count_h[lvl_h[image]] - sum(dftc["points"][:-1]) 
+        if dftc.size != 0:
+            missed = count_h[lvl_h[image]] - sum(dftc["points"]) 
+            if curr_class == "classifier9":
+                print(current_img_plus_png)
+                print(fn)
+                print(missed)
+                print(count_h[lvl_h[image]])
+                print(sum(dftc["points"]) )
             fn = fn + missed      
+
             name = img_names[image]
 
         # Store data for final result
+        if curr_class == "classifier9" and current_img_plus_png == "Mar19bS2C1R1_LHl_200x_y":
+            print(fp)
         this_row = pd.DataFrame([[name, tp, fp, fn, avg_area, avg_circular]], columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
         final_result = final_result.append(this_row)
             
