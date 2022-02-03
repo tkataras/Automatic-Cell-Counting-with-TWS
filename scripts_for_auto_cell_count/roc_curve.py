@@ -22,146 +22,140 @@ def set_dir(arg1):
     os.chdir(curr_dir)
 set_dir(sys.argv[1])
 
-# Get the selected classifier by the user
-selectedClassifier = sys.argv[2]
+# Input and Output location
+result_out = "../training_area/Weka_Output_Counted/"
+class_list = os.listdir(result_out)
 
-# Input file 
-results_file = "../training_area/Weka_Output_Counted/" + selectedClassifier + "/" + selectedClassifier + "_Results.csv"
-results = pd.read_csv(results_file)
-# Output location
-result_out = "../training_area/Results/"
+# Generate a plot for every ROC
+for selectedClassifier in class_list:
+    print(selectedClassifier)
+    # Input file 
+    results_file = result_out + selectedClassifier + "/" + selectedClassifier + "_Results.csv"
+    results = pd.read_csv(results_file)
 
-# File with the false negative information
-false_negative_file = "../training_area/Weka_Output_Counted/" + selectedClassifier + "/" + selectedClassifier + "_Final.csv"
+    # File with the false negative information
+    false_negative_file = result_out + selectedClassifier + "/" + selectedClassifier + "_Final.csv"
 
-# Reformat ROI names for use by selecting file name only, removing point name
-label_col = []
-to_delete = []
-for i in range(0, len(results)):
-    row_name = results.loc[i].at["Label"]
-    row_name = row_name.split(":")
+    # Reformat ROI names for use by selecting file name only, removing point name
+    label_col = []
+    to_delete = []
+    for i in range(0, len(results)):
+        row_name = results.loc[i].at["Label"]
+        row_name = row_name.split(":")
 
-    # Remove the one line to represent the image
-    if len(row_name) == 1:
-        to_delete.append(i)
-    else:
-        row_name = row_name[0]
-        label_col.append(row_name)
+        # Remove the one line to represent the image
+        if len(row_name) == 1:
+            to_delete.append(i)
+        else:
+            row_name = row_name[0]
+            label_col.append(row_name)
 
-# Remove lines representing a whole image      
-results = results.drop(index = to_delete)
+    # Remove lines representing a whole image      
+    results = results.drop(index = to_delete)
 
-# Rename labels without their point name
-results["Label"] = label_col
+    # Rename labels without their point name
+    results["Label"] = label_col
 
-# Get the number of false negatives
-false_neg_dataframe = pd.read_csv(false_negative_file)
-false_neg = false_neg_dataframe["fn"]
-total_false_neg = false_neg.sum()
-print(total_false_neg)
-print(false_neg)
+    # Get the number of false negatives
+    false_neg_dataframe = pd.read_csv(false_negative_file)
+    false_neg = false_neg_dataframe["fn"]
+    total_false_neg = false_neg.sum()
+    #print(total_false_neg)
+    #print(false_neg)
 
-for increment in range(0, total_false_neg):
-    new_row = pd.DataFrame([["hello there", 0, 1]], columns=["Label", "Mean", "points"])
-    results = results.append(new_row, ignore_index=True)
+    for increment in range(0, total_false_neg):
+        new_row = pd.DataFrame([["hello there", 0, 1]], columns=["Label", "Mean", "points"])
+        results = results.append(new_row, ignore_index=True)
 
-print(results)
-results.to_csv("test.csv")
-# Get the true or false autocount
-binary_y = np.array(results["points"])
+    #print(results)
+    # Get the true or false autocount
+    binary_y = np.array(results["points"])
 
-# Need to mark 2 as a 1 so it is not a multiclass array 
-binary_y[binary_y >= 2] = 1
+    # Need to mark 2 as a 1 so it is not a multiclass array 
+    binary_y[binary_y >= 2] = 1
 
-# TODO Implement the following
-# array to add to csv []
-# For each row inside of the csv
-#   If row["points"] >= 2
-#       create a row
-#       store new row inside of array
-#       Add a new row with mean of 0 (For 0 threshold) and point of 1
-#       I should be able to insert at the bottom of the file, with the name of the image, in order to not mess up line numbers
+    y_score = np.array(results["Mean"])
 
+    # NOTE in the method implementation, threshold will be made to have a value of max(y_score) + 1 to ensure it has a data point that is fpr, tpr = 0
+    fpr, tpr, thresholds = roc_curve(binary_y, y_score, pos_label=1, drop_intermediate=False)
 
-y_score = np.array(results["Mean"])
+    #print(fpr)
+    #print(tpr)
+    #print(thresholds)
+    # Calculate the area under the curve
+    auc = roc_auc_score(binary_y, y_score, multi_class="ovo")
+    print("AUC = " + str(auc))
 
-# NOTE in the method implementation, threshold will be made to have a value of max(y_score) + 1 to ensure it has a data point that is fpr, tpr = 0
-fpr, tpr, thresholds = roc_curve(binary_y, y_score, pos_label=1, drop_intermediate=False)
+    # Calculate Precision and Recall
+    # TODO, this doesn't have drop intermediate functionality=False, so it only shows thresholds that lead to good results, thus the graphs have
+    # different number of thresholds
+    # TODO I don't know how it figures out the number of false negatives
+    precision, recall, pr_thresholds = precision_recall_curve(binary_y, y_score, pos_label=1)
 
-print(fpr)
-print(tpr)
-print(thresholds)
-# Calculate the area under the curve
-auc = roc_auc_score(binary_y, y_score, multi_class="ovo")
-print("AUC = " + str(auc))
+    print(average_precision_score(binary_y, y_score))
+    # Method precision_recall_curve adds a single interger to the end of these arrays that must be removed
+    recall = recall[0:-1]
+    precision = precision[0:-1]
+    #print(precision)
+    #print(recall)
+    #print(pr_thresholds)
+    # TODO TO make f1 score, I need the tp, fp, and fn values specifically
+    # Probabily can get it out of the classifierN_final.csv, if I had one
+    #precision = tpr / (tpr + fpr)
+    #recall = tpr / 
+    # F1 = f1_score(binary_y, y_score)
+    #print(F1)
+    plt.subplot(2,2,1)
+    plt.title(selectedClassifier + " Threshold Optimization")
+    plt.plot(thresholds, fpr, color="red", marker=".", label="False Positive")
+    plt.plot(thresholds, tpr, color="blue", marker=".", label="True Positive")
 
-# Calculate Precision and Recall
-# TODO, this doesn't have drop intermediate functionality=False, so it only shows thresholds that lead to good results, thus the graphs have
-# different number of thresholds
-# TODO I don't know how it figures out the number of false negatives
-precision, recall, pr_thresholds = precision_recall_curve(binary_y, y_score, pos_label=1)
+    # Set axis limit
+    plt.xlim([0.5, 1])
+    plt.ylim([0, 1])
 
-print(average_precision_score(binary_y, y_score))
-# Method precision_recall_curve adds a single interger to the end of these arrays that must be removed
-recall = recall[0:-1]
-precision = precision[0:-1]
+    # Axis labels
+    plt.xlabel("Threshold")
+    plt.ylabel("Rate")
+    plt.legend()
 
-# TODO TO make f1 score, I need the tp, fp, and fn values specifically
-# Probabily can get it out of the classifierN_final.csv, if I had one
-#precision = tpr / (tpr + fpr)
-#recall = tpr / 
-# F1 = f1_score(binary_y, y_score)
-#print(F1)
-plt.subplot(2,2,1)
-plt.title(selectedClassifier + " Threshold Optimization")
-plt.plot(thresholds, fpr, color="red", marker=".", label="False Positive")
-plt.plot(thresholds, tpr, color="blue", marker=".", label="True Positive")
+    # Show the ROC Curve
+    plt.subplot(2,2,2)
+    plt.plot(fpr, tpr, color="blue", marker=".", label="ROC Curve")
+    plt.plot([0, 1], [0, 1], linestyle="--")
 
-# Set axis limit
-plt.xlim([0.5, 1])
-plt.ylim([0, 1])
+    # Axis limits and labels
+    plt.xlim([0, 1])
+    plt.ylim([0, 1])
+    plt.xlabel("False Positive Rate")
+    plt.ylabel("True Positive Rate")
 
-# Axis labels
-plt.xlabel("Threshold")
-plt.ylabel("Rate")
-plt.legend()
+    # Title
+    plt.title(selectedClassifier + " Receiver Operating Characteristic")
 
-# Show the ROC Curve
-plt.subplot(2,2,2)
-plt.plot(fpr, tpr, color="blue", marker=".", label="ROC Curve")
-plt.plot([0, 1], [0, 1], linestyle="--")
+    # Plot recall vs precision for each threshold
+    plt.subplot(2,2,3)
+    plt.plot(pr_thresholds, recall, color="blue", marker=".", label="Recall")
+    plt.plot(pr_thresholds, precision, color="red", marker=".", label="Precision")
+    plt.xlabel("Threshold")
+    plt.ylabel("Rate")
+    plt.xlim([0.5, 1])
+    plt.ylim([0, 1])
+    plt.title("Recall and Precision Threshold Optimization")
+    plt.legend()
 
-# Axis limits and labels
-plt.xlim([0, 1])
-plt.ylim([0, 1])
-plt.xlabel("False Positive Rate")
-plt.ylabel("True Positive Rate")
+    # Recall vs precision
+    plt.subplot(2,2,4)
+    plt.plot(recall, precision, color="black", marker=".", label="Recall vs Precision")
+    plt.title("Recall vs Precision for each threshold")
+    plt.xlabel("Recall")
+    plt.ylabel("Precision")
+    plt.xlim([0, 1])
+    plt.ylim([0, 1])
 
-# Title
-plt.title(selectedClassifier + " Receiver Operating Characteristic")
-
-# Plot recall vs precision for each threshold
-plt.subplot(2,2,3)
-plt.plot(pr_thresholds, recall, color="blue", marker=".", label="Recall")
-plt.plot(pr_thresholds, precision, color="red", marker=".", label="Precision")
-plt.xlabel("Threshold")
-plt.ylabel("Rate")
-plt.xlim([0.5, 1])
-plt.ylim([0, 1])
-plt.title("Recall and Precision Threshold Optimization")
-plt.legend()
-
-# Recall vs precision
-plt.subplot(2,2,4)
-plt.plot(recall, precision, color="black", marker=".", label="Recall vs Precision")
-plt.title("Recall vs Precision for each threshold")
-plt.xlabel("Recall")
-plt.ylabel("Precision")
-plt.xlim([0, 1])
-plt.ylim([0, 1])
-
-plt.tight_layout()
-plt.savefig("roc_curve.pdf", bbox_inches="tight")
-plt.show()
+    plt.tight_layout()
+    plt.savefig(result_out + selectedClassifier + "/" + selectedClassifier + "_roc_curve.pdf", bbox_inches="tight")
+    #plt.show()
+    plt.clf()
 
 print("Finished roc_curve.py\n")
