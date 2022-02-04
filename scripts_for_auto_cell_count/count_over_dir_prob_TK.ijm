@@ -92,9 +92,6 @@ macro "The -- True -- Count" {
 		
 			//close the counted image, open the probaility image and measure the objects on it instead
 			close();
-		
-			print("prob input");
-			print(inputP + input + filenameP);
 			
 			//using the classifier from input, not prob, should be fine, could be used elsewehre
 			open(inputP + input + filenameP);
@@ -124,8 +121,6 @@ macro "The -- True -- Count" {
 				// Measuring a full image after the objects, to keep parity with the empty images
 				run("Measure");
 				rowNumber++;
-				
-				//print(filenameTwo + "=filename2 the hand count");
 	
 				//need to deal with case where human marked no cells and saved placeholder, but program has objects
 				// This is with hand counts and auto counts
@@ -137,7 +132,6 @@ macro "The -- True -- Count" {
 					//TODO need to save the exact roi info for each auto object
 				 	// Establish number of objects
 					numRoi = roiManager("count"); 
-					print(numRoi);
 				
 					roiManager("select", numRoi - 1);
 //					print("this is roi name being used for hand count coords"  + Roi.getName); //I THINK THE ISSUE MAY BE HERE IN THE assignment of the hand count roi coords???!?!?!?!?!

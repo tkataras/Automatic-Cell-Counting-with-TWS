@@ -54,7 +54,7 @@ lvl_h = np.unique(hand_ini)
 
 # TODO May mess with non fluoset names
 lvl_h = sorted(lvl_h, key=str.swapcase)
-
+print(lvl_h)
 count_h = {}
 for i in range(0, len(hand_ini)):
     if count_h.get(hand_ini.loc[i].at["Label"]) == None:
