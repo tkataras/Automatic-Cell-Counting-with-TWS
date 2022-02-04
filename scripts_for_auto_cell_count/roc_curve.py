@@ -85,6 +85,7 @@ for selectedClassifier in class_list:
     #print(fpr)
     #print(tpr)
     #print(thresholds)
+
     # Calculate the area under the curve
     auc = roc_auc_score(binary_y, y_score, multi_class="ovo")
     print("AUC = " + str(auc))
@@ -96,6 +97,7 @@ for selectedClassifier in class_list:
     precision, recall, pr_thresholds = precision_recall_curve(binary_y, y_score, pos_label=1)
 
     # Average precision recall score (AP)
+    # TODO this seems kinda useless
     print("AP = " + str(average_precision_score(binary_y, y_score)))
 
     # Method precision_recall_curve adds a single interger to the end of these arrays that must be removed

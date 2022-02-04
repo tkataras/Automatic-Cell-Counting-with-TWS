@@ -22,7 +22,6 @@ if (ifWeka) {
 	run("BS TWS apply prob");
 } 
 
-break
 // Threshold the images into distinct values
 //runMacro(input + "just_thresh.ijm", input);
 
