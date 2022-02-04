@@ -13,7 +13,7 @@ input = getDirectory("Choose source directory of the macro (Scripts for Auto Cel
 run("Set Measurements...", "area mean standard modal min centroid center perimeter bounding fit shape feret's integrated median skewness kurtosis area_fraction limit display redirect=None decimal=8");
 
 // Variables for needed file paths
-testingPath = input + "../training_area/testing_area/";
+testingPath = input + "../testing_area/";
 classifierDir = input + "../training_area/Classifiers";
 searchDirectory = getFileList(classifierDir);
 
@@ -34,7 +34,7 @@ trimClassName = split(selectedClassifier, ".");
 testingPath = testingPath + "Weka_Output/" + trimClassName[0];
 
 // Create Weka output for the selected classifier
-run("apply TWS one classifier");
+run("apply TWS one classifier-probs");
 
 // Threshold the images
 runMacro(input + "just_thresh.ijm", testingPath);
@@ -48,9 +48,9 @@ result = Dialog.getCheckbox();
 
 if (result) {
 	exec("python", input + "project_N_images_by_ID.py", input, trimClassName[0]);
-	searchDirectory = input + "../training_area/testing_area/Weka_Output_Projected/" + trimClassName[0];
+	searchDirectory = input + "../testing_area/Weka_Output_Projected/" + trimClassName[0];
 } else {
-	searchDirectory = input + "../training_area/testing_area/Weka_Output_Thresholded/" + trimClassName[0];
+	searchDirectory = input + "../testing_area/Weka_Output_Thresholded/" + trimClassName[0];
 }
 
 // Count the number of objects in each image

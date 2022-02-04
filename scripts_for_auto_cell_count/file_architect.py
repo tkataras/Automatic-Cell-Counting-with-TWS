@@ -25,7 +25,7 @@ if len(sys.argv) == 3:
     class_list_pre_trim.append(sys.argv[2])
 
     # Set the location of the source folder where the folder is installed. 
-    source = "../training_area/testing_area/"
+    source = "../testing_area/"
     class_origin =  source + "Classifiers/"
     test_stage = True
 else:
