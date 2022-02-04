@@ -86,7 +86,11 @@ TODO images could also be .jpg or .tiff
 
 Each image should have a unique file name.
 
-Image file names should not contain a a __.__ (except for the one starting the file extension) or a __:__ as these symbols are used for other purposes.
+Image file names should not contain the following symbols as they are used for other purposes.
+```
+.     (except for the symbol starting the file extension)
+:
+```
 
 Projected images should have the following identifying characteristics to know which projections associate with each other: ...
 
