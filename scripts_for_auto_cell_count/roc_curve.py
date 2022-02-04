@@ -60,9 +60,8 @@ for selectedClassifier in class_list:
     false_neg_dataframe = pd.read_csv(false_negative_file)
     false_neg = false_neg_dataframe["fn"]
     total_false_neg = false_neg.sum()
-    #print(total_false_neg)
-    #print(false_neg)
-
+    
+    # Represent the false negatives as their own rows in the dataframe
     for increment in range(0, total_false_neg):
         new_row = pd.DataFrame([["hello there", 0, 1]], columns=["Label", "Mean", "points"])
         results = results.append(new_row, ignore_index=True)
@@ -98,6 +97,7 @@ for selectedClassifier in class_list:
 
     # Average precision recall score (AP)
     print("AP = " + str(average_precision_score(binary_y, y_score)))
+
     # Method precision_recall_curve adds a single interger to the end of these arrays that must be removed
     recall = recall[0:-1]
     precision = precision[0:-1]
@@ -108,8 +108,10 @@ for selectedClassifier in class_list:
     # Probabily can get it out of the classifierN_final.csv, if I had one
     #precision = tpr / (tpr + fpr)
     #recall = tpr / 
-    # F1 = f1_score(binary_y, y_score)
+    # F1 = f1_score(binary_y, y_score) doesn't work since it needs exact ground truth labels
     #print(F1)
+
+    plt.figure(figsize=(9,7))
     plt.subplot(2,2,1)
     plt.title(selectedClassifier + " Threshold Optimization")
     plt.plot(thresholds, fpr, color="red", marker=".", label="False Positive")
