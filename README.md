@@ -1,4 +1,4 @@
-# ACCT: Automatic-Cell-counting-with-TWS
+# ACCT: Automatic-Cell-Counting-with-TWS
 A user friendly program for automated object counting using Trainable WEKA Segmentation.
 
 ## Table of Contents
@@ -45,6 +45,8 @@ pip3 install sklearn
 -***In ImageJ enable update site for Featurej**
 
 -Python https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe
+
+-Currently the ImageScience package for FIJI must NOT be installed or have been installed on the FIjI installation in use
  
 # How To Use
 
@@ -114,9 +116,9 @@ __1.3__ Our data includes paired images in individual fields of view for increas
 
 <img src = "figures/selectMultipleSegmentation.PNG">
 
-__1.4__ To count the number of objects in your data, the program defaults to a 20 pixel minimum size to determine an object as countable. If you want a different minimum size threshold in order to be counted, you are able to adjust this value.
+__1.4__ To count the number of objects in your data, the program defaults to a 20 pixel minimum and 1000 maximum object size. These cuttoffs will have significant effects on accuracy and vary completely by application. You will be prompted to select these .
 
-<img src = "figures/selectSizeMin.PNG">
+<img src = "figures/sizeValues.PNG">
 
 After the pipeline completes a run, run times will vary by hardware capacity, open the All_Classifier_Comparison.csv file to compare the performance of the various classifiers. 
 
