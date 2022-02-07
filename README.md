@@ -118,7 +118,7 @@ __1.3__ Our data includes paired images in individual fields of view for increas
 
 __1.4__ To count the number of objects in your data, the program defaults to a 20 pixel minimum and 1000 maximum object size. These cuttoffs will have significant effects on accuracy and vary completely by application. You will be prompted to select these .
 
-<img src = "figures/sizeValues.PNG">
+<img src = "figures/sizeValues.png">
 
 After the pipeline completes a run, run times will vary by hardware capacity, open the All_Classifier_Comparison.csv file to compare the performance of the various classifiers. 
 
