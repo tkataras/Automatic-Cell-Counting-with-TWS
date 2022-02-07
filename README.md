@@ -46,7 +46,7 @@ pip3 install sklearn
 
 -Python https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe
 
--Currently the ImageScience package for FIJI must NOT be installed or have been installed on the FIjI installation in use
+-Currently the ImageScience package for FIJI must NOT be installed or have been installed on the FIJI installation in use
  
 # How To Use
 
