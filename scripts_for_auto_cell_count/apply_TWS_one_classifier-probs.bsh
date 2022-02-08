@@ -1,14 +1,10 @@
-#@ File(label="Input directory", description="Select the directory with input images", style="directory") inputDir
-#@ File(label="Output directory", description="Select the output directory", style="directory") outputDir
-#@ File(label="Weka model", description="Select the Weka model to apply") modelPath
-
+#@ File(label="Source directory", description="Select the directory with the source of the scripts", style="directory") srcDir
+#@ File(label="Weka model", description="_Select the Weka model to apply") modelPath
 
 resultMode = "Probabilities";
-//resultMode = "Labels";
 xTiles = 3;
 yTiles = 3;
 zTiles = 0;
-
 
 import trainableSegmentation.WekaSegmentation;
 import trainableSegmentation.utils.Utils;
@@ -16,6 +12,10 @@ import ij.io.FileSaver;
 import ij.IJ;
 import ij.ImagePlus;
 import graphcut.Graph_Cut;
+
+bsh.cwd = srcDir;
+inputDir = bsh.cwd + "../training_area/testing_area/Images/";
+outputDir = bsh.cwd + "../training_area/testing_area/Weka_Probability/";
 
 gc = new Graph_Cut();
 
@@ -27,11 +27,13 @@ getProbs = resultMode.equals( "Probabilities" );
  
 // create segmentator
 segmentator = new WekaSegmentation( zTiles > 0 );
+
 // load classifier
 segmentator.loadClassifier( modelPath.getCanonicalPath() );
   
 // get list of input images
-listOfFiles = inputDir.listFiles();
+listOfFiles = pathToFile(inputDir).listFiles();
+
 for ( i = 0; i < listOfFiles.length; i++ )
 {
     // process only files (do not go into sub-folders)
@@ -70,7 +72,10 @@ for ( i = 0; i < listOfFiles.length; i++ )
             
             new FileSaver( result ).saveAsTiff( outputDir.getPath() + File.separator + outputFileName );
 
-		
+			// TODO check if necessary 
+			//thresholding the probaility image just like the imageJ GUI. (only works with 2 classes eg. cell & non-cell)
+			IJ.setThreshold(result, 0, cutoff);
+			IJ.run(result, "Convert to Mask", "");
 			
 			//graph cut to get segmented image and then save
 			// dataWeight - weight of data term (t-links) [0,1]
