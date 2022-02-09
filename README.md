@@ -81,7 +81,7 @@ Place these classifiers inside of training_area/Classifiers. These should be .mo
 # Image Protocols
 Images should be of the same dimensions.
 
-Images should be free of major artifacts (Optimal but recommended).
+Images should be free of major artifacts (Optional but recommended).
 
 Images should be in .png format.
 TODO images could also be .jpg or .tiff
