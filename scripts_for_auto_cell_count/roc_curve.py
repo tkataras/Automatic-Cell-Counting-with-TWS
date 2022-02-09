@@ -1,11 +1,11 @@
 #!/usr/bin/python
 ###
 # Author: Tyler Jang, Theo Kataras
-# Date: 1/19/2021
-# This file creates a threshold optimization and ROC curve plot for each classifier 
+# Date: 2/9/2022
 #
 # Inputs: Results csv file containing the probability of each object
 # Outputs: A plot for threshold optimization and a ROC plot.
+# This file creates a threshold optimization and ROC curve plot for each classifier 
 ###
 import pandas as pd
 import numpy as np
@@ -82,18 +82,12 @@ for selectedClassifier in class_list:
     # NOTE in the method implementation, threshold will be made to have a value of max(y_score) + 1 to ensure it has a data point that is fpr, tpr = 0
     fpr, tpr, thresholds = roc_curve(binary_y, y_score, pos_label=1, drop_intermediate=False)
 
-    #print(fpr)
-    #print(tpr)
-    #print(thresholds)
-
     # Calculate the area under the curve
     auc = roc_auc_score(binary_y, y_score, multi_class="ovo")
     print("AUC = " + str(auc))
 
     # Calculate Precision and Recall
-    # TODO, this doesn't have drop intermediate functionality=False, so it only shows thresholds that lead to good results, thus the graphs have
-    # different number of thresholds
-    # TODO I don't know how it figures out the number of false negatives
+    # NOTE This doesn't have drop intermediate functionality=False, so it only shows thresholds that lead to good results, thus the graphs have different number of thresholds
     precision, recall, pr_thresholds = precision_recall_curve(binary_y, y_score, pos_label=1)
 
     # Average precision recall score (AP)
@@ -103,16 +97,8 @@ for selectedClassifier in class_list:
     # Method precision_recall_curve adds a single interger to the end of these arrays that must be removed
     recall = recall[0:-1]
     precision = precision[0:-1]
-    #print(precision)
-    #print(recall)
-    #print(pr_thresholds)
-    # TODO TO make f1 score, I need the tp, fp, and fn values specifically
-    # Probabily can get it out of the classifierN_final.csv, if I had one
-    #precision = tpr / (tpr + fpr)
-    #recall = tpr / 
-    # F1 = f1_score(binary_y, y_score) doesn't work since it needs exact ground truth labels
-    #print(F1)
-
+    
+    # Plot true positive and false positive rates
     plt.figure(figsize=(9,7))
     plt.subplot(2,2,1)
     plt.title(selectedClassifier + " Threshold Optimization")
@@ -153,7 +139,7 @@ for selectedClassifier in class_list:
     plt.title("Recall and Precision Threshold Optimization")
     plt.legend()
 
-    # Recall vs precision
+    # Recall vs precision for each threshold
     plt.subplot(2,2,4)
     plt.plot(recall, precision, color="black", marker=".", label="Recall vs Precision")
     plt.title("Recall vs Precision for each threshold")

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 ###
 # Author: Theo Kataras, Tyler Jang
-# Date: 12/1/2021
+# Date: 2/9/2022
 #
 # Input: The source directory
 #       (optional) The classifier selected by the user for the full dataset
@@ -19,6 +19,7 @@ def set_dir(arg1):
     os.chdir(curr_dir)
 set_dir(sys.argv[1])
 
+# Boolean to flag if the program is in the testing stage
 test_stage = False
 if len(sys.argv) == 3:
     class_list_pre_trim = []
@@ -33,7 +34,7 @@ else:
     source = "../training_area/"
     # Locate classifiers
     class_origin =  source + "Classifiers/"
-    # Determin the number of classifiers
+    # Determine the number of classifiers
     class_list_pre_trim = os.listdir(class_origin)
 
 # Trim the classifier names of the ".model" at the end

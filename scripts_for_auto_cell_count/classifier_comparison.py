@@ -1,7 +1,7 @@
 #!/usr/bin/python
 ###
 # Author: Tyler Jang, Theo Kataras
-# Date 1/11/2022
+# Date 2/9/2022
 #
 # Inputs: genotype csv file, hand count results file from count over roi,
 # results of count over dir in each classifier folder. 
@@ -28,7 +28,6 @@ set_dir(sys.argv[1])
 geno_file = "../training_area/genotype.csv"
 
 # File output location
-# TODO I just changed this to work with the probability data, so the files will end up in the projected probability folders
 output_count = "../training_area/Weka_Output_Counted/"
 result_out = "../training_area/Results/"
 
@@ -36,7 +35,7 @@ result_out = "../training_area/Results/"
 class_list = os.listdir(output_count)
 
 # Holds all accuracy values for classifiers
-your_boat = pd.DataFrame(columns=["class", "precision", "recall", "F1", "accuracy", "MAE", "MPE"]) 
+result_summary_file = pd.DataFrame(columns=["class", "precision", "recall", "F1", "accuracy", "MAE", "MPE"]) 
 
 # Getting in the results of count_from_roi.ijm
 hand_ini = pd.read_csv("../training_area/Results/roi_counts.csv", usecols=['Label'])
@@ -48,17 +47,17 @@ for i in range(0, len(hand_ini)):
     row_name = row_name.split(".")[0]
     hand_ini.loc[i].at["Label"] = row_name
 
-# TODO For testing that the column was renamed correctly
-#hand_ini.to_csv("../training_area/Results/roi_counts_temp.csv")
+# Get the unique image names
 lvl_h = np.unique(hand_ini)
 
 # TODO May mess with non fluoset names
 lvl_h = sorted(lvl_h, key=str.swapcase)
-print(lvl_h)
+
+# Get the hand counts for each unique image
 count_h = {}
 for i in range(0, len(hand_ini)):
     if count_h.get(hand_ini.loc[i].at["Label"]) == None:
-        # Start the count at 0 since there is 1 more line than hand counts in the file
+        # Start the count at 0 since there is 1 more line than hand counts in the file to represent the full image
         count_h[hand_ini.loc[i].at["Label"]] = 0
     else:
         count_h[hand_ini.loc[i].at["Label"]] = count_h[hand_ini.loc[i].at["Label"]] + 1
@@ -78,9 +77,7 @@ for f in range(0, len(class_list)):
         label_col.loc[row] = row_name
     class_results["Label"] = label_col
 
-    ## If else loop for determining true positive, false positive and false negative cell counts
-    ## from levels present in the classifier results output, this should be the same each time, BUT IT WoNT BE IF ONE IMAGE HAS NO CELL OBJECtS
-    ## need to go into the counted folder and pull out all image names, meaning ignorming the Results.csv files. images from tru_count with be .png
+    # Store the images that were counted by the classifiers
     folder_loc = output_count + curr_class
     img_names = []
     for image in os.listdir(folder_loc):
@@ -108,8 +105,6 @@ for f in range(0, len(class_list)):
             name = img_names[image]
             tp = 0
             fp = 0
-            # TODO check this math out fn = count_h[lvl_h[image]]
-            # fn = 0
             fn = count_h[lvl_h[image]]
             avg_area = 0
             avg_circular = 0
@@ -132,10 +127,7 @@ for f in range(0, len(class_list)):
                     tp = tp + 1
                     fn = fn + auto_count - 1
         
-        # For each image add total number hand count - sum(dftc$points), the sum points must always be less than count_h$count 
-        # dtfc$points only counts the markers that fall within cell objects, count_h$counts is the sum of all points in total. 
-        # When this is not true(e.g. there are negative values) check the image names of the hand count!!
-        # TODO print statement for this above comment TODO make this error handling better
+        # Find the number of hand counts that were missed and add it to false negatives
         if dftc.size != 0:
             missed = count_h[lvl_h[image]] - sum(dftc["points"]) 
             fn = fn + missed      
@@ -161,10 +153,12 @@ for f in range(0, len(class_list)):
                 with np.errstate(divide='ignore', invalid='ignore'):
                     return np.divide(numer, denom, out=None, where=(denom!=0))
             return None
-    # Need to calculate precision and recall
+    
+    # Calculate the total precision and recall
     total_tp = sum(final_result["tp"])
     total_fp = sum(final_result["fp"])
     total_fn = sum(final_result["fn"])
+
     # Accuracy = tp / (tp + fp + fn)
     accuracy = catchDivideByZero(total_tp, total_tp + total_fp + total_fn)
     # Precision = tp/(tp + fp)
@@ -175,7 +169,7 @@ for f in range(0, len(class_list)):
     if precision != None and recall != None:
         result = catchDivideByZero(precision*recall, precision + recall)
     else:
-        result = None
+        result = None    
     if result == None:
         F1 = None
     else:
@@ -280,9 +274,7 @@ for f in range(0, len(class_list)):
         if F1_2 is not None:
             mean_F1_ev0 = np.nanmean(group_one["F1_2"])
   
-        # TODO adjust columns of frame
         # Prepare output csv file
-        # TODO is putting it over 5 lines any better than it was, code looks awful either way
         row_row = pd.DataFrame([[curr_class, precision, recall, F1, accuracy, \
         mean_absolute_error, mean_percent_error, mean_F1_ev0, \
         precision_geno_ttest_pval, recall_geno_ttest_pval, \
@@ -291,7 +283,7 @@ for f in range(0, len(class_list)):
         "precision_geno_ttest_pval", "recall_geno_ttest_pval", \
         "F1_geno_ttest_pval"])
         
-        your_boat = your_boat.append(row_row)
+        result_summary_file = result_summary_file.append(row_row)
        
     # Else, if more than two levels
     elif len(lvl_geno) > 2:
@@ -343,7 +335,7 @@ for f in range(0, len(class_list)):
   
         # Store results in output csv file
         row_row = pd.DataFrame([[curr_class, precision, recall, F1, accuracy, mean_absolute_error, mean_percent_error, precision_f_val, precision_p_val, recall_f_val, recall_p_val, F1_f_val, F1_p_val]], columns=["class", "precision", "recall", "F1", "accuracy", "MAE", "MPE", "precision_F_value", "precision_P_value", "recall_F_value", "recall_P_value", "F1_F_value", "F1_P_value"])
-        your_boat = your_boat.append(row_row)
+        result_summary_file = result_summary_file.append(row_row)
 
     # Else there are only two levels
     else:    
@@ -379,12 +371,12 @@ for f in range(0, len(class_list)):
 
         # Prepare output csv file
         row_row = pd.DataFrame([[curr_class, precision, recall, F1, accuracy, mean_absolute_error, mean_percent_error, F1_geno_ttest_pval, mean_F1_ev0, mean_F1_ev1, precision_geno_ttest_pval, recall_geno_ttest_pval]], columns=["class", "precision", "recall", "F1", "accuracy", "MAE", "MPE", "F1_geno_ttest_pval", "mean_F1_ev0", "mean_F1_ev1", "precision_geno_ttest_pval", "recall_geno_ttest_pval"])
-        your_boat = your_boat.append(row_row)
+        result_summary_file = result_summary_file.append(row_row)
 
 # Generating a unique result file based on time and date
 curr_time = time.localtime(time.time())
 date = str(curr_time.tm_mday) + "-" + str(curr_time.tm_hour) + "-" + str(curr_time.tm_min) + "-" + str(curr_time.tm_sec)
 out_name = "All_classifier_Comparison_" + date + ".csv"
-your_boat.to_csv(result_out + out_name)
+result_summary_file.to_csv(result_out + out_name)
 
 print("End of classifier_comparison.py")

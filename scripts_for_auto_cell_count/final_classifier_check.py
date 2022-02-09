@@ -1,18 +1,17 @@
 #!/usr/bin/python
 ###
 # Author: Tyler Jang, Theo Kataras
-# Date 11/5/2021
-# This file is the pipeline for comparing classifier accuracy on validation data
+# Date 2/9/2022
 #
-# Inputs: genotype file, hand count results file from Cout Roi, results of The Count.IJM in each classifier folder 
-# Outputs: csv table with accuracy measurements for each classifier
+# Inputs: genotype file, hand count results csv, results of auto counting in each classifier folder 
+# Outputs: csv table with accuracy measurements for the selected classifier
+# This file finds the statistical performance of the selected classifier on the entire image dataset
 ###
 import pandas as pd
 import numpy as np
 import os
 import sys
 import scipy.stats
-from scipy.stats.stats import pearsonr
 
 print("Starting finalClassifierCheck.py\n")
 # Method to change working directory from inputted ImageJ Macro
@@ -38,6 +37,7 @@ for img in class_list_temp:
     if img[-4:] == ".png" or img[-4:] == ".jpg" or img[-5:] == ".tiff":
         class_list.append(img)
 
+# Get the unique image names
 unique_img = np.unique(class_list)
 
 class_res_loc = output_count + selectedClassifier + "/" + selectedClassifier + "_Results_test_data.csv"
@@ -45,7 +45,7 @@ class_results = pd.read_csv(class_res_loc)
 
 img_counts = pd.DataFrame(columns=["Label", "Counts"])
 cell_list = list(class_results["Label"])
-#iterate through each classifier 
+# Iterate through each image and its count for the selected classifier 
 for f in range(0, len(unique_img)):
     this_count = cell_list.count(unique_img[f]) - 1
     new_row = pd.DataFrame([[unique_img[f], this_count]], columns=["Label", "Counts"])
