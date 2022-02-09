@@ -34,12 +34,17 @@ trimClassName = split(selectedClassifier, ".");
 testingPath = testingPath + "Weka_Output/" + trimClassName[0];
 
 // Create Weka output for the selected classifier
-run("apply TWS one classifier");
+Dialog.addCheckbox("Do you need to run Weka?", true);
+Dialog.show();
+ifWeka = Dialog.getCheckbox();
+if (ifWeka) {
+	run("apply TWS one classifier-probs");
+} 
 
 // Threshold the images
-runMacro(input + "just_thresh.ijm", testingPath);
+// runMacro(input + "just_thresh.ijm", testingPath);
 
-// TODO Check if can run without projected images
+// TODO Check if can run with projected images
 searchDirectory = input
 Dialog.create("Question");
 Dialog.addCheckbox("Do you need to project multiple image segmentations?", false);
@@ -50,7 +55,7 @@ if (result) {
 	exec("python", input + "project_N_images_by_ID.py", input, trimClassName[0]);
 	searchDirectory = input + "../training_area/testing_area/Weka_Output_Projected/" + trimClassName[0];
 } else {
-	searchDirectory = input + "../training_area/testing_area/Weka_Output_Thresholded/" + trimClassName[0];
+	searchDirectory = input + "../training_area/testing_area/Weka_Output/" + trimClassName[0];
 }
 
 // Count the number of objects in each image

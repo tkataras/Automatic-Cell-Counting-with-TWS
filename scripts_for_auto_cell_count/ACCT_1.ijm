@@ -25,7 +25,7 @@ if (ifWeka) {
 // Threshold the images into distinct values
 //runMacro(input + "just_thresh.ijm", input);
 
-// TODO Check if can run without projected images
+// TODO Check if can run with projected images
 searchDirectory = input;
 Dialog.create("Multiple Image Segmentations?");
 Dialog.addCheckbox("Do you need to project multiple image segmentations?", false);

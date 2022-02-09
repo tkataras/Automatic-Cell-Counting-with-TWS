@@ -1,14 +1,11 @@
 /*
  * Author: Tyler Jang, Theo 
- * Date: 10/20/2021
+ * Date: 2/8/2022
  * Description: This macro applies each Weka classifier onto each validated training image.
  */
 // The user will have to select the directory that contains the script they are running.
 #@ File(label="Source directory", description="Select the directory with the source of the scripts", style="directory") srcDir
-
 #@ Float (label="Set cutoff[0,1], default = 0.5", description="Choose a cutoff from ACCT2 or leave as default 0.5",value=0.5) cutoff
-
-
 
 //#@ File(label="Output directories", description="Select the output directories", style="directory") outputDirs
 //#@ File(label="Weka models", description="Select the folder of Weka models to apply", style="directory") modelsDir
@@ -26,7 +23,7 @@
 bsh.cwd = srcDir;
 inputDir = bsh.cwd + "/../training_area/Validation_data/";
 outputDirs = bsh.cwd + "/../training_area/Weka_Output";
-outputprobDirs = bsh.cwd + "/../training_area/Weka_Probability";
+outputProbDirs = bsh.cwd + "/../training_area/Weka_Probability";
 modelsDir = bsh.cwd + "/../training_area/Classifiers";
 
 print("Past the dirs");
@@ -44,7 +41,7 @@ import ij.IJ;
 import ij.ImagePlus;
 import graphcut.Graph_Cut;
 
-gc = new Graph_Cut();
+//gc = new Graph_Cut();
 
   
 // starting time
@@ -61,7 +58,7 @@ listOfMod = pathToFile(modelsDir).listFiles();
 
 //iterate through output folders
 listOfOut = pathToFile(outputDirs).listFiles();
-listOfprobOut = pathToFile(outputprobDirs).listFiles();
+listOfprobOut = pathToFile(outputProbDirs).listFiles();
 //listOfOut = outputDirs.listFiles();
 //print(listOfOut);
 
@@ -137,7 +134,7 @@ for ( z = 0; z < listOfMod.length; z++ ) {
 
 				print(listOfOut[ z ].getPath());
 				print(outputFileName);
-				new FileSaver( result ).saveAsTiff( listOfOut[ z ].getPath() + File.separator +  outputFileName);
+				new FileSaver( result ).saveAsTiff( listOfOut[ z ].getPath() + File.separator + outputFileName);
   
 	            // force garbage collection (important for large images)
 	            result = null; 
