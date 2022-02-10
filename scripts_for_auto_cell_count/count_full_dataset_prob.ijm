@@ -75,22 +75,20 @@ macro "The -- True -- Count" {
 		//run("Watershed");
 		
 		// This imageJ plugin creates the results file and image of the count cells based on the size exclusion		
-		run("Analyze Particles...", "size=" + sizeMin + "-" + sizeMax + " pixel show=Masks display summarize add");
+		run("Analyze Particles...", "size=" + sizeMin + "-" + sizeMax + " pixel show=Masks summarize add");
 
 		// Save the resulting counted image
 		saveAs("Png", output + "/" + filename);
 		
 		//close the counted image, open the probaility image and measure the objects on it instead
-		close();
+		//close();
 
-		//using the classifier from input, not prob, should be fine, could be used elsewehre
-		open(probDirs + "/" + filenameP);
-		roiManager("measure");
 
 		//stop empty auto count images here 
 		// TODO what if image is not empty, but the particle is so small it gets passed by
 		// TODO this would also be an act one problem
 		getRawStatistics(nPixels, mean, min, max, std, histogram);
+		print(max);
 		if (max == 0) {
 			if (rowNumber == -1) {
 				rowNumber = 0;
@@ -103,15 +101,22 @@ macro "The -- True -- Count" {
 			//roiManager("Delete"); 
 			print(filename + " this was an empty image");
 		} else {
+			//using the classifier from input, not prob, should be fine, could be used elsewehre
+			open(probDirs + "/" + filenameP);
+			roiManager("measure");
+			close();
+			
 			// Measuring a full image after the objects, to keep parity with the empty images
 			run("Measure");	
 			rowNumber++;
 
 			// Establish number of objects
 			numRoi = roiManager("count"); 
-			print("Number of auto counted objects = " + numRoi - 1);	
+			print("Number of auto counted objects = " + numRoi);	
 			//print(numRoi);
 			//totalCount = totalCount + numRoi;
+
+			
 		}
 	}			
 	roiManager("deselect")		
