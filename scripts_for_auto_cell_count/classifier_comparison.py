@@ -45,7 +45,7 @@ for i in range(0, len(hand_ini)):
     row_name = hand_ini.loc[i].at["Label"]
     row_name = row_name.split(":")[0]
     row_name = row_name.split(".")[0]
-    hand_ini.loc[i].at["Label"] = row_name
+    hand_ini.loc[i, "Label"] = row_name
 
 # Get the unique image names
 lvl_h = np.unique(hand_ini)
@@ -69,13 +69,11 @@ for f in range(0, len(class_list)):
     class_results = pd.read_csv(class_res_loc)
 
     # Replace label column to remove file extensions and point
-    label_col = class_results["Label"]
-    for row in range(0, len(label_col)):
-        row_name = label_col.loc[row]
+    for row in range(0, len(class_results)):
+        row_name = class_results.loc[row, "Label"]
         row_name = row_name.split(":")[0]
         row_name = row_name.split(".")[0]
-        label_col.loc[row] = row_name
-    class_results["Label"] = label_col
+        class_results.loc[row, "Label"] = row_name
 
     # Store the images that were counted by the classifiers
     folder_loc = output_count + curr_class

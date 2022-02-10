@@ -37,17 +37,17 @@ for img in class_list_temp:
     if img[-4:] == ".png" or img[-4:] == ".jpg" or img[-5:] == ".tiff":
         class_list.append(img)
 
+# Remove file extensions and point deliminator 
 for i in range(0, len(class_list)):
     row_name = class_list[i]
     row_name = row_name.split(":")[0]
     row_name = row_name.split(".")[0]
     class_list[i] = row_name
+
 # Get the unique image names
 unique_img = np.unique(class_list)
-print(unique_img)
 class_res_loc = output_count + selectedClassifier + "/" + selectedClassifier + "_Results_test_data.csv"
 class_results = pd.read_csv(class_res_loc)
-
 
 # Replace label column to remove file extensions and point
 label_col = class_results["Label"]
@@ -55,8 +55,8 @@ for i in range(0, len(class_results)):
     row_name = class_results.loc[i].at["Label"]
     row_name = row_name.split(":")[0]
     row_name = row_name.split(".")[0]
-    label_col.loc[i] = row_name
-class_results["Label"] = label_col
+    #label_col.loc[i] = row_name
+    class_results.loc[i, "Label"] = row_name
 
 img_counts = pd.DataFrame(columns=["Label", "Counts"])
 cell_list = list(class_results["Label"])
@@ -100,6 +100,7 @@ if len(lvl_geno) == 1:
     # Write the T Test results
     print("T-test statistic: " + str(t_test_calc[0]))
     print("P-Value: " + str(t_test_calc[1]))
+    print("Total Count: " + str(np.sum(group_one["Counts"])))
 # 2+ levels
 elif len(lvl_geno) > 2:
     geno_list = []
@@ -142,6 +143,7 @@ elif len(lvl_geno) > 2:
     # Write out ANOVA results
     print(selectedClassifier + " ANOVA Object Count F-Value over " + str(len(lvl_geno)) + " conditions = " + str(counts_f_val))
     print(selectedClassifier + " ANOVA Object Count P-Value over " + str(len(lvl_geno)) + " conditions = " + str(counts_p_val))
+    print("Total counts are inside the final csv")
 # Else, only two levels
 else:
     geno_list = []
@@ -175,5 +177,7 @@ else:
     # Write the T Test results
     print("T-test statistic: " + str(t_test_calc[0]))
     print("P-Value: " + str(t_test_calc[1]))
+    total_count = np.sum(group_one["Counts"]) + np.sum(group_two["Counts"])
+    print("Total Count: " + str(total_count))
 
 print("\nFinished finalClassifierCheck.py")
