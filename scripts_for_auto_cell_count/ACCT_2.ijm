@@ -34,6 +34,7 @@ trimClassName = split(selectedClassifier, ".");
 testingPath = testingPath + "Weka_Output/" + trimClassName[0];
 
 // Create Weka output for the selected classifier
+Dialog.create("Run Weka to create new probability output?");
 Dialog.addCheckbox("Do you need to run Weka?", true);
 Dialog.show();
 ifWeka = Dialog.getCheckbox();
@@ -45,12 +46,11 @@ if (ifWeka) {
 // runMacro(input + "just_thresh.ijm", testingPath);
 
 // TODO Check if can run with projected images
-searchDirectory = input
+searchDirectory = input;
 Dialog.create("Question");
 Dialog.addCheckbox("Do you need to project multiple image segmentations?", false);
 Dialog.show();
 result = Dialog.getCheckbox();
-
 if (result) {
 	exec("python", input + "project_N_images_by_ID.py", input, trimClassName[0]);
 	searchDirectory = input + "../training_area/testing_area/Weka_Output_Projected/" + trimClassName[0];
@@ -59,7 +59,7 @@ if (result) {
 }
 
 // Count the number of objects in each image
-runMacro(input + "count_full_dataset_oneImessedwith.ijm", searchDirectory);
+runMacro(input + "count_full_dataset_prob.ijm", searchDirectory);
 
 // Finally, get statistical information about the classifier's performance
 exec("python", input + "final_classifier_check.py", input, trimClassName[0]);

@@ -1,6 +1,6 @@
 /**
  * Author: Theo Kataras, Tyler Jang
- * Date: 11/30/2021
+ * Date: 2/9/20212
  * 
  * Input: Binary images, hand placed markes in roi files, one file for each image
  * Output: Binary image files including only cells counted, and .csv file in classifier folder with accuracy information
@@ -18,14 +18,14 @@ macro "The -- True -- Count" {
 	// Weka Output Counted
 	outputDirs = inputDirs + "../Weka_Output_Counted/";
 	
-	// Weka Probability Projected
+	// Weka Probability
 	probDirs = inputDirs + "../Weka_Probability/";
 	
 	// Clear the results table
 	run("Clear Results");
 	
 	// Set size minimum for cells to exclude small radius noise and large artifacts
-	sizeMin=20;
+	sizeMin = 20;
 	sizeMax = 1000;
 	Dialog.create("Size Values");
 	Dialog.addNumber("Minimum pixel size for object count:", sizeMin);
@@ -38,7 +38,6 @@ macro "The -- True -- Count" {
 	
 	// Validation Hand Counts
 	dirVal = inputDirs + "../Validation_Hand_Counts/";
-
 	
 	// Gets the folders for each classifier
 	inputDirList = getFileList(inputDirs);
