@@ -90,13 +90,9 @@ macro "The -- True -- Count" {
 			saveAs("Png", outputDirs + output + filename);
 		
 			//close the counted image, open the probaility image and measure the objects on it instead
-			close();
+		//	close();
 			
-			//using the classifier from input, not prob, should be fine, could be used elsewehre
-			open(inputP + input + filenameP);
-			roiManager("measure");
 
-			
 			counts = 0;
 			//stop empty auto count images here 
 			getRawStatistics(nPixels, mean, min, max, std, histogram);
@@ -113,7 +109,12 @@ macro "The -- True -- Count" {
 				//print(filename + " this was an empty image");
 			} else {	
 				//print(filename + " this was an image with cells (after the else)");
-				
+				//using the classifier from input, not prob, should be fine, could be used elsewehre
+				open(inputP + input + filenameP);
+				roiManager("measure");
+				close();
+			
+
 					
 				// Measuring a full image after the objects, to keep parity with the empty images
 				run("Measure");
