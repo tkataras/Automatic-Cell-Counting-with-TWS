@@ -47,7 +47,7 @@ macro "The -- True -- Count" {
 	probDirList = getFileList(probDirs);
 
 	rowNumber = -1;
-		
+
 	// Iterate macro over the images in the input folder
 	for (q = 0; q < inputDirList.length; q++) {
 		action(inputDirs, outputDirs, inputDirList[q], probDirList[q]);
@@ -121,7 +121,7 @@ macro "The -- True -- Count" {
 	
 	// Takes / off end of folder name to get classifier ID
 	className = selectedClassifier[selectedClassifier.length - 1];
-	saveAs("Results", outputDirs + "/" + className + "_Results_test_data.csv"); // **#*#*CANT FIND THIS FILE ANYWHERE*#*#*#*##*
+	saveAs("Results", outputDirs + "/" + className + "_Results_test_data.csv"); 
 	run("Clear Results");
 	
 	// Prints text in the log window after all files are processed

@@ -101,11 +101,9 @@ macro "The -- True -- Count" {
 			//stop empty auto count images here 
 			getRawStatistics(nPixels, mean, min, max, std, histogram);
 			if (max == 0) {
-			
 				if (rowNumber == -1) {
 					rowNumber = 0;
 				}
-			
 				numRoi = 0;
 				run("Measure");
 				setResult("points", rowNumber++, counts);
