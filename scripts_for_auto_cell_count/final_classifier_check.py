@@ -37,11 +37,26 @@ for img in class_list_temp:
     if img[-4:] == ".png" or img[-4:] == ".jpg" or img[-5:] == ".tiff":
         class_list.append(img)
 
+for i in range(0, len(class_list)):
+    row_name = class_list[i]
+    row_name = row_name.split(":")[0]
+    row_name = row_name.split(".")[0]
+    class_list[i] = row_name
 # Get the unique image names
 unique_img = np.unique(class_list)
-
+print(unique_img)
 class_res_loc = output_count + selectedClassifier + "/" + selectedClassifier + "_Results_test_data.csv"
 class_results = pd.read_csv(class_res_loc)
+
+
+# Replace label column to remove file extensions and point
+label_col = class_results["Label"]
+for i in range(0, len(class_results)):
+    row_name = class_results.loc[i].at["Label"]
+    row_name = row_name.split(":")[0]
+    row_name = row_name.split(".")[0]
+    label_col.loc[i] = row_name
+class_results["Label"] = label_col
 
 img_counts = pd.DataFrame(columns=["Label", "Counts"])
 cell_list = list(class_results["Label"])
