@@ -18,6 +18,26 @@ macro "The -- Audit -- Count" {
 	Dialog.show();
 	size_min = Dialog.getNumber();
 
+
+
+
+	// Set size minimum for cells to exclude small radius noise and large artifacts
+	sizeMin=20;
+	sizeMax = 1000;
+	Dialog.create("Size Values");
+	Dialog.addNumber("Minimum pixel size for object count:", sizeMin);
+	Dialog.addNumber("Maximum pixel size for object count:", sizeMax);
+	Dialog.show();
+	sizeMin = Dialog.getNumber();
+	sizeMax = Dialog.getNumber();
+
+
+
+
+
+
+
+
 	
 	//set input and output directories locations
 	
@@ -63,22 +83,68 @@ macro "The -- Audit -- Count" {
 			//run("Invert");
 					
 			// this imageJ plugin creates the results file and image of the count cells based on the size exclusion		
-			run("Analyze Particles...", "size="+size_min+"-Infinity pixel show=Masks display summarize add");
+			run("Analyze Particles...", "size="+sizeMin+"-"+sixeMax+" pixel show=Masks display summarize add");
 			//saveAs("Png",output_dirs + output + filename);
 
-	//this if statement is made to allow the program to cycle over image files saved in the hand count folder to signify empty image
-		if (endsWith(filename2, ".roi") > 0) {
-			open(output + filename2);
-			roiManager("Add");
+	
 			
-			numroi = roiManager("count"); // establish number of objects
+			counts = 0;
+			//stop empty auto count images here 
+			getRawStatistics(nPixels, mean, min, max, std, histogram);
+			if (max == 0) {
+			
+				if (rowNumber == -1) {
+					rowNumber = 0;
+				}
+			
+				numRoi = 0;
+				run("Measure");
+				setResult("points", rowNumber++, counts);
 				
-			roiManager("Select", numroi - 1);
-			pts = Roi.getCoordinates(xpoints2, ypoints2); 
-			numpoints = lengthOf(ypoints2); // establish number of hand placed counts
-			print(numpoints + "_hand_placed_markers");
-			print("number auto count objects=" + numroi -1);
+				//roiManager("deselect");
+				//roiManager("Delete"); 
+				//print(filename + " this was an empty image");
+			} else {	
+				//print(filename + " this was an image with cells (after the else)");
+
 				
+					
+				// Measuring a full image after the objects, to keep parity with the empty images
+				run("Measure");
+				rowNumber++;
+				
+				//print(filenameTwo + "=filename2 the hand count");
+	
+				//need to deal with case where human marked no cells and saved placeholder, but program has objects
+				// This is with hand counts and auto counts
+				if (endsWith(filenameTwo, ".roi")) {
+					
+					open(inputTwo + filenameTwo);
+					roiManager("Add");
+
+					//TODO need to save the exact roi info for each auto object
+				 	// Establish number of objects
+					numRoi = roiManager("count"); 
+					print(numRoi);
+				
+					roiManager("select", numRoi - 1);
+//					print("this is roi name being used for hand count coords"  + Roi.getName); //I THINK THE ISSUE MAY BE HERE IN THE assignment of the hand count roi coords???!?!?!?!?!
+					pts = Roi.getCoordinates(xPoints2, yPoints2); //get info for all hand places counts
+
+					
+					//roiManager("Delete"); //just added this to test !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!312312313
+					numPoints = lengthOf(yPoints2); // establish number of hand placed counts	
+					numRoiTwo = numRoi - 1;//subtract one for the multipoint ROI containing the hand count info
+
+				} else {
+					//this is the case where the hand count found no cells, but the auto count did
+					numPoints = 0;//set the number of hand counts to 0
+//					print("this is the case where the hand count found no cells, but the auto count did");
+					numRoiTwo = roiManager("count");
+					xPoints2 = 99999;//these need to be a point that will never overlap with objects in the image
+					yPoints2 = 99999;
+				}
+
 			numroi2 = numroi -1;
 				
 				

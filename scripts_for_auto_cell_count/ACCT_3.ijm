@@ -6,7 +6,7 @@ run("Set Measurements...", "area mean standard modal min centroid center perimet
 //making sure all folders exist
 exec("python", input + "file_architect.py", input);
 
-testingPath = input + "../training_area/testing_area/";
+testingPath = input + "../testing_area/";
 classifierDir = input + "../training_area/Classifiers";
 searchDirectory = getFileList(classifierDir);
 
@@ -22,14 +22,36 @@ selectedClassifier = Dialog.getChoice();
 trimClassName = split(selectedClassifier, ".");
 
 // Randomly select images for analysis
-exec("python", input + "audit.py", input, trimClassName[0]);
+//TK: thinking about this more, the audit set needs to have the same genotype/exp condition breakdown as the validation set, IF the user has exp groups, so we might just say the 
+//user has to select images randomly and count them themselves and that THIS TOOL is just a way for them to quantify any futher counted images. 
+//audit could be more user input based so people can use it for any counting. just have one folder for counted images, one folder for hand counts and an output location in results
+
+//exec("python", input + "audit.py", input, trimClassName[0]);
 
 Dialog.create("Question");
 Dialog.addCheckbox("Now hand count the randomly selected audit images inside of training_area/testing_area/Audit_Images. Select this box when you are ready to continue.", false);
 Dialog.show();
 
+
+// Ask if the user needs to run Weka 
+Dialog.create("Have you selected you audit image set and marked cells with multi point selection?");
+Dialog.addCheckbox("ready to audit a dataset", true);
+Dialog.show();
+ifWeka = Dialog.getCheckbox();
+if (ifWeka) {
+
+
+
 // Count and analysis of audit images
-runMacro(input + "count_from_roi.ijm", input + "../training_area/testing_area/Audit_Hand_Counts/" + trimClassName[0] + "/");
+runMacro(input + "count_from_roi.ijm", input + "../testing_area/Audit_Hand_Counts/" + trimClassName[0] + "/");
 
 runMacro(input + "audit_count.ijm", searchDirectory);
 exec("python", input + "audit_classifier_comparison.py", input, trimClassName[0]);
+
+
+	
+} 
+
+
+
+
