@@ -96,15 +96,15 @@ Image file names should not contain the following symbols as they are used for o
 :
 ```
 
-Projected images should have the following identifying characteristics to know which projections associate with each other: ...
+Projected images should have the following identifying characteristics to know which projections associate with each other: ... __TODO__
 
 # How to create classifiers using Weka
 ACCT uses Weka Classifiers to count images, which the user will initially need to create. In order to generate classifiers..... __TODO__
 
 The program expects at least 2 classifiers to compare performance against.
-# Stage 1
 
-Navigate and select _Plugins >> ACCT 1_
+# Stage 1
+From the ImageJ bar, navigate and select _Plugins >> ACCT 1_
 
 __1.1__ The first step is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference. This is so that our program knows where you have downloaded it. Select the directory/folder named scripts_for_auto_cell_count.
 
@@ -134,7 +134,7 @@ As an example, the output in log will look like this.
 <img src = "figures/act1ExpectedOut.PNG">
 
 # Stage 2
-Navigate and select _Plugins >> ACCT 2_
+From the ImageJ bar, navigate and select _Plugins >> ACCT 2_
 
 __2.1__ Once again, the program must know where it is downloaded. Select the directory/folder named scripts_for_auto_cell_count.
 
@@ -167,7 +167,8 @@ Hand count markers are created in Imagej using the Point Selection Tool, availab
 <img src = "figures/roiManager.PNG">
 
 # Critical Notes
-The image names much match exactly between the hand counts and the original images(except for the file extension).
+The image names much match exactly between the hand counts and the original images (except for the file extension).
+
 Each folder must only contain images or hand counts, with the exception of the Weka Output Counted folder, in which classifier subfolders will include calculation data files.
 At present, two experimental conditions, denoted in the genotypes.csv files, are expected. 
 
