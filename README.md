@@ -20,8 +20,10 @@ Finally, you will have to manually copy and paste certain files into the plugins
 
 Find where you downloaded Fiji in your file directory. Next, navigate to scripts for auto cell count then copy and paste the following files into your Fiji.app/plugins directory. This is so you can run the program from ImageJ using the GUI.
 ```
-BS_TWS_apply.bsh
-apply_TWS_one_classifier.bsh
+ACCT_1.ijm
+ACCT_2.ijm
+BS_TWS_apply_prob.bsh
+apply_TWS_one_classifier_prob.bsh
 ```
 
 # Software Dependencies
@@ -102,7 +104,7 @@ ACCT uses Weka Classifiers to count images, which the user will initially need t
 The program expects at least 2 classifiers to compare performance against.
 # Stage 1
 
-Navigate and select _Plugins >> Macro >> Run >> macroPipeline.ijm_
+Navigate and select _Plugins >> ACCT 1_
 
 __1.1__ The first step is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference. This is so that our program knows where you have downloaded it. Select the directory/folder named scripts_for_auto_cell_count.
 
@@ -132,7 +134,7 @@ As an example, the output in log will look like this.
 <img src = "figures/act1ExpectedOut.PNG">
 
 # Stage 2
-Navigate and select _Plugins >> Macro >> Run >> selectedClassifierPipeline.ijm_
+Navigate and select _Plugins >> ACCT 2_
 
 __2.1__ Once again, the program must know where it is downloaded. Select the directory/folder named scripts_for_auto_cell_count.
 
