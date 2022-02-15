@@ -19,7 +19,6 @@
 //path=( getSourceFileInfo() );
 
 // Set the working directory to the directory with the script
-//srcDir = "C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/scripts_for_auto_cell_count";
 bsh.cwd = srcDir;
 inputDir = bsh.cwd + "/../training_area/Validation_data/";
 outputDirs = bsh.cwd + "/../training_area/Weka_Output";
@@ -39,9 +38,8 @@ import trainableSegmentation.utils.Utils;
 import ij.io.FileSaver;
 import ij.IJ;
 import ij.ImagePlus;
-import graphcut.Graph_Cut;
 
-//gc = new Graph_Cut();
+
 
   
 // starting time
@@ -77,7 +75,7 @@ for ( z = 0; z < listOfMod.length; z++ ) {
 	  
 	// get list of input images
 	listOfFiles = pathToFile(inputDir).listFiles();
-	print(listOfFiles);
+	//print(listOfFiles);
 	//listOfFiles = inputDir.listFiles();
 	for ( i = 0; i < listOfFiles.length; i++ ) {
 	    // process only files (do not go into sub-folders)

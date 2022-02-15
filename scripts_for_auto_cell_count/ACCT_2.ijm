@@ -13,7 +13,7 @@ input = getDirectory("Choose source directory of the macro (Scripts for Auto Cel
 run("Set Measurements...", "area mean standard modal min centroid center perimeter bounding fit shape feret's integrated median skewness kurtosis area_fraction limit display redirect=None decimal=8");
 
 // Variables for needed file paths
-testingPath = input + "../training_area/testing_area/";
+testingPath = input + "../testing_area/";
 classifierDir = input + "../training_area/Classifiers";
 searchDirectory = getFileList(classifierDir);
 
@@ -23,7 +23,8 @@ Dialog.addChoice("_Choose classifier", searchDirectory);
 Dialog.show();
 
 selectedClassifier = Dialog.getChoice();
-print(selectedClassifier);
+
+print(selectedClassifier);
 
 // Populate all folders. If folders already exist, selectively does not make those folders
 exec("python", input + "file_architect.py", input, selectedClassifier);
@@ -39,11 +40,9 @@ Dialog.addCheckbox("Do you need to run Weka?", true);
 Dialog.show();
 ifWeka = Dialog.getCheckbox();
 if (ifWeka) {
-	run("apply TWS one classifier-probs");
+	run("apply TWS one classifier prob");
 } 
 
-// Threshold the images
-// runMacro(input + "just_thresh.ijm", testingPath);
 
 // TODO Check if can run with projected images
 searchDirectory = input;
@@ -53,7 +52,7 @@ Dialog.show();
 result = Dialog.getCheckbox();
 if (result) {
 	exec("python", input + "project_N_images_by_ID.py", input, trimClassName[0]);
-	searchDirectory = input + "../training_area/testing_area/Weka_Output_Projected/" + trimClassName[0];
+	searchDirectory = input + "../testing_area/Weka_Output_Projected/" + trimClassName[0];
 } else {
 	searchDirectory = input + "../training_area/testing_area/Weka_Output/" + trimClassName[0];
 }
@@ -64,4 +63,4 @@ runMacro(input + "count_full_dataset_prob.ijm", searchDirectory);
 // Finally, get statistical information about the classifier's performance
 exec("python", input + "final_classifier_check.py", input, trimClassName[0]);
 
-print("Finished Act 2");
+print("Finished Act 2");

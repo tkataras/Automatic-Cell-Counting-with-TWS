@@ -1,0 +1,226 @@
+<<<<<<< HEAD:scripts_for_auto_cell_count/apply_TWS_one_classifier-probs.bsh
+/*
+ * Author: Tyler Jang, Theo 
+ * Date: 2/8/2022
+ * Description: This macro applies a selected Weka classifier onto each image.
+ */
+=======
+// The user will have to select the directory that contains the script they are running.
+#@ File(label="Source directory", description="Select the directory with the source of the scripts", style="directory") srcDir
+>>>>>>> working_on_ACCT2:scripts_for_auto_cell_count/apply_TWS_one_classifier_prob.bsh
+
+#@ File(label="Source directory", description="Select the directory with the source of the scripts", style="directory") srcDir
+#@ File(label="Weka model", description="_Select the Weka model to apply") modelPath
+#@ Float (label="Set cutoff[0,1], default = 0.5", description="Choose a cutoff from ACCT2 or leave as default 0.5",value=0.5) cutoff
+
+<<<<<<< HEAD:scripts_for_auto_cell_count/apply_TWS_one_classifier-probs.bsh
+resultMode = "Probabilities";
+xTiles = 3;
+yTiles = 3;
+zTiles = 0;
+
+import trainableSegmentation.WekaSegmentation;
+import trainableSegmentation.utils.Utils;
+import ij.io.FileSaver;
+import ij.IJ;
+import ij.ImagePlus;
+import graphcut.Graph_Cut;
+
+bsh.cwd = srcDir;
+inputDir = bsh.cwd + "/../training_area/testing_area/Images/";
+outputDir = bsh.cwd + "/../training_area/testing_area/Weka_Output/";
+outputProbDir = bsh.cwd + "/../training_area/testing_area/Weka_Probability/";
+
+//gc = new Graph_Cut();
+
+// starting time
+startTime = System.currentTimeMillis();
+  
+// caculate probabilities?
+getProbs = resultMode.equals("Probabilities");
+ 
+// create segmentator
+segmentator = new WekaSegmentation(zTiles > 0);
+
+// load classifier
+segmentator.loadClassifier(modelPath.getCanonicalPath());
+
+// Get list of input images
+listOfFiles = pathToFile(inputDir).listFiles();
+
+for (i = 0; i < listOfFiles.length; i++)
+{
+    // process only files (do not go into sub-folders)
+    if(listOfFiles[ i ].isFile())
+    {
+        // try to read file as image
+        image = IJ.openImage(listOfFiles[i].getCanonicalPath());
+        if(image != null)
+        {
+        	// Ensure the image is in 8-bit format for grey scaling
+	        IJ.run(image, "8-bit", "");
+            
+            tilesPerDim = new int[2];
+            if(image.getNSlices() > 1)
+            {
+                tilesPerDim = new int[3];
+                tilesPerDim[2] = zTiles;
+            }
+            tilesPerDim[0] = xTiles;
+            tilesPerDim[1] = yTiles;
+
+            // apply classifier and get results (0 indicates number of threads is auto-detected)
+            result = segmentator.applyClassifier(image, tilesPerDim, 0, getProbs);
+
+            if(!getProbs) {
+                // assign same LUT as in GUI
+                result.setLut( Utils.getGoldenAngleLUT() );
+            }
+			
+	        //removes the non-cell pixel probablility, which is obligate inverse of the cell prob.
+           	IJ.run(result, "Slice Remover", "first=2 last=2 increment=2");
+
+            // save result as TIFF in output folder
+            outputFileName = listOfFiles[ i ].getName().replaceFirst("[.][^.]+$", "") + ".tif";
+            
+            new FileSaver(result).saveAsTiff(pathToFile(outputProbDir) + File.separator + outputFileName);
+
+			// TODO check if necessary 
+			//thresholding the probaility image just like the imageJ GUI. (only works with 2 classes eg. cell & non-cell)
+			IJ.setThreshold(result, 0, cutoff);
+			IJ.run(result, "Convert to Mask", "");
+			
+			//graph cut to get segmented image and then save
+			// dataWeight - weight of data term (t-links) [0,1]
+			//float dataWeight = 0.9;
+			// pottsWeight - or smoothness, weight of smoothness term (n-links) [0,10]
+			//float pottsWeight = 1;
+			// optional input, else intialise to null
+			//ImagePlus edge = null;
+			//edgeWeight = 0;
+
+
+//			seg = gc.processSingleChannelImage(result, edge, dataWeight, pottsWeight, edgeWeight);
+			
+
+			new FileSaver(result).saveAsTiff(pathToFile(outputDir) + File.separator + outputFileName);
+  
+            // force garbage collection (important for large images)
+            result = null; 
+            image = null;
+            //System.gc();
+        }
+    }
+}
+// print elapsed time
+estimatedTime = System.currentTimeMillis() - startTime;
+IJ.log( "** Finished processing folder in " + estimatedTime + " ms **" );
+System.gc();
+=======
+#@ File(label="Weka model", description="Select the Weka model to apply") modelPath
+#@ Float (label="Set cutoff[0,1], default = 0.5", description="Choose a cutoff from ACCT1 or leave as default 0.5",value=0.5) cutoff
+
+resultMode = "Probabilities";
+//resultMode = "Labels";
+xTiles = 3;
+yTiles = 3;
+zTiles = 0;
+
+
+import trainableSegmentation.WekaSegmentation;
+import trainableSegmentation.utils.Utils;
+import ij.io.FileSaver;
+import ij.IJ;
+import ij.ImagePlus;
+
+
+
+
+
+modelName = modelPath.getName().replaceFirst("[.][^.]+$", "");
+
+
+
+// Set the working directory to the directory with the script
+bsh.cwd = srcDir;
+inputDir = bsh.cwd + "/../testing_area/images/";
+//inputDir = bsh.cwd + "/../training_area/Validation_data";
+
+
+outputDir = bsh.cwd + "/../testing_area/Weka_Output/" + modelName + "/";
+outputprobDir = bsh.cwd + "/../testing_area/Weka_Probability/" +	 modelName + "/";
+
+// starting time
+startTime = System.currentTimeMillis();
+  
+// caculate probabilities?
+getProbs = resultMode.equals( "Probabilities" );
+ 
+// create segmentator
+segmentator = new WekaSegmentation( zTiles > 0 );
+// load classifier
+segmentator.loadClassifier( modelPath.getCanonicalPath() );
+  
+// get list of input images
+listOfFiles = pathToFile(inputDir).listFiles();
+for ( i = 0; i < listOfFiles.length; i++ )
+{
+    // process only files (do not go into sub-folders)
+    if( listOfFiles[ i ].isFile() )
+    {
+        // try to read file as image
+        image = IJ.openImage( listOfFiles[i].getCanonicalPath() );
+        if( image != null )
+        {
+        	// Ensure the image is in 8-bit format for grey scaling
+	        IJ.run(image, "8-bit", "");
+            
+            tilesPerDim = new int[ 2 ];
+            if( image.getNSlices() > 1 )
+            {
+                tilesPerDim = new int[ 3 ];
+                tilesPerDim[ 2 ] = zTiles;
+            }
+            tilesPerDim[ 0 ] = xTiles;
+            tilesPerDim[ 1 ] = yTiles;
+            
+            // apply classifier and get results (0 indicates number of threads is auto-detected)
+            result = segmentator.applyClassifier( image, tilesPerDim, 0, getProbs );
+
+            if( !getProbs )
+                // assign same LUT as in GUI
+                result.setLut( Utils.getGoldenAngleLUT() );
+
+			
+            // save result as TIFF in output folder
+            outputFileName = listOfFiles[ i ].getName().replaceFirst("[.][^.]+$", "") + ".tif";
+            
+            //removes the non-cell pixel probablility, which is obligate inverse of the cell prob.
+            IJ.run(result, "Slice Remover", "first=2 last=2 increment=2");
+
+            
+            new FileSaver( result ).saveAsTiff( pathToFile(outputprobDir) + File.separator + outputFileName );
+
+		
+			
+			 //thresholding the probaility image just like the imageJ GUI. (only works with 2 classes eg. cell & non-cell)
+			IJ.setThreshold(result, 0, cutoff);
+			IJ.run(result, "Convert to Mask", "");
+
+
+			
+
+			new FileSaver( result ).saveAsTiff( pathToFile(outputDir) + File.separator + outputFileName);
+  
+            // force garbage collection (important for large images)
+            result = null; 
+            image = null;
+            //System.gc();
+        }
+    }
+}
+// print elapsed time
+estimatedTime = System.currentTimeMillis() - startTime;
+IJ.log( "** Finished processing folder in " + estimatedTime + " ms **" );
+//System.gc();
+>>>>>>> working_on_ACCT2:scripts_for_auto_cell_count/apply_TWS_one_classifier_prob.bsh
