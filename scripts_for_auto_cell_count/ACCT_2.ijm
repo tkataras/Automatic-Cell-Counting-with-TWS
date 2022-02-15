@@ -34,8 +34,13 @@ trimClassName = split(selectedClassifier, ".");
 testingPath = testingPath + "Weka_Output/" + trimClassName[0];
 
 // Create Weka output for the selected classifier
-//COMMENTING OUT FO RNOW @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-//run("apply TWS one classifier-probs");
+Dialog.create("Run Weka to create new probability output?");
+Dialog.addCheckbox("Do you need to run Weka?", true);
+Dialog.show();
+ifWeka = Dialog.getCheckbox();
+if (ifWeka) {
+	run("apply TWS one classifier prob");
+} 
 
 
 // TODO Check if can run without projected images
