@@ -28,14 +28,12 @@ trimClassName = split(selectedClassifier, ".");
 
 //exec("python", input + "audit.py", input, trimClassName[0]);
 
-Dialog.create("Question");
-Dialog.addCheckbox("Now hand count the randomly selected audit images inside of training_area/testing_area/Audit_Images. Select this box when you are ready to continue.", false);
-Dialog.show();
+
 
 
 // Ask if the user needs to run Weka 
-Dialog.create("Have you selected you audit image set and marked cells with multi point selection?");
-Dialog.addCheckbox("ready to audit a dataset", true);
+Dialog.create("Have you selected your audit image set, marked cells with multi point selection and moved counted images into the counted folder?");
+Dialog.addCheckbox("ready to audit a dataset", false);
 Dialog.show();
 ifWeka = Dialog.getCheckbox();
 if (ifWeka) {
@@ -43,10 +41,10 @@ if (ifWeka) {
 
 
 // Count and analysis of audit images
-runMacro(input + "count_from_roi.ijm", input + "../testing_area/Audit_Hand_Counts/" + trimClassName[0] + "/");
+runMacro(input + "count_from_roi.ijm", input + "../testing_area/Audit_Images/" + trimClassName[0] + "/");
+runMacro(input + "audit_count.ijm", input + "../testing_area/Audit_Counted/" + trimClassName[0] + "/");
 
-runMacro(input + "audit_count.ijm", searchDirectory);
-exec("python", input + "audit_classifier_comparison.py", input, trimClassName[0]);
+//exec("python", input + "audit_classifier_comparison.py", input, trimClassName[0]);
 
 
 	

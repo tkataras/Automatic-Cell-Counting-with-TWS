@@ -1,6 +1,6 @@
 /**
  * Author: Theo Kataras, Tyler Jang
- * Date: 11/30/2021
+ * Date: 2/9/20212
  * 
  * Input: Binary images, hand placed markes in roi files, one file for each image
  * Output: Binary image files including only cells counted, and .csv file in classifier folder with accuracy information
@@ -18,14 +18,14 @@ macro "The -- True -- Count" {
 	// Weka Output Counted
 	outputDirs = inputDirs + "../Weka_Output_Counted/";
 	
-	// Weka Probability Projected
+	// Weka Probability
 	probDirs = inputDirs + "../Weka_Probability/";
 	
 	// Clear the results table
 	run("Clear Results");
 	
 	// Set size minimum for cells to exclude small radius noise and large artifacts
-	sizeMin=20;
+	sizeMin = 20;
 	sizeMax = 1000;
 	Dialog.create("Size Values");
 	Dialog.addNumber("Minimum pixel size for object count:", sizeMin);
@@ -38,7 +38,6 @@ macro "The -- True -- Count" {
 	
 	// Validation Hand Counts
 	dirVal = inputDirs + "../Validation_Hand_Counts/";
-
 	
 	// Gets the folders for each classifier
 	inputDirList = getFileList(inputDirs);
@@ -91,27 +90,20 @@ macro "The -- True -- Count" {
 			saveAs("Png", outputDirs + output + filename);
 		
 			//close the counted image, open the probaility image and measure the objects on it instead
-			close();
-		
-			print("prob input");
-			print(inputP + input + filenameP);
+		//	close();
 			
-			//using the classifier from input, not prob, should be fine, could be used elsewehre
-			open(inputP + input + filenameP);
-			roiManager("measure");
 
-			
 			counts = 0;
 			//stop empty auto count images here 
 			getRawStatistics(nPixels, mean, min, max, std, histogram);
 			if (max == 0) {
-			
 				if (rowNumber == -1) {
 					rowNumber = 0;
 				}
-			
 				numRoi = 0;
+				open(inputP + input + filenameP);
 				run("Measure");
+				close();
 				setResult("points", rowNumber++, counts);
 				
 				//roiManager("deselect");
@@ -119,13 +111,17 @@ macro "The -- True -- Count" {
 				//print(filename + " this was an empty image");
 			} else {	
 				//print(filename + " this was an image with cells (after the else)");
-				
+
+				//using the classifier from input, not prob, should be fine, could be used elsewehre
+				open(inputP + input + filenameP);
+				roiManager("measure");
+				close();
+			
+
 					
 				// Measuring a full image after the objects, to keep parity with the empty images
 				run("Measure");
 				rowNumber++;
-				
-				//print(filenameTwo + "=filename2 the hand count");
 	
 				//need to deal with case where human marked no cells and saved placeholder, but program has objects
 				// This is with hand counts and auto counts
@@ -137,7 +133,6 @@ macro "The -- True -- Count" {
 					//TODO need to save the exact roi info for each auto object
 				 	// Establish number of objects
 					numRoi = roiManager("count"); 
-					print(numRoi);
 				
 					roiManager("select", numRoi - 1);
 //					print("this is roi name being used for hand count coords"  + Roi.getName); //I THINK THE ISSUE MAY BE HERE IN THE assignment of the hand count roi coords???!?!?!?!?!
