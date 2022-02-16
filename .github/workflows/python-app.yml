@@ -25,6 +25,10 @@ jobs:
         echo "Hello"
         python -m pip install --upgrade pip
         pip install numpy
-        
+        pip install numpy
+        pip install scipy
+        pip install pandas
+        pip install python-time
+        pip install imageio
+        pip install sklearn
 #        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    
