@@ -126,13 +126,16 @@ __1.4__ To count the number of objects in your data, the program defaults to a p
 
 <img src = "figures/sizeValues.png">
 
-After the pipeline completes a run, run times will vary by hardware capacity, open the __All_Classifier_Comparison_(current time).csv__ file to compare the performance of the various classifiers. 
+After the pipeline completes a run, run times will vary by hardware capacity, open the __All_Classifier_Comparison_(current time).csv__ file to compare the performance of the various classifiers. This is a summary of the overall statistical performance of each classifier.
 
 More statistical information will be printed to the log window.
 
 This will be located under __training_area/Results__.
 
-For the testing dataset, several classifiers should demonstrate the same accuracy statistics as the image size is very small as they contain at most 3 cells per image.
+If you desire even more detailed statistical information about each individual classifier:
+1. Reciever operator curves are also automatically generated for each classifier and located inside of __training_area/Weka_Output_Counted/classifier#/classifier# roc curve.pdf__.
+2. The number of true positives, false positives, and false negatives for each individual image for each individual classifier can be found in __training_area/Weka_Output_Counted/classifier#/classifier# Final.csv__.
+3. The morphological data and the correctness of each individual object counted for each individual image for each indivdual classifier can be found in __training_area/Weka_Output_Counted/classifier#/classifier# Results.csv__.
 
 As an example, the output in log will look like this.
 
@@ -145,7 +148,7 @@ __2.1__ Once again, the program must know where it is downloaded. Select the dir
 
 <img src = "figures/selectSource.PNG">
 
-__2.2__ Now, select the most accurate classifier (or any classifier of your choosing). Selecting the most accurate classifier is left to the user, but information is supplied in the form of accuracy values in Precision, Recall and F1 score, as well as statistical outputs of mean accuracy comparison between two separate experimental conditions entered in the genotypes.csv file. This program is set to handle any N number of conditions, performing 1 sample T-Tests, Welch 2 sample T-Tests, and ANOVA respective to the number of conditions in the genotype.csv file. __TODO__ Note that audit or ACCT 3 can only handle 2 levels, and only 2 levels.
+__2.2__ Now, select the most accurate classifier (or any classifier of your choosing). Selecting the most "best" classifier is left to the user, but information is supplied in the form of accuracy values in Precision, Recall and F1 score, as well as statistical outputs of mean accuracy comparison between two separate experimental conditions entered in the genotypes.csv file. This program is set to handle any N number of conditions, performing 1 sample T-Tests, Welch 2 sample T-Tests, and ANOVA respective to the number of conditions in the genotype.csv file. __TODO__ Note that audit or ACCT 3 can only handle 2 levels, and only 2 levels.
 
 <img src = "figures/selectClassifier.PNG">
 
@@ -162,7 +165,7 @@ Additionaly, the third step of the pipeline sets aside a random sample of images
 ***
 
 # Creating Hand Count Markers
-Hand count markers are created in Imagej using the Point Selection Tool, available in the toolbar, and the ROI manager, which is under Analyze >> Tools >> ROI Manager. You can also type ROI Manager in the search bar and select it.
+Hand count markers are created in Imagej using the Point Selection Tool, available in the toolbar, and the ROI manager, which is under __Analyze >> Tools >> ROI Manager__. You can also type ROI Manager in the search bar and select it.
 1.      Open an image and place one or two count markers 
 2.      Add the selections to the ROI manager
 3.      Rename the new ROI with the image name (This is most easily done by using the following keyboard shortcuts: Ctrl+d -> Ctrl+c -> Ctrl+w -> right click the ROI and select Rename -> Ctrl+v -> Enter)
