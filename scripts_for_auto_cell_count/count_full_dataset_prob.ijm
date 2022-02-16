@@ -136,6 +136,6 @@ sizeMax = Dialog.getNumber();
 	// Prints text in the log window after all files are processed
 	print("Counted " + inputDirList.length + " images");
 	//print("Counted a total of " + totalCount + " cells");
-	print("Finished count_full_dataset_prob\n");
+	print("Finished count_full_dataset_prob.ijm\n");
 }
 updateResults();
