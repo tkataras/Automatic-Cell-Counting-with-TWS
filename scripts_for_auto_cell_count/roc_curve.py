@@ -83,8 +83,11 @@ for selectedClassifier in class_list:
     fpr, tpr, thresholds = roc_curve(binary_y, y_score, pos_label=1, drop_intermediate=False)
 
     # Calculate the area under the curve
-    auc = roc_auc_score(binary_y, y_score, multi_class="ovo")
-    print("AUC = " + str(auc))
+    if len(np.unique(binary_y)) == 1:
+        print("No false positives, or only false positives. Skipping AUC calculation")
+    else:
+        auc = roc_auc_score(binary_y, y_score, multi_class="ovo")
+        print("AUC = " + str(auc))
 
     # Calculate Precision and Recall
     # NOTE This doesn't have drop intermediate functionality=False, so it only shows thresholds that lead to good results, thus the graphs have different number of thresholds
@@ -152,5 +155,6 @@ for selectedClassifier in class_list:
     plt.savefig(result_out + selectedClassifier + "/" + selectedClassifier + "_roc_curve.pdf", bbox_inches="tight")
     #plt.show()
     plt.clf()
+    plt.close()
 
 print("Finished roc_curve.py\n")
