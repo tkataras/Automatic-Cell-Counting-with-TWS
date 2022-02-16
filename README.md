@@ -190,7 +190,7 @@ Hand count markers are created in Imagej using the Point Selection Tool, availab
 
 1. Open an image and place one or two count markers 
 2. Add the selections to the ROI manager
-3. Rename the new ROI with the image name (This is most easily done by using the following keyboard shortcuts: Ctrl+d -> Ctrl+c -> Ctrl+w -> right click the ROI and select Rename -> Ctrl+v -> Enter)
+3. Rename the new ROI with the image name (This is most easily done by using the following keyboard shortcuts: Ctrl+Shift+d -> Ctrl+c -> Ctrl+w -> right click the ROI and select Rename -> Ctrl+v -> Enter)
 4. Continue selecting cell locations, peridocally updating via the Update button in the ROI Manager
 5. When all cells are selected, save in Hand counts folder, or Audit hand counts folder for the audit image set.
 6. Open new image and repeat until all validation or audit images are counted.
