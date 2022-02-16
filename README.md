@@ -30,12 +30,22 @@ apply_TWS_one_classifier_prob.bsh
 ```
 
 # Software Dependencies
-__Windows:__ In order to install the neccessary Python packages, the Python Scripts folder must be added to the terminal's knowelege of working areas designated by the PATH file. The easiest way to do this is to locate the Python install directory through the Windows search and copy the adress of the scripts folder. Then access Edit system environment variables, select Environment variables, select Path, Edit and new. Then paste the copied python scrips location into the new path line. Now open Windows Powershell from the search menu and the packages can be installed by copying the install scripts line by line and right clicking on the working line of the termnial to paste.
+__Windows:__ In order to install the neccessary Python packages, the Python Scripts folder must be added to the terminal's knowelege of working areas designated by the PATH file.
+
+The easiest way to do this is to do the following steps:
+
+Locate the Python install directory through the Windows search in Explorer
+
+Copy the address of the scripts folder from the location bar at the top of the explorer window
+
+Access Edit system environment variables in the control panel, select Environment variables, select Path, Edit and new
+
+Paste the copied python scrips location into the new path line
+
+Open Windows Powershell from the search menu and the packages can be installed by copying the install scripts line by line and right clicking on the working line of the termnial to paste.
 
 __Linux/Mac:__ Open your terminal and copy paste the following into the command line.
 ```
-sudo apt-get update
-sudo apt-get install python3-pip
 pip3 install numpy
 pip3 install scipy
 pip3 install pandas
@@ -46,8 +56,6 @@ pip3 install sklearn
 
 # Prerequisites:
 -Current version of FIJI distribution of Imagej https://imagej.net/software/fiji/
-
--***In ImageJ enable update site for Featurej**
 
 -Python https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe
 
