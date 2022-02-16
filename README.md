@@ -59,7 +59,7 @@ By downloading our Github repository you will have a set of folders for practice
 Your images in .PNG format
 TODO should be able to handle .JPG and .tiff, just need to test it
 ```
-Place the entire set of images you would like counted inside of training_area/testing_area/images.
+Place the entire set of images you would like counted inside of __testing_area/images__.
 
 Place the set of images you would like to use as training images to train the classifiers inside of training_area/Validation_data.
 ```
@@ -104,9 +104,9 @@ ACCT uses Weka Classifiers to count images, which the user will initially need t
 The program expects at least 2 classifiers to compare performance against.
 
 # Stage 1
-From the ImageJ bar, navigate and select _Plugins >> ACCT 1_
+From the ImageJ bar, navigate and select __Plugins >> ACCT 1__
 
-__1.1__ The first step is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference. This is so that our program knows where you have downloaded it. Select the directory/folder named scripts_for_auto_cell_count.
+__1.1__ The first step is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference. This is so that our program knows where you have downloaded it. Select the directory/folder named __scripts_for_auto_cell_count__.
 
 <img src = "figures/selectSource.PNG">
 
@@ -118,15 +118,15 @@ __1.3__ Our data includes paired images in individual fields of view for increas
 
 <img src = "figures/selectMultipleSegmentation.PNG">
 
-__1.4__ To count the number of objects in your data, the program defaults to a 20 pixel minimum and 1000 maximum object size. These cuttoffs will have significant effects on accuracy and vary completely by application. You will be prompted to select these .
+__1.4__ To count the number of objects in your data, the program defaults to a pixel minimum and maximum object size. These cuttoffs will have significant effects on accuracy and vary completely by application. You will be prompted to select these values. This has to be left to the user since the size of the objects they want counted will vary between different users.
 
 <img src = "figures/sizeValues.png">
 
-After the pipeline completes a run, run times will vary by hardware capacity, open the All_Classifier_Comparison.csv file to compare the performance of the various classifiers. 
+After the pipeline completes a run, run times will vary by hardware capacity, open the __All_Classifier_Comparison_(current time).csv__ file to compare the performance of the various classifiers. 
 
 More statistical information will be printed to the log window.
 
-This will be located under training_area/Results.
+This will be located under __training_area/Results__.
 
 For the testing dataset, several classifiers should demonstrate the same accuracy statistics as the image size is very small as they contain at most 3 cells per image.
 
@@ -134,9 +134,9 @@ As an example, the output in log will look like this.
 <img src = "figures/act1ExpectedOut.PNG">
 
 # Stage 2
-From the ImageJ bar, navigate and select _Plugins >> ACCT 2_
+From the ImageJ bar, navigate and select __Plugins >> ACCT 2__
 
-__2.1__ Once again, the program must know where it is downloaded. Select the directory/folder named scripts_for_auto_cell_count.
+__2.1__ Once again, the program must know where it is downloaded. Select the directory/folder named __scripts_for_auto_cell_count__.
 
 <img src = "figures/selectSource.PNG">
 
@@ -144,7 +144,7 @@ __2.2__ Now, select the most accurate classifier (or any classifier of your choo
 
 <img src = "figures/selectClassifier.PNG">
 
-__2.3__ After the best classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons. This step requires a second genotypes file named geno_full.csv from the user containing experimental grouping information for the unseen dataset.
+__2.3__ After the best classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons. This step requires a second genotypes file named __geno_full.csv__ from the user containing experimental grouping information for the unseen dataset. This serves the exact same purpose as geno.csv, but for the full set of images.
 
 __If not done yet, to generate your own geno_full.csv file: TODO__
 
