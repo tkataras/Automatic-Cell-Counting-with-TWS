@@ -110,7 +110,9 @@ __1.1__ The first step is to initiate the pipeline. You will be prompted to loca
 
 <img src = "figures/selectSource.PNG">
 
-__1.2__ The pipeline will then individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .roi files and the supplied genotypes.csv file. 
+__1.2__ The pipeline will ask if you want to run Trainable Weka Segmentation. This will individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .roi files and the supplied genotypes.csv file. This step needs to only be run once for a set of validation images, but you may want to run later steps. such as __1.4__, repeatedly to optimize your results. Thus, we give the option to skip this step. By default, it is set to run.
+
+<img src = "figures/selectWeka.PNG">
 
 __If not done yet, to generate your own genotype.csv file: TODO__
 
