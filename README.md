@@ -10,10 +10,12 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 6. [Critical Notes](#critical-notes)
 
 # Installation Guide
-First you will have to acquire this directory, can be done through a terminal such as Git, Ubuntu, or Microsoft Powershell with the following line of code.
+First you will have to acquire this directory, which can be done through a terminal such as Git, Ubuntu, or Microsoft Powershell with the following line of code.
 ```
 git clone https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
 ```
+If you are not familiar with terminals, you can also click the green code button and select __Download ZIP__.
+
 Next, ensure you have downloaded the software located in the __Prerequisites__ section.
 
 Finally, you will have to manually copy and paste certain files into the plugins folder of your Fiji instalation of Imagej. 
