@@ -126,16 +126,16 @@ __1.4__ To count the number of objects in your data, the program defaults to a p
 
 <img src = "figures/sizeValues.png">
 
-After the pipeline completes a run, run times will vary by hardware capacity, open the __All_Classifier_Comparison_(current time).csv__ file to compare the performance of the various classifiers. This is a summary of the overall statistical performance of each classifier.
+After the pipeline completes a run, run times will vary by hardware capacity, open the __All\_Classifier\_Comparison\_(current time).csv__ file to compare the performance of the various classifiers. This is a summary of the overall statistical performance of each classifier.
 
 More statistical information will be printed to the log window.
 
 This will be located under __training_area/Results__.
 
 If you desire even more detailed statistical information about each individual classifier:
-1. Reciever operator curves are also automatically generated for each classifier and located inside of __training_area/Weka_Output_Counted/classifier#/classifier# roc curve.pdf__.
-2. The number of true positives, false positives, and false negatives for each individual image for each individual classifier can be found in __training_area/Weka_Output_Counted/classifier#/classifier# Final.csv__.
-3. The morphological data and the correctness of each individual object counted for each individual image for each indivdual classifier can be found in __training_area/Weka_Output_Counted/classifier#/classifier# Results.csv__.
+1. Reciever operator curves are also automatically generated for each classifier and located inside of __training_area/Weka_Output_Counted/classifier#/classifier#\_roc\_curve.pdf__.
+2. The number of true positives, false positives, and false negatives for each individual image for each individual classifier can be found in __training_area/Weka_Output_Counted/classifier#/classifier#\_Final.csv__.
+3. The morphological data and the correctness of each individual object counted for each individual image for each indivdual classifier can be found in __training_area/Weka_Output_Counted/classifier#/classifier#\_Results.csv__.
 
 As an example, the output in log will look like this.
 
