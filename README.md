@@ -104,7 +104,9 @@ ACCT uses Weka Classifiers to count images, which the user will initially need t
 The program expects at least 2 classifiers to compare performance against.
 
 # Stage 1
-From the ImageJ bar, navigate and select __Plugins >> ACCT 1__
+From the ImageJ bar, navigate and select __Plugins >> ACCT 1__. You may need to scroll down for a period of time.
+<img src = "figures/selectACCT1.png">
+
 
 __1.1__ The first step is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference. This is so that our program knows where you have downloaded it. Select the directory/folder named __scripts_for_auto_cell_count__.
 
