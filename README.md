@@ -6,8 +6,8 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 2. [Software Dependencies](#software-dependencies)
 3. [Prerequisites](#prerequisites)
 4. [How To Use](#how-to-use)
-5. [Creating hand count markers](#creating-hand-count-markers)
-6. [Critical Notes](#critical-notes)
+6. [Creating hand count markers](#creating-hand-count-markers)
+7. [Critical Notes](#critical-notes)
 
 # Installation Guide
 First you will have to acquire this directory, which can be done through a terminal such as Git, Ubuntu, or Microsoft Powershell with the following line of code.
@@ -106,7 +106,7 @@ ACCT uses Weka Classifiers to count images, which the user will initially need t
 
 The program expects at least 2 classifiers to compare performance against.
 
-# Stage 1
+## Stage 1
 From the ImageJ bar, navigate and select __Plugins >> ACCT 1__. You may need to scroll down for a period of time.
 <img src = "figures/selectACCT1.png">
 
@@ -144,7 +144,7 @@ As an example, the output in log will look like this.
 
 <img src = "figures/act1ExpectedOut.PNG">
 
-# Stage 2
+## Stage 2
 From the ImageJ bar, navigate and select __Plugins >> ACCT 2__
 
 __2.1__ Once again, the program must know where it is downloaded. Select the directory/folder named __scripts_for_auto_cell_count__. [scripts_for_auto_cell_count](scripts_for_auto_cell_count)
@@ -170,7 +170,7 @@ If you desire even more detailed statistical information about the selected clas
 1. The number of counted objects for each individual image for each individual classifier can be found in __testing_area/Weka_Output_Counted/classifier#/classifier#\_Final.csv__.
 2. The morphological data of each individual object counted for each individual image for each indivdual classifier can be found in __testing_area/Weka_Output_Counted/classifier#/classifier#\_Results.csv__.
 
-# Stage 3
+## Stage 3
 *** 
 Additionaly, the third step of the pipeline sets aside a random sample of images equal to the number of validation images and equally distributed between experimental groups to serve as the performance estimate on the unseen data. This performance analysis requires user input in the form of .roi hand counts, similar to what was done in the first step of the program. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison.
 
