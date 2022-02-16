@@ -25,10 +25,10 @@ set_dir(sys.argv[1])
 selectedClassifier = sys.argv[2]
 
 # Input the genotype data as a .csv file
-geno_file = "../training_area/testing_area/geno_full.csv"
+geno_file = "../testing_area/geno_full.csv"
 
 # File output location
-output_count = "../training_area/testing_area/Weka_Output_Counted/"
+output_count = "../testing_area/Weka_Output_Counted/"
 class_list_temp = os.listdir(output_count + selectedClassifier)
 
 class_list = []
@@ -65,7 +65,6 @@ for f in range(0, len(unique_img)):
     this_count = cell_list.count(unique_img[f]) - 1
     new_row = pd.DataFrame([[unique_img[f], this_count]], columns=["Label", "Counts"])
     img_counts = img_counts.append(new_row)
-print(cell_list)
 geno = pd.read_csv(geno_file)
 
 # Get the unique genotype labels

@@ -83,12 +83,10 @@ macro "The -- True -- Count" {
 		//close the counted image, open the probaility image and measure the objects on it instead
 		//close();
 
-
 		//stop empty auto count images here 
 		// TODO what if image is not empty, but the particle is so small it gets passed by
 		// TODO this would also be an act one problem
 		getRawStatistics(nPixels, mean, min, max, std, histogram);
-		print(max);
 		if (max == 0) {
 			if (rowNumber == -1) {
 				rowNumber = 0;

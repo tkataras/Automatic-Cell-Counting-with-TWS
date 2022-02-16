@@ -1,19 +1,13 @@
-<<<<<<< HEAD:scripts_for_auto_cell_count/apply_TWS_one_classifier-probs.bsh
+
 /*
  * Author: Tyler Jang, Theo 
  * Date: 2/8/2022
  * Description: This macro applies a selected Weka classifier onto each image.
  */
-=======
-// The user will have to select the directory that contains the script they are running.
-#@ File(label="Source directory", description="Select the directory with the source of the scripts", style="directory") srcDir
->>>>>>> working_on_ACCT2:scripts_for_auto_cell_count/apply_TWS_one_classifier_prob.bsh
-
 #@ File(label="Source directory", description="Select the directory with the source of the scripts", style="directory") srcDir
 #@ File(label="Weka model", description="_Select the Weka model to apply") modelPath
 #@ Float (label="Set cutoff[0,1], default = 0.5", description="Choose a cutoff from ACCT2 or leave as default 0.5",value=0.5) cutoff
 
-<<<<<<< HEAD:scripts_for_auto_cell_count/apply_TWS_one_classifier-probs.bsh
 resultMode = "Probabilities";
 xTiles = 3;
 yTiles = 3;
@@ -30,6 +24,12 @@ bsh.cwd = srcDir;
 inputDir = bsh.cwd + "/../training_area/testing_area/Images/";
 outputDir = bsh.cwd + "/../training_area/testing_area/Weka_Output/";
 outputProbDir = bsh.cwd + "/../training_area/testing_area/Weka_Probability/";
+
+// Get the selected classifier as a string
+String modelPathString = modelPath.toString();
+modelFileName = modelPathString.split("\\\\");
+selectedClassifier = (modelFileName[modelFileName.length - 1]);
+selectedClassifier = selectedClassifier.split(".model")[0];
 
 //gc = new Graph_Cut();
 

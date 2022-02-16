@@ -54,7 +54,7 @@ if (result) {
 	exec("python", input + "project_N_images_by_ID.py", input, trimClassName[0]);
 	searchDirectory = input + "../testing_area/Weka_Output_Projected/" + trimClassName[0];
 } else {
-	searchDirectory = input + "../training_area/testing_area/Weka_Output/" + trimClassName[0];
+	searchDirectory = input + "../testing_area/Weka_Output/" + trimClassName[0];
 }
 
 // Count the number of objects in each image
