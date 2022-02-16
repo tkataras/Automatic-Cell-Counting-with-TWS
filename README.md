@@ -145,6 +145,7 @@ As an example, the output in log will look like this.
 From the ImageJ bar, navigate and select __Plugins >> ACCT 2__
 
 __2.1__ Once again, the program must know where it is downloaded. Select the directory/folder named __scripts_for_auto_cell_count__. [scripts_for_auto_cell_count](scripts_for_auto_cell_count)
+TODO maybe add links to each folder inside of this README?
 
 
 <img src = "figures/selectSource.PNG">
