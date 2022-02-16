@@ -1,7 +1,7 @@
 #!/usr/bin/python
 ###
 # Author: Tyler Jang, Theo Kataras
-# Date: 2/9/2022
+# Date: 2/15/2022
 #
 # Inputs: Results csv file containing the probability of each object
 # Outputs: A plot for threshold optimization and a ROC plot.
@@ -151,9 +151,9 @@ for selectedClassifier in class_list:
     plt.xlim([0, 1])
     plt.ylim([0, 1])
 
+    # Create and save the graph made, then close it for saving memory
     plt.tight_layout()
     plt.savefig(result_out + selectedClassifier + "/" + selectedClassifier + "_roc_curve.pdf", bbox_inches="tight")
-    #plt.show()
     plt.clf()
     plt.close()
 

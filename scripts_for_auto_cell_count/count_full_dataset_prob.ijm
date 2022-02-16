@@ -4,13 +4,14 @@
  * 
  * Input: Binary images, hand placed markes in roi files, one file for each image
  * Output: Binary image files including only cells counted, and .csv file in classifier folder with accuracy information
- * Description: Uses hand placed markers and weka output images from each classifier to begin accuracy calculation
+ * Description:
+ Uses hand placed markers and weka output images from each classifier to begin accuracy calculation
  */
 macro "The -- True -- Count" {
 	// This hides intermediary information and speeds processing
 	setBatchMode(true); 
 	
-	print("Starting count_full_dataset.ijm");
+	print("Starting count_full_dataset_prob.ijm");
 	
 	// Weka Output Projected if Projected, else Weka Output Thresholded
 	inputDirs = getArgument();
@@ -22,7 +23,8 @@ macro "The -- True -- Count" {
 	outputDirs = inputDirs + "/../../Weka_Output_Counted/" + selectedClassifier[selectedClassifier.length - 1];
 
 	// Weka Probability
-	probDirs = inputDirs + "/../../Weka_Probability/" + selectedClassifier[selectedClassifier.length - 1];
+	
+probDirs = inputDirs + "/../../Weka_Probability/" + selectedClassifier[selectedClassifier.length - 1];
 
 	// Track the total cell count
 	totalCount = 0;
@@ -38,7 +40,8 @@ macro "The -- True -- Count" {
 	Dialog.addNumber("Maximum pixel size for object count:", sizeMax);
 	Dialog.show();
 	sizeMin = Dialog.getNumber();
-	sizeMax = Dialog.getNumber();
+	
+sizeMax = Dialog.getNumber();
 	print(sizeMin);
 	print(sizeMax);
 	
@@ -110,13 +113,15 @@ macro "The -- True -- Count" {
 
 			// Establish number of objects
 			numRoi = roiManager("count"); 
-			print("Number of auto counted objects = " + numRoi);	
+			print("Number of auto counted objects = " + numRoi);
+	
 			//print(numRoi);
 			//totalCount = totalCount + numRoi;
 
 			
 		}
-	}			
+	}
+			
 	roiManager("deselect")		
 	roiManager("Delete");       
 	
@@ -124,12 +129,13 @@ macro "The -- True -- Count" {
 	
 	// Takes / off end of folder name to get classifier ID
 	className = selectedClassifier[selectedClassifier.length - 1];
-	saveAs("Results", outputDirs + "/" + className + "_Results_test_data.csv"); 
+	saveAs("Results", outputDirs + "/" + className + "_Results_test_data.csv");
+ 
 	run("Clear Results");
 	
 	// Prints text in the log window after all files are processed
 	print("Counted " + inputDirList.length + " images");
 	//print("Counted a total of " + totalCount + " cells");
-	print("Finished count_full_dataset\n");
+	print("Finished count_full_dataset_prob\n");
 }
 updateResults();

@@ -374,7 +374,7 @@ for f in range(0, len(class_list)):
 # Generating a unique result file based on time and date
 curr_time = time.localtime(time.time())
 date = str(curr_time.tm_mday) + "-" + str(curr_time.tm_hour) + "-" + str(curr_time.tm_min) + "-" + str(curr_time.tm_sec)
-out_name = "All_classifier_Comparison_" + date + ".csv"
+out_name = "All_Classifier_Comparison_" + date + ".csv"
 result_summary_file.to_csv(result_out + out_name)
 
 print("End of classifier_comparison.py")
