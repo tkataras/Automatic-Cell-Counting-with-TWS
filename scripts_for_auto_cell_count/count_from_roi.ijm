@@ -11,17 +11,10 @@ print("Starting count_from_roi.ijm");
 
 // Validation Hand Counts
 input = getArgument();
+input = input + "../training_area/Validation_Hand_Counts/";
 
-firstStage = true
-if(input.contains("testing_area")) {
-	// Passed in Audit_Hand_Counts/Classifier
-	x = split(input, "/");
-	output = input + "../";
-} else {
-	input = input + "../training_area/Validation_Hand_Counts/";
-	// Results
-	output = input + "../Results";
-}
+// Results
+output = input + "../Results";
 
 // CLOSES old Results and Summary to avoid mixing with new results
 run("Clear Results"); 
