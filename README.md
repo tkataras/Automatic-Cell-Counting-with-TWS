@@ -110,13 +110,13 @@ __1.1__ The first step is to initiate the pipeline. You will be prompted to loca
 
 <img src = "figures/selectSource.PNG">
 
-__1.2__ The pipeline will ask if you want to run Trainable Weka Segmentation. This will individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .roi files and the supplied genotypes.csv file. This step needs to only be run once for a set of validation images, but you may want to run later steps. such as __1.4__, repeatedly to optimize your results. Thus, we give the option to skip this step. By default, it is set to run.
+__1.2__ The pipeline will ask if you want to run Trainable Weka Segmentation. This will individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .roi files and the supplied genotypes.csv file. This stage needs to only be run once for a set of validation images, but you may want to run later stages. such as __1.4__, repeatedly to optimize your results. Thus, we give the option to skip this stage. By default, it is set to run.
 
-<img src = "figures/selectWeka.PNG">
+<img src = "figures/selectWeka.png">
 
 __If not done yet, to generate your own genotype.csv file: TODO__
 
-__1.3__ Our data includes paired images in individual fields of view for increased context when counting, so intermediate steps are included to identify and project these image pairs for the final automatic count. If your data does not include paired images, do not select this option below:
+__1.3__ Our data includes paired images in individual fields of view for increased context when counting, so intermediate stage are included to identify and project these image pairs for the final automatic count. If your data does not include paired images, do not select this option below:
 
 <img src = "figures/selectMultipleSegmentation.PNG">
 
@@ -146,12 +146,13 @@ __2.2__ Now, select the most accurate classifier (or any classifier of your choo
 
 <img src = "figures/selectClassifier.PNG">
 
-__2.3__ After the best classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons. This step requires a second genotypes file named __geno_full.csv__ from the user containing experimental grouping information for the unseen dataset. This serves the exact same purpose as __genotype.csv__, but for the full set of images.
+__2.3__ After the classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons. This is similar to stage __1.2__. As in that step, the user will only need to run this once for a full dataset, but may want to run later stages such as __2.4__ repeatedly to optimize your results. Thus, we give the option to skip this step. By default, it is set to run.
+
+<img src = "figures/selectWeka.png">
+
+__2.4__ Repeat stage __1.3__ and __1.4__ with the exact same parameters you used in stage __1__. This stage requires a second genotypes file named __geno_full.csv__ from the user containing experimental grouping information for the unseen dataset. This serves the exact same purpose as __genotype.csv__, but for the full set of images.
 
 __If not done yet, to generate your own geno_full.csv file: TODO__
-
-
-__2.4__ Repeat steps __1.3__ and __1.4__ with the parameters you used in stage 1.
 
 *** 
 Additionaly, the third step of the pipeline sets aside a random sample of images equal to the number of validation images and equally distributed between experimental groups to serve as the performance estimate on the unseen data. This performance analysis requires user input in the form of .roi hand counts, similar to what was done in the first step of the program. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison.
