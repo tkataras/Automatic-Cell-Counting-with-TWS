@@ -160,6 +160,12 @@ __2.4__ Repeat stage __1.3__ and __1.4__ with the exact same parameters you used
 
 __If not done yet, to generate your own geno_full.csv file: TODO__
 
+
+If you desire even more detailed statistical information about the selected classifier:
+1. Reciever operator curves are also automatically generated for each classifier and located inside of __testing_area/Weka_Output_Counted/classifier#/classifier#\_roc\_curve.pdf__.
+2. The number of true positives, false positives, and false negatives for each individual image for each individual classifier can be found in __testing_area/Weka_Output_Counted/classifier#/classifier#\_Final.csv__.
+3. The morphological data and the correctness of each individual object counted for each individual image for each indivdual classifier can be found in __testing_area/Weka_Output_Counted/classifier#/classifier#\_Results.csv__.
+
 *** 
 Additionaly, the third step of the pipeline sets aside a random sample of images equal to the number of validation images and equally distributed between experimental groups to serve as the performance estimate on the unseen data. This performance analysis requires user input in the form of .roi hand counts, similar to what was done in the first step of the program. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison.
 ***
