@@ -16,9 +16,10 @@ git clone https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
 ```
 If you are not familiar with terminals, you can also click the green code button and select __Download ZIP__.
 
-Next, ensure you have downloaded the software located in the __Prerequisites__ section.
+Next, ensure you have downloaded the software located in the [Prerequisites](#prerequisites) section.
 
-Finally, you will have to manually copy and paste certain files into the plugins folder of your Fiji instalation of Imagej. 
+
+Finally, you will have to manually copy and paste certain files into the __plugins__ folder of your Fiji instalation of Imagej. 
 
 Find where you downloaded Fiji in your file directory. Next, navigate to scripts for auto cell count then copy and paste the following files into your Fiji.app/plugins directory. This is so you can run the program from ImageJ using the GUI.
 ```
