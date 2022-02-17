@@ -3,9 +3,6 @@ input = getDirectory("Choose source directory of the macro (Scripts for Auto Cel
 // Set measurements to calculate
 run("Set Measurements...", "area mean standard modal min centroid center perimeter bounding fit shape feret's integrated median skewness kurtosis area_fraction limit display redirect=None decimal=8");
 
-//making sure all folders exist
-exec("python", input + "file_architect.py", input);
-
 testingPath = input + "../testing_area/";
 classifierDir = input + "../training_area/Classifiers";
 searchDirectory = getFileList(classifierDir);
@@ -20,6 +17,12 @@ selectedClassifier = Dialog.getChoice();
 
 // Trim .model off the selected classifier by the user
 trimClassName = split(selectedClassifier, ".");
+
+
+//making sure all folders exist
+exec("python", input + "file_architect.py", input, selectedClassifier);
+
+
 
 // Randomly select images for analysis
 //TK: thinking about this more, the audit set needs to have the same genotype/exp condition breakdown as the validation set, IF the user has exp groups, so we might just say the 
