@@ -1,6 +1,6 @@
 /**
  * Author: Theo Kataras, Tyler Jang
- * Date: 2/9/20212
+ * Date: 2/17/20212
  * 
  * Input: Binary images, hand placed markes in roi files, one file for each image
  * Output: Binary image files including only cells counted, and .csv file in classifier folder with accuracy information
@@ -33,8 +33,8 @@ macro "The -- True -- Count" {
 	Dialog.show();
 	sizeMin = Dialog.getNumber();
 	sizeMax = Dialog.getNumber();
-	print(sizeMin);
-	print(sizeMax);
+	print("Minimum Pixel Size: " + sizeMin);
+	print("Maximum Pixel Size: " + sizeMax);
 	
 	// Validation Hand Counts
 	dirVal = inputDirs + "../Validation_Hand_Counts/";
@@ -55,7 +55,7 @@ macro "The -- True -- Count" {
 		listVal = getFileList(dirVal);
 		listProb = getFileList(probDirs + prob);
 		
-		//have to initialize at -1 to start correctly at 0
+		// Initialize the csv row at -1 to start correctly at 0 when handling empty images
 		rowNumber = -1;
 		
 		// Iterate macro over the images in the classifier folder
@@ -72,11 +72,11 @@ macro "The -- True -- Count" {
 			setThreshold(6, 255);
 			run("Convert to Mask");
 			run("Invert");
-			run("Fill Holes"); //prevents any measurement discrepancies in Imagej
-
 			
+			// Fill in small pixel gaps to complete objects
+			run("Fill Holes");
 
-			//clear any existing rois
+			// Clear any existing rois
 			if (roiManager("count") > 0) {
 				roiManager("deselect");		
 				roiManager("Delete");
@@ -85,63 +85,65 @@ macro "The -- True -- Count" {
 			
 			// This imageJ plugin creates the results file and image of the count cells based on the size exclusion		
 			run("Analyze Particles...", "size=" + sizeMin + "-" + sizeMax + " pixel show=Masks summarize add");
-			//saving the image of the counted objects
+			
+			// Saving the image of the counted objects
 			saveAs("Png", outputDirs + output + filename);
-		
-	
-
+			
+			// Number of counted objects
 			counts = 0;
-			//stop empty auto count images here 
+			
+			// Get info about the images to see if it is empty
 			getRawStatistics(nPixels, mean, min, max, std, histogram);
+
+			// Stop empty auto count images here 
 			if (max == 0) {
+				// Case where the first image contained no auto counts
 				if (rowNumber == -1) {
 					rowNumber = 0;
 				}
+
+				// Save measurement data for the empty image
 				numRoi = 0;
 				run("Measure");
 				setResult("points", rowNumber++, counts);
 				
-				//roiManager("deselect");
-				//roiManager("Delete"); 
-				//print(filename + " this was an empty image");
+			// Image contains auto counted objects
 			} else {	
-				//print(filename + " this was an image with cells (after the else)");
-				//using the classifier from input, not prob, should be fine, could be used elsewehre
+				// Look at the probabilty maps for the images
 				open(inputP + input + filenameP);
 				roiManager("measure");
 				close();
-			
-
 					
 				// Measuring a full image after the objects, to keep parity with the empty images
 				run("Measure");
 				rowNumber++;
 	
-				//need to deal with case where human marked no cells and saved placeholder, but program has objects
-				// This is with hand counts and auto counts
+				// Images with hand counts and auto counts
 				if (endsWith(filenameTwo, ".roi")) {
-					
 					open(inputTwo + filenameTwo);
 					roiManager("Add");
 
 				 	// Establish number of objects
 					numRoi = roiManager("count"); 
-				
 					roiManager("select", numRoi - 1);
 
-					pts = Roi.getCoordinates(xPoints2, yPoints2); //get info for all hand places counts
+					// Get info for all hand places counts
+					pts = Roi.getCoordinates(xPoints2, yPoints2); 
 
+					// Establish number of hand placed counts	
+					numPoints = lengthOf(yPoints2); 
 					
-					
-					numPoints = lengthOf(yPoints2); // establish number of hand placed counts	
-					numRoiTwo = numRoi - 1;//subtract one for the multipoint ROI containing the hand count info
+					// Subtract one for the multipoint ROI containing the hand count info
+					numRoiTwo = numRoi - 1;
 
+				// Case where the hand count found no cells, but the auto count did
 				} else {
-					//this is the case where the hand count found no cells, but the auto count did
-					numPoints = 0;//set the number of hand counts to 0
-//					print("this is the case where the hand count found no cells, but the auto count did");
+					// Set the number of hand counts to 0
+					numPoints = 0;
 					numRoiTwo = roiManager("count");
-					xPoints2 = 99999;//these need to be a point that will never overlap with objects in the image
+					
+					// Set point that will never overlap with objects in the image
+					xPoints2 = 99999;
 					yPoints2 = 99999;
 				}
 		
@@ -149,11 +151,12 @@ macro "The -- True -- Count" {
 				for (k = 0; k < numRoiTwo; k++) {   
 					roiManager("Select", k);
 
-
 					// Get coords for all pixels in object
 					Roi.getContainedPoints(xPoints, yPoints); 
+
 					// Length of all pixels in current object, this varies
 					len = lengthOf(xPoints);
+					
 					// Length of hand placed counts, this does not vary 
 					lenTwo = numPoints; 
 
@@ -171,22 +174,20 @@ macro "The -- True -- Count" {
 								counts = counts + 1;
 							} 
 						}
-						 // each hand placed count
-					} // each pixel in object
+						 // Each hand placed count
+					} // Each pixel in object
 					// Update the results table
 					setResult("points", rowNumber++, counts);
-				}//each object in image	
-				
-			    
-			} //else
-		} //function endpoint
+				} // Each object in image	  
+			} // Else
+		} // Function endpoint
 		selectWindow("Results");
 		
-		// Take / off end of folder name to get classifier ID
+		// Take "/" off end of folder name to get classifier ID
 		class_name = substring(outputDirList[z], 0, lengthOf(outputDirList[z]) -1);
 		saveAs("Results", outputDirs + output + class_name + "_Results.csv");
 		run("Clear Results");
-	}// iterate through folders
+	} // Iterate through folders
 	
 	// Prints text in the log window after all files are processed
 	print("Counted " + list.length + " images");
