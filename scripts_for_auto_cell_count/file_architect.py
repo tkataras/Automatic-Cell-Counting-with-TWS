@@ -1,12 +1,13 @@
 #!/usr/bin/python
 ###
 # Author: Theo Kataras, Tyler Jang
-# Date: 2/9/2022
+# Date: 2/17/2022
 #
 # Input: The source directory
 #       (optional) The classifier selected by the user for the full dataset
 # Output: Directories in training_area or testing_area
-# Description: Creates the correct number of classifier folders in output folders
+# Description: Creates the correct number of classifier folders in output
+#              folders.
 ###
 import os
 import sys

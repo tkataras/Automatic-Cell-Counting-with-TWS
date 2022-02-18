@@ -1,5 +1,5 @@
 /**
- * Author: Theo, Tyler Jang
+ * Author: Theo Kataras, Tyler Jang
  * Date: 2/17/2021
  * 
  * Input: Hand counted images .

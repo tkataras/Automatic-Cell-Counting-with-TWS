@@ -3,9 +3,11 @@
 # Author: Tyler Jang, Theo Kataras
 # Date 2/17/2022
 #
-# Inputs: genotype file, hand count results csv, results of auto counting in each classifier folder 
+# Inputs: genotype file, hand count results csv, results of auto counting in
+#         each classifier folder 
 # Outputs: csv table with accuracy measurements for the selected classifier
-# This file finds the statistical performance of the selected classifier on the entire image dataset
+# Description: This file finds the statistical performance of the selected
+#              classifier on the entire image dataset.
 ###
 import pandas as pd
 import numpy as np

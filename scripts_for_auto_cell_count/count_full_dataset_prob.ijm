@@ -1,11 +1,10 @@
 /*
  * Author: Theo Kataras, Tyler Jang
- * Date: 2/9/2022
+ * Date: 2/17/2022
  * 
  * Input: Binary images, hand placed markes in roi files, one file for each image
  * Output: Binary image files including only cells counted, and .csv file in classifier folder with accuracy information
- * Description:
- Uses hand placed markers and weka output images from each classifier to begin accuracy calculation
+ * Description: Uses hand placed markers and weka output images from each classifier to begin accuracy calculation
  */
 macro "The -- True -- Count" {
 	// This hides intermediary information and speeds processing
@@ -23,8 +22,7 @@ macro "The -- True -- Count" {
 	outputDirs = inputDirs + "/../../Weka_Output_Counted/" + selectedClassifier[selectedClassifier.length - 1];
 
 	// Weka Probability
-	
-probDirs = inputDirs + "/../../Weka_Probability/" + selectedClassifier[selectedClassifier.length - 1];
+	probDirs = inputDirs + "/../../Weka_Probability/" + selectedClassifier[selectedClassifier.length - 1];
 
 	// Track the total cell count
 	totalCount = 0;
@@ -40,17 +38,17 @@ probDirs = inputDirs + "/../../Weka_Probability/" + selectedClassifier[selectedC
 	Dialog.addNumber("Maximum pixel size for object count:", sizeMax);
 	Dialog.show();
 	sizeMin = Dialog.getNumber();
-	
-sizeMax = Dialog.getNumber();
-	print(sizeMin);
-	print(sizeMax);
+	sizeMax = Dialog.getNumber();
+	print("Minimum Pixel Size: " + sizeMin);
+	print("Maximum Pixel Size: " + sizeMax);
 	
 	// Gets the images for the selected classifier
 	inputDirList = getFileList(inputDirs);
 	probDirList = getFileList(probDirs);
 
+	// Initialize the csv row at -1 to start correctly at 0 when handling empty images
 	rowNumber = -1;
-
+	
 	// Iterate macro over the images in the input folder
 	for (q = 0; q < inputDirList.length; q++) {
 		action(inputDirs, outputDirs, inputDirList[q], probDirList[q]);
@@ -65,8 +63,9 @@ sizeMax = Dialog.getNumber();
 		setThreshold(6, 255);
 		run("Convert to Mask");
 		run("Invert");
-		run("Fill Holes"); //prevents any measurement discrepancies in Imagej
 
+		// Fill in small pixel gaps to complete objects
+		run("Fill Holes"); 
 		
 		//clear any existing rois
 		if (roiManager("count") > 0) {
@@ -82,27 +81,23 @@ sizeMax = Dialog.getNumber();
 
 		// Save the resulting counted image
 		saveAs("Png", output + "/" + filename);
-		
-		//close the counted image, open the probaility image and measure the objects on it instead
-		//close();
 
-		//stop empty auto count images here 
-		// TODO what if image is not empty, but the particle is so small it gets passed by
-		// TODO this would also be an act one problem
+		// Get info about the images to see if it is empty
 		getRawStatistics(nPixels, mean, min, max, std, histogram);
+
+		// Stop empty auto count images here 
 		if (max == 0) {
+			// Case where the first image contained no auto counts
 			if (rowNumber == -1) {
 				rowNumber = 0;
 			}
+			// Save measurement data for the empty image
 			numRoi = 0;
 			run("Measure");
 			setResult("points", rowNumber++, numRoi);
-				
-			//roiManager("deselect");
-			//roiManager("Delete"); 
-			print(filename + " this was an empty image");
+		// Image contains auto counted objects
 		} else {
-			//using the classifier from input, not prob, should be fine, could be used elsewehre
+			// Using the classifier from input, not prob, should be fine, could be used elsewehre
 			open(probDirs + "/" + filenameP);
 			roiManager("measure");
 			close();
@@ -114,28 +109,21 @@ sizeMax = Dialog.getNumber();
 			// Establish number of objects
 			numRoi = roiManager("count"); 
 			print("Number of auto counted objects = " + numRoi);
-	
-			//print(numRoi);
-			//totalCount = totalCount + numRoi;
-
-			
 		}
-	}
-			
+	}	
 	roiManager("deselect")		
-	roiManager("Delete");       
-	
+	roiManager("Delete");       	
 	selectWindow("Results");
 	
 	// Takes / off end of folder name to get classifier ID
 	className = selectedClassifier[selectedClassifier.length - 1];
 	saveAs("Results", outputDirs + "/" + className + "_Results_test_data.csv");
- 
+
+ 	// Clear the results window
 	run("Clear Results");
 	
 	// Prints text in the log window after all files are processed
 	print("Counted " + inputDirList.length + " images");
-	//print("Counted a total of " + totalCount + " cells");
 	print("Finished count_full_dataset_prob.ijm\n");
 }
 updateResults();
