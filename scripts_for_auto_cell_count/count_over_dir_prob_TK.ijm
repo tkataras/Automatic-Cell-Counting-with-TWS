@@ -74,8 +74,7 @@ macro "The -- True -- Count" {
 			run("Invert");
 			run("Fill Holes"); //prevents any measurement discrepancies in Imagej
 
-			// Call the watershed algorithm to split objects
-			//run("Watershed");
+			
 
 			//clear any existing rois
 			if (roiManager("count") > 0) {
@@ -89,9 +88,7 @@ macro "The -- True -- Count" {
 			//saving the image of the counted objects
 			saveAs("Png", outputDirs + output + filename);
 		
-			//close the counted image, open the probaility image and measure the objects on it instead
-		//	close();
-			
+	
 
 			counts = 0;
 			//stop empty auto count images here 
@@ -127,16 +124,15 @@ macro "The -- True -- Count" {
 					open(inputTwo + filenameTwo);
 					roiManager("Add");
 
-					//TODO need to save the exact roi info for each auto object
 				 	// Establish number of objects
 					numRoi = roiManager("count"); 
 				
 					roiManager("select", numRoi - 1);
-//					print("this is roi name being used for hand count coords"  + Roi.getName); //I THINK THE ISSUE MAY BE HERE IN THE assignment of the hand count roi coords???!?!?!?!?!
+
 					pts = Roi.getCoordinates(xPoints2, yPoints2); //get info for all hand places counts
 
 					
-					//roiManager("Delete"); //just added this to test !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!312312313
+					
 					numPoints = lengthOf(yPoints2); // establish number of hand placed counts	
 					numRoiTwo = numRoi - 1;//subtract one for the multipoint ROI containing the hand count info
 
@@ -152,7 +148,7 @@ macro "The -- True -- Count" {
 				// For each object k in the image
 				for (k = 0; k < numRoiTwo; k++) {   
 					roiManager("Select", k);
-//					print("this is roi name being examined"  + Roi.getName); //I THINK THE ISSUE MAY BE HERE IN THE assignment of the hand count roi coords???!?!?!?!?!
+
 
 					// Get coords for all pixels in object
 					Roi.getContainedPoints(xPoints, yPoints); 
@@ -188,7 +184,7 @@ macro "The -- True -- Count" {
 		
 		// Take / off end of folder name to get classifier ID
 		class_name = substring(outputDirList[z], 0, lengthOf(outputDirList[z]) -1);
-		saveAs("Results", outputDirs + output + class_name + "_Results.csv");
+		saveAs("Results", output + class_name + "_Results.csv");
 		run("Clear Results");
 	}// iterate through folders
 	
