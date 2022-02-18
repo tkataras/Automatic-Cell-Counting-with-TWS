@@ -1,7 +1,11 @@
 /*
- * Author: Theo, Tyler
- * Date: 11/30/2021
- * Description: This macro gets the counts for each hand counted image, plus their coordinate position.
+ * Author: Theo, Tyler Jang
+ * Date: 2/16/2021
+ * 
+ * Input: Hand counted images .
+ * Output: CSV with information about all the hand counted objects.
+ * Description: This macro gets the counts for each hand counted image, plus their coordinate position. 
+ * 				Saves the results in roi_counts.csv
  */
  
 // Hide details from user to minimize screen clutter
@@ -19,7 +23,7 @@ output = input + "../Results";
 // CLOSES old Results and Summary to avoid mixing with new results
 run("Clear Results"); 
  
-//holds all file names from input folder
+// Holds all file names from input folder
 list = getFileList(input);
 
 // Need at least two files to compare
