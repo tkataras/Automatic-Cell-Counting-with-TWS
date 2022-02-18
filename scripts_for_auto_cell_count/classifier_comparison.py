@@ -1,7 +1,7 @@
 #!/usr/bin/python
 ###
 # Author: Tyler Jang, Theo Kataras
-# Date 2/9/2022
+# Date 2/17/2022
 #
 # Inputs: genotype csv file, hand count results file from count over roi,
 # results of count over dir in each classifier folder. 

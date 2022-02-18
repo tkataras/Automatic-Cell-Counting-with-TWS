@@ -55,7 +55,6 @@ for i in range(0, len(class_results)):
     row_name = class_results.loc[i].at["Label"]
     row_name = row_name.split(":")[0]
     row_name = row_name.split(".")[0]
-    #label_col.loc[i] = row_name
     class_results.loc[i, "Label"] = row_name
 
 img_counts = pd.DataFrame(columns=["Label", "Counts"])
