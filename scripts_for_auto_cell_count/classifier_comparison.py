@@ -202,6 +202,13 @@ for f in range(0, len(class_list)):
     # Precision and recall per image
     precision2 = catchDivideByZero(final_result["tp"], (final_result["tp"] + final_result["fp"]))    
     recall2 = catchDivideByZero(final_result["tp"], (final_result["tp"] + final_result["fn"]))
+    
+    # Error handling to ensure type conversion from pandas series to numpy ndarray of numpy float64s
+    if isinstance(precision2, pd.Series):
+        precision2 = precision2.to_numpy(dtype=np.float64)
+    if isinstance(recall2, pd.Series):
+        recall2 = recall2.to_numpy(dtype=np.float64)
+    
     if precision2 is not None and recall2 is not None:
         # Calculate F1_2
         F1_2 = []
@@ -214,10 +221,15 @@ for f in range(0, len(class_list)):
     else: 
         F1_2 = None
 
+    # Error handling to ensure type conversion from pandas series to numpy ndarray of numpy float64s
+    if isinstance(F1_2, pd.Series):
+        F1_2 = F1_2.to_numpy(dtype=np.float64)
+
     # Insert precision2, recall2, and F1_2 into final csv
     final_result["precision2"] = precision2
     final_result["recall2"] = recall2
     final_result["F1_2"] = F1_2
+        
     # Find the standard deviation of percision and recall
     if precision2 is not None:
         print(curr_class + " percision standard deviation = " + str(np.nanstd(precision2)))

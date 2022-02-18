@@ -184,7 +184,7 @@ macro "The -- True -- Count" {
 		
 		// Take / off end of folder name to get classifier ID
 		class_name = substring(outputDirList[z], 0, lengthOf(outputDirList[z]) -1);
-		saveAs("Results", output + class_name + "_Results.csv");
+		saveAs("Results", outputDirs + output + class_name + "_Results.csv");
 		run("Clear Results");
 	}// iterate through folders
 	
