@@ -1,7 +1,7 @@
 #!/usr/bin/python
 ###
 # Author: Tyler Jang, Theo Kataras
-# Date 2/9/2022
+# Date 2/17/2022
 #
 # Inputs: genotype file, hand count results csv, results of auto counting in each classifier folder 
 # Outputs: csv table with accuracy measurements for the selected classifier
@@ -31,8 +31,8 @@ geno_file = "../testing_area/geno_full.csv"
 output_count = "../testing_area/Weka_Output_Counted/"
 class_list_temp = os.listdir(output_count + selectedClassifier)
 
-class_list = []
 # Select only the images in the classifier
+class_list = []
 for img in class_list_temp:
     if img[-4:] == ".png" or img[-4:] == ".jpg" or img[-5:] == ".tiff":
         class_list.append(img)
@@ -72,10 +72,11 @@ lvl_geno = np.unique(geno["geno"])
 # Only 1 level
 if len(lvl_geno) == 1:
     print("Analysis with 1 level")
+
+    # Get a list of the condition
     geno_list = []
     for numRows in range(0, len(img_counts["Label"])):
         geno_list.append(geno["geno"][numRows])
-
     img_counts["geno"] = geno_list
 
     # Save current img counts to the counted classifier folder as csv file
@@ -101,14 +102,15 @@ if len(lvl_geno) == 1:
     print("Total Count: " + str(np.sum(group_one["Counts"])))
 # 2+ levels
 elif len(lvl_geno) > 2:
+    # Get a list of each condition
     geno_list = []
     for numRows in range(0, len(img_counts["Label"])):
         geno_list.append(geno["geno"][numRows])
-
     img_counts["geno"] = geno_list
 
     # Save current img counts to the counted classifier folder as csv file
     img_counts.to_csv(output_count + selectedClassifier + "/" + selectedClassifier + "_final.csv")
+    
     # Create as many groups as there are levels
     group_n = []
     counts_df = pd.DataFrame(index=range(len(geno_list)), columns=lvl_geno)
@@ -144,10 +146,10 @@ elif len(lvl_geno) > 2:
     print("Total counts are inside the final csv")
 # Else, only two levels
 else:
+    # Get a list of each condition
     geno_list = []
     for numRows in range(0, len(img_counts["Label"])):
         geno_list.append(geno["geno"][numRows])
-
     img_counts["geno"] = geno_list
 
     # Save current img counts to the counted classifier folder as csv file

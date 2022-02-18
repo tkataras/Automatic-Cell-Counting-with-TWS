@@ -1,6 +1,6 @@
-/*
+/**
  * Author: Theo, Tyler Jang
- * Date: 2/16/2021
+ * Date: 2/17/2021
  * 
  * Input: Hand counted images .
  * Output: CSV with information about all the hand counted objects.
@@ -20,7 +20,7 @@ input = input + "../training_area/Validation_Hand_Counts/";
 // Results
 output = input + "../Results";
 
-// CLOSES old Results and Summary to avoid mixing with new results
+// Closes old Results and Summary to avoid mixing with new results
 run("Clear Results"); 
  
 // Holds all file names from input folder
@@ -40,7 +40,8 @@ if(list.length < 2) {
 		open(input + filename);
 		// Measure full image
 		run("Measure"); 
-			
+
+		// Only read .roi files
 		if (endsWith(filename, ".roi")){
 			// Select all points in the image
 			run("Select All");  
@@ -48,8 +49,7 @@ if(list.length < 2) {
 			// Measure full image
 			run("Measure"); 
 			getImageID();
-		} 
-		    
+		}   
 	    close();			
 	}
 	

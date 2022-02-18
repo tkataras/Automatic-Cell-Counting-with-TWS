@@ -353,6 +353,8 @@ for f in range(0, len(class_list)):
         # Calculate the Welch 2 Sample T-test   
         group_one = final_result.query('geno == @lvl_geno[0]')
         group_two = final_result.query('geno == @lvl_geno[1]')
+        
+        # Initialize variables for T Test values
         precision_geno_ttest = None
         precision_geno_ttest_pval = None
         recall_geno_ttest = None 
