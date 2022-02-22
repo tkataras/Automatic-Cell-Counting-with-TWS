@@ -133,9 +133,32 @@ Example: __BKO-426-S42-Iba-Syn-Cortex-10x-F1a_XY1562195071_Z0_T0_C2.tiff8bit.png
 
 
 ## How to create classifiers using Weka
-ACCT uses Weka Classifiers to count images, which the user will initially need to create. In order to generate classifiers..... __TODO__
+ACCT uses Weka Classifiers to count images, which the user will initially need to create. 
 
-The program expects at least 2 classifiers to compare performance against.
+TODO: image of the weka gui 
+
+to start, close any images open in FIJI.
+
+Then select all training images in your file explorer progam and drag them to the FIJI user interface bar to open them all at once
+
+Once all images are open, use the FIJI search bar to apply the __Images to Stack__ operation
+
+With the image stack selected, launch the __Advanced Weka Segmentation__ plugin from the FIJI search bar, or __Plugins__ menu.
+
+With the full training image stack open in Weka, we can beging training classifiers.
+
+It is best to start with small amounts of input data, using a free selection tool to highlight some cell pixels in an image and adding them to __Class 1__.
+
+Next highlight some non-cell pixels and add them to __Class 2__
+
+After the first two bits of training data are added, press __Train classifier__ to begin building a classifier based on the provided data, which will then be applied to the whole image stack, visible from an overlay on all images. __The first training can take several minutes on an image stack, as features are calcuated for the first time for each image.__
+
+Once there is feedback on the current state fo the classifier, save it with the  __Save classifier__ button, before adding a few more pixels of training data based on areas innacurate segmentation based on the current classifier overlay. 
+
+With the new training data added, press __Train classifier__ and observe the result, making further corrections and saving the intermediate classifiers. Saving multiple classifiers allows us to select the most effective point in training based on the validation data.
+
+For more information, there is a thorough and effective explanation of __Trainable Weka Segmentation__ plugin located at: https://imagej.net/plugins/tws/
+ACCT will expect at least 2 classifiers to compare performance against for its validation step.
 
 ## Stage 1
 From the ImageJ bar, navigate and select __Plugins >> ACCT 1__. You may need to scroll down for a period of time.
