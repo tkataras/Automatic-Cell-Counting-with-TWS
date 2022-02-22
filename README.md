@@ -69,7 +69,7 @@ By downloading our Github repository you will have a set of folders for demo and
 
 ## Manual Input Files
 ```
-For consistency of inpyt, all inut images should be in .PNG format
+For consistency of input, all inut images should be in .PNG format
 TODO should be able to handle .JPG and .tiff, just need to test it
 ```
 Place the entire set of images you would like counted inside of __testing_area/images__.
@@ -95,7 +95,7 @@ geno_full.csv
 ```
 Place this file inside of __testing_area/__. It will look similar to the other genotype file but will have rows for every image in your complete dataset with rows containing the condition/group of the image the row represents.
 ```
-User generated classifiers through Trainable Weka Segmentation
+## User generated classifiers through Trainable Weka Segmentation
 ```
 Place these classifiers inside of __training_area/Classifiers__. These should be __.model__ files.
 
@@ -114,8 +114,23 @@ Image file names should not contain the following symbols as they are used for o
 .     (except for the symbol starting the file extension)
 :
 ```
+## Projected Images
+In some cases, paired or grouped images should be projected to create a complete cell count of an area. We are working on a more flexible implimentation of ACCT for handling projected images, but presently the images should have the following identifying characteristics to know which projections associate with each other: 
 
-Projected images should have the following identifying characteristics to know which projections associate with each other: ... __TODO__
+The final characters denoting the end of unique image information should be: ___XY__
+
+There are 3 loci for levels of identifying information seperated by __-__:
+
+the __first__ space, before any __-__
+
+the __second__ space, after __1 -__
+
+the __last__ space, after all __-__
+
+Example: __BKO-426-S42-Iba-Syn-Cortex-10x-F1a_XY1562195071_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3__
+
+
+
 
 ## How to create classifiers using Weka
 ACCT uses Weka Classifiers to count images, which the user will initially need to create. In order to generate classifiers..... __TODO__
