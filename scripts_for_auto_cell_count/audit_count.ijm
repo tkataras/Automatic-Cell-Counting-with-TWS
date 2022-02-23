@@ -146,7 +146,7 @@ function action(input, output, filename, inputTwo, filenameTwo) {
 	} //else
 } //function endpoint
 selectWindow("Results");
-saveAs("Results", outputDir + selectedClassifier + "_Results.csv");
+saveAs("Results", outputDir + selectedClassifier + "_Results_Audit.csv");
 run("Clear Results");
 	
 // iterate through folders

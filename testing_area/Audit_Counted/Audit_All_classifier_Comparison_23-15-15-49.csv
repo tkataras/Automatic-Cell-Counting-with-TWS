@@ -1,0 +1,2 @@
+,class,prec,reca,F1,F1_g_tt_p,mean_F1_gp,mean_F1_wt,p_g_tt_p,r_g_tt_p,precision,recall,accuracy,MAE,MPE,F1_geno_ttest_pval,mean_F1_ev0,mean_F1_ev1,precision_geno_ttest_pval,recall_geno_ttest_pval
+0,classifier,,,,,,,,,,0.0,0.0,1.0,0.3333333333333333,--,,,--,
