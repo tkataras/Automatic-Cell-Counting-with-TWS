@@ -46,6 +46,7 @@ if (result) {
 
 // Run ImageJ macros
 runMacro(input + "count_from_roi.ijm", input);
+return;
 runMacro(input + "count_over_dir_prob_TK.ijm", searchDirectory);
 
 // Next, run classifier comparison
