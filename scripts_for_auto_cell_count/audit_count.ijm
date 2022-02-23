@@ -40,8 +40,9 @@ Dialog.addNumber("Maximum pixel size for object count:", sizeMax);
 Dialog.show();
 sizeMin = Dialog.getNumber();
 sizeMax = Dialog.getNumber();
-print(sizeMin);
-print(sizeMax);
+print("Minimum Pixel Size: " + sizeMin);
+print("Maximum Pixel Size: " + sizeMax);
+
 
 // Have to initialize at -1 to start correctly at 0
 rowNumber = -1;
@@ -53,7 +54,6 @@ for (q = 0; q < list.length; q++) {
 			
 // Opens and thresholds binary images or Weka output directly       
 function action(input, output, filename, inputTwo, filenameTwo) {    	
-	print(inputDir + filename);
 	open(inputDir + filename);
 	run("8-bit");
 	setAutoThreshold("Default dark");
@@ -81,13 +81,11 @@ function action(input, output, filename, inputTwo, filenameTwo) {
 	counts = 0;
 	// Stop empty auto count images here 
 	getRawStatistics(nPixels, mean, min, max, std, histogram);
-	print(max);
 	if (max == 0) {	
 	// Case where the first image contained no auto counts
 		if (rowNumber == -1) {
 			rowNumber = 0;
 		}
-		
 		// Save measurement data for the empty image
 		numRoi = 0;
 		run("Measure");
