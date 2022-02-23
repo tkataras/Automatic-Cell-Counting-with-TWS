@@ -1,10 +1,12 @@
 #!/usr/bin/python
 ###
 # Author: Tyler Jang, Theo Kataras
-# Date 11/16/2021
+# Date 2/23/2022
 #
 # Inputs: 
 # Outputs: 
+# Description: This file audits several resulting images from ACCT 2 for the 
+#              selected classifier to determine how well it performed in testing
 ###
 import pandas as pd
 import numpy as np
@@ -35,9 +37,8 @@ hand_count_dir = "../testing_area/Audit_Hand_Counts/"
 OUTPUT_count = "../testing_area/Audit_Counted/" + selectedClassifier + "/"
 result_out = "../testing_area/Results/"
 
-class_list = os.listdir(OUTPUT_count)
-# Dataframe to store results
-result_summary_file = pd.DataFrame(columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp", "mean_F1_wt", "p_g_tt_p", "r_g_tt_p"]) #holds all accuracy values for classifiers
+# Holds all accuracy values for classifiers
+result_summary_file = pd.DataFrame(columns=["class", "precision", "recall", "F1", "accuracy", "MAE", "MPE"]) 
 
 ### adding in the results of the hand_count_from_roi.ijm, this will not change by folder, and is generated manually by saving results in Imagej from Count ROI
 hand_ini = pd.read_csv("../testing_area/Results/roi_counts.csv", usecols=['Label'])
@@ -381,12 +382,12 @@ else:
     row_row = pd.DataFrame([[selectedClassifier, precision, recall, F1, accuracy, mean_absolute_error, mean_percent_error, F1_geno_ttest_pval, mean_F1_ev0, mean_F1_ev1, precision_geno_ttest_pval, recall_geno_ttest_pval]], columns=["class", "precision", "recall", "F1", "accuracy", "MAE", "MPE", "F1_geno_ttest_pval", "mean_F1_ev0", "mean_F1_ev1", "precision_geno_ttest_pval", "recall_geno_ttest_pval"])
     result_summary_file = result_summary_file.append(row_row)
 
-currTime = time.localtime(time.time())
-#generating a unique file name based on time and date
-date = str(currTime.tm_mday) + "-" + str(currTime.tm_hour) + "-" + str(currTime.tm_min) + "-" + str(currTime.tm_sec)
+# Generating a unique file name based on time and date
+curr_time = time.localtime(time.time())
+date = str(curr_time.tm_mday) + "-" + str(curr_time.tm_hour) + "-" + str(curr_time.tm_min) + "-" + str(curr_time.tm_sec)
 
-out_name = "Audit_All_classifier_Comparison_" + date + ".csv"
+# Create a resulting output file for information
+out_name = "Audit_All_Classifier_Comparison_" + date + ".csv"
+result_summary_file.to_csv(result_out  + out_name)
 
-#write.csv(result_summary_file, paste(result_out,out_name, sep = ""))
-result_summary_file.to_csv("../testing_area/Audit_Counted/"  + out_name)
 print("Finished audit_classifier_check.py")
