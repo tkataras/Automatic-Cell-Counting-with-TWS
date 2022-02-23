@@ -125,9 +125,14 @@ the __first__ space, before any __-__
 
 the __second__ space, after __1 -__
 
-the __last__ space, after all __-__
+the __last__ space, after all __-__, only the first two characters are considered
 
 Example: __BKO-426-S42-Iba-Syn-Cortex-10x-F1a_XY1562195071_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3__
+
+the relevant sections are:
+__426__
+__S42__
+__F1__
 
 
 
@@ -135,30 +140,41 @@ Example: __BKO-426-S42-Iba-Syn-Cortex-10x-F1a_XY1562195071_Z0_T0_C2.tiff8bit.png
 ## How to create classifiers using Weka
 ACCT uses Weka Classifiers to count images, which the user will initially need to create. 
 
-<img src = "figures/weka gui.tif">
-
 to start, close any images open in FIJI.
 
-Then select all training images in your file explorer progam and drag them to the FIJI user interface bar to open them all at once
+Then select all __training images__ in your file explorer progam and drag them to the FIJI user interface bar to open them all at once
 
 Once all images are open, use the FIJI search bar to apply the __Images to Stack__ operation
 
 With the image stack selected, launch the __Advanced Weka Segmentation__ plugin from the FIJI search bar, or __Plugins__ menu.
 
-With the full training image stack open in Weka, we can beging training classifiers.
+With the __full training image stack-- open in Weka, we can beging training classifiers
 
 
-<img src = "figures/training1.png">
+It is best to start with small amounts of input data, using a free selection tool to highlight some cell pixels in an image and adding them to __Class 1__ and some non-cell pixels, adding them to __Class 2__.
 
-It is best to start with small amounts of input data, using a free selection tool to highlight some cell pixels in an image and adding them to __Class 1__.
 
-Next highlight some non-cell pixels and add them to __Class 2__
+<img src = "figures/weka gui.png">
 
 After the first two bits of training data are added, press __Train classifier__ to begin building a classifier based on the provided data, which will then be applied to the whole image stack, visible from an overlay on all images. __The first training can take several minutes on an image stack, as features are calcuated for the first time for each image.__
 
+<img src = "figures/smaller_training/training1.pnghalf.png">
+
 Once there is feedback on the current state fo the classifier, save it with the  __Save classifier__ button, before adding a few more pixels of training data based on areas innacurate segmentation based on the current classifier overlay. 
 
-With the new training data added, press __Train classifier__ and observe the result, making further corrections and saving the intermediate classifiers. Saving multiple classifiers allows us to select the most effective point in training based on the validation data.
+<img src = "figures/smaller_training/training2.pnghalf.png">
+
+<img src = "figures/smaller_training/training5.pnghalf.png">
+
+With the new training data added, press __Train classifier__ and observe the result, making further corrections and saving the intermediate classifiers.
+
+
+<img src = "figures/smaller_training/training7.pnghalf.png">
+
+<img src = "figures/smaller_training/training8.pnghalf.png">
+
+Each new addition of data will change the persepctive of the classifier based on the new data, and we can  Saving multiple classifiers allows us to select the most effective point in training based on the validation data.
+
 
 For more information, there is a thorough and effective explanation of __Trainable Weka Segmentation__ plugin located at: https://imagej.net/plugins/tws/
 ACCT will expect at least 2 classifiers to compare performance against for its validation step.
