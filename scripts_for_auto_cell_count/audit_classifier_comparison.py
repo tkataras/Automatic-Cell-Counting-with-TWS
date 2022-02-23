@@ -13,6 +13,8 @@ import sys
 import time
 import scipy.stats
 
+print("Starting audit_classifier_comparison.py\n")
+
 # Method to change working directory from inputted ImageJ Macro
 currDir = os.getcwd()
 def set_dir(arg1):
@@ -24,21 +26,21 @@ set_dir(sys.argv[1])
 selectedClassifier = sys.argv[2]
 
 # Input the genotype data as a .csv file
-geno_file = "../training_area/testing_area/geno_audit.csv"
+geno_file = "../testing_area/geno_audit.csv"
 
 # Input Hand Counts
-hand_count_dir = "../training_area/testing_area/Audit_Hand_Counts/"
+hand_count_dir = "../testing_area/Audit_Hand_Counts/"
 
 # File output location
-OUTPUT_count = "../training_area/testing_area/Audit_Counted/" + selectedClassifier + "/"
-result_out = "../training_area/testing_area/"
+OUTPUT_count = "../testing_area/Audit_Counted/" + selectedClassifier + "/"
+result_out = "../testing_area/Results/"
 
 class_list = os.listdir(OUTPUT_count)
 # Dataframe to store results
 your_boat = pd.DataFrame(columns=["class", "prec", "reca", "F1", "F1_g_tt_p", "mean_F1_gp", "mean_F1_wt", "p_g_tt_p", "r_g_tt_p"]) #holds all accuracy values for classifiers
 
 ### adding in the results of the hand_count_from_roi.ijm, this will not change by folder, and is generated manually by saving results in Imagej from Count ROI
-hand_ini = pd.read_csv("../training_area/testing_area/Audit_Hand_Counts/roi_counts.csv", usecols=['Label'])
+hand_ini = pd.read_csv("../testing_area/Results/roi_counts.csv", usecols=['Label'])
 lvl_h = np.unique(hand_ini)
 count_h = {}
 for i in range(0, len(hand_ini)):
@@ -48,7 +50,7 @@ for i in range(0, len(hand_ini)):
         count_h[hand_ini.loc[i].at["Label"]] = count_h[hand_ini.loc[i].at["Label"]] + 1
 hand_final = count_h
 
-class_res_loc = hand_count_dir + "/" + selectedClassifier + "_testing_Results.csv"
+class_res_loc = result_out + selectedClassifier + "_Results.csv"
 class_results = pd.read_csv(class_res_loc)
 
 ##if else loop for determining true positive, false positive and false negative cell counts
@@ -125,7 +127,7 @@ else:
 print(selectedClassifier + " percision = " +  str(prec))
 print(selectedClassifier + " recall = " +  str(reca))
 print(selectedClassifier + " F1 = " +  str(F1))
-file_out_name = "../training_area/testing_area/Audit_Counted/" + selectedClassifier + "_Final.csv"
+file_out_name = result_out + selectedClassifier + "_Final.csv"
 # Writes out the final file to save the output
 final_blah.to_csv(file_out_name)
 

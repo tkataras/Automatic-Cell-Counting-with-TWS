@@ -1,3 +1,10 @@
+/**
+ * Author: Theo Kataras, Tyler Jang
+ * Date: 2/23/2022
+ * 
+ * Description: Main program to validate the counts from ACCT 2 to see performance on a random
+ * 				selection of images.
+ */
 input = getDirectory("Choose source directory of the macro (Scripts for Auto Cell Count)");
 
 // Set measurements to calculate
@@ -18,11 +25,8 @@ selectedClassifier = Dialog.getChoice();
 // Trim .model off the selected classifier by the user
 trimClassName = split(selectedClassifier, ".");
 
-
-//making sure all folders exist
+// Making sure all folders exist
 exec("python", input + "file_architect.py", input, selectedClassifier);
-
-
 
 // Randomly select images for analysis
 //TK: thinking about this more, the audit set needs to have the same genotype/exp condition breakdown as the validation set, IF the user has exp groups, so we might just say the 
@@ -31,28 +35,19 @@ exec("python", input + "file_architect.py", input, selectedClassifier);
 
 //exec("python", input + "audit.py", input, trimClassName[0]);
 
-
-
-
 // Ask if the user needs to run Weka 
 Dialog.create("Have you selected your audit image set, marked cells with multi point selection and moved counted images into the counted folder?");
-Dialog.addCheckbox("ready to audit a dataset", false);
+Dialog.addCheckbox("Are you ready to audit your dataset?", true);
 Dialog.show();
 ifWeka = Dialog.getCheckbox();
 if (ifWeka) {
+	// Count and analysis of audit images
+	runMacro(input + "count_from_roi_audit.ijm", input + "../testing_area/Audit_Images/" + trimClassName[0] + "/");
+	runMacro(input + "audit_count.ijm", input + "../testing_area/Audit_Counted/" + trimClassName[0] + "/");
 
-
-
-// Count and analysis of audit images
-runMacro(input + "count_from_roi.ijm", input + "../testing_area/Audit_Images/" + trimClassName[0] + "/");
-runMacro(input + "audit_count.ijm", input + "../testing_area/Audit_Counted/" + trimClassName[0] + "/");
-
-//exec("python", input + "audit_classifier_comparison.py", input, trimClassName[0]);
-
-
-	
+	exec("python", input + "audit_classifier_comparison.py", input, trimClassName[0]);
 } 
 
-
+print("Finished ACCT 3");
 
 
