@@ -135,7 +135,7 @@ Example: __BKO-426-S42-Iba-Syn-Cortex-10x-F1a_XY1562195071_Z0_T0_C2.tiff8bit.png
 ## How to create classifiers using Weka
 ACCT uses Weka Classifiers to count images, which the user will initially need to create. 
 
-TODO: image of the weka gui 
+<img src = "figures/weka gui.tif">
 
 to start, close any images open in FIJI.
 
@@ -146,6 +146,9 @@ Once all images are open, use the FIJI search bar to apply the __Images to Stack
 With the image stack selected, launch the __Advanced Weka Segmentation__ plugin from the FIJI search bar, or __Plugins__ menu.
 
 With the full training image stack open in Weka, we can beging training classifiers.
+
+
+<img src = "figures/training1.png">
 
 It is best to start with small amounts of input data, using a free selection tool to highlight some cell pixels in an image and adding them to __Class 1__.
 
