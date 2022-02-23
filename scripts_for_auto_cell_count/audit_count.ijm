@@ -62,6 +62,16 @@ function action(input, output, filename, inputTwo, filenameTwo) {
 	run("Convert to Mask");
 	run("Invert");
 
+	// Fill in small pixel gaps to complete objects
+	run("Fill Holes");
+
+	
+	// Clear any existing rois
+	if (roiManager("count") > 0) {
+		roiManager("deselect");		
+		roiManager("Delete");
+	}  
+
 	// This imageJ plugin creates the results file and image of the count cells based on the size exclusion		
 	run("Analyze Particles...", "size=" + sizeMin + "-" + sizeMax + " pixel show=Masks display summarize add");
 
