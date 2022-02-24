@@ -36,7 +36,7 @@ hand_count_dir = "../testing_area/Audit_Hand_Counts/"
 # File output location
 OUTPUT_count = "../testing_area/Audit_Counted/" + selectedClassifier + "/"
 result_out = "../testing_area/Results/"
-print(os.listdir(OUTPUT_count))
+
 # Holds all accuracy values for classifiers
 result_summary_file = pd.DataFrame(columns=["class", "precision", "recall", "F1", "accuracy", "MAE", "MPE"]) 
 
