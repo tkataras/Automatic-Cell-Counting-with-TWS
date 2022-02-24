@@ -247,35 +247,6 @@ if len(lvl_geno) == 1:
     recall_mean = np.mean(group_one["recall2"])
     F1_mean = np.mean(group_one["F1_2"])
 
-    precision_geno_ttest = None
-    recall_geno_ttest = None 
-    F1_geno_ttest = None
-
-    # TODO remove the 1 sample T test since it only matters when user expects an expected mean
-    # TODO I don't know what the popmean should be equal to, what is the expected mean of our pop vs actual mean
-    if precision2 is not None:
-        precision_geno_ttest = scipy.stats.ttest_1samp(group_one["precision2"], popmean=1, nan_policy="omit")
-        print("Precision T Test " + str(precision_geno_ttest))
-    if recall2 is not None:
-        recall_geno_ttest = scipy.stats.ttest_1samp(group_one["recall2"], popmean=1, nan_policy="omit")
-        print("Recall T Test " + str(recall_geno_ttest))
-    if F1_2 is not None:
-        F1_geno_ttest = scipy.stats.ttest_1samp(group_one["F1_2"], popmean=1, nan_policy="omit")
-        print("F1 T Test " + str(F1_geno_ttest) + "\n")
-
-    # TODO also write the F values out to log
-    precision_geno_ttest_pval = None
-    recall_geno_ttest_pval = None
-    F1_geno_ttest_pval = None
-
-    # Get the p values of each T test
-    if precision2 is not None:
-        precision_geno_ttest_pval = precision_geno_ttest[1]
-    if recall2 is not None:
-        recall_geno_ttest_pval = recall_geno_ttest[1]
-    if F1_2 is not None:
-        F1_geno_ttest_pval = F1_geno_ttest[1]
-
     # Get means of F1_2
     mean_F1_ev0 = None
     if F1_2 is not None:
@@ -283,12 +254,8 @@ if len(lvl_geno) == 1:
 
     # Prepare output csv file
     row_row = pd.DataFrame([[selectedClassifier, precision, recall, F1, accuracy, \
-    mean_absolute_error, mean_percent_error, mean_F1_ev0, \
-    precision_geno_ttest_pval, recall_geno_ttest_pval, \
-    F1_geno_ttest_pval]], columns=["class", "precision", "recall", "F1",\
-    "accuracy", "MAE", "MPE", "mean_F1_ev0", \
-    "precision_geno_ttest_pval", "recall_geno_ttest_pval", \
-    "F1_geno_ttest_pval"])
+    mean_absolute_error, mean_percent_error, mean_F1_ev0]], columns=["class", "precision", "recall", "F1",\
+    "accuracy", "MAE", "MPE", "mean_F1_ev0"])
     
     result_summary_file = result_summary_file.append(row_row)
     
