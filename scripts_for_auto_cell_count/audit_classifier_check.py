@@ -36,7 +36,7 @@ hand_count_dir = "../testing_area/Audit_Hand_Counts/"
 # File output location
 OUTPUT_count = "../testing_area/Audit_Counted/" + selectedClassifier + "/"
 result_out = "../testing_area/Results/"
-
+print(os.listdir(OUTPUT_count))
 # Holds all accuracy values for classifiers
 result_summary_file = pd.DataFrame(columns=["class", "precision", "recall", "F1", "accuracy", "MAE", "MPE"]) 
 
@@ -79,7 +79,7 @@ for row in range(0, len(class_results)):
 ##need to go into the counted folder and pull out all image names, meaning ignorming the Results.csv img_names. images from tru_count with be .png
 img_names = []
 for image in os.listdir(OUTPUT_count):
-    if image[-4:] == ".png" or image[-4:] == ".jpg" or image[-5:] == ".tiff":
+    if image[-4:] == ".png" or image[-4:] == ".jpg" or image[-4:] == ".tif" or image[-5:] == ".tiff":
         img_names.append(image)
 final_result = pd.DataFrame(columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
 
@@ -132,22 +132,22 @@ for image in range (0, len(img_names)):
     this_row = pd.DataFrame([[name, tp, fp, fn, avg_area, avg_circular]], columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
     final_result = final_result.append(this_row)
 
-    # Method to catch divide by zeros 
-    def catchDivideByZero(numer, denom):
-        try:
-            # Don't print the error message to stderr
-            with np.errstate(divide='ignore', invalid='ignore'):
-                return numer/denom
-        except ZeroDivisionError:
-            # Divide dataframe elements by elements that are not 0, those that are will be None values
-            if isinstance(numer, pd.Series) and isinstance(denom, pd.Series):
-                numer = list(numer)
-                denom = list(denom)
+# Method to catch divide by zeros 
+def catchDivideByZero(numer, denom):
+    try:
+        # Don't print the error message to stderr
+        with np.errstate(divide='ignore', invalid='ignore'):
+            return numer/denom
+    except ZeroDivisionError:
+        # Divide dataframe elements by elements that are not 0, those that are will be None values
+        if isinstance(numer, pd.Series) and isinstance(denom, pd.Series):
+            numer = list(numer)
+            denom = list(denom)
 
-                # Don't print the error message for the where statement evaluation
-                with np.errstate(divide='ignore', invalid='ignore'):
-                    return np.divide(numer, denom, out=None, where=(denom!=0))
-            return None
+            # Don't print the error message for the where statement evaluation
+            with np.errstate(divide='ignore', invalid='ignore'):
+                return np.divide(numer, denom, out=None, where=(denom!=0))
+        return None
 
 # Need to calculate precision and recall
 total_tp = sum(final_result["tp"])
@@ -169,7 +169,7 @@ if result == None:
     F1 = None
 else:
     F1 = 2 * result
-    
+
 # Absolute Error = (tp + fn) - (tp + fp)
 mean_absolute_error = ((total_tp + total_fn) - (total_tp + total_fp)) / len(img_names)
 
@@ -358,7 +358,7 @@ else:
     recall_geno_ttest_pval = None
     F1_geno_ttest = None
     F1_geno_ttest_pval = None
-    
+
     if precision2 is not None:
         precision_geno_ttest = scipy.stats.ttest_ind(group_one["precision2"], group_two["precision2"], equal_var=False, nan_policy="omit")
         precision_geno_ttest_pval = precision_geno_ttest[1]

@@ -36,7 +36,7 @@ class_list_temp = os.listdir(output_count + selectedClassifier)
 # Select only the images in the classifier
 class_list = []
 for img in class_list_temp:
-    if img[-4:] == ".png" or img[-4:] == ".jpg" or img[-5:] == ".tiff":
+    if img[-4:] == ".png" or img[-4:] == ".jpg" or  img[-4:] == ".tif" or img[-5:] == ".tiff":
         class_list.append(img)
 
 # Remove file extensions and point deliminator 

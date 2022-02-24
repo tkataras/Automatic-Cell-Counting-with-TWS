@@ -79,7 +79,7 @@ for f in range(0, len(class_list)):
     folder_loc = output_count + curr_class
     img_names = []
     for image in os.listdir(folder_loc):
-        if image[-4:] == ".png" or image[-4:] == ".jpg" or image[-5:] == ".tiff":
+        if image[-4:] == ".png" or image[-4:] == ".jpg" or  image[-4:] == ".tif" or image[-5:] == ".tiff":
             img_names.append(image)
 
     # Dataframe to store the results of autocounting performance
