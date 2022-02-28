@@ -55,7 +55,7 @@ macro "The -- True -- Count" {
 		listVal = getFileList(dirVal);
 		listProb = getFileList(probDirs + prob);
 		
-		// Initialize the csv row at -1 to start correctly at 0 when handling empty images
+		// Initialize the csv row at -1 to start correctly at zero for handling empty images
 		rowNumber = -1;
 		
 		// Iterate macro over the images in the classifier folder
