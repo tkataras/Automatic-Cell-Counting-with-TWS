@@ -65,7 +65,7 @@ for i in range(0, len(hand_ini)):
         count_h[hand_ini.loc[i].at["Label"]] = count_h[hand_ini.loc[i].at["Label"]] + 1
 
 for x in count_h:
-    print(x + " = " + str(count_h[x]))
+    print(str(count_h[x]))
 class_res_loc = result_out + selectedClassifier + "_Results_Audit.csv"
 class_results = pd.read_csv(class_res_loc)
 
