@@ -124,7 +124,7 @@ for f in range(0, len(class_list)):
                 else:
                     tp = tp + 1
                     fn = fn + auto_count - 1
-        
+
         # Find the number of hand counts that were missed and add it to false negatives
         if dftc.size != 0:
             missed = count_h[lvl_h[image]] - sum(dftc["points"]) 
@@ -229,7 +229,7 @@ for f in range(0, len(class_list)):
     final_result["precision2"] = precision2
     final_result["recall2"] = recall2
     final_result["F1_2"] = F1_2
-        
+    
     # Find the standard deviation of percision and recall
     if precision2 is not None:
         print(curr_class + " percision standard deviation = " + str(np.nanstd(precision2)))

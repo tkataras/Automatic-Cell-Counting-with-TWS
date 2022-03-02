@@ -76,6 +76,8 @@ macro "The -- True -- Count" {
 			// Fill in small pixel gaps to complete objects
 			run("Fill Holes");
 
+			run("Watershed");
+
 			// Clear any existing rois
 			if (roiManager("count") > 0) {
 				roiManager("deselect");		
