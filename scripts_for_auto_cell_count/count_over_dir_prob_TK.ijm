@@ -27,12 +27,15 @@ macro "The -- True -- Count" {
 	// Set size minimum for cells to exclude small radius noise and large artifacts
 	sizeMin = 20;
 	sizeMax = 1000;
+	ifWatershed = true;
 	Dialog.create("Size Values");
 	Dialog.addNumber("Minimum pixel size for object count:", sizeMin);
 	Dialog.addNumber("Maximum pixel size for object count:", sizeMax);
+	Dialog.addCheckbox("Do you want to apply the Watershed algorithm", true);
 	Dialog.show();
 	sizeMin = Dialog.getNumber();
 	sizeMax = Dialog.getNumber();
+	ifWatershed = Dialog.getCheckbox();
 	print("Minimum Pixel Size: " + sizeMin);
 	print("Maximum Pixel Size: " + sizeMax);
 	
@@ -55,7 +58,7 @@ macro "The -- True -- Count" {
 		listVal = getFileList(dirVal);
 		listProb = getFileList(probDirs + prob);
 		
-		// Initialize the csv row at -1 to start correctly at 0 when handling empty images
+		// Initialize the csv row at -1 to start correctly at zero for handling empty images
 		rowNumber = -1;
 		
 		// Iterate macro over the images in the classifier folder
@@ -75,14 +78,18 @@ macro "The -- True -- Count" {
 			
 			// Fill in small pixel gaps to complete objects
 			run("Fill Holes");
-
+		
+			// Apply the watershed algorithm if true
+			if(ifWatershed) {
+				run("Watershed");
+			}
+			
 			// Clear any existing rois
 			if (roiManager("count") > 0) {
 				roiManager("deselect");		
 				roiManager("Delete");
 			}  
-			
-			
+						
 			// This imageJ plugin creates the results file and image of the count cells based on the size exclusion		
 			run("Analyze Particles...", "size=" + sizeMin + "-" + sizeMax + " pixel show=Masks summarize add");
 			

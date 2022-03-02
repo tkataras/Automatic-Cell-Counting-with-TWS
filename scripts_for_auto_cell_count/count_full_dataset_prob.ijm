@@ -33,12 +33,15 @@ macro "The -- True -- Count" {
 	// Set size minimum for cells to exclude small radius noise
 	sizeMin = 20;
 	sizeMax = 1000;
+	isWatershed = true;
 	Dialog.create("Size Values");
 	Dialog.addNumber("Minimum pixel size for object count:", sizeMin);
 	Dialog.addNumber("Maximum pixel size for object count:", sizeMax);
+	Dialog.addCheckbox("Do you want to apply the Watershed algorithm", true);
 	Dialog.show();
 	sizeMin = Dialog.getNumber();
 	sizeMax = Dialog.getNumber();
+	ifWatershed = Dialog.getCheckbox();
 	print("Minimum Pixel Size: " + sizeMin);
 	print("Maximum Pixel Size: " + sizeMax);
 	
@@ -73,8 +76,10 @@ macro "The -- True -- Count" {
 			roiManager("Delete");
 		}  
 
-		// Call the watershed algorithm to split objects
-		//run("Watershed");
+		// Apply the watershed algorithm if true
+		if(ifWatershed) {
+			run("Watershed");
+		}
 		
 		// This imageJ plugin creates the results file and image of the count cells based on the size exclusion		
 		run("Analyze Particles...", "size=" + sizeMin + "-" + sizeMax + " pixel show=Masks summarize add");
