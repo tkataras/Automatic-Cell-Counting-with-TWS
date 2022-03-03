@@ -20,8 +20,7 @@ If you are not familiar with terminals, you can also click the green code button
 
 Next, ensure you have downloaded the software located in the [Prerequisites](#prerequisites) section.
 
-
-Finally, you will have to manually copy and paste certain files into the __plugins__ folder of your Fiji instalation of Imagej. 
+Finally, you will have to manually copy and paste certain files into the __Plugins__ folder of your Fiji instalation of Imagej. 
 
 Find where you downloaded Fiji in your file directory. Next, navigate to scripts for auto cell count then copy and paste the following files into your Fiji.app/plugins directory. This is so you can run the program from ImageJ using the graphical user interface and macro menu.
 ```
@@ -114,7 +113,7 @@ Each image _must_ have a unique file name.
 
 Image file names should not contain the following symbols as they are used for other purposes.
 ```
-.     (except for the symbol starting the file extension)
+.     (except for the default symbol starting the file extension)
 :
 ```
 ## Projected Images
@@ -137,7 +136,6 @@ __426__
 __S42__
 __F1__
 
-
 # Creating Classifiers Using Weka
 ACCT uses Weka Classifiers to count images, which the user will initially need to create. 
 
@@ -151,9 +149,7 @@ With the image stack selected, launch the __Advanced Weka Segmentation__ plugin 
 
 With the __full training image stack-- open in Weka, we can beging training classifiers
 
-
 It is best to start with small amounts of input data, using a free selection tool to highlight some cell pixels in an image and adding them to __Class 1__ and some non-cell pixels, adding them to __Class 2__.
-
 
 <img src = "figures/weka gui.png">
 
@@ -169,17 +165,14 @@ Once there is feedback on the current state fo the classifier, save it with the 
 
 With the new training data added, press __Train classifier__ and observe the result, making further corrections and saving the intermediate classifiers.
 
-
 <img src = "figures/smaller_training/training7.pnghalf.png">
 
 <img src = "figures/smaller_training/training8.pnghalf.png">
 
 Each new addition of data will change the persepctive of the classifier based on the new data, and we can  Saving multiple classifiers allows us to select the most effective point in training based on the validation data.
 
-
 For more information, there is a thorough and effective explanation of __Trainable Weka Segmentation__ plugin located at: https://imagej.net/plugins/tws/
 ACCT will expect at least 2 classifiers to compare performance against for its validation step.
-
 
 # Creating Hand Count Markers
 Hand count markers are created in Imagej using the Point Selection Tool, available in the toolbar, and the ROI manager, which is under __Analyze >> Tools >> ROI Manager__. You can also type ROI Manager in the search bar and select it.
@@ -211,8 +204,6 @@ __1.2__ The pipeline will ask if you want to run Trainable Weka Segmentation. Th
 
 <img src = "figures/selectWeka.png">
 
-__If not done yet, to generate your own genotype.csv file: TODO__
-
 __1.3__ Our data includes paired images in individual fields of view for increased context when counting, so intermediate stage are included to identify and project these image pairs for the final automatic count. If your data does not include paired images, do not select this option below:
 
 <img src = "figures/selectMultipleSegmentation.PNG">
@@ -240,8 +231,8 @@ As an example, the output in log will look like this.
 From the ImageJ bar, navigate and select __Plugins >> ACCT 2__
 
 __2.1__ Once again, the program must know where it is downloaded. Select the directory/folder named __scripts_for_auto_cell_count__. [scripts_for_auto_cell_count](scripts_for_auto_cell_count)
-TODO maybe add links to each folder inside of this README?
 
+TODO: Maybe add links to each folder inside of this README?
 
 <img src = "figures/selectSource.PNG">
 
@@ -254,9 +245,6 @@ __2.3__ After the classifier is selected, the pipline applies the single selecte
 <img src = "figures/selectWeka.png">
 
 __2.4__ Repeat stage __1.3__ and __1.4__ with the exact same parameters you used in stage __1__. This stage requires a second genotypes file named __geno_full.csv__ from the user containing experimental grouping information for the unseen dataset. This serves the exact same purpose as __genotype.csv__, but for the full set of images.
-
-__If not done yet, to generate your own geno_full.csv file: TODO__
-
 
 If you desire even more detailed statistical information about the selected classifier:
 1. The number of counted objects for each individual image for each individual classifier can be found in __testing_area/Weka_Output_Counted/classifier#/classifier#\_Final.csv__.
@@ -276,4 +264,4 @@ The image names much match exactly between the hand counts and the original imag
 Each folder must only contain images or hand counts, with the exception of the Weka Output Counted folder, in which classifier subfolders will include calculation data files.
 At present, two experimental conditions, denoted in the genotypes.csv files, are expected. 
 
-When running the program again with a new set of images, classifiers, etc. you will want to remove all the inputted files and folders generated by the program so that the file architecture is the same as it was when downloaded from github.
+When running the program again with a new set of images, classifiers, etc. you will want to remove all the folders generated by the program so that the file architecture is the same as it was when downloaded from Github.
