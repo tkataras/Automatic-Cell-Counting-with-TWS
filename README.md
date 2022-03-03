@@ -5,8 +5,8 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 1. [Installation Guide](#installation-guide)
 2. [Prerequisites](#prerequisites)
 3. [Software Dependencies](#software-dependencies)
-4. [Creating Classifiers Using Weka](#Creating-Classifiers-Using-Weka)
-5. [How To Use](#how-to-use)
+4. [How To Use](#how-to-use)
+5. [Creating Classifiers Using Weka](#Creating-Classifiers-Using-Weka)
 6. [Creating hand count markers](#creating-hand-count-markers)
 7. [Critical Notes](#critical-notes)
 
@@ -98,7 +98,7 @@ geno_full.csv
 ```
 Place this file inside of __testing_area/__. It will look similar to the other genotype file but will have rows for every image in your complete dataset with rows containing the condition/group of the image the row represents.
 ```
-## User generated classifiers through Trainable Weka Segmentation
+User generated classifiers through Trainable Weka Segmentation
 ```
 Place these classifiers inside of __training_area/Classifiers__. These should be __.model__ files.
 
