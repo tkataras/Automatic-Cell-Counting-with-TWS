@@ -5,7 +5,8 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 1. [Installation Guide](#installation-guide)
 2. [Prerequisites](#prerequisites)
 3. [Software Dependencies](#software-dependencies)
-4. [How To Use](#how-to-use)
+4. [Creating Classifiers Using Weka](#Creating-Classifiers-Using-Weka)
+5. [How To Use](#how-to-use)
 6. [Creating hand count markers](#creating-hand-count-markers)
 7. [Critical Notes](#critical-notes)
 
@@ -29,7 +30,7 @@ BS_TWS_apply_prob.bsh
 apply_TWS_one_classifier_prob.bsh
 ```
 
-# Prerequisites:
+# Prerequisites
 -Current version of FIJI distribution of Imagej https://imagej.net/software/fiji/
 
 -Python https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe
@@ -101,7 +102,7 @@ Place this file inside of __testing_area/__. It will look similar to the other g
 ```
 Place these classifiers inside of __training_area/Classifiers__. These should be __.model__ files.
 
-Making classifiers is described in the [How to create classifiers using Weka](#How-to-create classifiers-using-Weka) section.
+Making classifiers is described in the [Creating Classifiers Using Weka](#Creating-Classifiers-Using-Weka) section.
 
 ## Image Protocols
 Images should be of the same dimensions.
@@ -139,9 +140,7 @@ __S42__
 __F1__
 
 
-
-
-## How to create classifiers using Weka
+# Creating Classifiers Using Weka
 ACCT uses Weka Classifiers to count images, which the user will initially need to create. 
 
 to start, close any images open in FIJI.
