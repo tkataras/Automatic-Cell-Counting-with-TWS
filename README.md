@@ -91,7 +91,7 @@ The file will look similar to this with "geno" as a specified header and your co
 ```
 geno_full.csv
 ```
-Place this file inside of __testing_area/__[testing_area/](testing_area/). It will look similar to the other genotype file but will have rows for every image in your complete dataset with rows containing the condition/group of the image the row represents.
+Place this file inside of [testing_area/](testing_area/). It will look similar to the other genotype file but will have rows for every image in your complete dataset with rows containing the condition/group of the image the row represents.
 ```
 User generated classifiers through Trainable Weka Segmentation
 ```
@@ -179,7 +179,7 @@ Hand count markers are created in Imagej using the Point Selection Tool, availab
 2. Add the selections to the ROI manager
 3. Rename the new ROI with the image name (This is most easily done by using the following keyboard shortcuts: Ctrl+Shift+d -> Ctrl+c -> Ctrl+w -> right click the ROI and select Rename -> Ctrl+v -> Enter)
 4. Continue selecting cell locations, peridocally updating via the Update button in the ROI Manager
-5. When all cells are selected, save in the __/training_area/Validation_Hand_Counts__ folder, or the __/testing_area/Audit_Hand_Counts__ folder for the audit image set.
+5. When all cells are selected, save in the [training_area/Validation_Hand_Counts](training_area/Validation_Hand_Counts)folder, or the __/testing_area/Audit_Hand_Counts__ [testing_area/Audit_Hand_Counts](testing_area/Audit_Hand_Counts) folder for the audit image set.
 6. Open new image and repeat until all validation or audit images are counted.
 
 <img src = "figures/fijiMultiPoint.PNG">
