@@ -72,7 +72,7 @@ TODO should be able to handle .JPG and .tiff, just need to test it
 ```
 Place the entire set of images you would like counted inside of [testing_area/images](testing_area/images).
 
-Place the set of images you would like to use as images to train the classifiers inside of __training_area/training_images__. This is mainly for you to keep track of what images you used for training.
+Place the set of images you would like to use as images to train the classifiers inside of [training_area/training_images](training_area/training_images). This is mainly for you to keep track of what images you used for training.
 
 Place the set of images you would like use for validation of the machine learning classifiers in [training_area/Validation_data](training_area/Validation_data).
 
@@ -82,7 +82,7 @@ You will also need to create a .csv file storing the experimental condition data
 ```
 genotype.csv 
 ```
-Place this file inside of __training_area/__. 
+Place this file inside of [training_area/](training_area/). 
 
 The file will look similar to this with "geno" as a specified header and your conditions for each image of your training set in alphabetical order written in each row.
 
@@ -141,7 +141,7 @@ ACCT uses Weka Classifiers to count images, which the user will initially need t
 
 Before starting, close any images open in Fiji.
 
-Start by selecting all __training images__ in your file explorer progam and drag them to the Fiji user interface bar to open them all at once.
+Start by selecting all [training_area/training_images](training_area/training_images) in your file explorer progam and drag them to the Fiji user interface bar to open them all at once.
 
 Once all images are open, use the Fiji search bar to apply the __Images to Stack__ operation.
 
