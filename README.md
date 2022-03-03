@@ -137,15 +137,15 @@ __F1__
 # Creating Classifiers Using Weka
 ACCT uses Weka Classifiers to count images, which the user will initially need to create. 
 
-to start, close any images open in FIJI.
+to start, close any images open in Fiji.
 
-Then select all __training images__ in your file explorer progam and drag them to the FIJI user interface bar to open them all at once
+Then select all __training images__ in your file explorer progam and drag them to the Fiji user interface bar to open them all at once
 
-Once all images are open, use the FIJI search bar to apply the __Images to Stack__ operation
+Once all images are open, use the Fiji search bar to apply the __Images to Stack__ operation
 
-With the image stack selected, launch the __Advanced Weka Segmentation__ plugin from the FIJI search bar, or __Plugins__ menu.
+With the image stack selected, launch the __Advanced Weka Segmentation__ plugin from the Fiji search bar, or __Plugins__ menu.
 
-With the __full training image stack-- open in Weka, we can beging training classifiers
+With the __full training image stack__ open in Weka, we can beging training classifiers
 
 It is best to start with small amounts of input data, using a free selection tool to highlight some cell pixels in an image and adding them to __Class 1__ and some non-cell pixels, adding them to __Class 2__.
 
