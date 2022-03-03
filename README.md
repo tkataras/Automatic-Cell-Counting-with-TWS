@@ -51,7 +51,7 @@ Access Edit system environment variables in the control panel, select Environmen
 
 Paste the copied python scrips location into the new path line
 
-Open Windows Powershell from the search menu and the packages can be installed by copying the install scripts line by line and right clicking on the working line of the termnial to paste.
+Open Windows Powershell from the search menu and the packages can be installed by copying the install commands line by line and right clicking on the working line of the termnial to paste.
 
 __Linux/Mac:__ Open your terminal and copy paste the following into the command line.
 ```
