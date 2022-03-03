@@ -121,18 +121,20 @@ The final characters denoting the end of unique image information should be: ___
 
 There are 3 loci for levels of identifying information seperated by __-__:
 
-the __first__ space, before any __-__
+1. The __first__ space, before any __"-"__
 
-the __second__ space, after __1 -__
+2. The __second__ space, after a single __"-"__
 
-the __last__ space, after all __-__, only the first two characters are considered
+3. The __last__ space, after all __"-"__, only the first two characters are considered
 
 Example: __BKO-426-S42-Iba-Syn-Cortex-10x-F1a_XY1562195071_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3__
 
-the relevant sections are:
-__426__
-__S42__
-__F1__
+In this example, the relevant sections are:
+```
+426
+S42
+F1
+```
 
 # Creating Classifiers Using Weka
 ACCT uses Weka Classifiers to count images, which the user will initially need to create. 
