@@ -27,6 +27,7 @@ Find where you downloaded Fiji in your file directory. Next, navigate to scripts
 ```
 ACCT_1.ijm
 ACCT_2.ijm
+ACCT_3.ijm
 BS_TWS_apply_prob.bsh
 apply_TWS_one_classifier_prob.bsh
 ```
@@ -187,7 +188,7 @@ Hand count markers are created in Imagej using the Point Selection Tool, availab
 2. Add the selections to the ROI manager
 3. Rename the new ROI with the image name (This is most easily done by using the following keyboard shortcuts: Ctrl+Shift+d -> Ctrl+c -> Ctrl+w -> right click the ROI and select Rename -> Ctrl+v -> Enter)
 4. Continue selecting cell locations, peridocally updating via the Update button in the ROI Manager
-5. When all cells are selected, save in Hand counts folder, or Audit hand counts folder for the audit image set.
+5. When all cells are selected, save in the __/training_area/Validation_Hand_Counts__ folder, or the __/testing_area/Audit_Hand_Counts__ folder for the audit image set.
 6. Open new image and repeat until all validation or audit images are counted.
 
 <img src = "figures/fijiMultiPoint.PNG">
