@@ -101,6 +101,8 @@ Place this file inside of __testing_area/__. It will look similar to the other g
 ```
 Place these classifiers inside of __training_area/Classifiers__. These should be __.model__ files.
 
+Making classifiers is described in the [How to create classifiers using Weka](#How-to-create classifiers-using-Weka) section.
+
 ## Image Protocols
 Images should be of the same dimensions.
 
