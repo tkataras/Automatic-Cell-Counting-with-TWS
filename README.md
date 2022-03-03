@@ -7,12 +7,12 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 3. [Software Dependencies](#software-dependencies)
 4. [Manual Input Files](#manual-input-files)
 5. [Creating Classifiers Using Weka](#Creating-Classifiers-Using-Weka)
-6. [Creating hand count markers](#creating-hand-count-markers)
+6. [Creating Hand Count Markers](#creating-hand-count-markers)
 7. [How to Use](#how-to-use) 
 8. [Critical Notes](#critical-notes)
 
 # Installation Guide
-First you will have to acquire this directory, which can be done through a terminal such as Git, Ubuntu, or Microsoft Powershell with the following line of code.
+First you will have to download this program, which can be done through a terminal such as Git, Ubuntu, or Microsoft Powershell with the following line of code.
 ```
 git clone https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
 ```
