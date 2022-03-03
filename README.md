@@ -55,6 +55,8 @@ Open Windows Powershell from the search menu and the packages can be installed b
 
 __Linux/Mac:__ Open your terminal and copy paste the following into the command line.
 ```
+sudo apt install python3-pip
+
 pip3 install numpy
 pip3 install scipy
 pip3 install pandas
