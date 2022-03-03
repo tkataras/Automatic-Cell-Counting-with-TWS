@@ -36,7 +36,7 @@ apply_TWS_one_classifier_prob.bsh
 
 -Python https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe
 
--Currently the ImageScience package for Fiji must NOT be installed or have been installed on the Fiji installation in use since it is not compatable with our program. If you have installed it, you can uninstall and reinstall Fiji to solve the problem.
+-Currently the ImageScience package for Fiji must NOT be installed or have been installed on the Fiji installation in use since it is not compatable with our program. If you have installed ImageScience, you can uninstall and reinstall Fiji to solve the problem.
 
 # Software Dependencies
 __Windows:__ In order to install the neccessary Python packages, the Python Scripts folder must be added to the terminal's knowelege of working areas designated by the PATH file.
@@ -91,11 +91,11 @@ The file will look similar to this with "geno" as a specified header and your co
 ```
 geno_full.csv
 ```
-Place this file inside of __testing_area/__. It will look similar to the other genotype file but will have rows for every image in your complete dataset with rows containing the condition/group of the image the row represents.
+Place this file inside of __testing_area/__[testing_area/](testing_area/). It will look similar to the other genotype file but will have rows for every image in your complete dataset with rows containing the condition/group of the image the row represents.
 ```
 User generated classifiers through Trainable Weka Segmentation
 ```
-Place these classifiers inside of __training_area/Classifiers__. These should be __.model__ files.
+Place these classifiers inside of [training_area/Classifiers/](training_area/Classifiers/). These should be __.model__ files.
 
 Making classifiers is described in the [Creating Classifiers Using Weka](#Creating-Classifiers-Using-Weka) section.
 
