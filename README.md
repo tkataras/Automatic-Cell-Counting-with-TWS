@@ -139,25 +139,25 @@ F1
 # Creating Classifiers Using Weka
 ACCT uses Weka Classifiers to count images, which the user will initially need to create. 
 
-to start, close any images open in Fiji.
+Before starting, close any images open in Fiji.
 
-Then select all __training images__ in your file explorer progam and drag them to the Fiji user interface bar to open them all at once
+Start by selecting all __training images__ in your file explorer progam and drag them to the Fiji user interface bar to open them all at once.
 
-Once all images are open, use the Fiji search bar to apply the __Images to Stack__ operation
+Once all images are open, use the Fiji search bar to apply the __Images to Stack__ operation.
 
 With the image stack selected, launch the __Advanced Weka Segmentation__ plugin from the Fiji search bar, or __Plugins__ menu.
 
-With the __full training image stack__ open in Weka, we can beging training classifiers
+With the __full training image stack__ open in Weka, we can beging training classifiers.
 
-It is best to start with small amounts of input data, using a free selection tool to highlight some cell pixels in an image and adding them to __Class 1__ and some non-cell pixels, adding them to __Class 2__.
+It is best to start with small amounts of input data, using the free selection tool to highlight some cell pixels in an image and adding them to __Class 1__ and some non-cell pixels, adding them to __Class 2__.
 
 <img src = "figures/weka gui.png">
 
-After the first two bits of training data are added, press __Train classifier__ to begin building a classifier based on the provided data, which will then be applied to the whole image stack, visible from an overlay on all images. __The first training can take several minutes on an image stack, as features are calcuated for the first time for each image.__
+After the first two bits of training data are added, press __Train classifier__ to begin building a classifier based on the provided data, which will then be applied to the whole image stack, visible from an overlay on all images. __The first training can take several minutes on an image stack, as features are calcuated for the first time for each image. This speed improves on the following training.__
 
 <img src = "figures/smaller_training/training1.pnghalf.png">
 
-Once there is feedback on the current state fo the classifier, save it with the  __Save classifier__ button, before adding a few more pixels of training data based on areas innacurate segmentation based on the current classifier overlay. 
+Once there is feedback on the current state of the classifier, save it with the __Save classifier__ button, before adding a few more pixels of training data based on areas with inaccurate segmentation based on the current classifier overlay. 
 
 <img src = "figures/smaller_training/training2.pnghalf.png">
 
@@ -169,9 +169,10 @@ With the new training data added, press __Train classifier__ and observe the res
 
 <img src = "figures/smaller_training/training8.pnghalf.png">
 
-Each new addition of data will change the persepctive of the classifier based on the new data, and we can  Saving multiple classifiers allows us to select the most effective point in training based on the validation data.
+Each new addition of data will change the persepctive of the classifier based on the new data, and we can save multiple classifiers which allows us to select the most effective point in training based on the validation data.
 
-For more information, there is a thorough and effective explanation of __Trainable Weka Segmentation__ plugin located at: https://imagej.net/plugins/tws/
+For more information, there is a thorough and effective explanation of __Trainable Weka Segmentation__ plugin located at: https://imagej.net/plugins/tws/ .
+
 ACCT will expect at least 2 classifiers to compare performance against for its validation step.
 
 # Creating Hand Count Markers
@@ -189,12 +190,11 @@ Hand count markers are created in Imagej using the Point Selection Tool, availab
 
 # How To Use
 
-TODO: By downloading our Github repository you will have a set of folders for demo and for experimental use.
+TODO: By downloading our Github repository you will have a set of folders for demo and for experimental use. (Don't have a demo with example data yet)
 
 ## Stage 1
-From the ImageJ bar, navigate and select __Plugins >> ACCT 1__. You may need to scroll down for a period of time.
+From the ImageJ bar, navigate and select __Plugins >> ACCT 1__. You may need to scroll down for a period of time to find it.
 <img src = "figures/selectACCT1.png">
-
 
 __1.1__ The first step is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference. This is so that our program knows where you have downloaded it. Select the directory/folder named [scripts_for_auto_cell_count](scripts_for_auto_cell_count).
 
