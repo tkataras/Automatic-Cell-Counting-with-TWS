@@ -5,10 +5,11 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 1. [Installation Guide](#installation-guide)
 2. [Prerequisites](#prerequisites)
 3. [Software Dependencies](#software-dependencies)
-4. [How To Use](#how-to-use)
+4. [Manual Input Files](#manual-input-files)
 5. [Creating Classifiers Using Weka](#Creating-Classifiers-Using-Weka)
-6. [Creating hand count markers](#creating-hand-count-markers)
-7. [Critical Notes](#critical-notes)
+6. [How to Use](#how-to-use)
+7. [Creating hand count markers](#creating-hand-count-markers)
+8. [Critical Notes](#critical-notes)
 
 # Installation Guide
 First you will have to acquire this directory, which can be done through a terminal such as Git, Ubuntu, or Microsoft Powershell with the following line of code.
@@ -66,11 +67,7 @@ pip3 install imageio
 pip3 install sklearn
 ```
 
-# How To Use
-
-By downloading our Github repository you will have a set of folders for demo and for experimental use.
-
-## Manual Input Files
+# Manual Input Files
 ```
 For consistency of input, all inut images should be in .PNG format
 TODO should be able to handle .JPG and .tiff, just need to test it
@@ -181,6 +178,10 @@ Each new addition of data will change the persepctive of the classifier based on
 
 For more information, there is a thorough and effective explanation of __Trainable Weka Segmentation__ plugin located at: https://imagej.net/plugins/tws/
 ACCT will expect at least 2 classifiers to compare performance against for its validation step.
+
+# How To Use
+
+TODO: By downloading our Github repository you will have a set of folders for demo and for experimental use.
 
 ## Stage 1
 From the ImageJ bar, navigate and select __Plugins >> ACCT 1__. You may need to scroll down for a period of time.
