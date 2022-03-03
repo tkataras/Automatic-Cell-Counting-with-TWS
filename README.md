@@ -70,11 +70,11 @@ pip3 install sklearn
 For consistency of input, all inut images should be in .PNG format
 TODO should be able to handle .JPG and .tiff, just need to test it
 ```
-Place the entire set of images you would like counted inside of __testing_area/images__.
+Place the entire set of images you would like counted inside of [testing_area/images](testing_area/images).
 
-Place the set of images you would like to use as images to train the classifiers inside of __training_area/training_images__.
+Place the set of images you would like to use as images to train the classifiers inside of __training_area/training_images__. This is mainly for you to keep track of what images you used for training.
 
-Place the set of images you would like use for validation of the machine learning classifiers in __training_area/Validation_data__.
+Place the set of images you would like use for validation of the machine learning classifiers in [training_area/Validation_data](training_area/Validation_data).
 
 These three sets should have no overlapping images for the most statstically valid automatic counts.
 
@@ -214,7 +214,7 @@ After the pipeline completes a run, run times will vary by hardware capacity, op
 
 More statistical information will be printed to the log window.
 
-This will be located under __training_area/Results__.
+This will be located under [training_area/Results](training_area/Results).
 
 If you desire even more detailed statistical information about each individual classifier:
 1. Reciever operator curves are also automatically generated for each classifier and located inside of __training_area/Weka_Output_Counted/classifier#/classifier#\_roc\_curve.pdf__.
