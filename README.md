@@ -22,7 +22,7 @@ Next, ensure you have downloaded the software located in the [Prerequisites](#pr
 
 Finally, you will have to manually copy and paste certain files into the __Plugins__ folder of your Fiji instalation of Imagej. 
 
-Find where you downloaded Fiji in your file directory. Next, navigate to scripts for auto cell count then copy and paste the following files into your Fiji.app/plugins directory. This is so you can run the program from ImageJ using the graphical user interface and macro menu.
+Find where you downloaded Fiji in your file directory. Next, navigate to [scripts_for_auto_cell_count](scripts_for_auto_cell_count) then copy and paste the following files into your Fiji.app/plugins directory. This is so you can run the program from ImageJ using the graphical user interface and macro menu.
 ```
 ACCT_1.ijm
 ACCT_2.ijm
@@ -196,7 +196,7 @@ From the ImageJ bar, navigate and select __Plugins >> ACCT 1__. You may need to 
 <img src = "figures/selectACCT1.png">
 
 
-__1.1__ The first step is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference. This is so that our program knows where you have downloaded it. Select the directory/folder named __scripts_for_auto_cell_count__.
+__1.1__ The first step is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference. This is so that our program knows where you have downloaded it. Select the directory/folder named [scripts_for_auto_cell_count](scripts_for_auto_cell_count).
 
 <img src = "figures/selectSource.PNG">
 
