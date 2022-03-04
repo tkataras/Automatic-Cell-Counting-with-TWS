@@ -9,7 +9,7 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 5. [Creating Classifiers Using Weka](#Creating-Classifiers-Using-Weka)
 6. [Creating Hand Count Markers](#creating-hand-count-markers)
 7. [How to Use](#how-to-use) 
-8. [Critical Notes](#critical-notes)
+8. [Error Fixing](#error-fixing)
 
 # Installation Guide
 First you will have to download this program, which can be done through a terminal such as Git, Ubuntu, or Microsoft Powershell with the following line of code.
