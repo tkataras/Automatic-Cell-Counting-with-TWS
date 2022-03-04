@@ -260,8 +260,6 @@ __TODO__: Currently the program allows users to themselves chose images from the
 
 # Error Fixing
 ## Installation Errors
-The image names much match exactly between the hand counts and the original images (except for the file extension).
-
 __I can't move the files listed in the installation guide into the Plugins folder__
 1. It may be that you do not have permission to move files into that location. It may be your computer downloading Fiji into a protected location, like the iCloud. Try moving it, or downloading it again, to a local folder and try moving the folders again.
   
@@ -274,3 +272,6 @@ __My program is giving me an index out of bounds exception.__
 __If you get an error message stating "Error when adjusting data!",__
 1. In our experience, this occurs mostly when the ImageJ updates its software. It is most often solved by uninstalling and reinstalling Fiji. You could also try the ImageJ updater, but it doesn't always work.
 2. It could be that one of your classifier.model files got corrupted, and needs to be remade.
+
+__My roi_counts.csv looks like it has repetitive data, or it looks like it is full of error messages__
+1. Close all ImageJ windows except for the task bar. This can be from running ACCT and stopping the program midway through, then rerunning. It can also be from just rerunning the program. The issue is due to the Results and Summary windows remaining open, which get added to the csv file again when the program generates it.
