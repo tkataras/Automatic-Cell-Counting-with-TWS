@@ -186,6 +186,7 @@ Hand count markers are created in Imagej using the Point Selection Tool, availab
 6. Open a new image and repeat until all validation or audit images are counted.
 
 <img src = "figures/fijiMultiPoint.PNG">
+
 <img src = "figures/roiManager.PNG">
 
 # How To Use
@@ -194,6 +195,7 @@ TODO: By downloading our Github repository you will have a set of folders for de
 
 ## Stage 1
 From the ImageJ bar, navigate and select __Plugins >> ACCT 1__. You may need to scroll down for a period of time to find it.
+
 <img src = "figures/selectACCT1.png">
 
 __1.1__ The first step is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference. This is so that our program knows where you have downloaded it. Select the directory/folder named [scripts_for_auto_cell_count](scripts_for_auto_cell_count).
