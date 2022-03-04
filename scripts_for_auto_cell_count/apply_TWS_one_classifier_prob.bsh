@@ -1,13 +1,16 @@
 /*
  * Author: Tyler Jang, Theo 
- * Date: 2/15/2022
+ * Date: 3/3/2022
+ * 
+ * Input: Classifiers to apply, images to process
+ * Output: Images after being classified with probability maps
  * Description: This macro applies a selected Weka classifier onto each image.
  */
 #@ File(label="Source directory", description="Select the directory with the source of the scripts", style="directory") srcDir
 #@ File(label="Weka model", description="Select the Weka model to apply") modelPath
 #@ Float (label="Set cutoff[0,1], default = 0.5", description="Choose a cutoff from ACCT1 or leave as default 0.5",value=0.5) cutoff
 
-resultMode = "Probabilities";
+// Number of tiles per image
 xTiles = 3;
 yTiles = 3;
 zTiles = 0;
@@ -33,17 +36,15 @@ outputprobDir = bsh.cwd + "/../testing_area/Weka_Probability/" + modelName + "/"
 // Starting time
 startTime = System.currentTimeMillis();
   
-// Caculate probabilities boolean
-getProbs = resultMode.equals("Probabilities");
- 
 // Create segmentator
 segmentator = new WekaSegmentation(zTiles > 0);
 
 // Load chosen classifier
 segmentator.loadClassifier(modelPath.getCanonicalPath());
   
-// get list of input images
+// Get list of input images
 listOfFiles = pathToFile(inputDir).listFiles();
+
 for (i = 0; i < listOfFiles.length; i++) {
     // process only files (do not go into sub-folders)
     if(listOfFiles[i].isFile()) {
@@ -61,18 +62,13 @@ for (i = 0; i < listOfFiles.length; i++) {
             tilesPerDim[0] = xTiles;
             tilesPerDim[1] = yTiles;
             
-            // apply classifier and get results (0 indicates number of threads is auto-detected)
-            result = segmentator.applyClassifier(image, tilesPerDim, 0, getProbs);
-
-            if(!getProbs) {
-                // assign same LUT as in GUI
-                result.setLut( Utils.getGoldenAngleLUT() );
-            }
+            // Apply classifier and get results (0 indicates number of threads is auto-detected)
+            result = segmentator.applyClassifier(image, tilesPerDim, 0, true);
             
-            // save result as TIFF in output folder
+            // Save result as TIFF in output folder
             outputFileName = listOfFiles[i].getName().replaceFirst("[.][^.]+$", "") + ".tif";
             
-            //removes the non-cell pixel probablility, which is obligate inverse of the cell prob.
+            // Removes the non-cell pixel probablility, which is obligate inverse of the cell prob.
             IJ.run(result, "Slice Remover", "first=2 last=2 increment=2");
 
             new FileSaver(result).saveAsTiff(pathToFile(outputprobDir) + File.separator + outputFileName);
@@ -83,14 +79,14 @@ for (i = 0; i < listOfFiles.length; i++) {
 
 			new FileSaver(result).saveAsTiff(pathToFile(outputDir) + File.separator + outputFileName);
   
-            // force garbage collection (important for large images)
+            // Force garbage collection (important for large images)
             result = null; 
             image = null;
             System.gc();
         }
     }
 }
-// print elapsed time
+// Print elapsed time
 estimatedTime = System.currentTimeMillis() - startTime;
 IJ.log( "** Finished processing folder in " + estimatedTime + " ms **" );
 System.gc();
