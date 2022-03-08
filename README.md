@@ -27,7 +27,7 @@ Find where you downloaded Fiji in your file directory. Next, navigate to [script
 ACCT_1.ijm
 ACCT_2.ijm
 ACCT_3.ijm
-BS_TWS_apply_prob.bsh
+apply_BS_TWS_prob.bsh
 apply_TWS_one_classifier_prob.bsh
 ```
 
