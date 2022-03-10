@@ -1,6 +1,6 @@
 /**
  * Author: Theo Kataras, Tyler Jang
- * Date: 2/23/2022
+ * Date: 3/9/2022
  * 
  * Description: Main program to validate the counts from ACCT 2 to see performance on a random
  * 				selection of images.

@@ -1,11 +1,12 @@
 #!/usr/bin/python
 ###
 # Author: Theo Kataras, Tyler Jang
-# Date 12/17/2021
+# Date 3/10/2022
 # 
 # Input: A set of thresholded, projected images
 # Output: A set of merged images
-# Description: This file in the pipeline.....
+# Description: This file in the pipeline merges projected probability images 
+#              into one image so they can be counted.
 ###
 import os
 import sys
@@ -13,6 +14,7 @@ import pandas as pd
 import numpy as np
 import imageio
 
+###
 # Method: trim_names 
 # Input: File names
 # Output: Bisected file names based on split
@@ -38,9 +40,10 @@ def trim_names(file_names, half):
 
 ###
 # Method: parse_it 
-# Input: list of seperated relevent name elements from every image
-# Output: TODO
-# Description: 
+# Input: Projected image file names
+# Output: List of seperated relevent name elements from every image
+# Description: Gets the key identifying information for projected images so they
+#              can be grouped together.
 ###
 def parse_it(file_names, object_num):
     newsid1_anum = []
@@ -61,7 +64,7 @@ def sep_slidebook(file_names, delim):
         split_files.append(file.split(delim))
     max_len = len(split_files[1])
     
-    # These are what you need to adjust for different names of images!!!!####
+    # These are what you need to adjust for different names of images
     newsid1_anum = parse_it(split_files, 1)
     newsid1_snum = parse_it(split_files, 2)
     newsid1_fnum = parse_it(split_files, max_len - 1)
@@ -150,8 +153,7 @@ if first_stage:
     big_df = pd.concat([big_df, id1_df_sep], axis=1)
     big_df.columns = ["File_name", "Img_ID", "A_num", "S_num", "F_num"]
 
-    # Now need to gather and project all items with matching img_ID 
-    # Need to start working in directory that holds all image folders
+    # Gather all items with matching img_ID 
     u_img = np.unique(big_df["Img_ID"])
 
     # Project the n images in each classifier
@@ -192,8 +194,6 @@ else:
     in_dir_list = os.listdir(id_for_in_dir)
 
     # Getting images names, can pick any folder with all images in question to do this
-    # TODO why do I need trim names? (I believe it was for R code limitations) Code runs faster without it.
-    #newsid1 = trim_names(id1, half="back")
     newsid1 = in_dir_list
     id1_df_sep = sep_slidebook(newsid1, "-")
     id1_df_squish = squish(id1_df_sep)
