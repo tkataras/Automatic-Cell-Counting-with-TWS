@@ -354,7 +354,7 @@ curr_time = time.localtime(time.time())
 date = str(curr_time.tm_mday) + "-" + str(curr_time.tm_hour) + "-" + str(curr_time.tm_min) + "-" + str(curr_time.tm_sec)
 
 # Create a resulting output file for information
-out_name = "Audit_All_Classifier_Comparison_" + date + ".csv"
+out_name = "Audit_" + selectedClassifier + "_" + date + ".csv"
 result_summary_file.to_csv(result_out  + out_name)
 
 print("Finished audit_classifier_check.py")
