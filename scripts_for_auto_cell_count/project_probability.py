@@ -92,7 +92,9 @@ def sep_slidebook(file_names, delim):
 # Method: squish 
 # Input: data from of grouping variables
 # Output: list of unique image IDs contining specific grouping information
-# Description: creates one grouping object for each image that can be compared across other iterations of the images with slightly different file names
+# Description: creates one grouping object for each image that can be compared
+#              across other iterations of the images with slightly different 
+#              file names.
 ###
 def squish(input_df):
     id1_df_squish = []
@@ -209,11 +211,9 @@ else:
     big_df = pd.concat([big_df, id1_df_sep], axis=1)
     big_df.columns = ["File_name", "Img_ID", "A_num", "S_num", "F_num"]
 
-    # Now need to gather and project all items with matching img_ID 
-    # Need to start working in directory that holds all image folders
+    # Gather all items with matching img_ID 
     u_img = np.unique(big_df["Img_ID"])
 
-    print(u_img)
     # Project the n images in the classifier
     for id in range(0, len(u_img)):
         # Identify images belonging to each unique image ID
@@ -235,8 +235,10 @@ else:
             for y_inc in range(y_axis):
                 # For each column
                 for x_inc in range(x_axis):
+                    # Set the max probability of each pixel as the projected result
                     if projected[x_inc][y_inc] < curr_probability[x_inc][y_inc]:
                         projected[x_inc][y_inc] = curr_probability[x_inc][y_inc]
+        # Write projected image to file output
         file_out_loc = id_for_out_dir + "/" + list(all_current_ID["File_name"])[0]
         imageio.imwrite(file_out_loc, projected)
         projected = [[0] * y_axis] * x_axis

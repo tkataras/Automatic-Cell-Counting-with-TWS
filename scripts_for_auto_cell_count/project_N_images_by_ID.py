@@ -198,8 +198,7 @@ else:
     big_df = pd.concat([big_df, id1_df_sep], axis=1)
     big_df.columns = ["File_name", "Img_ID", "A_num", "S_num", "F_num"]
 
-    # Now need to gather and project all items with matching img_ID 
-    # Need to start working in directory that holds all image folders
+    # Gather all items with matching img_ID 
     u_img = np.unique(big_df["Img_ID"])
 
     # Project the n images in the classifier
