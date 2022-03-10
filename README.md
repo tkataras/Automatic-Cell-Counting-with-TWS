@@ -283,3 +283,6 @@ __My roi_counts.csv looks like it has repetitive data, or it looks like it is fu
 
 __I have applied classifiers with BS TWS to many of the images but had to stop for some reason or for some error and I do not want to restart the long process again for the images I already finished.__
 1. You can remove images that you have already processed in images to skip forward, but be sure you know that you processed these images correctly.
+
+__No ROC plot appears in Weka_Output_Counted folders__
+1. You may not have all python packages installed correctly. Make sure all python packages are installed and available.
