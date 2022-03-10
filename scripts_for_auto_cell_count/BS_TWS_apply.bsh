@@ -1,0 +1,104 @@
+// The user will have to select the directory that contains the script they are running.
+#@ File(label="Source directory", description="Select the directory with the source of the scripts", style="directory") srcDir
+
+//#@ Integer(label="Number of tiles in X:", description="Number of image subdivisions in the X direction", value=3) xTiles
+//#@ Integer(label="Number of tiles in Y:", description="Number of image subdivisions in the Y direction", value=3) yTiles
+//#@ Integer(label="Number of tiles in Z (set to 0 for 2D processing):", description="Number of image subdivisions in the Z direction (ignored when using 2D images)", value=0) zTiles
+
+// Set the working directory to the directory with the script
+bsh.cwd = srcDir;
+inputDir = bsh.cwd + "/../training_area/Validation_data/";
+outputDirs = bsh.cwd + "/../training_area/Weka_Output";
+modelsDir = bsh.cwd + "/../training_area/Classifiers";
+
+resultMode="Labels";
+xTiles=3;
+yTiles=3;
+zTiles=0;
+
+import trainableSegmentation.WekaSegmentation;
+import trainableSegmentation.utils.Utils;
+import ij.io.FileSaver;
+import ij.IJ;
+import ij.ImagePlus;
+  
+// Store the starting time
+startTime = System.currentTimeMillis();
+  
+// Boolean to determine if calculating probability maps
+getProbs = resultMode.equals("Probabilities");
+ 
+// Iterate through classifiers
+listOfMod = pathToFile(modelsDir).listFiles();
+
+// Iterate through output folders
+listOfOut = pathToFile(outputDirs).listFiles();
+
+// For each classifier model
+//for (currMod = 0; currMod < listOfMod.length; currMod++) {	
+//limited for testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!S
+for (currMod = 0; currMod < 1; currMod++) {		
+	// Path to classifier model
+	modelPath = listOfMod[currMod];
+	print(modelPath);
+	
+	// Instantiate Weka Segmentation object
+	// TODO This is always FALSE, why is it set up like this, false means its 2D images
+	segmentator = new WekaSegmentation(zTiles > 0);
+	segmentator.loadClassifier(modelPath.getCanonicalPath());
+
+	// Get list of input validation images
+	listOfFiles = pathToFile(inputDir).listFiles();
+
+	// For each image inside of the validation data
+	for (i = 0; i < listOfFiles.length; i++) {
+	    // process only files (do not go into sub-folders)
+	    if(listOfFiles[i].isFile()) {
+	        // Try to read file as image
+	        image = IJ.openImage(listOfFiles[i].getCanonicalPath());
+	        print(image);
+	        print(getProbs);
+	        if(image != null) {
+	        	// Ensure the image is in 8-bit format for grey scaling
+	        	IJ.run(image, "8-bit", "");
+	        	
+	            // TODO have Theo explain why these are hard coded numbers
+	            tilesPerDim = new int[2];
+	            if(image.getNSlices() > 1) {
+	                tilesPerDim = new int[3];
+	                tilesPerDim[2] = zTiles;
+	            }
+	            tilesPerDim[0] = xTiles;
+	            tilesPerDim[1] = yTiles;
+
+	            // Apply classifier and get results (0 indicates number of threads is auto-detected)
+	            // TODO why only use 1 thread?
+	            result = segmentator.applyClassifier(image, tilesPerDim, 0, getProbs);
+				
+				// If it is just in labeling mode
+	            if(!getProbs) {
+	                // assign same LUT as in GUI
+	                result.setLut(Utils.getGoldenAngleLUT());
+	            }	             
+	            // save result as TIFF in output folder
+	            outputFileName = listOfFiles[i].getName().replaceFirst("[.][^.]+$", "") + ".tif";
+
+	            // Save processed image as a .tiff file
+	            new FileSaver(result).saveAsTiff(listOfOut[currMod].getPath() + File.separator + outputFileName);
+	  
+	            // Force garbage collection (important for large images)
+	            // TODO Idk about this Theo, forcing garbage collection seems bad
+	            result = null; 
+	            image = null;     
+	            System.gc();
+	        }
+	    }
+	}
+	segmentator = null;
+	System.gc();
+}
+
+// Print elapsed time
+estimatedTime = System.currentTimeMillis() - startTime;
+IJ.log("** Finished processing folders in " + estimatedTime + " ms **");
+System.gc();

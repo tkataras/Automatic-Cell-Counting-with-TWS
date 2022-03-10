@@ -1,11 +1,14 @@
 /*
  * Author: Tyler Jang, Theo 
- * Date: 2/8/2022
+ * Date: 10/20/2021
  * Description: This macro applies each Weka classifier onto each validated training image.
  */
 // The user will have to select the directory that contains the script they are running.
 #@ File(label="Source directory", description="Select the directory with the source of the scripts", style="directory") srcDir
+
 #@ Float (label="Set cutoff[0,1], default = 0.5", description="Choose a cutoff from ACCT2 or leave as default 0.5",value=0.5) cutoff
+
+
 
 //#@ File(label="Output directories", description="Select the output directories", style="directory") outputDirs
 //#@ File(label="Weka models", description="Select the folder of Weka models to apply", style="directory") modelsDir
@@ -19,10 +22,11 @@
 //path=( getSourceFileInfo() );
 
 // Set the working directory to the directory with the script
+//srcDir = "C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/scripts_for_auto_cell_count";
 bsh.cwd = srcDir;
 inputDir = bsh.cwd + "/../training_area/Validation_data/";
 outputDirs = bsh.cwd + "/../training_area/Weka_Output";
-outputProbDirs = bsh.cwd + "/../training_area/Weka_Probability";
+outputprobDirs = bsh.cwd + "/../training_area/Weka_Probability";
 modelsDir = bsh.cwd + "/../training_area/Classifiers";
 
 print("Past the dirs");
@@ -38,8 +42,9 @@ import trainableSegmentation.utils.Utils;
 import ij.io.FileSaver;
 import ij.IJ;
 import ij.ImagePlus;
+import graphcut.Graph_Cut;
 
-
+gc = new Graph_Cut();
 
   
 // starting time
@@ -56,7 +61,7 @@ listOfMod = pathToFile(modelsDir).listFiles();
 
 //iterate through output folders
 listOfOut = pathToFile(outputDirs).listFiles();
-listOfprobOut = pathToFile(outputProbDirs).listFiles();
+listOfprobOut = pathToFile(outputprobDirs).listFiles();
 //listOfOut = outputDirs.listFiles();
 //print(listOfOut);
 
@@ -75,7 +80,7 @@ for ( z = 0; z < listOfMod.length; z++ ) {
 	  
 	// get list of input images
 	listOfFiles = pathToFile(inputDir).listFiles();
-	//print(listOfFiles);
+	print(listOfFiles);
 	//listOfFiles = inputDir.listFiles();
 	for ( i = 0; i < listOfFiles.length; i++ ) {
 	    // process only files (do not go into sub-folders)
@@ -132,7 +137,7 @@ for ( z = 0; z < listOfMod.length; z++ ) {
 
 				print(listOfOut[ z ].getPath());
 				print(outputFileName);
-				new FileSaver( result ).saveAsTiff( listOfOut[ z ].getPath() + File.separator + outputFileName);
+				new FileSaver( result ).saveAsTiff( listOfOut[ z ].getPath() + File.separator +  outputFileName);
   
 	            // force garbage collection (important for large images)
 	            result = null; 

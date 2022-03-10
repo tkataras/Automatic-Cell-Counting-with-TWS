@@ -1,6 +1,6 @@
 /**
  * Author: Theo Kataras, Tyler Jang
- * Date: 2/17/2022
+ * Date: 3/7/2022
  * 
  * Description: Main program for doing training analysis of user made classifiers to determine 
  * 				the performance of each classifier.
@@ -39,13 +39,15 @@ if (result) {
 	exec("python", input + "project_probability.py", input);
 	// Projected images go inside of Weka_Output_Projected
 	searchDirectory = input + "../training_area/Weka_Output_Projected/";
+	runMacro(input + "threshold_projected_prob.ijm", searchDirectory);
+
 } else {
 	// Else, search for images in Weka Output
 	searchDirectory = input + "../training_area/Weka_Output/";
 }
 
 // Run ImageJ macros
-//runMacro(input + "count_from_roi.ijm", input);
+runMacro(input + "count_from_roi.ijm", input);
 
 runMacro(input + "count_over_dir_prob_TK.ijm", searchDirectory);
 

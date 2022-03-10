@@ -4,7 +4,7 @@
  * Description:
  */
 setBatchMode(true); 
-print("Starting just_thresh.ijm");
+print("Starting threshold_projected_prob.ijm");
 
 
 //get the threshold from user
@@ -25,7 +25,10 @@ firstStage = true;
 
 // Check if the argument is from testing or training area
 if(Arg1.contains("testing_area")) {
+	
+	inputDirs = Arg1 + "/../../Weka_Probability_Projected/"+ selectedClassifier[selectedClassifier.length-1] + "/";
 	outputDirs = Arg1 + "/../../Weka_Output_Projected/" + selectedClassifier[selectedClassifier.length-1] + "/";
+	
 	firstStage = false;
 } else {
 	inputDirs = Arg1 + "../Weka_Probability_Projected/";
@@ -41,6 +44,8 @@ print(outputDirs);
 if(firstStage) {
 	inputDirList = getFileList(inputDirs);
 	outputDirList = getFileList(outputDirs);
+	print(inputDirList.length);
+	print(outputDirList.length);
 
 	// Call threshold over each classifier in Weka Probabilty Projected
 	for (z = 0; z< inputDirList.length; z++) {	
@@ -89,4 +94,4 @@ if(firstStage) {
 		close();	
 	}
 }
-print("Finished just_thresh.ijm\n");
+print("Finished threshold_projected_prob.ijm\n");

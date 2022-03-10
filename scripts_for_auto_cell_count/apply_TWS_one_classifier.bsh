@@ -1,0 +1,96 @@
+<<<<<<< HEAD
+//#@ File(label="Input directory", description="Select the directory with input images", style="directory") inputDir
+//#@ File(label="Output directory", description="Select the output directory", style="directory") outputDir
+#@ File(label="Source directory", description="Select the directory with the source of the scripts", style="directory") srcDir
+#@ File(label="Weka model", description="_Select the Weka model to apply") modelPath
+
+// Set the working directory to the directory with the script
+bsh.cwd = srcDir;
+inputDir = bsh.cwd + "/../training_area/testing_area/images/";
+outputDir = bsh.cwd + "/../training_area/testing_area/Weka_Output";
+=======
+#@ File(label="Source directory", description="Select the directory with the source of the scripts", style="directory") srcDir
+#@ File(label="Weka model", description="_Select the Weka model to apply") modelPath
+
+// Set the working directory to the directory with the script
+bsh.cwd = srcDir;
+inputDir = bsh.cwd + "/../training_area/testing_area/Images/";
+outputDir = bsh.cwd + "/../training_area/testing_area/Weka_Output/";
+
+// Get the selected classifier as a string
+String modelPathString = modelPath.toString();
+modelFileName = modelPathString.split("\\\\");
+selectedClassifier = (modelFileName[modelFileName.length - 1]);
+selectedClassifier = selectedClassifier.split(".model")[0];
+outputDir = outputDir + selectedClassifier;
+>>>>>>> 1a1d53a1666c204d1e327efdda76bc48a4a0214a
+
+resultMode = "Labels";
+xTiles = 3;
+yTiles = 3;
+zTiles = 0;
+
+import trainableSegmentation.WekaSegmentation;
+import trainableSegmentation.utils.Utils;
+import ij.io.FileSaver;
+import ij.IJ;
+import ij.ImagePlus;
+  
+// Starting time
+startTime = System.currentTimeMillis();
+  
+<<<<<<< HEAD
+// caculate probabilities?
+=======
+// Caculate probabilities?
+>>>>>>> 1a1d53a1666c204d1e327efdda76bc48a4a0214a
+getProbs = resultMode.equals("Probabilities");
+ 
+// create segmentator
+segmentator = new WekaSegmentation(zTiles > 0);
+// load classifier
+segmentator.loadClassifier(modelPath.getCanonicalPath());
+  
+// get list of input images
+listOfFiles = pathToFile(inputDir).listFiles();
+for (currMod = 0; currMod < listOfFiles.length; currMod++)
+{
+    // process only files (do not go into sub-folders)
+    if(listOfFiles[currMod].isFile())
+    {
+        // try to read file as image
+        image = IJ.openImage( listOfFiles[currMod].getCanonicalPath());
+        if(image != null)
+        {
+            tilesPerDim = new int[ 2 ];
+            if(image.getNSlices() > 1)
+            {
+                tilesPerDim = new int[3];
+                tilesPerDim[2] = zTiles;
+            }
+            tilesPerDim[0] = xTiles;
+            tilesPerDim[1] = yTiles;
+            
+            // apply classifier and get results (0 indicates number of threads is auto-detected)
+            result = segmentator.applyClassifier(image, tilesPerDim, 0, getProbs);
+
+            if(!getProbs) {
+                // assign same LUT as in GUI
+                result.setLut(Utils.getGoldenAngleLUT());
+            }
+            
+            // save result as TIFF in output folder
+            outputFileName = listOfFiles[currMod].getName().replaceFirst("[.][^.]+$", "") + ".tif";
+            new FileSaver(result).saveAsTiff(pathToFile(outputDir).getPath() + File.separator + outputFileName);
+  
+            // force garbage collection (important for large images)
+            result = null; 
+            image = null;
+            System.gc();
+        }
+    }
+}
+// print elapsed time
+estimatedTime = System.currentTimeMillis() - startTime;
+IJ.log("** Finished processing folder in " + estimatedTime + " ms **");
+System.gc();
