@@ -63,6 +63,7 @@ pip3 install pandas
 pip3 install python-time
 pip3 install imageio
 pip3 install sklearn
+pip3 install matplotlib
 ```
 
 # Manual Input Files
