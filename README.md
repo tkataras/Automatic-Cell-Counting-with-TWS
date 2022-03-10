@@ -277,3 +277,6 @@ __If you get an error message stating "Error when adjusting data!",__
 
 __My roi_counts.csv looks like it has repetitive data, or it looks like it is full of error messages__
 1. Close all ImageJ windows except for the task bar. This can be from running ACCT and stopping the program midway through, then rerunning. It can also be from just rerunning the program. The issue is due to the Results and Summary windows remaining open, which get added to the csv file again when the program generates it.
+
+__I have applied classifiers with BS TWS to many of the images but had to stop for some reason or for some error and I do not want to restart the long process again for the images I already finished.__
+1. You can remove images that you have already processed in images to skip forward, but be sure you know that you processed these images correctly.
