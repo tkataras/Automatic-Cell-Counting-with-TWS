@@ -1,6 +1,6 @@
 /**
  * Author: Theo Kataras, Tyler Jang
- * Date: 2/17/20212
+ * Date: 3/9/2022
  * 
  * Input: Binary images, hand placed markes in roi files, one file for each image
  * Output: Binary image files including only cells counted, and .csv file in classifier folder with accuracy information
@@ -151,8 +151,8 @@ function action(input, output, filename, inputTwo, filenameTwo) {
 						counts = counts + 1;
 					} 
 				}
-			 // each hand placed count
-			} // each pixel in object
+			 // Each hand placed count
+			} // Each pixel in object
 			// Update the results table
 		setResult("points", rowNumber++, counts);
 		}//each object in image	

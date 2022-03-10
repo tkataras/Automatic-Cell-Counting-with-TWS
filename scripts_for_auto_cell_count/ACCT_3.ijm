@@ -42,7 +42,7 @@ Dialog.show();
 ifWeka = Dialog.getCheckbox();
 if (ifWeka) {
 	// Count and analysis of audit images
-	//runMacro(input + "count_from_roi_audit.ijm", input + "../testing_area/Audit_Hand_Counts/" + trimClassName[0] + "/");
+	runMacro(input + "count_from_roi_audit.ijm", input + "../testing_area/Audit_Hand_Counts/" + trimClassName[0] + "/");
 	runMacro(input + "audit_count.ijm", input + "../testing_area/Audit_Counted/" + trimClassName[0] + "/");
 	exec("python", input + "audit_classifier_check.py", input, trimClassName[0]);
 } 
