@@ -265,6 +265,9 @@ __TODO__: Currently the program allows users to themselves chose images from the
 __I can't move the files listed in the installation guide into the Plugins folder__
 1. It may be that you do not have permission to move files into that location. It may be your computer downloading Fiji into a protected location, like the iCloud. Try moving it, or downloading it again, to a local folder and try moving the folders again.
   
+__I want to use other classifier models besides the ones that come with ACCT__
+1. Weka allows installation of other classifier models which is explained at the following website: https://imagej.net/imagej-wiki-static/Trainable_Weka_Segmentation_-_How_to_install_new_classifiers
+
 ## Program Errors
 __My program is giving me an index out of bounds exception.__
 1. Keep subfolders in [training_area/](training_area) and [testing_area/](testing_area) free of files other than their intended content. Failing to do so may cause the program to give incorrect results.
