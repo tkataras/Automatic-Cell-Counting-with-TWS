@@ -75,8 +75,7 @@ function action(input, output, filename, inputTwo, filenameTwo) {
 	// This imageJ plugin creates the results file and image of the count cells based on the size exclusion		
 	run("Analyze Particles...", "size=" + sizeMin + "-" + sizeMax + " pixel show=Masks display summarize add");
 
-	// Saving the image of the counted objects
-	saveAs("Png", outputDir + filename);
+	
 
 	counts = 0;
 	// Stop empty auto count images here 
