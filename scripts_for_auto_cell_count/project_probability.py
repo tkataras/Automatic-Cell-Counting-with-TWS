@@ -122,11 +122,14 @@ def set_dir(arg1):
 set_dir(sys.argv[1])
 
 first_stage = True
+
+print(len(sys.argv))
+print(len(sys.argv))
 # If in the second stage of the pipeline, use the specified classifier
 if len(sys.argv) == 3:
     # Input and Output file directories
-    id_for_in_dir = "../training_area/testing_area/Weka_Probability/" + sys.argv[2] + "/"
-    id_for_out_dir = "../training_area/testing_area/Weka_Probability_Projected/" + sys.argv[2] + "/"
+    id_for_in_dir = "../testing_area/Weka_Probability/" + sys.argv[2] + "/"
+    id_for_out_dir = "../testing_area/Weka_Probability_Projected/" + sys.argv[2] + "/"
     first_stage = False
 else:
     # Input and Output file directories

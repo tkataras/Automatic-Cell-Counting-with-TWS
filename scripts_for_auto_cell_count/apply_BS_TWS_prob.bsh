@@ -11,10 +11,11 @@
 #@ Float (label="Set cutoff[0,1], default = 0.5", description="Choose a cutoff from ACCT2 or leave as default 0.5",value=0.5) cutoff
 
 // Set the working directory to the directory with the script
+//srcDir = "C:/Users/19099/Documents/Kaul_Lab/AutoCellCount/Automatic-Cell-counting-with-TWS/scripts_for_auto_cell_count";
 bsh.cwd = srcDir;
 inputDir = bsh.cwd + "/../training_area/Validation_data/";
 outputDirs = bsh.cwd + "/../training_area/Weka_Output";
-outputProbDirs = bsh.cwd + "/../training_area/Weka_Probability";
+outputprobDirs = bsh.cwd + "/../training_area/Weka_Probability";
 modelsDir = bsh.cwd + "/../training_area/Classifiers";
 
 import trainableSegmentation.WekaSegmentation;
@@ -22,7 +23,7 @@ import trainableSegmentation.utils.Utils;
 import ij.io.FileSaver;
 import ij.IJ;
 import ij.ImagePlus;
-  
+
 // Number of tiles per image
 xTiles=3;
 yTiles=3;
@@ -88,16 +89,16 @@ for ( z = 0; z < listOfMod.length; z++ ) {
 				IJ.setThreshold(result, 0, cutoff);
 				IJ.run(result, "Convert to Mask", "");
 
-	  		
 				// Save resulting probability map in its output folder 
 				print(listOfOut[ z ].getPath());
 				print(outputFileName);
-				new FileSaver( result ).saveAsTiff( listOfOut[ z ].getPath() + File.separator + outputFileName);
+				new FileSaver( result ).saveAsTiff( listOfOut[ z ].getPath() + File.separator +  outputFileName);
   
 	            // force garbage collection (important for large images)
 	            result = null; 
 	            image = null;
-	            System.gc();
+	            
+				System.gc();
 	        }
 	    }
 	}

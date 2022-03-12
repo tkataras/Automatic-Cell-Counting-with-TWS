@@ -16,7 +16,7 @@ searchDirectory = getFileList(classifierDir);
 
 print(classifierDir);
 
-Dialog.create("Select Classifier to test on full dataset");
+Dialog.create("Select Classifier to audit");
 Dialog.addChoice("_Choose classifier", searchDirectory);
 Dialog.show();
 
@@ -34,19 +34,21 @@ exec("python", input + "file_architect.py", input, selectedClassifier);
 //audit could be more user input based so people can use it for any counting. just have one folder for counted images, one folder for hand counts and an output location in results
 
 //exec("python", input + "audit.py", input, trimClassName[0]);
-print(input + "../testing_area/Audit_Images/" + trimClassName[0] + "/");
+
+print(input + "../testing_area/Audit_Images/" + trimClassName[0] + "/");
 // Ask if the user needs to run Weka 
 Dialog.create("Have you selected your audit image set, marked cells with multi point selection and moved counted images into the counted folder?");
 Dialog.addCheckbox("Are you ready to audit your dataset?", true);
 Dialog.show();
 ifWeka = Dialog.getCheckbox();
 if (ifWeka) {
-	// Count and analysis of audit images
+
+	// Count and analysis of audit images
 	runMacro(input + "count_from_roi_audit.ijm", input + "../testing_area/Audit_Hand_Counts/" + trimClassName[0] + "/");
 	runMacro(input + "audit_count.ijm", input + "../testing_area/Audit_Counted/" + trimClassName[0] + "/");
 	exec("python", input + "audit_classifier_check.py", input, trimClassName[0]);
 } 
 
-print("Finished ACCT 3");
 
+print("Finished ACCT 3");
 

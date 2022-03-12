@@ -1,12 +1,14 @@
 #!/usr/bin/python
 ###
 # Author: Tyler Jang, Theo Kataras
-# Date: 2/15/2022
+# Date: 3/10/2022
 #
 # Inputs: Results csv file containing the probability of each object
 # Outputs: A plot for threshold optimization and a ROC plot.
 # This file creates a threshold optimization and ROC curve plot for each classifier 
 ###
+print("Start of roc_curve.py\n")
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt

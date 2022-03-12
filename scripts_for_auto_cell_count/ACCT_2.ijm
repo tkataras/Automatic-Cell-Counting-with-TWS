@@ -1,6 +1,6 @@
 /**
  * Author: Theo Kataras, Tyler Jang
- * Date: 3/3/2022
+ * Date: 3/8/2022
  * 
  * Input: Several user created classifiers, a set of images.
  * Output: The total number of objects counted, statistical information about the count
@@ -52,6 +52,7 @@ if (result) {
 	exec("python", input + "project_probability.py", input, trimClassName[0]);
 	// Projected images go inside of Weka_Output_Projected
 	searchDirectory = input + "../testing_area/Weka_Output_Projected/" + trimClassName[0];
+	runMacro(input + "threshold_projected_prob.ijm", searchDirectory);
 } else {
 	// Else, search for images in Weka Output
 	searchDirectory = input + "../testing_area/Weka_Output/" + trimClassName[0];
