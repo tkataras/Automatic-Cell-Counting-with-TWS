@@ -1,7 +1,7 @@
 #!/usr/bin/python
 ###
 # Author: Tyler Jang, Theo Kataras
-# Date 2/17/2022
+# Date 3/10/2022
 #
 # Inputs: genotype csv file, hand count results file from count over roi,
 # results of count over dir in each classifier folder. 
@@ -330,6 +330,7 @@ for f in range(0, len(class_list)):
         F1_geno_ttest = None
         F1_geno_ttest_pval = None
         
+        # Calculate Welsh 2 level T Test Values
         if precision2 is not None:
             precision_geno_ttest = scipy.stats.ttest_ind(group_one["precision2"], group_two["precision2"], equal_var=False, nan_policy="omit")
             precision_geno_ttest_pval = precision_geno_ttest[1]

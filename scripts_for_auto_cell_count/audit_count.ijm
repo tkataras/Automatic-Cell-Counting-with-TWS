@@ -1,6 +1,6 @@
 /**
  * Author: Theo Kataras, Tyler Jang
- * Date: 2/17/20212
+ * Date: 3/9/2022
  * 
  * Input: Binary images, hand placed markes in roi files, one file for each image
  * Output: Binary image files including only cells counted, and .csv file in classifier folder with accuracy information
@@ -34,12 +34,15 @@ run("Clear Results");
 // Set size minimum for cells to exclude small radius noise and large artifacts
 sizeMin = 20;
 sizeMax = 1000;
+isWatershed = true;
 Dialog.create("Size Values");
 Dialog.addNumber("Minimum pixel size for object count:", sizeMin);
 Dialog.addNumber("Maximum pixel size for object count:", sizeMax);
+Dialog.addCheckbox("Do you want to apply the Watershed algorithm", true);
 Dialog.show();
 sizeMin = Dialog.getNumber();
 sizeMax = Dialog.getNumber();
+ifWatershed = Dialog.getCheckbox();
 print("Minimum Pixel Size: " + sizeMin);
 print("Maximum Pixel Size: " + sizeMax);
 
@@ -65,13 +68,17 @@ function action(input, output, filename, inputTwo, filenameTwo) {
 	// Fill in small pixel gaps to complete objects
 	run("Fill Holes");
 
-	
 	// Clear any existing rois
 	if (roiManager("count") > 0) {
 		roiManager("deselect");		
 		roiManager("Delete");
 	}  
 
+	// Apply the watershed algorithm if true
+	if(ifWatershed) {
+		run("Watershed");
+	}
+	
 	// This imageJ plugin creates the results file and image of the count cells based on the size exclusion		
 	run("Analyze Particles...", "size=" + sizeMin + "-" + sizeMax + " pixel show=Masks display summarize add");
 
@@ -143,8 +150,8 @@ function action(input, output, filename, inputTwo, filenameTwo) {
 						counts = counts + 1;
 					} 
 				}
-			 // each hand placed count
-			} // each pixel in object
+			 // Each hand placed count
+			} // Each pixel in object
 			// Update the results table
 		setResult("points", rowNumber++, counts);
 		}//each object in image	

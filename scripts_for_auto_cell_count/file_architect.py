@@ -50,7 +50,6 @@ print(class_list)
 output = source + "Weka_Output/"
 output_prob = source + "Weka_Probability/"
 output_prob2 = source + "Weka_Probability_Projected/"
-output_thresh = source + "Weka_Output_Thresholded/"
 output_project = source + "Weka_Output_Projected/"
 output_count = source + "Weka_Output_Counted/"
 
@@ -61,8 +60,6 @@ if not os.path.isdir(output_prob):
     os.mkdir(output_prob)    
 if not os.path.isdir(output_prob2):
     os.mkdir(output_prob2)    
-if not os.path.isdir(output_thresh):
-    os.mkdir(output_thresh)
 if not os.path.isdir(output_project):
     os.mkdir(output_project)
 if not os.path.isdir(output_count):
@@ -76,8 +73,6 @@ for class_ID in class_list:
         os.mkdir(output_prob + class_ID)    
     if not os.path.isdir(output_prob2 + class_ID):
         os.mkdir(output_prob2 + class_ID)    
-    if not os.path.isdir(output_thresh + class_ID):
-        os.mkdir(output_thresh + class_ID)
     if not os.path.isdir(output_project + class_ID):
         os.mkdir(output_project + class_ID)
     if not os.path.isdir(output_count + class_ID):

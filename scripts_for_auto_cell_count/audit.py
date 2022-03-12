@@ -13,8 +13,6 @@ import numpy as np
 import os
 import sys
 import random
-import shutil
-import csv
 
 ###
 # Method: parse_it 
@@ -102,7 +100,7 @@ is_projected = "False"
 is_projected = sys.argv[3]
 
 # Read in geno_full.csv
-geno_file = "../training_area/testing_area/geno_full.csv"
+geno_file = "../testing_area/geno_full.csv"
 geno = pd.read_csv(geno_file)
 # Get the unique genotype labels
 lvl_geno = np.unique(geno["geno"])
@@ -206,8 +204,8 @@ for file in selected_images:
     filename =  os.path.basename(file)
     print(filename)
     
-    shutil.copyfile("../training_area/testing_area/Images/" + filename, os.path.join("../training_area/testing_area/Audit_Images/" + selected_classifier +"/", filename))
-# TODO is this needed anymore   shutil.copyfile("../training_area/testing_area/Weka_Output_Counted/" + selected_classifier +"/" + filename, os.path.join("../training_area/testing_area/Audit_Counted/"+ selected_classifier +"/", filename))
+    shutil.copyfile("../testing_area/Images/" + filename, os.path.join("../testing_area/Audit_Images/" + selected_classifier +"/", filename))
+    shutil.copyfile("../testing_area/Weka_Output_Counted/" + selected_classifier +"/" + filename, os.path.join("../testing_area/Audit_Counted/"+ selected_classifier +"/", filename))
 
 # Write a CSV for the geno data with images in alphabetical order
 geno_csv = []
@@ -216,13 +214,13 @@ for key, value in sorted(audit_set.items()):
 print(geno_csv)
 
 # TODO Temp comment out so I don't need to redo ROI stuff
-with open("../training_area/testing_area/geno_audit.csv", 'w+', newline ='') as file:
+with open("../testing_area/geno_audit.csv", 'w+', newline ='') as file:
     write = csv.writer(file)
     write.writerow(["geno"])
     write.writerows(geno_csv)
 
 
-hand_ini = pd.read_csv("../training_area/testing_area/Audit_Hand_Counts/roi_counts.csv", usecols=['Label'])
+hand_ini = pd.read_csv("../testing_area/Audit_Hand_Counts/roi_counts.csv", usecols=['Label'])
 lvl_h = np.unique(hand_ini)
 count_h = {}
 for i in range(0, len(hand_ini)):

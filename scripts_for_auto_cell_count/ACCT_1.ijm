@@ -22,7 +22,7 @@ Dialog.addCheckbox("Do you need to run Weka?", true);
 Dialog.show();
 ifWeka = Dialog.getCheckbox();
 if (ifWeka) {
-	run("BS TWS apply prob");
+	run("apply BS TWS prob");
 } 
 
 // Threshold the images into distinct values

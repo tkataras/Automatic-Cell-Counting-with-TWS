@@ -1,10 +1,10 @@
 #!/usr/bin/python
 ###
 # Author: Tyler Jang, Theo Kataras
-# Date 2/23/2022
+# Date 3/10/2022
 #
-# Inputs: 
-# Outputs: 
+# Inputs: List of counted images, roi csv file with hand count represented
+# Outputs: Statistical performance of selected classifier to csv
 # Description: This file audits several resulting images from ACCT 2 for the 
 #              selected classifier to determine how well it performed in testing
 ###
@@ -64,8 +64,6 @@ for i in range(0, len(hand_ini)):
     else:
         count_h[hand_ini.loc[i].at["Label"]] = count_h[hand_ini.loc[i].at["Label"]] + 1
 
-for x in count_h:
-    print(str(count_h[x]))
 class_res_loc = result_out + selectedClassifier + "_Results_Audit.csv"
 class_results = pd.read_csv(class_res_loc)
 
@@ -76,15 +74,14 @@ for row in range(0, len(class_results)):
     row_name = row_name.split(".")[0]
     class_results.loc[row, "Label"] = row_name
 
-##if else loop for determining true positive, false positive and false negative cell counts
-##from levels present in the classifier results output, this should be the same each time, BUT IT WoNT BE IF ONE IMAGE HAS NO CELL OBJECtS
-##need to go into the counted folder and pull out all image names, meaning ignorming the Results.csv img_names. images from tru_count with be .png
+# Get the images from the counted images file
 img_names = []
 for image in os.listdir(OUTPUT_count):
     if image[-4:] == ".png" or image[-4:] == ".jpg" or image[-4:] == ".tif" or image[-5:] == ".tiff":
         img_names.append(image)
 final_result = pd.DataFrame(columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
 
+# Check classifier performance on each counted image being audited
 for image in range (0, len(img_names)):
     current_img_plus_png = img_names[image]
 
@@ -328,6 +325,7 @@ else:
     F1_geno_ttest = None
     F1_geno_ttest_pval = None
 
+    # Calculate Welsh 2 level T Test Values
     if precision2 is not None:
         precision_geno_ttest = scipy.stats.ttest_ind(group_one["precision2"], group_two["precision2"], equal_var=False, nan_policy="omit")
         precision_geno_ttest_pval = precision_geno_ttest[1]
@@ -356,7 +354,7 @@ curr_time = time.localtime(time.time())
 date = str(curr_time.tm_mday) + "-" + str(curr_time.tm_hour) + "-" + str(curr_time.tm_min) + "-" + str(curr_time.tm_sec)
 
 # Create a resulting output file for information
-out_name = "Audit_All_Classifier_Comparison_" + date + ".csv"
+out_name = "Audit_" + selectedClassifier + "_" + date + ".csv"
 result_summary_file.to_csv(result_out  + out_name)
 
 print("Finished audit_classifier_check.py")
