@@ -97,8 +97,7 @@ for ( z = 0; z < listOfMod.length; z++ ) {
 	            // force garbage collection (important for large images)
 	            result = null; 
 	            image = null;
-	            
-				System.gc();
+	            System.gc();
 	        }
 	    }
 	}
