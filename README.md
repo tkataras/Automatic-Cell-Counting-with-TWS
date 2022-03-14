@@ -287,3 +287,6 @@ __I have applied classifiers with BS TWS to many of the images but had to stop f
 
 __No ROC plot appears in Weka_Output_Counted folders__
 1. You may not have all python packages installed correctly. Make sure all python packages are installed and available.
+
+__No Audit_example.csv file appears in Results folder when running ACCT 3__
+1. Make sure for ACCT 3 that images in __Audit_counted__ match .roi files in __Audit_Hand_Counts__ and the rows in __geno_audit.csv__
