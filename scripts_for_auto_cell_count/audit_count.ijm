@@ -46,7 +46,6 @@ ifWatershed = Dialog.getCheckbox();
 print("Minimum Pixel Size: " + sizeMin);
 print("Maximum Pixel Size: " + sizeMax);
 
-
 // Have to initialize at -1 to start correctly at 0
 rowNumber = -1;
 		
@@ -81,8 +80,6 @@ function action(input, output, filename, inputTwo, filenameTwo) {
 	
 	// This imageJ plugin creates the results file and image of the count cells based on the size exclusion		
 	run("Analyze Particles...", "size=" + sizeMin + "-" + sizeMax + " pixel show=Masks display summarize add");
-
-	
 
 	counts = 0;
 	// Stop empty auto count images here 

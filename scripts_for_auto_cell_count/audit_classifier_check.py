@@ -79,6 +79,8 @@ img_names = []
 for image in os.listdir(OUTPUT_count):
     if image[-4:] == ".png" or image[-4:] == ".jpg" or image[-4:] == ".tif" or image[-5:] == ".tiff":
         img_names.append(image)
+
+# Dataframe to store the results of autocounting performance
 final_result = pd.DataFrame(columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
 
 # Check classifier performance on each counted image being audited
