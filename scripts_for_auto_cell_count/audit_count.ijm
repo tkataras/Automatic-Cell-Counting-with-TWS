@@ -62,7 +62,7 @@ function action(input, output, filename, inputTwo, filenameTwo) {
 	run("Threshold...");
 	setThreshold(6, 255);
 	run("Convert to Mask");
-	//run("Invert");
+	run("Invert");
 
 	// Fill in small pixel gaps to complete objects
 	run("Fill Holes");
