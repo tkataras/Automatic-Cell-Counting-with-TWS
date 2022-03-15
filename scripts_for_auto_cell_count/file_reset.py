@@ -11,6 +11,7 @@
 ###
 import os
 import sys
+import shutil
 
 print("Starting file_reset.py")
 # Method to change working directory from inputted ImageJ Macro
@@ -54,20 +55,20 @@ output_project = source + "Weka_Output_Projected/"
 output_count = source + "Weka_Output_Counted/"
 
 # Create folders in described paths
-if not os.path.isdir(output):
-    os.rmdir(output)
+if os.path.isdir(output):
+    shutil.rmtree(output)
     os.mkdir(output)
-if not os.path.isdir(output_prob):
-    os.rmdir(output_prob)
+if os.path.isdir(output_prob):
+    shutil.rmtree(output_prob)
     os.mkdir(output_prob)    
-if not os.path.isdir(output_prob2):
-    os.rmdir(output_prob2)
+if os.path.isdir(output_prob2):
+    shutil.rmtree(output_prob2)
     os.mkdir(output_prob2)    
-if not os.path.isdir(output_project):
-    os.rmdir(output_project)
+if os.path.isdir(output_project):
+    shutil.rmtree(output_project)
     os.mkdir(output_project)
-if not os.path.isdir(output_count):
-    os.rmdir(output_count)    
+if os.path.isdir(output_count):
+    shutil.rmtree(output_count)
     os.mkdir(output_count)
 
 # Create classifier folders in each prescribed location if it doesn't exist
