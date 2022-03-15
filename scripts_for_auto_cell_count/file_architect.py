@@ -52,6 +52,9 @@ output_prob = source + "Weka_Probability/"
 output_prob2 = source + "Weka_Probability_Projected/"
 output_project = source + "Weka_Output_Projected/"
 output_count = source + "Weka_Output_Counted/"
+class_folder = source + "Classifiers/"
+results_folder = source + "Results/"
+training_folder = source + "training_images/"
 
 # Create folders in described paths
 if not os.path.isdir(output):
@@ -64,6 +67,12 @@ if not os.path.isdir(output_project):
     os.mkdir(output_project)
 if not os.path.isdir(output_count):
     os.mkdir(output_count)
+if not os.path.isdir(class_folder):
+    os.mkdir(class_folder)
+if not os.path.isdir(results_folder):
+    os.mkdir(results_folder)
+if not os.path.isdir(training_folder):
+    os.mkdir(training_folder)
 
 # Create classifier folders in each prescribed location if it doesn't exist
 for class_ID in class_list:
