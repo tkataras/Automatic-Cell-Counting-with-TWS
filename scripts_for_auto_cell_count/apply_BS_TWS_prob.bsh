@@ -15,7 +15,7 @@
 bsh.cwd = srcDir;
 inputDir = bsh.cwd + "/../training_area/Validation_data/";
 outputDirs = bsh.cwd + "/../training_area/Weka_Output";
-outputprobDirs = bsh.cwd + "/../training_area/Weka_Probability";
+outputProbDirs = bsh.cwd + "/../training_area/Weka_Probability";
 modelsDir = bsh.cwd + "/../training_area/Classifiers";
 
 import trainableSegmentation.WekaSegmentation;
@@ -37,7 +37,7 @@ listOfMod = pathToFile(modelsDir).listFiles();
 
 // Iterate through output folders
 listOfOut = pathToFile(outputDirs).listFiles();
-listOfprobOut = pathToFile(outputProbDirs).listFiles();
+listOfProbOut = pathToFile(outputProbDirs).listFiles();
 
 // Apply each classifier to each validation image
 for ( z = 0; z < listOfMod.length; z++ ) {	
@@ -70,20 +70,15 @@ for ( z = 0; z < listOfMod.length; z++ ) {
 	            
 	            // Apply classifier and get results (0 indicates number of threads is auto-detected)
 	            result = segmentator.applyClassifier(image, tilesPerDim, 0, true);
-	
-	            if( !getProbs ) {
-	                // Assign same LUT as in GUI
-	                result.setLut( Utils.getGoldenAngleLUT() );
-	            }	             
-	            
+	                       
 	            // Removes the non-cell pixel probablility, which is obligate inverse of the cell prob.
             	IJ.run(result, "Slice Remover", "first=2 last=2 increment=2");
 
 	            // Save result as TIFF in output folder
 	            outputFileName = listOfFiles[ i ].getName().replaceFirst("[.][^.]+$", "") + ".tif";
-	            print(listOfprobOut[ z ].getPath());
+	            print(listOfProbOut[ z ].getPath());
 	            print(outputFileName);
-	            new FileSaver( result ).saveAsTiff( listOfprobOut[ z ].getPath() + File.separator + outputFileName );
+	            new FileSaver( result ).saveAsTiff( listOfProbOut[ z ].getPath() + File.separator + outputFileName );
 
 	            // Thresholding the probaility image just like the imageJ GUI. (only works with 2 classes eg. cell & non-cell)
 				IJ.setThreshold(result, 0, cutoff);
