@@ -126,7 +126,7 @@ There are 3 loci for levels of identifying information seperated by __-__:
 
 2. The __second__ space, after a single __"-"__
 
-3. The __last__ space, after all __"-"__, only the first two characters are considered
+3. The __last__ space, after all __"-"__, and before ___XY__ . Only the first two characters are considered
 
 Example: __BKO-426-S42-Iba-Syn-Cortex-10x-F1a_XY1562195071_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3__
 
@@ -176,7 +176,7 @@ For more information, there is a thorough and effective explanation of __Trainab
 
 ACCT will expect at least 2 classifiers to compare performance against for its validation step.
 
-# Creating Hand Count Markers
+# Creating Hand p
 Hand count markers are created in Imagej using the Point Selection Tool, available in the toolbar, and the ROI manager, which is under __Analyze >> Tools >> ROI Manager__. You can also type ROI Manager in the search bar and select it.
 
 1. Open an image and place one or two count markers 
