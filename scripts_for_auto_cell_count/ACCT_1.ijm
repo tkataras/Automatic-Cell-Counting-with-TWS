@@ -13,7 +13,8 @@ input = getDirectory("Choose source directory of the macro (Scripts for Auto Cel
 // Set measurements to calculate
 run("Set Measurements...", "area mean standard modal min centroid center perimeter bounding fit shape feret's integrated median skewness kurtosis area_fraction limit display redirect=None decimal=8");
 
-// Populate all folders. If folders already exist, selectively does not make those folders
+
+// Populate all folders. If folders already exist, selectively does not make those folders
 exec("python", input + "file_architect.py", input);
 
 // Ask if the user needs to run Weka 
@@ -30,7 +31,8 @@ if (ifWeka) {
 
 // TODO Check if can run with projected images
 // Dialog box option to ask user if their data is made of projected image segmentations
-searchDirectory = input;
+searchDirectory = input;
+
 Dialog.create("Multiple Image Segmentations?");
 Dialog.addCheckbox("Do you need to project multiple image segmentations?", false);
 Dialog.show();
