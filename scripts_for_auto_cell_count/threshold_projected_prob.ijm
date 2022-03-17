@@ -1,6 +1,6 @@
 /*
  * Author: Theo Kataras, Tyler Jang
- * Date: 2/17/2022
+ * Date: 3/17/2022
  * 
  * Input: Binary images, hand placed markes in roi files, one file for each image
  * Output: Binary image files including only cells counted, and .csv file in classifier folder with accuracy information
