@@ -1,6 +1,6 @@
 /*
  * Author: Theo, Tyler
- * Date: 3/17/2021
+ * Date: 3/18/2021
  * Description:
  */
 setBatchMode(true); 
@@ -24,7 +24,7 @@ selectedClassifier = split(Arg1, "/");
 firstStage = true;
 
 // Check if the argument is from testing or training area
-if(Arg1.contains("testing_area")) {
+if(indexOf(Arg1, "testing_area") >= 0) {
 	
 	inputDirs = Arg1 + "/../../Weka_Probability_Projected/"+ selectedClassifier[selectedClassifier.length-1] + "/";
 	outputDirs = Arg1 + "/../../Weka_Output_Projected/" + selectedClassifier[selectedClassifier.length-1] + "/";
