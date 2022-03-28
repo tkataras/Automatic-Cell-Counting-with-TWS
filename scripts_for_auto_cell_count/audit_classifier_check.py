@@ -1,7 +1,7 @@
 #!/usr/bin/python
 ###
 # Author: Tyler Jang, Theo Kataras
-# Date 3/10/2022
+# Date 3/28/2022
 #
 # Inputs: List of counted images, roi csv file with hand count represented
 # Outputs: Statistical performance of selected classifier to csv
@@ -40,8 +40,9 @@ result_out = "../testing_area/Results/"
 # Holds all accuracy values for classifiers
 result_summary_file = pd.DataFrame(columns=["class", "precision", "recall", "F1", "accuracy", "MAE", "MPE"]) 
 
-### adding in the results of the hand_count_from_roi.ijm, this will not change by folder, and is generated manually by saving results in Imagej from Count ROI
+# Get the hand counted images' data
 hand_ini = pd.read_csv("../testing_area/Results/roi_counts.csv", usecols=['Label'])
+
 # Reformat ROI names for use by selecting file name only, removing point name
 for i in range(0, len(hand_ini)):
     row_name = hand_ini.loc[i].at["Label"]

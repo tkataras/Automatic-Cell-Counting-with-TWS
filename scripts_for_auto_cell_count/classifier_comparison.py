@@ -1,7 +1,7 @@
 #!/usr/bin/python
 ###
 # Author: Tyler Jang, Theo Kataras
-# Date 3/10/2022
+# Date 3/28/2022
 #
 # Inputs: genotype csv file, hand count results file from count over roi,
 # results of count over dir in each classifier folder. 
@@ -37,7 +37,7 @@ class_list = os.listdir(output_count)
 # Holds all accuracy values for classifiers
 result_summary_file = pd.DataFrame(columns=["class", "precision", "recall", "F1", "accuracy", "MAE", "MPE"]) 
 
-# Getting in the results of count_from_roi.ijm
+# Getting the results of count_from_roi.ijm
 hand_ini = pd.read_csv("../training_area/Results/roi_counts.csv", usecols=['Label'])
 
 # Reformat ROI names for use by selecting file name only, removing point name
