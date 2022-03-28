@@ -20,7 +20,6 @@ import imageio
 # Description:useful if information in automatic file name from microscope is repetitive
 ###
 def trim_names(file_names, half):
-    #TODO isn't this to narrowly specific, file versions differ names
     delim = "_XY"
     
     # Split files from delim
