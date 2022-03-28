@@ -287,6 +287,7 @@ __I have applied classifiers with BS TWS to many of the images but had to stop f
 
 __No ROC plot appears in Weka_Output_Counted folders__
 1. You may not have all python packages installed correctly. Make sure all python packages are installed and available.
-
+2. Check that the output to log says that the ROC curve was not generated due to the data being entirely false positives or true positives. This happens on occasion when a classifier is too restrictive or not restrictive enough. The program will not generate a ROC curve that is essentially a flat line in that situation.
+ 
 __No Audit_example.csv file appears in Results folder when running ACCT 3__
 1. Make sure for ACCT 3 that images in __Audit_counted__ match .roi files in __Audit_Hand_Counts__ and the rows in __geno_audit.csv__
