@@ -50,7 +50,7 @@ for i in range(0, len(hand_ini)):
 # Get the unique image names
 lvl_h = np.unique(hand_ini)
 
-# TODO May mess with non fluoset names
+# Sort lower case before upper case
 lvl_h = sorted(lvl_h, key=str.swapcase)
 
 # Get the hand counts for each unique image
@@ -81,6 +81,8 @@ for f in range(0, len(class_list)):
     for image in os.listdir(folder_loc):
         if image[-4:] == ".png" or image[-4:] == ".jpg" or  image[-4:] == ".tif" or image[-5:] == ".tiff":
             img_names.append(image)
+    # Sort lower case before upper case
+    img_names = sorted(img_names, key=str.swapcase)
 
     # Dataframe to store the results of autocounting performance
     final_result = pd.DataFrame(columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
