@@ -173,7 +173,7 @@ else:
     F1 = 2 * result
 
 # Absolute Error = (tp + fn) - (tp + fp)
-mean_absolute_error = ((total_tp + total_fn) - (total_tp + total_fp)) / len(img_names)
+mean_absolute_error = sum(np.abs(final_result["fn"] - final_result["fp"])) / len(img_names)
 
 # Percent Error = ((tp + fn) - (tp + fp)) / (tp + fn)
 mean_percent_error = (((total_tp + total_fn) - (total_tp + total_fp)) / (total_tp + total_fn)) / len(img_names)
