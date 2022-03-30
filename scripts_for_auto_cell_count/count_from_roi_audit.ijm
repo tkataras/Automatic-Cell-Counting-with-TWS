@@ -11,7 +11,7 @@
 // Hide details from user to minimize screen clutter
 setBatchMode(true);
 
-print("Starting count_from_roi.ijm");
+print("Starting count_from_roi_audit.ijm");
 
 // Audit Hand Counts
 input = getArgument();
@@ -56,4 +56,4 @@ if(list.length < 2) {
 	print("Counts from " + list.length + " ROIs");
 	saveAs("Results", output +"/roi_counts.csv");
 }
-print("Finished count_from_roi.ijm\n");
+print("Finished count_from_roi_audit.ijm\n");
