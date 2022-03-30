@@ -54,7 +54,7 @@ output_project = source + "Weka_Output_Projected/"
 output_count = source + "Weka_Output_Counted/"
 class_folder = source + "Classifiers/"
 results_folder = source + "Results/"
-training_folder = source + "training_images/"
+training_folder = source + "Training_Images/"
 
 # Create folders in described paths
 if not os.path.isdir(output):
