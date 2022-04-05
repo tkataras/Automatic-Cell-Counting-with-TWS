@@ -12,6 +12,8 @@
 import os
 import sys
 
+from pandas import test
+
 print("Starting file_architect.py")
 # Method to change working directory from inputted ImageJ Macro
 curr_dir = os.getcwd()
@@ -53,7 +55,10 @@ output_prob2 = source + "Weka_Probability_Projected/"
 output_project = source + "Weka_Output_Projected/"
 output_count = source + "Weka_Output_Counted/"
 results_folder = source + "Results/"
-training_folder = source + "Training_Images/"
+training_folder = source + "training_images/"
+valid_folder = source + "Validation_Hand_Counts/"
+valid_data_folder = source + "Validation_data/"
+class_folder = source + "Classifiers/"
 
 # Create folders in described paths
 if not os.path.isdir(output):
@@ -70,6 +75,12 @@ if not os.path.isdir(results_folder):
     os.mkdir(results_folder)
 if not os.path.isdir(training_folder) and not test_stage:
     os.mkdir(training_folder)
+if not os.path.isdir(valid_folder) and not test_stage:
+    os.mkdir(valid_folder)
+if not os.path.isdir(valid_data_folder) and not test_stage:
+    os.mkdir(valid_data_folder)
+if not os.path.isdir(class_folder) and not test_stage:
+    os.mkdir(class_folder)
 
 # Create classifier folders in each prescribed location if it doesn't exist
 for class_ID in class_list:
@@ -101,4 +112,6 @@ if test_stage:
     if not os.path.isdir(source + "Audit_Counted/" + class_list[0]):
         os.mkdir(source + "Audit_Counted/" + class_list[0])
     
+    if not os.path.isdir(source + "images/"):
+        os.mkdir(source + "Audit_Counted/")
 print("Finished file_architect.py")
