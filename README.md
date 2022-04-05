@@ -65,6 +65,8 @@ pip3 install imageio
 pip3 install sklearn
 pip3 install matplotlib
 ```
+<img src = "figures/file_diagram_v1.PNG">
+
 
 # Manual Input Files
 ```
