@@ -40,12 +40,22 @@ else:
 
 # Trim the classifier names of the ".model" at the end
 class_list = []
+remove_empty_marker = False
 for x in class_list_pre_trim:
+    # Don't generate subfolder for the empty file tracker
+    if x == ".gitkeep" or x == ".gitignore":
+        remove_empty_marker = True
+        empty_file = x
+        continue
     name = x.split('.model')
     class_current = [(name[0])]
     class_list += class_current
 print(class_list)
-    
+
+# Remove .gitkeep or .gitignore representing an empty folder
+if remove_empty_marker and len(class_list) > 0:
+    os.remove(class_origin + empty_file)
+
 # Make folders in locations
 output = source + "Weka_Output/"
 output_prob = source + "Weka_Probability/"
@@ -111,5 +121,5 @@ if test_stage:
         os.mkdir(source + "Audit_Counted/" + class_list[0])
     
     if not os.path.isdir(source + "images/"):
-        os.mkdir(source + "Audit_Counted/")
+        os.mkdir(source + "images/")
 print("Finished file_architect.py")
