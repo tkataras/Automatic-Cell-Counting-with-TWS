@@ -1,7 +1,7 @@
 #!/usr/bin/python
 ###
 # Author: Theo Kataras, Tyler Jang
-# Date: 3/31/2022
+# Date: 4/5/2022
 #
 # Input: The source directory
 #       (optional) The classifier selected by the user for the full dataset
@@ -11,8 +11,6 @@
 ###
 import os
 import sys
-
-from pandas import test
 
 print("Starting file_architect.py")
 # Method to change working directory from inputted ImageJ Macro
