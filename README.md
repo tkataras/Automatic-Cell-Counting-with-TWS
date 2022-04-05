@@ -65,7 +65,10 @@ pip3 install imageio
 pip3 install sklearn
 pip3 install matplotlib
 ```
-<img src = "figures/file_diagram_v1.PNG">
+
+## File architecture
+This image represents the full file architecture of ACCT, displaying information about the location and purpose of different folders.
+<img src = "figures/file_diagram_v1.png">
 
 
 # Manual Input Files
