@@ -1,7 +1,7 @@
 #!/usr/bin/python
 ###
 # Author: Theo Kataras, Tyler Jang
-# Date: 4/5/2022
+# Date: 4/6/2022
 #
 # Input: The source directory
 #       (optional) The classifier selected by the user for the full dataset
@@ -53,7 +53,7 @@ for x in class_list_pre_trim:
 print(class_list)
 
 # Remove .gitkeep or .gitignore representing an empty folder
-if remove_empty_marker and len(class_list) > 0:
+if remove_empty_marker:
     os.remove(class_origin + empty_file)
 
 # Make folders in locations
@@ -90,6 +90,26 @@ if not os.path.isdir(valid_data_folder) and not test_stage:
 if not os.path.isdir(class_folder) and not test_stage:
     os.mkdir(class_folder)
 
+# Remove .gitkeep files
+if os.path.isfile(output + ".gitkeep"):
+    os.remove(output + ".gitkeep")
+if os.path.isfile(output_prob + ".gitkeep"):
+    os.remove(output_prob + ".gitkeep")
+if os.path.isfile(output_prob2 + ".gitkeep"):
+    os.remove(output_prob2 + ".gitkeep")
+if os.path.isfile(output_project + ".gitkeep"):
+    os.remove(output_project + ".gitkeep")
+if os.path.isfile(output_count + ".gitkeep"):
+    os.remove(output_count + ".gitkeep")
+if os.path.isfile(results_folder + ".gitkeep"):
+    os.remove(results_folder + ".gitkeep")
+if os.path.isfile(training_folder + ".gitkeep") and not test_stage:
+    os.remove(training_folder + ".gitkeep")
+if os.path.isfile(valid_folder + ".gitkeep") and not test_stage:
+    os.remove(valid_folder + ".gitkeep")
+if os.path.isfile(valid_data_folder + ".gitkeep") and not test_stage:
+    os.remove(valid_data_folder + ".gitkeep")
+
 # Create classifier folders in each prescribed location if it doesn't exist
 for class_ID in class_list:
     if not os.path.isdir(output + class_ID):
@@ -102,6 +122,7 @@ for class_ID in class_list:
         os.mkdir(output_project + class_ID)
     if not os.path.isdir(output_count + class_ID):
         os.mkdir(output_count + class_ID)
+
 
 # Generate classifier subfolders for audit directories
 if test_stage:
@@ -122,4 +143,15 @@ if test_stage:
     
     if not os.path.isdir(source + "images/"):
         os.mkdir(source + "images/")
+
+    # Remove .gitkeep folders
+    if os.path.isfile(source + "Audit_Images/" + ".gitkeep"):
+        os.remove(source + "Audit_Images/" + ".gitkeep")
+    if os.path.isfile(source + "Audit_Hand_Counts/" + ".gitkeep"):
+        os.remove(source + "Audit_Hand_Counts/" + ".gitkeep")
+    if os.path.isfile(source + "Audit_Counted/" + ".gitkeep"):
+        os.remove(source + "Audit_Counted/" + ".gitkeep")
+    if os.path.isfile(source + "images/" + ".gitkeep"):
+        os.remove(source + "images/" + ".gitkeep")
+
 print("Finished file_architect.py")
