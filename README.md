@@ -227,7 +227,8 @@ More statistical information will be printed to the log window.
 This will be located under [training_area/Results](training_area/Results).
 
 If you desire even more detailed statistical information about each individual classifier:
-1. Reciever operator curves are also automatically generated for each classifier and located inside of __training_area/Weka_Output_Counted/classifier#/classifier#\_roc\_curve.pdf__.
+1. Reciever operator curves are also automatically generated for each classifier and located inside of __training_area/Weka_Output_Counted/classifier#/classifier#\_roc\_curve.pdf__.   (Note, Not all models classifiy pixels in a probabilistic manner, instead classifying by a binary label. Thus, ROC plots cannot be generated for that particular model.)
+
 2. The number of true positives, false positives, and false negatives for each individual image for each individual classifier can be found in __training_area/Weka_Output_Counted/classifier#/classifier#\_Final.csv__.
 3. The morphological data and the correctness of each individual object counted for each individual image for each indivdual classifier can be found in __training_area/Weka_Output_Counted/classifier#/classifier#\_Results.csv__.
 
@@ -293,6 +294,7 @@ __I have applied classifiers with BS TWS to many of the images but had to stop f
 __No ROC plot appears in Weka_Output_Counted folders__
 1. You may not have all python packages installed correctly. Make sure all python packages are installed and available.
 2. Check that the output to log says that the ROC curve was not generated due to the data being entirely false positives or true positives. This happens on occasion when a classifier is too restrictive or not restrictive enough. The program will not generate a ROC curve that is essentially a flat line in that situation.
+3. Not all models classifiy pixels in a probabilistic manner, instead classifying by a binary label. Thus, ROC plots cannot be generated for that particular model.
  
 __No Audit_example.csv file appears in Results folder when running ACCT 3__
 1. Make sure for ACCT 3 that images in __Audit_counted__ match .roi files in __Audit_Hand_Counts__ and the rows in __geno_audit.csv__
