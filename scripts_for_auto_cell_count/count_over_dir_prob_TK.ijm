@@ -10,7 +10,7 @@ macro "The -- True -- Count" {
 	// This hides intermediary information and speeds processing
 	setBatchMode(true); 
 	
-	print("Starting count_over_dir.ijm");
+	print("Starting count_over_dir_prob_TK.ijm");
 	
 	// Weka Output Projected if Projected, else Weka Output Thresholded
 	inputDirs = getArgument();
@@ -19,28 +19,9 @@ macro "The -- True -- Count" {
 	outputDirs = inputDirs + "../Weka_Output_Counted/";
 	
 	// Weka Probability
-
-// Check if we used projected images
-if(inputDirs.contains("Weka_Output_Projected")) {
-	probDirs = inputDirs + "../Weka_Probability_Projected/";
-	projected = true;
-	print("Projected Images");
-} else {
 	probDirs = inputDirs + "../Weka_Probability/";
-	projected = false;
 	
-}
-
-
-
-
-
-
-
-	
-	
-	
-	// Clear the results table
+	//Clear the results table
 	run("Clear Results");
 	
 	// Set size minimum for cells to exclude small radius noise and large artifacts
@@ -217,6 +198,6 @@ if(inputDirs.contains("Weka_Output_Projected")) {
 	
 	// Prints text in the log window after all files are processed
 	print("Counted " + list.length + " images");
-	print("Finished count_over_dir.ijm\n");
+	print("Finished count_over_dir_prob_TK.ijm\n");
 }
 updateResults();
