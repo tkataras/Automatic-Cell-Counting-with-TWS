@@ -1,6 +1,6 @@
 /*
  * Author: Theo Kataras, Tyler Jang
- * Date: 2/17/2022
+ * Date: 4/12/2022
  * 
  * Input: Binary images, hand placed markes in roi files, one file for each image
  * Output: Binary image files including only cells counted, and .csv file in classifier folder with accuracy information
@@ -20,27 +20,19 @@ macro "The -- True -- Count" {
 
 	// Weka Output Counted
 	outputDirs = inputDirs + "/../../Weka_Output_Counted/" + selectedClassifier[selectedClassifier.length - 1];
-
-
-
+
 	// Weka Probability
-
-
-// Check if we used projected images
-if(inputDirs.contains("Weka_Output_Projected")) {
-	probDirs = inputDirs + "/../../Weka_Probability_Projected/" + selectedClassifier[selectedClassifier.length - 1];
-	projected = true;
-	print("Projected Images");
-} else {
-	probDirs = inputDirs + "/../../Weka_Probability/" + selectedClassifier[selectedClassifier.length - 1];
-
-	projected = false;
+	// Check if we used projected images
+	if(inputDirs.contains("Weka_Output_Projected")) {
+		probDirs = inputDirs + "/../../Weka_Probability_Projected/" + selectedClassifier[selectedClassifier.length - 1];
+		projected = true;
+		print("Projected Images");
+	} else {
+		probDirs = inputDirs + "/../../Weka_Probability/" + selectedClassifier[selectedClassifier.length - 1];
 	
-}
-
-
-
-	
+		projected = false;
+		
+	}
 
 	// Track the total cell count
 	totalCount = 0;

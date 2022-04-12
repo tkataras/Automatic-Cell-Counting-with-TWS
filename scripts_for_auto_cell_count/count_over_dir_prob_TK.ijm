@@ -19,7 +19,15 @@ macro "The -- True -- Count" {
 	outputDirs = inputDirs + "../Weka_Output_Counted/";
 	
 	// Weka Probability
-	probDirs = inputDirs + "../Weka_Probability/";
+	// Check if we used projected images
+	if(inputDirs.contains("Weka_Output_Projected")) {
+		probDirs = inputDirs + "../Weka_Probability_Projected/";
+		projected = true;
+		print("Projected Images");
+	} else {
+		probDirs = inputDirs + "../Weka_Probability/";
+		projected = false;
+	}
 	
 	//Clear the results table
 	run("Clear Results");
