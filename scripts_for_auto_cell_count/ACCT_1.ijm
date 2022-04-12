@@ -38,9 +38,16 @@ Dialog.addCheckbox("Do you need to project multiple image segmentations?", false
 Dialog.show();
 result = Dialog.getCheckbox();
 if (result) {
-	exec("python", input + "project_probability.py", input);
 	// Projected images go inside of Weka_Output_Projected
 	searchDirectory = input + "../training_area/Weka_Output_Projected/";
+
+	Dialog.create("Project Probability Images?");
+	Dialog.addCheckbox("Do you need to project images again? If you already have done so, leave the box unselected so you can skip this step", false);
+	Dialog.show();
+	projectResult = Dialog.getCheckbox();
+	if (projectResult) {
+		exec("python", input + "project_probability.py", input);	
+	}
 	runMacro(input + "threshold_projected_prob.ijm", searchDirectory);
 
 } else {

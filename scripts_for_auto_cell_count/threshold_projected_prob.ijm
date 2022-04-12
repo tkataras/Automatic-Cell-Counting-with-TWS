@@ -1,6 +1,6 @@
 /*
- * Author: Theo, Tyler
- * Date: 3/18/2021
+ * Author: Theo, Tyler Jang
+ * Date: 4/12/2022
  * Description:
  */
 setBatchMode(true); 
@@ -24,7 +24,7 @@ selectedClassifier = split(Arg1, "/");
 firstStage = true;
 
 // Check if the argument is from testing or training area
-if(indexOf(Arg1, "testing_area") >= 0) {
+if(Arg1.contains("testing_area")) {
 	
 	inputDirs = Arg1 + "/../../Weka_Probability_Projected/"+ selectedClassifier[selectedClassifier.length-1] + "/";
 	outputDirs = Arg1 + "/../../Weka_Output_Projected/" + selectedClassifier[selectedClassifier.length-1] + "/";
@@ -36,16 +36,11 @@ if(indexOf(Arg1, "testing_area") >= 0) {
 	firstStage = true;
 	print("first stage");
 }
-print(inputDirs);
-print(outputDirs);
-
 
 // Code for the first half of the pipeline
 if(firstStage) {
 	inputDirList = getFileList(inputDirs);
 	outputDirList = getFileList(outputDirs);
-	print(inputDirList.length);
-	print(outputDirList.length);
 
 	// Call threshold over each classifier in Weka Probabilty Projected
 	for (z = 0; z< inputDirList.length; z++) {	
@@ -65,8 +60,11 @@ if(firstStage) {
 			open(inputDirs + input + filename);
 			//run("Threshold...");
 			setThreshold(0, cutoff);
-			setOption("BlackBackground", false);
+			//setOption("BlackBackground", false);
+			//run("Convert to Mask");
+			setOption("BlackBackground", true);
 			run("Convert to Mask");
+			//run("Invert");
 			saveAs("tiff", outputDirs + output + filename);
 			close();
 		}
@@ -74,9 +72,6 @@ if(firstStage) {
 } else {
 	// Holds all file names from input folder
 	list = getFileList(inputDirs);
-	print("input list length");
-	print(list.length);
-	
 	
 	// Iterate macro over each image in the input folder for this specific classifier
 	for (q = 0; q < list.length; q++) {
@@ -88,8 +83,9 @@ if(firstStage) {
 		open(input + "/" + filename);
 		//run("Threshold...");
 		setThreshold(0, cutoff);
-		setOption("BlackBackground", false);
+		setOption("BlackBackground", true);
 		run("Convert to Mask");
+		//run("Invert");
 		saveAs("tiff", output + filename);
 		close();	
 	}
