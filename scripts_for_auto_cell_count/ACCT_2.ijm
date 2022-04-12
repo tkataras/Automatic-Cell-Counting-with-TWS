@@ -44,14 +44,21 @@ if (ifWeka) {
 
 // Dialog box option to ask user if their data is made of projected image segmentations
 searchDirectory = input;
-Dialog.create("Question");
-Dialog.addCheckbox("Do you need to project multiple image segmentations?", false);
+Dialog.create("Multiple Image Segmentations?");
+Dialog.addCheckbox("Are you working with projected image segmentations?", false);
 Dialog.show();
 result = Dialog.getCheckbox();
 if (result) {
-	exec("python", input + "project_probability.py", input, trimClassName[0]);
 	// Projected images go inside of Weka_Output_Projected
 	searchDirectory = input + "../testing_area/Weka_Output_Projected/" + trimClassName[0];
+
+	Dialog.create("Project Probability Images?");
+	Dialog.addCheckbox("Do you need to project images again? If you already have done so, leave the box unselected so you can skip this step", false);
+	Dialog.show();
+	projectResult = Dialog.getCheckbox();
+	if (projectResult) {
+		exec("python", input + "project_probability.py", input, trimClassName[0]);
+	}
 	runMacro(input + "threshold_projected_prob.ijm", searchDirectory);
 } else {
 	// Else, search for images in Weka Output

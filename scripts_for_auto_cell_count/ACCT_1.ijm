@@ -32,7 +32,7 @@ if (ifWeka) {
 // Dialog box option to ask user if their data is made of projected image segmentations
 searchDirectory = input;
 Dialog.create("Multiple Image Segmentations?");
-Dialog.addCheckbox("Do you need to project multiple image segmentations?", false);
+Dialog.addCheckbox("Are you working with projected image segmentations?", false);
 Dialog.show();
 result = Dialog.getCheckbox();
 if (result) {
