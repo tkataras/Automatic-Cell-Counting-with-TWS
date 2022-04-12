@@ -1,12 +1,11 @@
 #!/usr/bin/python
 ###
 # Author: Theo Kataras, Tyler Jang
-# Date 3/10/2022
+# Date 4/12/2022
 # 
 # Input: A set of thresholded, projected images
 # Output: A set of merged images
-# Description: This file in the pipeline merges projected probability images 
-#              into one image so they can be counted.
+# Description: This file in the pipeline.....
 ###
 import os
 import sys
@@ -14,13 +13,15 @@ import pandas as pd
 import numpy as np
 import imageio
 
-###
+
+
 # Method: trim_names 
 # Input: File names
 # Output: Bisected file names based on split
 # Description:useful if information in automatic file name from microscope is repetitive
 ###
 def trim_names(file_names, half):
+    #TODO isn't this to narrowly specific, file versions differ names
     delim = "_XY"
     
     # Split files from delim
@@ -39,10 +40,9 @@ def trim_names(file_names, half):
 
 ###
 # Method: parse_it 
-# Input: Projected image file names
-# Output: List of seperated relevent name elements from every image
-# Description: Gets the key identifying information for projected images so they
-#              can be grouped together.
+# Input: list of seperated relevent name elements from every image
+# Output: TODO
+# Description: 
 ###
 def parse_it(file_names, object_num):
     newsid1_anum = []
@@ -63,7 +63,7 @@ def sep_slidebook(file_names, delim):
         split_files.append(file.split(delim))
     max_len = len(split_files[1])
     
-    # These are what you need to adjust for different names of images
+    # These are what you need to adjust for different names of images!!!!####
     newsid1_anum = parse_it(split_files, 1)
     newsid1_snum = parse_it(split_files, 2)
     newsid1_fnum = parse_it(split_files, max_len - 1)
@@ -91,9 +91,7 @@ def sep_slidebook(file_names, delim):
 # Method: squish 
 # Input: data from of grouping variables
 # Output: list of unique image IDs contining specific grouping information
-# Description: creates one grouping object for each image that can be compared
-#              across other iterations of the images with slightly different 
-#              file names.
+# Description: creates one grouping object for each image that can be compared across other iterations of the images with slightly different file names
 ###
 def squish(input_df):
     id1_df_squish = []
@@ -122,8 +120,6 @@ set_dir(sys.argv[1])
 
 first_stage = True
 
-print(len(sys.argv))
-print(len(sys.argv))
 # If in the second stage of the pipeline, use the specified classifier
 if len(sys.argv) == 3:
     # Input and Output file directories
@@ -157,7 +153,8 @@ if first_stage:
     big_df = pd.concat([big_df, id1_df_sep], axis=1)
     big_df.columns = ["File_name", "Img_ID", "A_num", "S_num", "F_num"]
 
-    # Gather all items with matching img_ID 
+    # Now need to gather and project all items with matching img_ID 
+    # Need to start working in directory that holds all image folders
     u_img = np.unique(big_df["Img_ID"])
 
     # Project the n images in each classifier
@@ -183,6 +180,7 @@ if first_stage:
             for k in range(0, max_len):
                 path = rel_path + "/" + list(all_current_ID["File_name"])[k]
                 curr_probability = imageio.imread(path)
+                print(path)
                 # For each row
                 for y_inc in range(y_axis):
                     # For each column
@@ -198,6 +196,8 @@ else:
     in_dir_list = os.listdir(id_for_in_dir)
 
     # Getting images names, can pick any folder with all images in question to do this
+    # TODO why do I need trim names? (I believe it was for R code limitations) Code runs faster without it.
+    #newsid1 = trim_names(id1, half="back")
     newsid1 = in_dir_list
     id1_df_sep = sep_slidebook(newsid1, "-")
     id1_df_squish = squish(id1_df_sep)
@@ -213,7 +213,8 @@ else:
     big_df = pd.concat([big_df, id1_df_sep], axis=1)
     big_df.columns = ["File_name", "Img_ID", "A_num", "S_num", "F_num"]
 
-    # Gather all items with matching img_ID 
+    # Now need to gather and project all items with matching img_ID 
+    # Need to start working in directory that holds all image folders
     u_img = np.unique(big_df["Img_ID"])
 
     # Project the n images in the classifier
@@ -237,10 +238,8 @@ else:
             for y_inc in range(y_axis):
                 # For each column
                 for x_inc in range(x_axis):
-                    # Set the max probability of each pixel as the projected result
                     if projected[x_inc][y_inc] < curr_probability[x_inc][y_inc]:
                         projected[x_inc][y_inc] = curr_probability[x_inc][y_inc]
-        # Write projected image to file output
         file_out_loc = id_for_out_dir + "/" + list(all_current_ID["File_name"])[0]
         imageio.imwrite(file_out_loc, projected)
         projected = [[0] * y_axis] * x_axis
