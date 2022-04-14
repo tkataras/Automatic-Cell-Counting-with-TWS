@@ -181,7 +181,7 @@ For more information, there is a thorough and effective explanation of __Trainab
 
 ACCT will expect at least 2 classifiers to compare performance against for its validation step.
 
-# Creating Hand p
+# Creating Hand Placed Markers for Validation
 Hand count markers are created in Imagej using the Point Selection Tool, available in the toolbar, and the ROI manager, which is under __Analyze >> Tools >> ROI Manager__. You can also type ROI Manager in the search bar and select it.
 
 1. Open an image and place one or two count markers 
