@@ -245,11 +245,11 @@ TODO: Maybe add links to each folder inside of this README?
 
 <img src = "figures/selectSource.PNG">
 
-__2.2__ Now, select the most accurate classifier (or any classifier of your choosing). Selecting the most "best" classifier is left to the user, but information is supplied in the form of accuracy values in Precision, Recall and F1 score, as well as statistical outputs of mean accuracy comparison between two separate experimental conditions entered in the genotypes.csv file. This program is set to handle any N number of conditions, performing Welch 2 sample T-Tests and ANOVA respective to the number of conditions in the genotype.csv file. 
+__2.2__ Now, select the most accurate classifier (or any classifier of your choosing). Selecting the best classifier is left to the user, but information is supplied in the form of accuracy values on the validation dataset in the form of in Precision, Recall and F1 score, as well as statistical outputs of mean accuracy comparison between two separate experimental conditions entered in the genotypes.csv file. This program is set to handle any N number of conditions, performing Welch 2 sample T-Tests and ANOVA respective to the number of conditions in the genotype.csv file. 
 
 <img src = "figures/selectClassifier.PNG">
 
-__2.3__ After the classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons. This is similar to stage __1.2__. As in that step, the user will only need to run this once for a full dataset, but may want to repeatedly run later stages, such as stage __2.4__, to optimize your results. Thus, we give the option to skip this step. By default, it is set to run.
+__2.3__ After the classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons based on the genotypes file. This is similar to stage __1.2__. As in that step, the user will only need to run this once for a full dataset, but may want to repeatedly run later stages, such as stage __2.4__, to optimize your results. Thus, we give the option to skip this step. By default, it is set to run.
 
 <img src = "figures/selectWeka.png">
 
@@ -261,7 +261,7 @@ If you desire even more detailed statistical information about the selected clas
 
 ## Stage 3
 *** 
-Additionaly, the third step of the pipeline sets aside a random sample of images equal to the number of validation images and equally distributed between experimental groups to serve as the performance estimate on the unseen data. This performance analysis requires user input in the form of .roi hand counts, similar to what was done in the first step of the program. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison.
+Additionaly, the third step of the pipeline allows the user to audit a set of binary images for accuracy using a set of hand placed markers. In this step, set aside a random sample of images equal to the number of validation images and equally distributed between experimental groups from the unseen data to serve as the performance estimate. This performance analysis requires user input in the form of .roi hand counts, similar to what was done in the first step of the program. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison.
 
 __TODO__: Currently the program allows users to themselves chose images from the full dataset they want to use to audit the final result with. It isn't in the demo branch yet and the code to randomly select images is commented out as of now. So it's manual.
 
