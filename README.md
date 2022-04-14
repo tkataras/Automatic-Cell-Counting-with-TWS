@@ -11,6 +11,14 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 7. [How to Use](#how-to-use) 
 8. [Error Fixing](#error-fixing)
 
+
+# Prerequisites
+-Current version of Fiji distribution of Imagej https://imagej.net/software/fiji/
+
+-Python https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe
+
+-Currently the ImageScience package for Fiji must NOT be installed or have been installed on the Fiji installation in use since it is not compatable with our program. If you have installed ImageScience, you can uninstall and reinstall Fiji to solve the problem.
+
 # Installation Guide
 First you will have to download this program, which can be done through a terminal such as Git, Ubuntu, or Microsoft Powershell with the following line of code.
 ```
@@ -31,17 +39,11 @@ apply_BS_TWS_prob.bsh
 apply_TWS_one_classifier_prob.bsh
 ```
 
-# Prerequisites
--Current version of Fiji distribution of Imagej https://imagej.net/software/fiji/
-
--Python https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe
-
--Currently the ImageScience package for Fiji must NOT be installed or have been installed on the Fiji installation in use since it is not compatable with our program. If you have installed ImageScience, you can uninstall and reinstall Fiji to solve the problem.
 
 # Software Dependencies
-__Windows:__ In order to install the neccessary Python packages, the Python Scripts folder must be added to the terminal's knowelege of working areas designated by the PATH file.
+__Windows:__ In order to install the neccessary Python packages, the Python Scripts folder must be added to the terminal's knowelege of working areas designated by the PATH file. The easiest way to do this is to ensure the "add to path" checkbox is filled during the installation fo python.
 
-If you are unfamiliar with Python, the easiest way to do this is to do the following steps:
+If you hhave an existing installation of Python not added to path, a to add it is to do the following steps:
 
 Locate the Python install directory through the Windows search in Explorer
 
