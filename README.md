@@ -15,7 +15,7 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 # Prerequisites
 -Current version of Fiji distribution of Imagej https://imagej.net/software/fiji/
 
--Python https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe
+-Python https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe (ensure the "add to path" check box is selected during install)
 
 -Currently the ImageScience package for Fiji must NOT be installed or have been installed on the Fiji installation in use since it is not compatable with our program. If you have installed ImageScience, you can uninstall and reinstall Fiji to solve the problem.
 
