@@ -53,6 +53,16 @@ Paste the copied python scrips location into the new path line
 
 Open Windows Powershell from the search menu and the packages can be installed by copying the install commands line by line and right clicking on the working line of the termnial to paste.
 
+```
+pip3 install numpy
+pip3 install scipy
+pip3 install pandas
+pip3 install python-time
+pip3 install imageio
+pip3 install sklearn
+pip3 install matplotlib
+```
+
 __Linux/Mac:__ Open your terminal and copy paste the following into the command line.
 ```
 sudo apt install python3-pip
