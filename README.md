@@ -80,7 +80,7 @@ pip3 install matplotlib
 
 ## File architecture
 This image represents the full file architecture of ACCT, displaying information about the location and purpose of different folders. More details about individual sections of this image appear in the following sections.
-<img src = "figures/file_diagram_v1.png">
+<img src = "figures/file_diagram.png">
 
 
 # Manual Input Files
