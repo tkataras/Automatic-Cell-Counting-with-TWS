@@ -13,8 +13,6 @@ import pandas as pd
 import numpy as np
 import imageio
 
-
-
 # Method: trim_names 
 # Input: File names
 # Output: Bisected file names based on split
