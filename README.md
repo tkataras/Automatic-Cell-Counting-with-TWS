@@ -11,6 +11,14 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 7. [How to Use](#how-to-use) 
 8. [Error Fixing](#error-fixing)
 
+
+# Prerequisites
+-Current version of Fiji distribution of Imagej https://imagej.net/software/fiji/
+
+-Python https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe (ensure the "add to path" check box is selected during install)
+
+-Currently the ImageScience package for Fiji must NOT be installed or have been installed on the Fiji installation in use since it is not compatable with our program. If you have installed ImageScience, you can uninstall and reinstall Fiji to solve the problem.
+
 # Installation Guide
 First you will have to download this program, which can be done through a terminal such as Git, Ubuntu, or Microsoft Powershell with the following line of code.
 ```
@@ -31,17 +39,11 @@ apply_BS_TWS_prob.bsh
 apply_TWS_one_classifier_prob.bsh
 ```
 
-# Prerequisites
--Current version of Fiji distribution of Imagej https://imagej.net/software/fiji/
-
--Python https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe
-
--Currently the ImageScience package for Fiji must NOT be installed or have been installed on the Fiji installation in use since it is not compatable with our program. If you have installed ImageScience, you can uninstall and reinstall Fiji to solve the problem.
 
 # Software Dependencies
-__Windows:__ In order to install the neccessary Python packages, the Python Scripts folder must be added to the terminal's knowelege of working areas designated by the PATH file.
+__Windows:__ In order to install the neccessary Python packages, the Python Scripts folder must be added to the terminal's knowelege of working areas designated by the PATH file. The easiest way to do this is to ensure the "add to path" checkbox is filled during the installation fo python.
 
-If you are unfamiliar with Python, the easiest way to do this is to do the following steps:
+If you hhave an existing installation of Python not added to path, a to add it is to do the following steps:
 
 Locate the Python install directory through the Windows search in Explorer
 
@@ -52,6 +54,16 @@ Access Edit system environment variables in the control panel, select Environmen
 Paste the copied python scrips location into the new path line
 
 Open Windows Powershell from the search menu and the packages can be installed by copying the install commands line by line and right clicking on the working line of the termnial to paste.
+
+```
+pip3 install numpy
+pip3 install scipy
+pip3 install pandas
+pip3 install python-time
+pip3 install imageio
+pip3 install sklearn
+pip3 install matplotlib
+```
 
 __Linux/Mac:__ Open your terminal and copy paste the following into the command line.
 ```
@@ -181,7 +193,7 @@ For more information, there is a thorough and effective explanation of __Trainab
 
 ACCT will expect at least 2 classifiers to compare performance against for its validation step.
 
-# Creating Hand p
+# Creating Hand Placed Markers for Validation
 Hand count markers are created in Imagej using the Point Selection Tool, available in the toolbar, and the ROI manager, which is under __Analyze >> Tools >> ROI Manager__. You can also type ROI Manager in the search bar and select it.
 
 1. Open an image and place one or two count markers 
@@ -245,11 +257,11 @@ TODO: Maybe add links to each folder inside of this README?
 
 <img src = "figures/selectSource.PNG">
 
-__2.2__ Now, select the most accurate classifier (or any classifier of your choosing). Selecting the most "best" classifier is left to the user, but information is supplied in the form of accuracy values in Precision, Recall and F1 score, as well as statistical outputs of mean accuracy comparison between two separate experimental conditions entered in the genotypes.csv file. This program is set to handle any N number of conditions, performing Welch 2 sample T-Tests and ANOVA respective to the number of conditions in the genotype.csv file. 
+__2.2__ Now, select the most accurate classifier (or any classifier of your choosing). Selecting the best classifier is left to the user, but information is supplied in the form of accuracy values on the validation dataset in the form of in Precision, Recall and F1 score, as well as statistical outputs of mean accuracy comparison between two separate experimental conditions entered in the genotypes.csv file. This program is set to handle any N number of conditions, performing Welch 2 sample T-Tests and ANOVA respective to the number of conditions in the genotype.csv file. 
 
 <img src = "figures/selectClassifier.PNG">
 
-__2.3__ After the classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons. This is similar to stage __1.2__. As in that step, the user will only need to run this once for a full dataset, but may want to repeatedly run later stages, such as stage __2.4__, to optimize your results. Thus, we give the option to skip this step. By default, it is set to run.
+__2.3__ After the classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons based on the genotypes file. This is similar to stage __1.2__. As in that step, the user will only need to run this once for a full dataset, but may want to repeatedly run later stages, such as stage __2.4__, to optimize your results. Thus, we give the option to skip this step. By default, it is set to run.
 
 <img src = "figures/selectWeka.png">
 
@@ -261,7 +273,7 @@ If you desire even more detailed statistical information about the selected clas
 
 ## Stage 3
 *** 
-Additionaly, the third step of the pipeline sets aside a random sample of images equal to the number of validation images and equally distributed between experimental groups to serve as the performance estimate on the unseen data. This performance analysis requires user input in the form of .roi hand counts, similar to what was done in the first step of the program. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison.
+Additionaly, the third step of the pipeline allows the user to audit a set of binary images for accuracy using a set of hand placed markers. In this step, set aside a random sample of images equal to the number of validation images and equally distributed between experimental groups from the unseen data to serve as the performance estimate. This performance analysis requires user input in the form of .roi hand counts, similar to what was done in the first step of the program. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison.
 
 __TODO__: Currently the program allows users to themselves chose images from the full dataset they want to use to audit the final result with. It isn't in the demo branch yet and the code to randomly select images is commented out as of now. So it's manual.
 
