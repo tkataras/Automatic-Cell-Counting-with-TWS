@@ -137,7 +137,7 @@ for f in range(0, len(class_list)):
         this_row = pd.DataFrame([[name, tp, fp, fn, avg_area, avg_circular]], columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
         final_result = final_result.append(this_row)
             
-    # Method to catch divide by zeros 
+    # Method to catch divide by zero errors, skipping rows that cause the issue 
     def catchDivideByZero(numer, denom):
         try:
             # Don't print the error message to stderr

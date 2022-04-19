@@ -53,7 +53,7 @@ if (result) {
 	searchDirectory = input + "../testing_area/Weka_Output_Projected/" + trimClassName[0];
 
 	Dialog.create("Project Probability Images?");
-	Dialog.addCheckbox("Do you need to project images again? If you already have done so, leave the box unselected so you can skip this step", false);
+	Dialog.addCheckbox("Do you need to project images again? If you already have done so, leave the box unselected so you can speed up this step", false);
 	Dialog.show();
 	projectResult = Dialog.getCheckbox();
 	if (projectResult) {
