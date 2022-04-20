@@ -263,8 +263,6 @@ From the ImageJ bar, navigate and select __Plugins >> ACCT 2__.
 
 __2.1__ Once again, the program must know where it is downloaded. Select the directory/folder named [scripts_for_auto_cell_count](scripts_for_auto_cell_count).
 
-TODO: Maybe add links to each folder inside of this README?
-
 <img src = "figures/selectSource.PNG">
 
 __2.2__ Now, select the most accurate classifier (or any classifier of your choosing). Selecting the best classifier is left to the user, but information is supplied in the form of accuracy values on the validation dataset in the form of in Precision, Recall and F1 score, as well as statistical outputs of mean accuracy comparison between two separate experimental conditions entered in the genotypes.csv file. This program is set to handle any N number of conditions, performing Welch 2 sample T-Tests and ANOVA respective to the number of conditions in the genotype.csv file. 
