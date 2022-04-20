@@ -296,6 +296,7 @@ __3.3__ The program will ask if you are ready to audit your images. This is beca
 
 <img src = "figures/auditConfirmProgress.png">
 
+__3.4__ Same as __1.5__ to set the maximum and minimum object size and toggle the watershed algorithm option.
 ***
 
 # Error Fixing
