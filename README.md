@@ -260,7 +260,7 @@ As an example, the output in log will look like this.
 <img src = "figures/act1ExpectedOut.PNG">
 
 ## Stage 2
-From the ImageJ bar, navigate and select __Plugins >> ACCT 2__
+From the ImageJ bar, navigate and select __Plugins >> ACCT 2__.
 
 __2.1__ Once again, the program must know where it is downloaded. Select the directory/folder named [scripts_for_auto_cell_count](scripts_for_auto_cell_count).
 
@@ -326,4 +326,4 @@ __No ROC plot appears in Weka_Output_Counted folders__
 3. Not all models classifiy pixels in a probabilistic manner, instead classifying by a binary label. Thus, ROC plots cannot be generated for that particular model.
  
 __No Audit_example.csv file appears in Results folder when running ACCT 3__
-1. Make sure for ACCT 3 that images in __Audit_counted__ match .roi files in __Audit_Hand_Counts__ and the rows in __geno_audit.csv__
+1. Make sure for ACCT 3 that images in __Audit_Counted__ match .roi files in __Audit_Hand_Counts__ and the rows in __geno_audit.csv__
