@@ -124,9 +124,6 @@ Images should be of the same dimensions.
 
 Images should be free of major artifacts (Optional but recommended).
 
-Images should be in .png format.
-TODO (Haven't tested yet) Images could also be .jpg or .tiff
-
 Each image _must_ have a unique file name.
 
 Image file names should not contain the following symbols as they are used for other purposes.
