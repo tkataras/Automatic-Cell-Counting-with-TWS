@@ -235,6 +235,10 @@ __1.4__ Our data includes paired images in individual fields of view for increas
 
 <img src = "figures/selectMultipleSegmentation.PNG">
 
+__1.4.1__ If you select this option, you will then be prompted to rerun the step that grouped the projected images into a combined image. This step takes a long time relative to other parts of the pipeline and only needs to be done once, so you are prompted to decide if you want to rerun this step.
+
+<img src = "figures/rerunProjected.png">
+
 __1.5__ To count the number of objects in your data, the program defaults to a pixel minimum and maximum object size. These cuttoffs will have significant effects on accuracy and vary completely by application. You will be prompted to select these values. This has to be left to the user since the size of the objects they want counted will vary between different users. You will also be prompted to optionally apply the watershed algorithm when counting images. This is used to separate objects that are touching or overlapping in the image so they can be separately counted. This is on by default.
 
 <img src = "figures/sizeValues.png">
@@ -256,7 +260,7 @@ As an example, the output in log will look like this.
 <img src = "figures/act1ExpectedOut.PNG">
 
 ## Stage 2
-From the ImageJ bar, navigate and select __Plugins >> ACCT 2__
+From the ImageJ bar, navigate and select __Plugins >> ACCT 2__.
 
 __2.1__ Once again, the program must know where it is downloaded. Select the directory/folder named [scripts_for_auto_cell_count](scripts_for_auto_cell_count).
 
@@ -282,8 +286,11 @@ If you desire even more detailed statistical information about the selected clas
 *** 
 Additionaly, the third step of the pipeline allows the user to audit a set of binary images for accuracy using a set of hand placed markers. In this step, set aside a random sample of images equal to the number of validation images and equally distributed between experimental groups from the unseen data to serve as the performance estimate. This performance analysis requires user input in the form of .roi hand counts, similar to what was done in the first step of the program. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison.
 
-__TODO__: Currently the program allows users to themselves chose images from the full dataset they want to use to audit the final result with. It isn't in the demo branch yet and the code to randomly select images is commented out as of now. So it's manual.
+__3.1__
 
+__3.2__
+
+__3.3__
 ***
 
 # Error Fixing
@@ -322,4 +329,4 @@ __No ROC plot appears in Weka_Output_Counted folders__
 3. Not all models classifiy pixels in a probabilistic manner, instead classifying by a binary label. Thus, ROC plots cannot be generated for that particular model.
  
 __No Audit_example.csv file appears in Results folder when running ACCT 3__
-1. Make sure for ACCT 3 that images in __Audit_counted__ match .roi files in __Audit_Hand_Counts__ and the rows in __geno_audit.csv__
+1. Make sure for ACCT 3 that images in __Audit_Counted__ match .roi files in __Audit_Hand_Counts__ and the rows in __geno_audit.csv__
