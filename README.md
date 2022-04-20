@@ -13,7 +13,7 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 
 
 # Prerequisites
--Current version of Fiji distribution of Imagej: https://imagej.net/software/fiji/
+-Current version of Fiji distribution of ImageJ: https://imagej.net/software/fiji/
 
 -Python: https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe 
 
@@ -30,7 +30,7 @@ If you are not familiar with terminals, you can also click the green code button
 
 Next, ensure you have downloaded the software located in the [Prerequisites](#prerequisites) section.
 
-Finally, you will have to manually copy and paste certain files into the __Plugins__ folder of your Fiji instalation of Imagej. 
+Finally, you will have to manually copy and paste certain files into the __Plugins__ folder of your Fiji instalation of ImageJ. 
 
 Find where you downloaded Fiji in your file directory. Next, navigate to [scripts_for_auto_cell_count](scripts_for_auto_cell_count) then copy and paste the following files into your __Fiji.app/plugins__ directory. This is so you can run the program from ImageJ using the graphical user interface and macro menu.
 ```
@@ -195,7 +195,7 @@ For more information, there is a thorough explanation of __Trainable Weka Segmen
 ACCT will expect at least 2 classifiers to compare performance against for its validation step.
 
 # Creating Hand Placed Markers for Validation
-Hand count markers are created in Imagej using the Point Selection Tool, available in the toolbar, and the ROI manager, which is under __Analyze >> Tools >> ROI Manager__. You can also type ROI Manager in the search bar and select it.
+Hand count markers are created in ImageJ using the Point Selection Tool, available in the toolbar, and the ROI manager, which is under __Analyze >> Tools >> ROI Manager__. You can also type ROI Manager in the search bar and select it.
 
 1. Open an image and place one or two count markers 
 2. Add the selections to the ROI manager
