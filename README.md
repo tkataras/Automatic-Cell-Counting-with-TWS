@@ -41,19 +41,19 @@ apply_TWS_one_classifier_prob.bsh
 
 
 # Software Dependencies
-__Windows:__ In order to install the neccessary Python packages, the Python Scripts folder must be added to the terminal's knowelege of working areas designated by the PATH file. The easiest way to do this is to ensure the "add to path" checkbox is filled during the installation fo python.
+__Windows:__ In order to install the neccessary Python packages, the Python Scripts folder must be added to the terminal's knowledge of working areas designated by the PATH file. The easiest way to do this is to ensure the "add to path" checkbox is filled during the installation of Python.
 
-If you hhave an existing installation of Python not added to path, a to add it is to do the following steps:
+If you have an existing installation of Python not added to path, perform the following steps to add Python to the path:
 
-Locate the Python install directory through the Windows search in Explorer
+Locate the Python install directory through the Windows search in Explorer.
 
-Copy the address of the scripts folder from the location bar at the top of the explorer window
+Copy the address of the scripts folder from the location bar at the top of the Explorer window.
 
-Access Edit system environment variables in the control panel, select Environment variables, select Path, Edit and new
+Access Edit system environment variables in the control panel, select Environment variables, select Path, Edit and new.
 
-Paste the copied python scrips location into the new path line
+Paste the copied Python scrips location into the new path line.
 
-Open Windows Powershell from the search menu and the packages can be installed by copying the install commands line by line and right clicking on the working line of the termnial to paste.
+Open Windows Powershell from the search menu and the packages can be installed by copying the following install commands line by line. Right click the working line of the termnial to paste the command.
 
 ```
 pip3 install numpy
