@@ -292,7 +292,7 @@ __3.2__ You will select which classifier you want to audit the performance of fr
 
 <img src = "figures/auditSelectClassifier.png">
 
-__3.3__
+__3.3__ The program will ask if you are ready to audit your images. This is because the program is waiting for you to select the images you want to audit and move them into the __Audit_Images__ folder. It is also waiting for the .roi files for these images to be placed in the __Audit_Hand_Counts__ folder. Once this is done you can select __OK__.
 
 <img src = "figures/auditConfirmProgress.png">
 
