@@ -286,11 +286,16 @@ If you desire even more detailed statistical information about the selected clas
 *** 
 Additionaly, the third step of the pipeline allows the user to audit a set of binary images for accuracy using a set of hand placed markers. In this step, set aside a random sample of images equal to the number of validation images and equally distributed between experimental groups from the unseen data to serve as the performance estimate. This performance analysis requires user input in the form of .roi hand counts, similar to what was done in the first step of the program. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison.
 
-__3.1__
+__3.1__ Same as __1.1__
 
-__3.2__
+__3.2__ You will select which classifier you want to audit the performance of from the full dataset. 
+
+<img src = "figures/auditSelectClassifier.png">
 
 __3.3__
+
+<img src = "figures/auditConfirmProgress.png">
+
 ***
 
 # Error Fixing
