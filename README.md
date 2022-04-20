@@ -332,7 +332,7 @@ __I have applied classifiers with BS TWS to many of the images but had to stop f
 1. You can remove images that you have already processed in images to skip forward, but be sure you know that you processed these images correctly.
 
 __No ROC plot appears in Weka_Output_Counted folders__
-1. You may not have all python packages installed correctly. Make sure all python packages are installed and available.
+1. You may not have all Python packages installed correctly. Make sure all Python packages are installed and available.
 2. Check that the output to log says that the ROC curve was not generated due to the data being entirely false positives or true positives. This happens on occasion when a classifier is too restrictive or not restrictive enough. The program will not generate a ROC curve that is essentially a flat line in that situation.
 3. Not all models classifiy pixels in a probabilistic manner, instead classifying by a binary label. Thus, ROC plots cannot be generated for that particular model.
  
