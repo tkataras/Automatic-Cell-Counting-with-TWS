@@ -222,7 +222,10 @@ __1.1__ The first step is to initiate the pipeline. You will be prompted to loca
 
 <img src = "figures/selectSource.PNG">
 
-__1.2__ The pipeline will ask if you want to reset your folders. Specifically it will ask if you want to reset your Weka_ folders. This is because you may want to run ACCT with new images and so you will need to remove old files or the program will try to use those old files. 
+__1.2__ The pipeline will ask if you want to reset your folders. Specifically it will ask if you want to reset your Weka_ folders. This is because you may want to run ACCT with new images and so you will need to remove old files or the program will try to use those old files. If you select the option to reset your files, it will then ask to confirm that choice.
+
+<img src = "figures/fileResetOne.png">
+<img src = "figures/fileResetTwo.png">
 
 __1.3__ The pipeline will ask if you want to run Trainable Weka Segmentation. This will individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .roi files and the supplied genotypes.csv file. This stage needs to only be run once for a set of validation images, but you may want to repeatedly run later stages, such as stage __1.4__, to optimize your results. Thus, we give the option to skip this stage. By default, it is set to run.
 
