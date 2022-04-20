@@ -13,9 +13,11 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 
 
 # Prerequisites
--Current version of Fiji distribution of Imagej https://imagej.net/software/fiji/
+-Current version of Fiji distribution of Imagej: https://imagej.net/software/fiji/
 
--Python https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe (ensure the "add to path" check box is selected during install)
+-Python: https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe 
+
+(Ensure the "add to path" check box is selected during install)
 
 -Currently the ImageScience package for Fiji must NOT be installed or have been installed on the Fiji installation in use since it is not compatable with our program. If you have installed ImageScience, you can uninstall and reinstall Fiji to solve the problem.
 
@@ -41,19 +43,19 @@ apply_TWS_one_classifier_prob.bsh
 
 
 # Software Dependencies
-__Windows:__ In order to install the neccessary Python packages, the Python Scripts folder must be added to the terminal's knowelege of working areas designated by the PATH file. The easiest way to do this is to ensure the "add to path" checkbox is filled during the installation fo python.
+__Windows:__ In order to install the neccessary Python packages, the Python Scripts folder must be added to the terminal's knowledge of working areas designated by the PATH file. The easiest way to do this is to ensure the "add to path" checkbox is filled during the installation of Python.
 
-If you hhave an existing installation of Python not added to path, a to add it is to do the following steps:
+If you have an existing installation of Python not added to path, perform the following steps to add Python to the path:
 
-Locate the Python install directory through the Windows search in Explorer
+Locate the Python install directory through the Windows search in Explorer.
 
-Copy the address of the scripts folder from the location bar at the top of the explorer window
+Copy the address of the scripts folder from the location bar at the top of the Explorer window.
 
-Access Edit system environment variables in the control panel, select Environment variables, select Path, Edit and new
+Access Edit system environment variables in the control panel, select Environment variables, select Path, Edit and new.
 
-Paste the copied python scrips location into the new path line
+Paste the copied Python scrips location into the new path line.
 
-Open Windows Powershell from the search menu and the packages can be installed by copying the install commands line by line and right clicking on the working line of the termnial to paste.
+Open Windows Powershell from the search menu and the packages can be installed by copying the following install commands line by line. Right click the working line of the termnial to paste the command.
 
 ```
 pip3 install numpy
@@ -191,7 +193,7 @@ With the new training data added, press __Train classifier__ and observe the res
 
 Each new addition of data will change the persepctive of the classifier based on the new data, and we can save multiple classifiers which allows us to select the most effective point in training based on the validation data.
 
-For more information, there is a thorough and effective explanation of __Trainable Weka Segmentation__ plugin located at: https://imagej.net/plugins/tws/ .
+For more information, there is a thorough explanation of __Trainable Weka Segmentation__ plugin located at: https://imagej.net/plugins/tws/ .
 
 ACCT will expect at least 2 classifiers to compare performance against for its validation step.
 
@@ -286,11 +288,17 @@ If you desire even more detailed statistical information about the selected clas
 *** 
 Additionaly, the third step of the pipeline allows the user to audit a set of binary images for accuracy using a set of hand placed markers. In this step, set aside a random sample of images equal to the number of validation images and equally distributed between experimental groups from the unseen data to serve as the performance estimate. This performance analysis requires user input in the form of .roi hand counts, similar to what was done in the first step of the program. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison.
 
-__3.1__
+__3.1__ Same as __1.1__
 
-__3.2__
+__3.2__ You will select which classifier you want to audit the performance of from the full dataset. 
 
-__3.3__
+<img src = "figures/auditSelectClassifier.png">
+
+__3.3__ The program will ask if you are ready to audit your images. This is because the program is waiting for you to select the images you want to audit and move them into the __Audit_Images__ folder. It is also waiting for the .roi files for these images to be placed in the __Audit_Hand_Counts__ folder. Once this is done you can select __OK__.
+
+<img src = "figures/auditConfirmProgress.png">
+
+__3.4__ Same as __1.5__ to set the maximum and minimum object size and toggle the watershed algorithm option.
 ***
 
 # Error Fixing
