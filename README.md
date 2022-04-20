@@ -13,9 +13,11 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 
 
 # Prerequisites
--Current version of Fiji distribution of Imagej https://imagej.net/software/fiji/
+-Current version of Fiji distribution of Imagej: https://imagej.net/software/fiji/
 
--Python https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe (ensure the "add to path" check box is selected during install)
+-Python: https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe 
+
+(Ensure the "add to path" check box is selected during install)
 
 -Currently the ImageScience package for Fiji must NOT be installed or have been installed on the Fiji installation in use since it is not compatable with our program. If you have installed ImageScience, you can uninstall and reinstall Fiji to solve the problem.
 
@@ -191,7 +193,7 @@ With the new training data added, press __Train classifier__ and observe the res
 
 Each new addition of data will change the persepctive of the classifier based on the new data, and we can save multiple classifiers which allows us to select the most effective point in training based on the validation data.
 
-For more information, there is a thorough and effective explanation of __Trainable Weka Segmentation__ plugin located at: https://imagej.net/plugins/tws/ .
+For more information, there is a thorough explanation of __Trainable Weka Segmentation__ plugin located at: https://imagej.net/plugins/tws/ .
 
 ACCT will expect at least 2 classifiers to compare performance against for its validation step.
 
