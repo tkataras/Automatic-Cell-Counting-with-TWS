@@ -85,8 +85,8 @@ This image represents the full file architecture of ACCT, displaying information
 
 # Manual Input Files
 ```
-For consistency of input, all inut images should be in .PNG format
-TODO should be able to handle .JPG and .tiff, just need to test it
+All input images should be in .PNG, .JPEG, or .TIF format. 
+Preferably, images should be in .PNG format.
 ```
 Place the entire set of images you would like counted inside of [testing_area/images](testing_area/images).
 
