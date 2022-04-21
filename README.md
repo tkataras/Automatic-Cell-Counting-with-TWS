@@ -190,6 +190,8 @@ With the new training data added, press __Train classifier__ and observe the res
 
 Each new addition of data will change the persepctive of the classifier based on the new data, and we can save multiple classifiers which allows us to select the most effective point in training based on the validation data.
 
+There will be an image overlay in red and green showing what the classifier thinks is part of the object and what is not. If you would like to see the original image under the overlay, select __Toggle overlay__.
+
 For more information, there is a thorough explanation of __Trainable Weka Segmentation__ plugin located at: https://imagej.net/plugins/tws/ .
 
 ACCT will expect at least 2 classifiers to compare performance against for its validation step.
