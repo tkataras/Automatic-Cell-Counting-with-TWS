@@ -204,7 +204,7 @@ Hand count markers are created in ImageJ using the Point Selection Tool, availab
 3. Rename the new ROI with the image name (This is most easily done by using the following keyboard shortcuts: Ctrl+Shift+d -> Ctrl+c -> Ctrl+w -> right click the ROI and then select Rename -> Ctrl+v -> Enter)
 4. Continue selecting cell locations, peridocally updating via the Update button in the ROI Manager
 5. When all cells are selected, save the .roi file in the [training_area/Validation_Hand_Counts](training_area/Validation_Hand_Counts) folder if placing markers for the validation images, or in the [testing_area/Audit_Hand_Counts](testing_area/Audit_Hand_Counts) folder for the audit image set. To do this select __More >> Save__ and navigate to the folder you wish to save the file in.
-6. Once saved, select the roi in the roi manager and select __Delete__ before moving on to the next image.
+6. Once saved, select the roi in the roi manager and select __Delete__ before moving on to the next image. Then close the image so you can open the next image. Your computer will ask if you want to save changes you made to the image, but you _do not_ want to save changes. Instead, select __Don't Save__ when closing the image.
 7. Open a new image and repeat until all validation or audit images are counted.
 
 <img src = "figures/fijiMultiPoint.PNG">
