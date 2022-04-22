@@ -1,7 +1,10 @@
 /*
  * Author: Theo, Tyler Jang
- * Date: 4/12/2022
- * Description:
+ * Date: 4/21/2022
+ * 
+ * Input: Projected Images
+ * Output: Thresholded Projected Images
+ * Description: Take the projected images and threshold them to the cut off value
  */
 setBatchMode(true); 
 print("Starting threshold_projected_prob.ijm");
@@ -34,7 +37,6 @@ if(Arg1.contains("testing_area")) {
 	inputDirs = Arg1 + "../Weka_Probability_Projected/";
 	outputDirs = Arg1;
 	firstStage = true;
-	print("first stage");
 }
 
 // Code for the first half of the pipeline

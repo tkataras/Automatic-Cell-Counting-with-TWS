@@ -1,6 +1,6 @@
 /**
  * Author: Theo Kataras, Tyler Jang
- * Date: 4/19/2022
+ * Date: 4/21/2022
  * 
  * Input: Classifier model files, validation images, hand counted roi files
  * Output: CSV of statistical performance of each classifier on validation data, ROC curves
@@ -54,7 +54,7 @@ if (result) {
 
 	// Check if the user has already projected images
 	Dialog.create("Project Probability Images?");
-	Dialog.addCheckbox("Do you need to project images again? If you already have done so, leave the box unselected so you can speed up this step", false);
+	Dialog.addCheckbox("Do you need to project images? If you already have done so, leave the box unselected so you can speed up this step", false);
 	Dialog.show();
 	projectResult = Dialog.getCheckbox();
 	if (projectResult) {
@@ -79,4 +79,4 @@ exec("python", input + "classifier_comparison.py", input);
 // Run ROC Curve script
 exec("python", input + "roc_curve.py", input);
 
-print("Finished ACCT 1");
+print("Finished ACCT 1");

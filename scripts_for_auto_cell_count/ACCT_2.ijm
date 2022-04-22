@@ -1,6 +1,6 @@
 /**
  * Author: Theo Kataras, Tyler Jang
- * Date: 3/8/2022
+ * Date: 4/21/2022
  * 
  * Input: Several user created classifiers, a set of images.
  * Output: The total number of objects counted, statistical information about the count
@@ -53,7 +53,7 @@ if (result) {
 	searchDirectory = input + "../testing_area/Weka_Output_Projected/" + trimClassName[0];
 
 	Dialog.create("Project Probability Images?");
-	Dialog.addCheckbox("Do you need to project images again? If you already have done so, leave the box unselected so you can speed up this step", false);
+	Dialog.addCheckbox("Do you need to project images? If you already have done so, leave the box unselected so you can speed up this step", false);
 	Dialog.show();
 	projectResult = Dialog.getCheckbox();
 	if (projectResult) {
