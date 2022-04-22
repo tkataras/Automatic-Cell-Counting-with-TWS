@@ -244,22 +244,10 @@ else:
 
 # If only 1 level
 if len(lvl_geno) == 1:
-    group_one = final_result.query('geno == @lvl_geno[0]')
-    
-    # Calculate 1 Sample T Test
-    precision_mean = np.mean(group_one["precision2"])
-    recall_mean = np.mean(group_one["recall2"])
-    F1_mean = np.mean(group_one["F1_2"])
-
-    # Get means of F1_2
-    mean_F1_ev0 = None
-    if F1_2 is not None:
-        mean_F1_ev0 = np.nanmean(group_one["F1_2"])
-
     # Prepare output csv file
     row_row = pd.DataFrame([[selectedClassifier, precision, recall, F1, accuracy, \
-    mean_absolute_error, mean_percent_error, mean_F1_ev0]], columns=["class", "precision", "recall", "F1",\
-    "accuracy", "MAE", "MPE", "mean_F1_ev0"])
+    mean_absolute_error, mean_percent_error]], columns=["class", "precision", "recall", "F1",\
+    "accuracy", "MAE", "MPE"])
     
     result_summary_file = pd.concat([result_summary_file, row_row], ignore_index=True)
     
