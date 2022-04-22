@@ -65,7 +65,7 @@ cell_list = list(class_results["Label"])
 for f in range(0, len(unique_img)):
     this_count = cell_list.count(unique_img[f]) - 1
     new_row = pd.DataFrame([[unique_img[f], this_count]], columns=["Label", "Counts"])
-    img_counts = img_counts.append(new_row)
+    img_counts = pd.concat([img_counts, new_row], ignore_index=True)
 geno = pd.read_csv(geno_file)
 
 # Get the unique genotype labels

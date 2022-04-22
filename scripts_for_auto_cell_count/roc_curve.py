@@ -64,7 +64,7 @@ for selectedClassifier in class_list:
     # Represent the false negatives as their own rows in the dataframe
     for increment in range(0, total_false_neg):
         new_row = pd.DataFrame([["hello there", 0, 1]], columns=["Label", "Mean", "points"])
-        results = results.append(new_row, ignore_index=True)
+        results = pd.concat([results, new_row], ignore_index=True)
 
     # Get the true or false autocount
     binary_y = np.array(results["points"])
