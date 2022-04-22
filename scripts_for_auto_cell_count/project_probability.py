@@ -82,7 +82,7 @@ def sep_slidebook(file_names, delim):
     id1_df = pd.DataFrame(columns=["newsid1_anum", "newsid1_snum", "newsid1_fnum3"])
     for index in range(0, len(newsid1_anum)):
         new_row = pd.DataFrame([[newsid1_anum[index], newsid1_snum[index], newsid1_fnum3[index]]], columns=["newsid1_anum", "newsid1_snum", "newsid1_fnum3"])
-        id1_df = id1_df.append(new_row)
+        id1_df = pd.concat([id1_df, new_row], ignore_index=True)
     return id1_df
 
 ### 
@@ -104,7 +104,7 @@ def squish(input_df):
     id1_df_squish_df = pd.DataFrame(columns=["id1_df_squish"])
     for index in range(0, len(id1_df_squish)):
         new_row = pd.DataFrame([[id1_df_squish[index]]], columns=["id1_df_squish"])
-        id1_df_squish_df = id1_df_squish_df.append(new_row)
+        id1_df_squish_df = pd.concat([id1_df_squish_df, new_row], ignore_index=True)
     return id1_df_squish_df
 
 # Start of main
@@ -144,7 +144,7 @@ if first_stage:
     newsid1_df = pd.DataFrame(columns=["newsid1"])
     for index in range(0, len(newsid1)):
             new_row = pd.DataFrame([[newsid1[index]]], columns=["newsid1"])
-            newsid1_df = newsid1_df.append(new_row)
+            newsid1_df = pd.concat([newsid1_df, new_row], ignore_index=True)
     
     # This df gives us access to varibles based on the images in several forms
     big_df = pd.concat([newsid1_df, id1_df_squish], axis=1)
@@ -204,7 +204,7 @@ else:
     newsid1_df = pd.DataFrame(columns=["newsid1"])
     for index in range(0, len(newsid1)):
             new_row = pd.DataFrame([[newsid1[index]]], columns=["newsid1"])
-            newsid1_df = newsid1_df.append(new_row)
+            newsid1_df = pd.concat([newsid1_df, new_row], ignore_index=True)
 
     # This df gives us access to varibles based on the images in several forms
     big_df = pd.concat([newsid1_df, id1_df_squish], axis=1)
