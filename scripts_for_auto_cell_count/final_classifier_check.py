@@ -82,11 +82,10 @@ if len(lvl_geno) == 1:
     img_counts["geno"] = geno_list
 
     # Save current img counts to the counted classifier folder as csv file
-    img_counts.to_csv(output_count + selectedClassifier + "/" + selectedClassifier + "_final.csv")
-
-    # Calculate the 1 Sample T-test   
+    img_counts.to_csv(output_count + selectedClassifier + "/" + selectedClassifier + "_final.csv") 
+    
+    # Get information about the group
     group_one = img_counts.query('geno == @lvl_geno[0]')
-    t_test_calc = scipy.stats.ttest_1samp(group_one["Counts"],  popmean=1, nan_policy="omit")
  
     # Calculate the mean counts
     print(str(lvl_geno[0]) + " Mean Counts: " + str(np.mean(group_one["Counts"])))
@@ -98,9 +97,7 @@ if len(lvl_geno) == 1:
     print(str(lvl_geno[0]) + " 95% Confidence Interval: ")
     print(scipy.stats.norm.interval(alpha=0.95, loc=np.mean(group_one["Counts"])))
 
-    # Write the T Test results
-    print("T-test statistic: " + str(t_test_calc[0]))
-    print("P-Value: " + str(t_test_calc[1]))
+    # Write the total cell count
     print("Total Count: " + str(np.sum(group_one["Counts"])))
 # 2+ levels
 elif len(lvl_geno) > 2:
