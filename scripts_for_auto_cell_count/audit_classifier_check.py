@@ -134,7 +134,7 @@ for image in range (0, len(img_names)):
 
     # Store data for final result
     this_row = pd.DataFrame([[name, tp, fp, fn, avg_area, avg_circular]], columns=["name", "tp", "fp", "fn", "avg_area", "avg_circularity"])
-    final_result = final_result.append(this_row)
+    final_result = pd.concat([final_result, this_row], ignore_index=True) 
 
 # Method to catch divide by zero errors, skipping rows that cause the issue 
 def catchDivideByZero(numer, denom):
@@ -261,7 +261,7 @@ if len(lvl_geno) == 1:
     mean_absolute_error, mean_percent_error, mean_F1_ev0]], columns=["class", "precision", "recall", "F1",\
     "accuracy", "MAE", "MPE", "mean_F1_ev0"])
     
-    result_summary_file = result_summary_file.append(row_row)
+    result_summary_file = pd.concat([result_summary_file, row_row], ignore_index=True)
     
 # Else, if more than two levels
 elif len(lvl_geno) > 2:
@@ -313,7 +313,7 @@ elif len(lvl_geno) > 2:
 
     # Store results in output csv file
     row_row = pd.DataFrame([[selectedClassifier, precision, recall, F1, accuracy, mean_absolute_error, mean_percent_error, precision_f_val, precision_p_val, recall_f_val, recall_p_val, F1_f_val, F1_p_val]], columns=["class", "precision", "recall", "F1", "accuracy", "MAE", "MPE", "precision_F_value", "precision_P_value", "recall_F_value", "recall_P_value", "F1_F_value", "F1_P_value"])
-    result_summary_file = result_summary_file.append(row_row)
+    result_summary_file = pd.concat([result_summary_file, row_row], ignore_index=True)
 
 # Else there are only two levels
 else:    
@@ -352,7 +352,7 @@ else:
 
     # Prepare output csv file
     row_row = pd.DataFrame([[selectedClassifier, precision, recall, F1, accuracy, mean_absolute_error, mean_percent_error, F1_geno_ttest_pval, mean_F1_ev0, mean_F1_ev1, precision_geno_ttest_pval, recall_geno_ttest_pval]], columns=["class", "precision", "recall", "F1", "accuracy", "MAE", "MPE", "F1_geno_ttest_pval", "mean_F1_ev0", "mean_F1_ev1", "precision_geno_ttest_pval", "recall_geno_ttest_pval"])
-    result_summary_file = result_summary_file.append(row_row)
+    result_summary_file = pd.concat([result_summary_file, row_row], ignore_index=True)
 
 # Generating a unique file name based on time and date
 curr_time = time.localtime(time.time())
