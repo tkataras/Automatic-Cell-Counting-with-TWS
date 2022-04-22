@@ -12,7 +12,7 @@ macro "The -- True -- Count" {
 	
 	print("Starting count_over_dir_prob_TK.ijm");
 	
-	// Weka Output Projected if Projected, else Weka Output Thresholded
+	// Weka Output Projected if Projected, else Weka Output
 	inputDirs = getArgument();
 	
 	// Weka Output Counted
