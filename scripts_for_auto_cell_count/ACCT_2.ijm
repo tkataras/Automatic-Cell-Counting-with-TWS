@@ -52,6 +52,7 @@ if (result) {
 	// Projected images go inside of Weka_Output_Projected
 	searchDirectory = input + "../testing_area/Weka_Output_Projected/" + trimClassName[0];
 
+	// Check if the user has already projected images
 	Dialog.create("Project Probability Images?");
 	Dialog.addCheckbox("Do you need to project images? If you already have done so, leave the box unselected so you can speed up this step", false);
 	Dialog.show();
