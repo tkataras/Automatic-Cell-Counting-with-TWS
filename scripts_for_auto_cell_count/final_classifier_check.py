@@ -174,7 +174,7 @@ else:
     print(scipy.stats.norm.interval(alpha=0.95, loc=np.mean(group_two["Counts"])))
 
     # Write the T Test results
-    print("T-test statistic: " + str(t_test_calc[0]))
+    print("2 Level T-test statistic: " + str(t_test_calc[0]))
     print("P-Value: " + str(t_test_calc[1]))
     total_count = np.sum(group_one["Counts"]) + np.sum(group_two["Counts"])
     print("Total Count: " + str(total_count))
