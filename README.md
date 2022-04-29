@@ -9,7 +9,7 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 5. [Creating Classifiers Using Weka](#Creating-Classifiers-Using-Weka)
 6. [Creating Hand Count Markers](#creating-hand-count-markers)
 7. [How to Use](#how-to-use) 
-8. [Error Fixing](#error-fixing)
+8. [Errors and Troubleshooting](#errors-and-troubleshooting)
 
 
 # Prerequisites
@@ -280,7 +280,7 @@ If you desire even more detailed statistical information about the selected clas
 
 ## Stage 3
 *** 
-Additionaly, the third step of the pipeline allows the user to audit a set of binary images for accuracy using a set of hand placed markers. In this step, set aside a random sample of images equal to the number of validation images and equally distributed between experimental groups from the unseen data to serve as the performance estimate. This performance analysis requires user input in the form of .roi hand counts, similar to what was done in the first step of the program. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison.
+The third step of the pipeline allows the user to audit the accuracy of a set of binary images using a set of hand placed markers. In this step, set aside a random sample of images equal to the number of validation images and equally distributed between experimental groups from the unseen data to serve as the performance estimate. This performance analysis requires user input in the form of .roi hand counts, similar to what was done for the validation images in ACCT 1. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison. ACCT 3 can also be used to assess the accuracy of any set of binary images with multi point ROI markers. 
 
 __3.1__ Same as __1.1__
 
@@ -295,7 +295,7 @@ __3.3__ The program will ask if you are ready to audit your images. This is beca
 __3.4__ Same as __1.5__ to set the maximum and minimum object size and toggle the watershed algorithm option.
 ***
 
-# Error Fixing
+# Errors and Troubleshooting
 ## Installation Errors
 __I can't move the files listed in the installation guide into the Plugins folder__
 1. It may be that you do not have permission to move files into that location. It may be your computer downloading Fiji into a protected location, like the iCloud. Try moving it, or downloading it again, to a local folder and try moving the folders again.
