@@ -352,7 +352,10 @@ Separate your image set and place them in the following folders:
  Create a validation marker set
   Use the "Multi-point" selection tool in FIJI to place a marker near the center of each counted object in each validation image and save one multipoint ROI per image using the same file name as the original images.
   
-  Run ACCT 1 from the Macro dropdown menu (it will be at the bottom)
+ Create a genotype file for the validation images
+  As ACCT is designed for cell counting in experimental conditions, the user must specify the conditions of each image in a .csv file named genotype.csv. the column of data containing the condition infomration must have the first element as "geno" followed by whatever levels are present in the experiment. there must be one cell for each image in the valdiation dataset.
+ 
+  Run ACCT 1 from the Macro dropdown menu in FIJI (it will be at the bottom)
   
   
  
