@@ -10,7 +10,7 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 6. [Creating Hand Count Markers](#creating-hand-count-markers)
 7. [How to Use](#how-to-use) 
 8. [Errors and Troubleshooting](#errors-and-troubleshooting)
-
+9. [Quick Start Guide(in progrss)](#quick-start-guide)
 
 # Prerequisites
 -Current version of Fiji distribution of ImageJ: https://imagej.net/software/fiji/
@@ -332,3 +332,27 @@ __No ROC plot appears in Weka_Output_Counted folders__
  
 __No Audit_example.csv file appears in Results folder when running ACCT 3__
 1. Make sure for ACCT 3 that images in __Audit_Counted__ match .roi files in __Audit_Hand_Counts__ and the rows in __geno_audit.csv__
+
+
+
+
+# Quick Start Guide(in progress)
+***
+to quickly test ACCT with your own images follow these steps:
+Download the #### branch, which has no demonstration data included.
+
+Prepare your data:
+  All images should be 8-bit single channel .png images without any extranious information such as scale bars.
+
+Separate your image set and place them in the following folders:
+  training images - a subset of images to train the machine learnign classifier - place in DownloadLocation/training_are/training_images
+  validation images - a sebset of images to assess classifier accuracy durign model selection - place in DownloadLocation/training_are/Validation_images
+  testing images - the remaining images you would like to count - place in DownloadLocation/training_are/Validation_images
+ 
+ Create a validation marker set
+  Use the "Multi-point" selection tool in FIJI to place a marker near the center of each counted object in each validation image and save one multipoint ROI per image using the same file name as the original images.
+  
+  Run ACCT 1 from the Macro dropdown menu (it will be at the bottom)
+  
+  
+ 
