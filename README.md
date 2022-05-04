@@ -7,10 +7,10 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 3. [Software Dependencies](#software-dependencies)
 4. [Manual Input Files](#manual-input-files)
 5. [Creating Classifiers Using Weka](#Creating-Classifiers-Using-Weka)
-6. [Creating Hand Count Markers](#creating-hand-count-markers)
+6. [Hand Placed Markers for Validation](#creating-Hand-Placed-Markers-for-Validation)
 7. [How to Use](#how-to-use) 
 8. [Errors and Troubleshooting](#errors-and-troubleshooting)
-9. [Quick Start Guide(in progrss)](#quick-start-guide)
+9. [Quick Start Guide(in progress)](#quick-start-guide)
 
 # Prerequisites
 -Current version of Fiji distribution of ImageJ: https://imagej.net/software/fiji/
