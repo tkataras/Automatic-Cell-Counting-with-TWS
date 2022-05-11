@@ -1,10 +1,11 @@
 /**
  * Author: Theo Kataras, Tyler Jang
- * Date: 4/21/2022
+ * Date: 5/11/2022
  * 
  * Description: Main program to validate the counts from ACCT 2 to see performance on a
  * 				selection of images from the full dataset.
  */
+print("Starting ACCT 3");
 input = getDirectory("Choose source directory of the macro (Scripts for Auto Cell Count)");
 
 // Set measurements to calculate
