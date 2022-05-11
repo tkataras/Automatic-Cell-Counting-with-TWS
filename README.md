@@ -309,17 +309,24 @@ If you desire even more detailed statistical information about the selected clas
 *** 
 The third step of the pipeline allows the user to audit the accuracy of a set of binary images using a set of hand placed markers. In this step, set aside a random sample of images equal to the number of validation images and equally distributed between experimental groups from the unseen data to serve as the performance estimate. This performance analysis requires user input in the form of .roi hand counts, similar to what was done for the validation images in ACCT 1. This audit dataset is then used to calculate the same statistics as the validation dataset for comparison. ACCT 3 can also be used to assess the accuracy of any set of binary images with multi point ROI markers. 
 
-__3.1__ Same as __1.1__
+__3.1__ Once again, the program must know where it is downloaded. Select the directory/folder named [scripts_for_auto_cell_count](scripts_for_auto_cell_count).
+
+<img src = "figures/selectSource.PNG">
 
 __3.2__ You will select which classifier you want to audit the performance of from the full dataset. 
 
 <img src = "figures/auditSelectClassifier.png">
 
-__3.3__ The program will ask if you are ready to audit your images. This is because the program is waiting for you to select the images you want to audit and move them into the __Audit_Images__ folder. It is also waiting for the .roi files for these images to be placed in the __Audit_Hand_Counts__ folder. Once this is done you can select __OK__.
+__3.3__ The program will ask if you are ready to audit your images. This is because the program is waiting for you to select the images you want to audit and move them into the __Audit_Images__ folder. It is also waiting for the .roi files for these images to be placed in the __Audit_Hand_Counts__ folder. Once this is done you can select __OK__ with the checkbox selected.
 
 <img src = "figures/auditConfirmProgress.png">
 
-__3.4__ Same as __1.5__ to set the maximum and minimum object size and toggle the watershed algorithm option.
+__3.4__ Same as __1.5__ to set the maximum and minimum object size and toggle the watershed algorithm option. To count the number of objects in your data, the program defaults to a pixel minimum and maximum object size. These cuttoffs will have significant effects on accuracy and vary completely by application. You will be prompted to select these values. This has to be left to the user since the size of the objects they want counted will vary between different users. You will also be prompted to optionally apply the watershed algorithm when counting images. This is used to separate objects that are touching or overlapping in the image so they can be separately counted. This is on by default.
+
+Please use the same parameters you used in Stage 1 to ensure proper experimental design.
+
+<img src = "figures/sizeValues.png">
+
 ***
 
 # Errors and Troubleshooting
