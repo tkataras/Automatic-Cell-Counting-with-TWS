@@ -47,15 +47,13 @@ __Windows:__ In order to install the neccessary Python packages, the Python Scri
 
 If you have an existing installation of Python not added to path, perform the following steps to add Python to the path:
 
+```
 Locate the Python install directory through the Windows search in Explorer.
-
 Copy the address of the scripts folder from the location bar at the top of the Explorer window.
-
 Access Edit system environment variables in the control panel, select Environment variables, select Path, Edit and new.
-
 Paste the copied Python scrips location into the new path line.
-
-Open Windows Powershell from the search menu and the packages can be installed by copying the following install commands line by line. Right click the working line of the termnial to paste the command.
+```
+With Python added to the system apth, open Windows Powershell from the search menu and the packages can be installed by copying the following install commands line by line. Right click the working line of the termnial to paste the command.
 
 ```
 pip3 install numpy
@@ -122,6 +120,8 @@ Making classifiers is described in the [Creating Classifiers Using Weka](#Creati
 ## Image Protocols
 Images should be of the same dimensions.
 
+Images should be 8-bit.
+
 Images should be free of major artifacts (Optional but recommended).
 
 Each image _must_ have a unique file name.
@@ -154,7 +154,7 @@ F1
 ```
 
 # Creating Classifiers Using Weka
-ACCT uses Weka Classifiers to count images, which the user will initially need to create. 
+ACCT uses Weka Classifiers to identify cells in images, which the user will need to create. 
 
 Before starting, close any images open in Fiji.
 
@@ -162,7 +162,7 @@ Start by selecting all [training_area/training_images](training_area/training_im
 
 Once all images are open, use the Fiji search bar to apply the __Images to Stack__ operation.
 
-You will then want to convert the images to 8-bit, which will make the images appear in greyscale. To do this select __Image >> Type >> 8-bit__.
+You will then want to convert the images to 8-bit for consistency, which will make the images appear in greyscale. To do this select __Image >> Type >> 8-bit__.
 
 With the image stack selected, launch the __Advanced Weka Segmentation__ plugin from the Fiji search bar, or __Plugins__ menu.
 
@@ -172,7 +172,7 @@ It is best to start with small amounts of input data, using the free selection t
 
 <img src = "figures/weka gui.png">
 
-After the first two bits of training data are added, press __Train classifier__ to begin building a classifier based on the provided data, which will then be applied to the whole image stack, visible from an overlay on all images. __The first training can take several minutes on an image stack, as features are calcuated for the first time for each image. This speed improves on the following training.__
+After the first two instances of training data are added, press __Train classifier__ to begin building a classifier with the provided data, which will then be applied to the whole image stack, visible from an overlay on all images. __The first training can take several minutes on an image stack, as features are calcuated for the first time for each image. This speed improves in the following trainings.__
 
 <img src = "figures/smaller_training/training1.pnghalf.png">
 
@@ -191,6 +191,10 @@ With the new training data added, press __Train classifier__ and observe the res
 Each new addition of data will change the persepctive of the classifier based on the new data, and we can save multiple classifiers which allows us to select the most effective point in training based on the validation data.
 
 There will be an image overlay in red and green showing what the classifier thinks is part of the object and what is not. If you would like to see the original image under the overlay, select __Toggle overlay__.
+
+For ACCT's automatic counting to function:
+**Cells** should be **RED**, or class 1
+**Background** should be **GREEN** or class 2
 
 For more information, there is a thorough explanation of __Trainable Weka Segmentation__ plugin located at: https://imagej.net/plugins/tws/ .
 
