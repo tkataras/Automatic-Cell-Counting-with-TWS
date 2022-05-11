@@ -343,6 +343,11 @@ Please use the same parameters you used in Stage 1 to ensure proper experimental
 
 <img src = "figures/sizeValues.png">
 
+As an example, the output in log will look similar to this.
+
+
+<img src = "figures/act3ExpectedOut.PNG">
+<img src = "figures/act3ExpectedOutPartTwo.PNG">
 ***
 
 # Errors and Troubleshooting
