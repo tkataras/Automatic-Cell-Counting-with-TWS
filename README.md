@@ -278,17 +278,28 @@ __2.2__ Select the most accurate classifier (or any classifier of your choosing)
 
 <img src = "figures/selectClassifier.PNG">
 
-__2.3__ The pipeline will ask if you want to run Trainable Weka Segmentation. This will individually apply the selected classifier to the full image data set. This stage needs to only be run once for each classifier on the whole dataset, but you may want to repeatedly run later stages, to optimize your results. Thus, we give the option to skip this stage. By default, it is set to run.
-
-<img src = "figures/applyTWSOneClassifierProb.png">
-
-__2.2__ After the classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons based on the genotypes file. This is similar to stage __1.2__. As in that step, the user will only need to run this once for a full dataset, but may want to repeatedly run later stages, such as stage __2.4__, to optimize your results. Thus, we give the option to skip this step. By default, it is set to run. 
-
-You will explicitly need to select the .model file of the classifier you wish to run. You also can set the threshold value in this step.
+__2.3__ The pipeline will ask if you want to run Trainable Weka Segmentation. This will individually apply the selected classifier to the full image data set. This stage needs to only be run once for each classifier on the whole dataset, but you may want to repeatedly run later stages, to optimize your results. Thus, we give the option to skip this stage. By default, it is set to run. 
 
 <img src = "figures/selectWeka.png">
 
-__2.3__ Repeat stage __1.3__ and __1.4__ with the exact same parameters you used in stage __1__. This stage requires a second genotypes file named __geno_full.csv__ from the user containing experimental grouping information for the unseen dataset. This serves the exact same purpose as __genotype.csv__, but for the full set of images.
+You will explicitly need to select the .model file of the classifier you wish to run. You also can set the threshold value in this step.
+
+<img src = "figures/applyTWSOneClassifierProb.png">
+
+__2.4__ Our data includes paired images in individual fields of view for increased context when counting, so intermediate stage are included to identify and project these image pairs for the final automatic count. If your data does not include paired images, do not select this option below:
+
+<img src = "figures/selectMultipleSegmentation.PNG">
+
+__2.4.1__ If you select this option, you will then be prompted to rerun the step that grouped the projected images into a combined image. This step takes a long time relative to other parts of the pipeline and only needs to be done once, so you are prompted to decide if you want to rerun this step.
+
+<img src = "figures/rerunProjected.png">
+
+__2.5__ After the classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons based on the genotypes file. This is identical to stage __1.5__. To count the number of objects in your data, the program defaults to a pixel minimum and maximum object size. These cuttoffs will have significant effects on accuracy and vary completely by application. You will be prompted to select these values. This has to be left to the user since the size of the objects they want counted will vary between different users. You will also be prompted to optionally apply the watershed algorithm when counting images. This is used to separate objects that are touching or overlapping in the image so they can be separately counted. This is on by default.
+
+Please use the same parameters you used in Stage 1 to ensure proper experimental design.
+ 
+<img src = "figures/sizeValues.png">
+
 
 If you desire even more detailed statistical information about the selected classifier:
 1. The number of counted objects for each individual image for each individual classifier can be found in __testing_area/Weka_Output_Counted/classifier#/classifier#\_Final.csv__.
