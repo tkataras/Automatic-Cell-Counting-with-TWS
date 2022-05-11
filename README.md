@@ -192,8 +192,9 @@ Each new addition of data will change the persepctive of the classifier based on
 
 There will be an image overlay in red and green showing what the classifier thinks is part of the object and what is not. If you would like to see the original image under the overlay, select __Toggle overlay__.
 
-For ACCT's automatic counting to function:
+To review, for ACCT's automatic counting to function:
 **Cells** should be **RED**, or class 1
+
 **Background** should be **GREEN** or class 2
 
 For more information, there is a thorough explanation of __Trainable Weka Segmentation__ plugin located at: https://imagej.net/plugins/tws/ .
@@ -217,14 +218,14 @@ Hand count markers are created in ImageJ using the Point Selection Tool, availab
 
 # How To Use
 
-TODO: By downloading our Github repository you will have a set of folders for demo and for experimental use. (Don't have a demo with example data yet)
+TODO: By downloading our Github __demo__ repository you will have a set of folders for demo and for experimental use. (Don't have a demo with example data yet)
 
 ## Stage 1
 From the ImageJ bar, navigate and select __Plugins >> ACCT 1__. You may need to scroll down for a period of time to find it.
 
 <img src = "figures/selectACCT1.png">
 
-__1.1__ The first step is to initiate the pipeline. You will be prompted to locate the installation location of the pipeline, as this will vary by user preference. This is so that our program knows where you have downloaded it. Select the directory/folder named [scripts_for_auto_cell_count](scripts_for_auto_cell_count).
+__1.1__ The first step is to initiate the pipeline. You will be prompted to locate the installation location of the ACCT folders, as this will vary by user preference.  Select the directory/folder named [scripts_for_auto_cell_count](scripts_for_auto_cell_count).
 
 <img src = "figures/selectSource.PNG">
 
