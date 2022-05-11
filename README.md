@@ -247,7 +247,7 @@ __1.4.1__ If you select this option, you will then be prompted to rerun the step
 <img src = "figures/rerunProjected.png">
 
 __1.4.2__ Thresholding..........
-<img src = "figures/thresholdprob.PNG">
+<img src = "figures/thresholdprob.png">
 
 
 __1.5__ To count the number of objects in your data, the program defaults to a pixel minimum and maximum object size. These cuttoffs will have significant effects on accuracy and vary completely by application. You will be prompted to select these values. This has to be left to the user since the size of the objects they want counted will vary between different users. You will also be prompted to optionally apply the watershed algorithm when counting images. This is used to separate objects that are touching or overlapping in the image so they can be separately counted. This is on by default.
