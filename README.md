@@ -198,6 +198,11 @@ For more information, there is a thorough explanation of the __Trainable Weka Se
 
 ACCT will expect at least 2 classifiers to compare performance against for its validation step in Stage __1__.
 
+## Changing classifier settings
+By default, the classifiers will be a Fast Random Forest model, however different models may give different results that the user may desire. Settings can also change what features of the image the classifiers will focus on in training, which may be important.
+
+To change the settings, select __Settings__.
+
 # Creating Hand Placed Markers for Validation
 Hand count markers are created in ImageJ using the Point Selection Tool, available in the toolbar, and the ROI manager, which is under __Analyze >> Tools >> ROI Manager__. You can also type ROI Manager in the search bar and select it. You should also close __Trainable Weka Segmentation__ if you still have it open.
 
