@@ -237,7 +237,11 @@ Hand count markers are created in ImageJ using the Point Selection Tool, availab
 
 # How To Use
 
-TODO: By downloading our Github __demo__ repository you will have a set of folders for demo and for experimental use. (Don't have a demo with example data yet)
+The following is a step-by-step walkthrough of ACCT in its three stages:
+[Stage 1](#Stage-1)
+[Stage 2](#Stage-2)
+[Stage 3](#Stage-3)
+
 
 ## Stage 1
 From the ImageJ bar, navigate and select __Plugins >> ACCT 1__. You may need to scroll down for a period of time to find it.
