@@ -17,12 +17,12 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 
 -Python: https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe 
 
-(Ensure the "add to path" check box is selected during install)
+(Ensure the "add to path" checkbox is selected during installation.)
 
--Currently the ImageScience package for Fiji must NOT be installed or have been installed on the Fiji installation in use since it is not compatable with our program. If you have installed ImageScience, you can uninstall and reinstall Fiji to solve the problem. Alternatively, it is possible to use ACCT from a fresh installation of Fiji.
+-_Currently_ the ImageScience package for Fiji must NOT be installed or have been installed on the Fiji installation in use since it is not compatable with our program. If you have installed ImageScience, you can uninstall and reinstall Fiji to solve the problem. Alternatively, it is possible to use ACCT from a fresh installation of Fiji.
 
 # Installation Guide
-First you will have to download this program, which can be done through a terminal such as Git, Ubuntu, or Microsoft Powershell with the following line of code.
+First, you will have to download this program, which can be done through a terminal such as Git, Ubuntu, or Microsoft Powershell with the following line of code.
 ```
 git clone https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
 ```
@@ -41,9 +41,8 @@ apply_BS_TWS_prob.bsh
 apply_TWS_one_classifier_prob.bsh
 ```
 
-
 # Software Dependencies
-__Windows:__ In order to install the neccessary Python packages, the Python Scripts folder must be added to the terminal's knowledge of working areas designated by the PATH file. The easiest way to do this is to ensure the "add to path" checkbox is filled during the installation of Python.
+__Windows:__ In order to install the neccessary Python packages, the Python Scripts folder must be added to the terminal's knowledge of working areas designated by the PATH file. To do this, ensure the "add to path" checkbox is selected during the installation of Python.
 
 If you have an existing installation of Python not added to path, perform the following steps to add Python to the path:
 
@@ -53,7 +52,7 @@ Copy the address of the scripts folder from the location bar at the top of the E
 Access Edit system environment variables in the control panel, select Environment variables, select Path, Edit and new.
 Paste the copied Python scrips location into the new path line.
 ```
-With Python added to the system apth, open Windows Powershell from the search menu and the packages can be installed by copying the following install commands line by line. Right click the working line of the termnial to paste the command.
+With Python added to the path, open Windows Powershell from the search menu and the packages can be installed by copying the following install commands line by line. Right click the working line of the termnial to paste the command.
 
 ```
 pip3 install numpy
@@ -78,8 +77,8 @@ pip3 install sklearn
 pip3 install matplotlib
 ```
 
-## File architecture
-This image represents the full file architecture of ACCT, displaying information about the location and purpose of different folders. More details about individual sections of this image appear in the following sections.
+## File Architecture
+This image represents the file architecture of ACCT, displaying information about the location and purpose of different folders. More details about individual sections of this image appear in the following sections.
 <img src = "figures/file_diagram.png">
 
 
@@ -88,21 +87,22 @@ This image represents the full file architecture of ACCT, displaying information
 All input images should be in .PNG, .JPEG, or .TIF format. 
 Preferably, images should be in .PNG format.
 ```
-Place the entire set of images you would like counted inside of [testing_area/images](testing_area/images).
 
 Place the set of images you would like to use as images to train the classifiers inside of [training_area/training_images](training_area/training_images). This is mainly for you to keep track of what images you used for training.
 
 Place the set of images you would like use for validation of the machine learning classifiers in [training_area/Validation_data](training_area/Validation_data).
 
-These three sets should have no overlapping images for the most statstically valid automatic counts.
+Place the entire set of images you would like counted inside of [testing_area/images](testing_area/images).
 
-You will also need to create a .csv file storing the experimental condition data for your images. ACCT is set up to handle two condition comparisons automatically. Currently, this is neccessary even if you only have one condition. We refer to these files as genotype.csv for the validation data, and geno_full.csv for the experimental data.
+These three folders __should not__ have overlapping images if you desire valid automatic counts.
+
+You will also need to create a __.csv__ file storing the experimental condition data for your images. ACCT is set up to handle two or more condition comparisons automatically. Currently, this is neccessary even if you only have one condition. We refer to these files as __genotype.csv__ for the validation data, and __geno_full.csv__ for the full image dataset.
 ```
 genotype.csv 
 ```
 Place this file inside of [training_area/](training_area/). 
 
-The file will look similar to this with "geno" as a specified header and your conditions for each image of your training set in alphabetical order written in each row.
+The file will look similar to this with "geno" as a specified header and your conditions for each image written in each row. These conditions must be in the same order as your images in [training_area/Validation_data](training_area/Validation_data) which is in alphabetical order.
 
 <img src = "figures/genotypeCSV.PNG">
 
@@ -120,7 +120,7 @@ Making classifiers is described in the [Creating Classifiers Using Weka](#Creati
 ## Image Protocols
 Images should be of the same dimensions.
 
-Images should be 8-bit.
+Images should be 8-bit. Refer to [Creating Classifiers Using Weka](#Creating-Classifiers-Using-Weka) to make your images 8-bit.
 
 Images should be free of major artifacts (Optional but recommended).
 
@@ -128,11 +128,11 @@ Each image _must_ have a unique file name.
 
 Image file names should not contain the following symbols as they are used for other purposes.
 ```
-.     (except for the default symbol starting the file extension)
+.     (Except for the default symbol separating the file extension from the file name.)
 :
 ```
 ## Projected Images
-In some cases, paired or grouped images should be projected to create a complete cell count of an area. We are working on a more flexible implimentation of ACCT for handling projected images, but presently the images should have the following identifying characteristics to know which projections associate with each other: 
+In some cases, paired or grouped images should be projected to create a complete cell count of an area. ACCT can handle projected images, but presently the images should have the following identifying characteristics to know which projections associate with each other: 
 
 The final characters denoting the end of unique image information should be: ___XY__
 
@@ -154,11 +154,11 @@ F1
 ```
 
 # Creating Classifiers Using Weka
-ACCT uses Weka Classifiers to identify cells in images, which the user will need to create. 
+ACCT uses classifiers, stored as __.model__ files, to identify cells in images, which the user will need to create. 
 
 Before starting, close any images open in Fiji.
 
-Start by selecting all [training_area/training_images](training_area/training_images) in your file explorer progam and drag them to the Fiji user interface bar to open them all at once.
+Start by selecting all [training_area/training_images](training_area/training_images) in your file explorer progam and drag them into the Fiji user interface bar to open them all at once.
 
 Once all images are open, use the Fiji search bar to apply the __Images to Stack__ operation.
 
@@ -354,6 +354,9 @@ __I can't move the files listed in the installation guide into the Plugins folde
   
 __I want to use other classifier models besides the ones that come with ACCT__
 1. Weka allows installation of other classifier models which is explained at the following website: https://imagej.net/imagej-wiki-static/Trainable_Weka_Segmentation_-_How_to_install_new_classifiers
+
+__When converting my images to stack and then into 8-bit images, my program crashes__
+1. This may happen if you are trying to stack and convert too many images at the same time. Instead, convert smaller sets of images into 8-bit instead of all at the same time.
 
 ## Program Errors
 __ACCT will not run if I try to use the result from the search bar.__
