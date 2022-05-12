@@ -203,6 +203,12 @@ By default, the classifiers will be a Fast Random Forest model, however differen
 
 To change the settings, select __Settings__.
 
+The default settings will look like the following image, with Fast Random Forest as the default model:
+<img src = "figures/wekaSettings.png">
+
+Selecting __Choose__ will bring up a menu to select a different model. 
+<img src = "figures/wekaSettingsWithClassifierOptions.png">
+
 # Creating Hand Placed Markers for Validation
 Hand count markers are created in ImageJ using the Point Selection Tool, available in the toolbar, and the ROI manager, which is under __Analyze >> Tools >> ROI Manager__. You can also type ROI Manager in the search bar and select it. You should also close __Trainable Weka Segmentation__ if you still have it open.
 
