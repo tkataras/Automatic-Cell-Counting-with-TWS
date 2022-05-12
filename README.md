@@ -192,10 +192,7 @@ Each new addition of data will change the persepctive of the classifier based on
 
 There will be an image overlay in red and green showing what the classifier thinks is part of the object and what is not. If you would like to see the original image under the overlay, select __Toggle overlay__.
 
-To review, for ACCT's automatic counting to function:
-**Cells** should be **RED**, or class 1
-
-**Background** should be **GREEN** or class 2
+To review, for ACCT's automatic counting to function **Cells** should be **RED**, or class 1 and **Background** should be **GREEN** or class 2
 
 For more information, there is a thorough explanation of __Trainable Weka Segmentation__ plugin located at: https://imagej.net/plugins/tws/ .
 
