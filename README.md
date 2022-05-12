@@ -198,7 +198,7 @@ For more information, there is a thorough explanation of the __Trainable Weka Se
 
 ACCT will expect at least 2 classifiers to compare performance against for its validation step in Stage __1__.
 
-## Changing classifier settings
+## Changing Classifier Settings
 __For users who are familiar with the basics.__
 
 By default, the classifiers will be a Fast Random Forest model, however different models may give different results that the user may desire. Settings can also change what features of the image the classifiers will focus on in training, which may be important.
@@ -238,9 +238,9 @@ Hand count markers are created in ImageJ using the Point Selection Tool, availab
 # How To Use
 
 The following is a step-by-step walkthrough of ACCT in its three stages:
-[Stage 1](#Stage-1)
-[Stage 2](#Stage-2)
-[Stage 3](#Stage-3)
+1. [Stage 1](#Stage-1)
+2. [Stage 2](#Stage-2)
+3. [Stage 3](#Stage-3)
 
 
 ## Stage 1
