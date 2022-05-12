@@ -138,11 +138,11 @@ The final characters denoting the end of unique image information should be: ___
 
 There are 3 loci for levels of identifying information seperated by __-__:
 
-1. The __first__ space, before any __"-"__
+1. The __first__ space, after the first __"-"__
 
-2. The __second__ space, after a single __"-"__
+2. The __second__ space, after the second __"-"__
 
-3. The __last__ space, after all __"-"__, and before ___XY__ . Only the first two characters are considered
+3. The __last__ space, after all __"-"__, and before ___XY__ . Only the first two characters are considered.
 
 Example: __BKO-426-S42-Iba-Syn-Cortex-10x-F1a_XY1562195071_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3__
 
@@ -168,11 +168,11 @@ With the image stack selected, launch the __Advanced Weka Segmentation__ plugin 
 
 With the __full training image stack__ open in Weka, we can beging training classifiers.
 
-It is best to start with small amounts of input data, using the free selection tool to highlight some cell pixels in an image and adding them to __Class 1__ and some non-cell pixels, adding them to __Class 2__.
+It is best to start with small amounts of input data, using the free selection tool to highlight some cell pixels in an image and adding them to __Class 1__ and some non-cell pixels, adding them to __Class 2__. After highlighting some pixels, select __Add to class 1__ or __Add to class 2__ to add these pixels to the class for cell pixels or non-cell pixels, respectively.
 
 <img src = "figures/weka gui.png">
 
-After the first two instances of training data are added, press __Train classifier__ to begin building a classifier with the provided data, which will then be applied to the whole image stack, visible from an overlay on all images. __The first training can take several minutes on an image stack, as features are calcuated for the first time for each image. This speed improves in the following trainings.__
+After the first two instances of training data are added, press __Train classifier__ to begin building a classifier with the provided data, which will then be applied to the whole image stack, visible from an overlay on all images. You can select __Toggle Overlay__ to remove or apply the overlay displaying what the classifier determined to be a cell or non-cell pixel. __The first training can take several minutes on an image stack, as features are calcuated for the first time for each image. This speed improves greatly in the following trainings.__
 
 <img src = "figures/smaller_training/training1.pnghalf.png">
 
@@ -188,15 +188,15 @@ With the new training data added, press __Train classifier__ and observe the res
 
 <img src = "figures/smaller_training/training8.pnghalf.png">
 
-Each new addition of data will change the persepctive of the classifier based on the new data, and we can save multiple classifiers which allows us to select the most effective point in training based on the validation data.
+Each new addition of data will change the persepctive of the classifier based on the new data, and we can save multiple classifiers which allows us to select the most effective point in training based on the validation data during Stage __1__.
 
 There will be an image overlay in red and green showing what the classifier thinks is part of the object and what is not. If you would like to see the original image under the overlay, select __Toggle overlay__.
 
-To review, for ACCT's automatic counting to function **Cells** should be **RED**, or class 1 and **Background** should be **GREEN** or class 2
+To review, for ACCT's automatic counting to function **Cells** should be **RED**, or __class 1__, and **Background** should be **GREEN**, or __class 2__.
 
-For more information, there is a thorough explanation of __Trainable Weka Segmentation__ plugin located at: https://imagej.net/plugins/tws/ .
+For more information, there is a thorough explanation of the __Trainable Weka Segmentation__ plugin located at: https://imagej.net/plugins/tws/ .
 
-ACCT will expect at least 2 classifiers to compare performance against for its validation step.
+ACCT will expect at least 2 classifiers to compare performance against for its validation step in Stage __1__.
 
 # Creating Hand Placed Markers for Validation
 Hand count markers are created in ImageJ using the Point Selection Tool, available in the toolbar, and the ROI manager, which is under __Analyze >> Tools >> ROI Manager__. You can also type ROI Manager in the search bar and select it. You should also close __Trainable Weka Segmentation__ if you still have it open.
