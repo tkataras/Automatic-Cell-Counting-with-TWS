@@ -328,7 +328,7 @@ __2.4.2__ Thresholding..........
 
 <img src = "figures/thresholdprob.png">
 
-__2.5__ After the classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons based on the genotypes file. This is identical to stage __1.5__. To count the number of objects in your data, the program defaults to a pixel minimum and maximum object size. These cuttoffs will have significant effects on accuracy and vary completely by application. You will be prompted to select these values. This has to be left to the user since the size of the objects they want counted will vary between different users. You will also be prompted to optionally apply the watershed algorithm when counting images. This is used to separate objects that are touching or overlapping in the image so they can be separately counted. This is on by default.
+__2.5__ After the classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons based on the genotypes file. This is identical to stage __1.5__. 
 
 Please use the same parameters you used in Stage 1 to ensure proper experimental design.
  
@@ -360,7 +360,7 @@ __3.3__ The program will ask if you are ready to audit your images. This is beca
 
 <img src = "figures/auditConfirmProgress.png">
 
-__3.4__ Same as __1.5__ to set the maximum and minimum object size and toggle the watershed algorithm option. To count the number of objects in your data, the program defaults to a pixel minimum and maximum object size. These cuttoffs will have significant effects on accuracy and vary completely by application. You will be prompted to select these values. This has to be left to the user since the size of the objects they want counted will vary between different users. You will also be prompted to optionally apply the watershed algorithm when counting images. This is used to separate objects that are touching or overlapping in the image so they can be separately counted. This is on by default.
+__3.4__ Same as __1.5__ to set the maximum and minimum object size and toggle the watershed algorithm option. 
 
 Please use the same parameters you used in Stage 1 to ensure proper experimental design.
 
@@ -368,10 +368,8 @@ Please use the same parameters you used in Stage 1 to ensure proper experimental
 
 As an example, the output in log will look similar to this.
 
-
 <img src = "figures/act3ExpectedOut.PNG">
 <img src = "figures/act3ExpectedOutPartTwo.PNG">
-***
 
 # Errors and Troubleshooting
 ## Installation Errors
