@@ -176,13 +176,13 @@ After the first two instances of training data are added, press __Train classifi
 
 <img src = "figures/smaller_training/training1.pnghalf.png">
 
-Once there is feedback on the current state of the classifier, save it with the __Save classifier__ button, before adding a few more pixels of training data based on areas with inaccurate segmentation based on the current classifier overlay. 
+Once there is feedback on the current state of the classifier, save it with the __Save classifier__ button, before adding a few more pixels of training data based on areas with inaccurate segmentation based on the current classifier overlay. Navigate to [training_area/Classifiers](training_area/Classifiers) and save the classifier model with a name, such as __classifier1.model__.
 
 <img src = "figures/smaller_training/training2.pnghalf.png">
 
 <img src = "figures/smaller_training/training5.pnghalf.png">
 
-With the new training data added, press __Train classifier__ and observe the result, making further corrections and saving the intermediate classifiers.
+With the new training data added, press __Train classifier__ and observe the result, making further corrections and saving the intermediate classifiers. If your images have been converted to a stack, you can move the horizontal scroll bar to see other images that you can train on.
 
 <img src = "figures/smaller_training/training7.pnghalf.png">
 
