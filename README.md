@@ -230,7 +230,7 @@ Hand count markers are created in ImageJ using the Point Selection Tool, availab
 6. Add the selections to the ROI manager.
 7. Rename the new ROI with the image name (This is most easily done by using the following keyboard shortcuts: __Ctrl+Shift+d -> Ctrl+c -> Ctrl+w -> Left click the ROI >> Select Rename -> Ctrl+v -> Enter__).
 8. Continue selecting cell locations, peridocally updating via the Update button in the ROI Manager.
-9. When all cells are selected, save the .roi file in the [training_area/Validation_Hand_Counts](training_area/Validation_Hand_Counts) folder if placing markers for the validation images, or in the [testing_area/Audit_Hand_Counts](testing_area/Audit_Hand_Counts) folder for the audit image set. To do this select __More >> Save__ and navigate to the folder you wish to save the file in.
+9. When all cells are selected, save the .roi file in the [training_area/Validation_Hand_Counts](training_area/Validation_Hand_Counts) folder if placing markers for the validation images, or in the [testing_area/Audit_Hand_Counts](testing_area/Audit_Hand_Counts) folder for the audit image set during Stage __3__. To do this select __More >> Save__ and navigate to the folder you wish to save the file in.
 10. Once saved, select the roi in the ROI manager and select __Delete__ before moving on to the next image. Then close the image so you can open the next image. Your computer will ask if you want to save changes you made to the image, but you _do not_ want to save changes. Instead, select __Don't Save__ when closing the image.
 11. Open a new image and repeat until all validation or audit images are counted.
 
@@ -256,6 +256,8 @@ __1.1__ The first step is to initiate the pipeline. You will be prompted to loca
 <img src = "figures/selectSource.PNG">
 
 __1.2__ The pipeline will ask if you want to reset your folders. Specifically it will ask if you want to reset your Weka_ folders. This is because you may want to run ACCT with new images and so you will need to remove old files or the program will try to use those old files. If you select the option to reset your files, it will then ask to confirm that choice. By default, this is turned off.
+
+__THIS WILL DELETE ALL IMAGES AND HAND COUNTS IF SELECTED.__
 
 <img src = "figures/fileResetOne.png">
 <img src = "figures/fileResetTwo.png">
