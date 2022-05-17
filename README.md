@@ -160,7 +160,9 @@ Before starting, close any images open in Fiji.
 
 Start by selecting all [training_area/training_images](training_area/training_images) in your file explorer progam and drag them into the Fiji user interface bar to open them all at once.
 
-Once all images are open, use the Fiji search bar to apply the __Images to Stack__ operation.
+Once all images are open, use the Fiji search bar to apply the __Images to Stack__ operation. Select _OK__.
+
+**TODO** place an image of the images to stack menu.
 
 You will then want to convert the images to 8-bit for consistency, which will make the images appear in greyscale. To do this select __Image >> Type >> 8-bit__.
 
@@ -223,13 +225,14 @@ Hand count markers are created in ImageJ using the Point Selection Tool, availab
 1. Close __Trainable Weka Segmentation__ if you still have it open.
 2. Open the ROI manager through __Analyze >> Tools >> ROI Manager__.
 3. From the toolbar, select the __Multipoint__ option.
-4. Open an image and place several count markers.
-5. Add the selections to the ROI manager.
-6. Rename the new ROI with the image name (This is most easily done by using the following keyboard shortcuts: __Ctrl+Shift+d -> Ctrl+c -> Ctrl+w -> Right click the ROI and then select Rename -> Ctrl+v -> Enter__).
-7. Continue selecting cell locations, peridocally updating via the Update button in the ROI Manager.
-8. When all cells are selected, save the .roi file in the [training_area/Validation_Hand_Counts](training_area/Validation_Hand_Counts) folder if placing markers for the validation images, or in the [testing_area/Audit_Hand_Counts](testing_area/Audit_Hand_Counts) folder for the audit image set. To do this select __More >> Save__ and navigate to the folder you wish to save the file in.
-9. Once saved, select the roi in the ROI manager and select __Delete__ before moving on to the next image. Then close the image so you can open the next image. Your computer will ask if you want to save changes you made to the image, but you _do not_ want to save changes. Instead, select __Don't Save__ when closing the image.
-10. Open a new image and repeat until all validation or audit images are counted.
+4. Navigate to [training_area/Validation_data](training_area/Validation_data).
+5. Open an image and place several count markers.
+6. Add the selections to the ROI manager.
+7. Rename the new ROI with the image name (This is most easily done by using the following keyboard shortcuts: __Ctrl+Shift+d -> Ctrl+c -> Ctrl+w -> Left click the ROI >> Select Rename -> Ctrl+v -> Enter__).
+8. Continue selecting cell locations, peridocally updating via the Update button in the ROI Manager.
+9. When all cells are selected, save the .roi file in the [training_area/Validation_Hand_Counts](training_area/Validation_Hand_Counts) folder if placing markers for the validation images, or in the [testing_area/Audit_Hand_Counts](testing_area/Audit_Hand_Counts) folder for the audit image set. To do this select __More >> Save__ and navigate to the folder you wish to save the file in.
+10. Once saved, select the roi in the ROI manager and select __Delete__ before moving on to the next image. Then close the image so you can open the next image. Your computer will ask if you want to save changes you made to the image, but you _do not_ want to save changes. Instead, select __Don't Save__ when closing the image.
+11. Open a new image and repeat until all validation or audit images are counted.
 
 <img src = "figures/fijiMultiPoint.PNG">
 
