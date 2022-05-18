@@ -162,7 +162,7 @@ Start by selecting all [training_area/training_images](training_area/training_im
 
 Once all images are open, use the Fiji search bar to apply the __Images to Stack__ operation. Select _OK__.
 
-**TODO** place an image of the images to stack menu.
+<img src = "figures/imageToStack.png">
 
 You will then want to convert the images to 8-bit for consistency, which will make the images appear in greyscale. To do this select __Image >> Type >> 8-bit__.
 
