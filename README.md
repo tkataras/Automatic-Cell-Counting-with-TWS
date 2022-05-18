@@ -160,7 +160,7 @@ Before starting, close any images open in Fiji.
 
 Start by selecting all [training_area/training_images](training_area/training_images) in your file explorer progam and drag them into the Fiji user interface bar to open them all at once.
 
-Once all images are open, use the Fiji search bar to apply the __Images to Stack__ operation. Select _OK__.
+Once all images are open, use the Fiji search bar to apply the __Images to Stack__ operation. Select _OK_.
 
 <img src = "figures/imageToStack.png">
 
