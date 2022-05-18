@@ -20,7 +20,7 @@ macro "The -- True -- Count" {
 	
 	// Weka Probability
 	// Check if we used projected images
-	if(inputDirs.contains("Weka_Output_Projected")) {
+	if(matches(inputDirs, ".*Weka_Output_Projected.*")) {
 		probDirs = inputDirs + "../Weka_Probability_Projected/";
 		projected = true;
 		print("Projected Images");
@@ -86,7 +86,8 @@ macro "The -- True -- Count" {
 			
 			// Fill in small pixel gaps to complete objects
 			run("Fill Holes");
-		
+
+		
 			// Apply the watershed algorithm if true
 			if(ifWatershed) {
 				run("Watershed");
@@ -97,13 +98,15 @@ macro "The -- True -- Count" {
 				roiManager("deselect");		
 				roiManager("Delete");
 			}  
-						
+			
+			
 			// This imageJ plugin creates the results file and image of the count cells based on the size exclusion		
 			run("Analyze Particles...", "size=" + sizeMin + "-" + sizeMax + " pixel show=Masks summarize add");
 			
 			// Saving the image of the counted objects
 			saveAs("Png", outputDirs + output + filename);
-			
+		
+	
 			// Number of counted objects
 			counts = 0;
 			
@@ -151,7 +154,8 @@ macro "The -- True -- Count" {
 					// Subtract one for the multipoint ROI containing the hand count info
 					numRoiTwo = numRoi - 1;
 
-				// Case where the hand count found no cells, but the auto count did
+
+				// Case where the hand count found no cells, but the auto count did
 				} else {
 					// Set the number of hand counts to 0
 					numPoints = 0;
@@ -193,7 +197,8 @@ macro "The -- True -- Count" {
 					} // Each pixel in object
 					// Update the results table
 					setResult("points", rowNumber++, counts);
-				} // Each object in image	  
+				} // Each object in image	
+  
 			} // Else
 		} // Function endpoint
 		selectWindow("Results");
