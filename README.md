@@ -257,7 +257,7 @@ __1.1__ The first step is to initiate the pipeline. You will be prompted to loca
 
 __1.2__ The pipeline will ask if you want to reset your folders. Specifically it will ask if you want to reset your Weka_ folders. This is because you may want to run ACCT with new images and so you will need to remove old files or the program will try to use those old files. If you select the option to reset your files, it will then ask to confirm that choice. By default, this is turned off.
 
-__THIS WILL DELETE ALL IMAGES AND HAND COUNTS IF SELECTED.__
+__THIS WILL DELETE ALL PROCESSED IMAGES IN THE WEKA* folders. Your .roi, .csv, classifier.model, and images will be left alone.__
 
 <img src = "figures/fileResetOne.png">
 <img src = "figures/fileResetTwo.png">
