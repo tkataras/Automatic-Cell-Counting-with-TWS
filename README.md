@@ -365,13 +365,14 @@ __3.3__ The program will ask if you are ready to audit your images. This is beca
 1. Select the images from [testing_area/images](testing_area/images) that you want to audit and move them into the [testing_area/Audit_Images](testing_area/Audit_Images) folder. 
 2. Generate equivalent .roi files for these images to be placed in the [testing_area/Audit_Hand_Counts](testing_area/Audit_Hand_Counts) folder. This is done as in [Hand Placed Markers for Validation](#creating-Hand-Placed-Markers-for-Validation)
 3. From [testing_area/Weka_Output_Counted](testing_area/Weka_Output_Counted), move the matching images from the selected classifier you want to audit into [testing_area/Audit_Counted](testing_area/Audit_Counted)
+
 Once this is done you can select __OK__ with the checkbox selected.
 
 <img src = "figures/auditConfirmProgress.png">
 
 __3.4__ Same as __1.5__ to set the maximum and minimum object size and toggle the watershed algorithm option. 
 
-Please use the same parameters you used in Stage 1 to ensure proper experimental design.
+Please use the same parameters you used in Stage __1__ and Stage __2__ to ensure proper experimental design.
 
 <img src = "figures/sizeValues.png">
 
@@ -421,8 +422,8 @@ __No ROC plot appears in Weka_Output_Counted folders__
 __No Audit_example.csv file appears in Results folder when running ACCT 3__
 1. Make sure for ACCT 3 that images in __Audit_Counted__ match .roi files in __Audit_Hand_Counts__ and the rows in __geno_audit.csv__
 
-
-
+__My output log says that "Counted 0 images" or "Counts from 0 ROIs"__
+1. This is primarily due to having extra folders or files in __Weka_Output_Counted__ or another Weka folder without a matching classifer.model file. The program will give this warning and will not give .csv file results in this case. This is due to the program searching for the matching classifier to the file and not finding one, then proceding to exit that script in the workflow.
 
 # Quick Start Guide(in progress)
 ***
