@@ -264,7 +264,7 @@ __THIS WILL DELETE ALL PROCESSED IMAGES IN THE WEKA* folders. Your .roi, .csv, c
 <img src = "figures/fileResetOne.png">
 <img src = "figures/fileResetTwo.png">
 
-__1.3__ The pipeline will ask if you want to run Trainable Weka Segmentation. This will individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .roi files and the supplied genotypes.csv file. This stage needs to only be run _once_ for a set of validation images, but you may want to repeatedly run later stages, such as stage __1.4__, to optimize your results. Thus, we give the option to skip this stage. By default, it is set to run.
+__1.3__ The pipeline will ask if you want to run Trainable Weka Segmentation. This will individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .roi files and the supplied genotypes.csv file. This stage needs to only be run _once_ for a set of validation images, but you may want to repeatedly run later stages, such as Stage __1.4__, to optimize your results. Thus, we give the option to skip this stage. By default, it is set to run.
 
 <img src = "figures/selectWeka.png">
 
@@ -335,9 +335,9 @@ __2.4.2__ Thresholding..........
 
 <img src = "figures/thresholdprob.png">
 
-__2.5__ After the classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons based on the genotypes file. This is identical to stage __1.5__. 
+__2.5__ After the classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons based on the genotypes file. This is identical to tage __1.5__. 
 
-Please use the same parameters you used in Stage 1 to ensure proper experimental design.
+Please use the same parameters you used in Stage __1__ to ensure proper experimental design.
  
 <img src = "figures/sizeValues.png">
 
