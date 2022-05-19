@@ -1,11 +1,14 @@
 #!/usr/bin/python
 ###
 # Author: Theo Kataras, Tyler Jang
-# Date 4/12/2022
+# Date 5/19/2022
 # 
 # Input: A set of thresholded, projected images
 # Output: A set of merged images
-# Description: This file in the pipeline.....
+# Description: This file in the pipeline will combine projected images from
+#              Weka_Probability by taking the maximum probability at each pixel. 
+#              This process is thus slow as each pixel must check every pixel in
+#              its matching image.
 ###
 import os
 import sys
@@ -16,7 +19,7 @@ import imageio
 # Method: trim_names 
 # Input: File names
 # Output: Bisected file names based on split
-# Description:useful if information in automatic file name from microscope is repetitive
+# Description: Useful if information in automatic file name from microscope is repetitive
 ###
 def trim_names(file_names, half):
     #TODO isn't this to narrowly specific, file versions differ names
@@ -39,8 +42,9 @@ def trim_names(file_names, half):
 ###
 # Method: parse_it 
 # Input: list of seperated relevent name elements from every image
-# Output: TODO
-# Description: 
+# Output: Important name element denoting projection of an image
+# Description: This gets the important name element from a split of the file
+#              name of an image.
 ###
 def parse_it(file_names, object_num):
     newsid1_anum = []
@@ -50,9 +54,9 @@ def parse_it(file_names, object_num):
 
 ###
 # Method: sep_slidebook 
-# Input: file names containng all relevant image info (animal #, slice #, field #)
-# Output: data frame with each type of info as it own column
-# Description: parses out individual grouping variables
+# Input: File names containng all relevant image info (animal #, slice #, field #)
+# Output: Data frame with each type of info as it own column
+# Description: Parses out individual grouping variables
 ###
 def sep_slidebook(file_names, delim):
     # Split files from delim
@@ -61,7 +65,7 @@ def sep_slidebook(file_names, delim):
         split_files.append(file.split(delim))
     max_len = len(split_files[1])
     
-    # These are what you need to adjust for different names of images!!!!####
+    # These are what you need to adjust for different names of images
     newsid1_anum = parse_it(split_files, 1)
     newsid1_snum = parse_it(split_files, 2)
     newsid1_fnum = parse_it(split_files, max_len - 1)
@@ -89,7 +93,8 @@ def sep_slidebook(file_names, delim):
 # Method: squish 
 # Input: data from of grouping variables
 # Output: list of unique image IDs contining specific grouping information
-# Description: creates one grouping object for each image that can be compared across other iterations of the images with slightly different file names
+# Description: Creates one grouping object for each image that can be compared 
+#       across other iterations of the images with slightly different file names
 ###
 def squish(input_df):
     id1_df_squish = []
@@ -188,14 +193,12 @@ if first_stage:
             file_out_loc = id_for_out_dir + out_dir_list[image] + "/" + list(all_current_ID["File_name"])[0]
             imageio.imwrite(file_out_loc, projected)
             projected = [[0] * y_axis] * x_axis
-# Second half of the pipeline TODO Make it project onto probability map
+# Second half of the pipeline 
 else:
     # Get the classifiers/files contained in these directories
     in_dir_list = os.listdir(id_for_in_dir)
 
     # Getting images names, can pick any folder with all images in question to do this
-    # TODO why do I need trim names? (I believe it was for R code limitations) Code runs faster without it.
-    #newsid1 = trim_names(id1, half="back")
     newsid1 = in_dir_list
     id1_df_sep = sep_slidebook(newsid1, "-")
     id1_df_squish = squish(id1_df_sep)
