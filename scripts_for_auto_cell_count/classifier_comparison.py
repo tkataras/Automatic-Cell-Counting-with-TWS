@@ -165,7 +165,7 @@ for f in range(0, len(class_list)):
     precision = catchDivideByZero(total_tp, total_tp + total_fp)
     # Recall = tp/(tp + fn)
     recall = catchDivideByZero(total_tp, total_tp + total_fn)
-    # F1 = 2 * (percision * recall / percision + recall)
+    # F1 = 2 * (precision * recall / precision + recall)
     if precision != None and recall != None:
         result = catchDivideByZero(precision*recall, precision + recall)
     else:
@@ -182,7 +182,7 @@ for f in range(0, len(class_list)):
     mean_percent_error = (((total_tp + total_fn) - (total_tp + total_fp)) / (total_tp + total_fn)) / len(img_names)
 
     # Print resulting values to the log
-    print(curr_class + " percision = " +  str(precision))
+    print(curr_class + " precision = " +  str(precision))
     print(curr_class + " recall = " +  str(recall))
     print(curr_class + " F1 = " +  str(F1))
     print(curr_class + " accuracy = " +  str(accuracy))
@@ -232,11 +232,11 @@ for f in range(0, len(class_list)):
     final_result["recall2"] = recall2
     final_result["F1_2"] = F1_2
     
-    # Find the standard deviation of percision and recall
+    # Find the standard deviation of precision and recall
     if precision2 is not None:
-        print(curr_class + " percision standard deviation = " + str(np.nanstd(precision2)))
+        print(curr_class + " precision standard deviation = " + str(np.nanstd(precision2)))
     else:
-        print(curr_class + " percision standard deviation = None")
+        print(curr_class + " precision standard deviation = None")
 
     if recall2 is not None:
         print(curr_class + " recall standard deviation = " + str(np.nanstd(recall2)))   
