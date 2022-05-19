@@ -16,6 +16,7 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 -Version v1.53c of the Fiji distribution of ImageJ: https://downloads.imagej.net/fiji/archive/20201104-1356/fiji-win64.zip
 
 -Python: https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe 
+(If you are using an older version of Windows, such as Windows 7, you can find compatable versions of Python here: https://www.python.org/downloads/windows/)
 
 __(Ensure the "add to path" checkbox is selected during installation.)__
 
