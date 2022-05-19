@@ -164,7 +164,7 @@ accuracy = catchDivideByZero(total_tp, total_tp + total_fp + total_fn)
 precision = catchDivideByZero(total_tp, total_tp + total_fp)
 # Recall = tp/(tp + fn)
 recall = catchDivideByZero(total_tp, total_tp + total_fn)
-# F1 = 2 * (percision * recall / percision + recall)
+# F1 = 2 * (precision * recall / precision + recall)
 if precision != None and recall != None:
     result = catchDivideByZero(precision*recall, precision + recall)
 else:
@@ -181,7 +181,7 @@ mean_absolute_error = sum(np.abs(final_result["fn"] - final_result["fp"])) / len
 mean_percent_error = (((total_tp + total_fn) - (total_tp + total_fp)) / (total_tp + total_fn)) / len(img_names)
 
 # Print resulting values to the log
-print(selectedClassifier + " percision = " +  str(precision))
+print(selectedClassifier + " precision = " +  str(precision))
 print(selectedClassifier + " recall = " +  str(recall))
 print(selectedClassifier + " F1 = " +  str(F1))
 print(selectedClassifier + " accuracy = " +  str(accuracy))
@@ -231,11 +231,11 @@ final_result["precision2"] = precision2
 final_result["recall2"] = recall2
 final_result["F1_2"] = F1_2
     
-# Find the standard deviation of percision and recall
+# Find the standard deviation of precision and recall
 if precision2 is not None:
-    print(selectedClassifier + " percision standard deviation = " + str(np.nanstd(precision2)))
+    print(selectedClassifier + " precision standard deviation = " + str(np.nanstd(precision2)))
 else:
-    print(selectedClassifier + " percision standard deviation = None")
+    print(selectedClassifier + " precision standard deviation = None")
 
 if recall2 is not None:
     print(selectedClassifier + " recall standard deviation = " + str(np.nanstd(recall2)))   
