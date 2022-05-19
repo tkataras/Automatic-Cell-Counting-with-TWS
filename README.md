@@ -361,7 +361,11 @@ __3.2__ You will select which classifier you want to audit the performance of fr
 
 <img src = "figures/auditSelectClassifier.png">
 
-__3.3__ The program will ask if you are ready to audit your images. This is because the program is waiting for you to select the images you want to audit and move them into the __Audit_Images__ folder. It is also waiting for the .roi files for these images to be placed in the __Audit_Hand_Counts__ folder. Once this is done you can select __OK__ with the checkbox selected.
+__3.3__ The program will ask if you are ready to audit your images. This is because the program is waiting for you to do three steps:
+1. Select the images from [testing_area/images](testing_area/images) that you want to audit and move them into the [testing_area/Audit_Images](testing_area/Audit_Images) folder. 
+2. Generate equivalent .roi files for these images to be placed in the [testing_area/Audit_Hand_Counts](testing_area/Audit_Hand_Counts) folder. This is done as in [Hand Placed Markers for Validation](#creating-Hand-Placed-Markers-for-Validation)
+3. From [testing_area/Weka_Output_Counted](testing_area/Weka_Output_Counted), move the matching images from the selected classifier you want to audit into [testing_area/Audit_Counted](testing_area/Audit_Counted)
+Once this is done you can select __OK__ with the checkbox selected.
 
 <img src = "figures/auditConfirmProgress.png">
 
