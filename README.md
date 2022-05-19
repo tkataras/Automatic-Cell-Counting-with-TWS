@@ -291,6 +291,8 @@ More statistical information will be printed to the log window.
 
 This will be located under [training_area/Results](training_area/Results).
 
+**TODO** Note, to avoid division by 0 errors, images that are empty in the automatic count will be excluded from calculations for the overall precision, recall, F1 Score, and accuracy. This is mainly relavent if a classifier model does not select any object in the image as a cell. This needs a better explaination of the impact on the statistical outcome.
+
 If you desire even more detailed statistical information about each individual classifier:
 1. Reciever operator curves are also automatically generated for each classifier and located inside of __training_area/Weka_Output_Counted/classifier#/classifier#\_roc\_curve.pdf__.   (Note, Not all models classifiy pixels in a probabilistic manner, instead classifying by a binary label. Thus, ROC plots cannot be generated for that particular model.)
 
