@@ -285,7 +285,7 @@ __1.5__ To count the number of objects in your data, the program defaults to a p
 
 <img src = "figures/sizeValues.png">
 
-After the pipeline completes a run, run times will vary by hardware capacity, open the __All\_Classifier\_Comparison\_(current time).csv__ file to compare the performance of the various classifiers. This is a summary of the overall statistical performance of each classifier.
+After the pipeline completes a run, run times will vary by hardware capacity, open the __All\_Classifier\_Comparison\_(current time).csv__ file to compare the performance of the various classifiers. This contains P-Value calculations for statistical significance as well. This is a summary of the overall statistical performance of each classifier.
 
 More statistical information will be printed to the log window.
 
@@ -306,7 +306,7 @@ As an example, the output in log will look similar to this.
 ## Stage 2
 From the ImageJ bar, navigate and select __Plugins >> ACCT 2__.
 
-__2.1__ Once again, the program must know where it is downloaded. Select the directory/folder named [scripts_for_auto_cell_count](scripts_for_auto_cell_count).
+__2.1__ Once again, the program must know where it is downloaded. Select the folder named [scripts_for_auto_cell_count](scripts_for_auto_cell_count).
 
 <img src = "figures/selectSource.PNG">
 
