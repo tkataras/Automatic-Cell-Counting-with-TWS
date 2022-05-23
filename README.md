@@ -429,26 +429,5 @@ __No Audit_example.csv file appears in Results folder when running ACCT 3__
 __My output log says that "Counted 0 images" or "Counts from 0 ROIs"__
 1. This is primarily due to having extra folders or files in __Weka_Output_Counted__ or another Weka folder without a matching classifer.model file. The program will give this warning and will not give .csv file results in this case. This is due to the program searching for the matching classifier to the file and not finding one, then proceding to exit that script in the workflow.
 
-# Quick Start Guide(in progress)
-***
-to quickly test ACCT with your own images follow these steps:
-Download the #### branch, which has no demonstration data included.
 
-Prepare your data:
-  All images should be 8-bit single channel .png images without any extranious information such as scale bars.
-
-Separate your image set and place them in the following folders:
-  training images - a subset of images to train the machine learnign classifier - place in DownloadLocation/training_are/training_images
-  validation images - a sebset of images to assess classifier accuracy durign model selection - place in DownloadLocation/training_are/Validation_images
-  testing images - the remaining images you would like to count - place in DownloadLocation/training_are/Validation_images
- 
- Create a validation marker set
-  Use the "Multi-point" selection tool in FIJI to place a marker near the center of each counted object in each validation image and save one multipoint ROI per image using the same file name as the original images.
-  
- Create a genotype file for the validation images
-  As ACCT is designed for cell counting in experimental conditions, the user must specify the conditions of each image in a .csv file named genotype.csv. the column of data containing the condition infomration must have the first element as "geno" followed by whatever levels are present in the experiment. there must be one cell for each image in the valdiation dataset.
- 
-  Run ACCT 1 from the Macro dropdown menu in FIJI (it will be at the bottom)
-  
-  
  
