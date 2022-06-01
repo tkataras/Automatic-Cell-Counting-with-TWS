@@ -35,6 +35,8 @@ git clone https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
 ```
 If you are not familiar with terminals, you can also click the green code button and select __Download ZIP__, then unzip the files in a desired location.
 
+<img src = "figures/DownloadZip.png">
+
 Next, ensure you have downloaded the software located in the [Prerequisites](#prerequisites) section.
 
 Finally, you will have to manually copy and paste certain files into the __Plugins__ folder of your Fiji instalation of ImageJ. 
