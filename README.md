@@ -10,7 +10,7 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 6. [Hand Placed Markers for Validation](#creating-hand-placed-markers-for-validation)
 7. [How to Use](#how-to-use) 
 8. [Errors and Troubleshooting](#errors-and-troubleshooting)
-9. [Quick Start Guide(in progress)](#quick-start-guide)
+
 
 # Prerequisites
 -Version v1.53c of the Fiji distribution of ImageJ: https://downloads.imagej.net/fiji/archive/20201104-1356/fiji-win64.zip
