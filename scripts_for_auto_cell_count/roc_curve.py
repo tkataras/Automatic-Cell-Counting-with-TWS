@@ -1,11 +1,13 @@
 #!/usr/bin/python
 ###
 # Author: Tyler Jang, Theo Kataras
-# Date: 4/21/2022
+# Date: 5/19/2022
 #
 # Inputs: Results csv file containing the probability of each object
 # Outputs: A plot for threshold optimization and a ROC plot.
-# This file creates a threshold optimization and ROC curve plot for each classifier 
+# Description: This file creates a threshold optimization and ROC curve plot for
+# each classifier. It also displays the Area Under the Curve and Average
+# Percision Score calculation. 
 ###
 import pandas as pd
 import numpy as np
@@ -94,7 +96,6 @@ for selectedClassifier in class_list:
     precision, recall, pr_thresholds = precision_recall_curve(binary_y, y_score, pos_label=1)
 
     # Average precision recall score (AP)
-    # TODO this seems kinda useless
     print("AP = " + str(average_precision_score(binary_y, y_score)))
 
     # Method precision_recall_curve adds a single interger to the end of these arrays that must be removed

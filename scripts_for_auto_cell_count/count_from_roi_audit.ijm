@@ -1,8 +1,8 @@
 /**
  * Author: Theo Kataras, Tyler Jang
- * Date: 2/17/2021
+ * Date: 5/19/2022
  * 
- * Input: Hand counted images .
+ * Input: Hand counted images
  * Output: CSV with information about all the hand counted objects.
  * Description: This macro gets the counts for each hand counted image, plus their coordinate position. 
  * 				Saves the results in roi_counts.csv

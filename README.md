@@ -6,27 +6,39 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 2. [Prerequisites](#prerequisites)
 3. [Software Dependencies](#software-dependencies)
 4. [Manual Input Files](#manual-input-files)
-5. [Creating Classifiers Using Weka](#Creating-Classifiers-Using-Weka)
-6. [Hand Placed Markers for Validation](#creating-Hand-Placed-Markers-for-Validation)
+5. [Creating Classifiers Using Weka](#creating-classifiers-using-weka)
+6. [Hand Placed Markers for Validation](#creating-hand-placed-markers-for-validation)
 7. [How to Use](#how-to-use) 
 8. [Errors and Troubleshooting](#errors-and-troubleshooting)
-9. [Quick Start Guide(in progress)](#quick-start-guide)
+
 
 # Prerequisites
--Current version of Fiji distribution of ImageJ: https://imagej.net/software/fiji/
+-Version v1.53c of the Fiji distribution of ImageJ: https://downloads.imagej.net/fiji/archive/20201104-1356/fiji-win64.zip
+
+```
+for non-Windows 64 bit installations for FIJI version 1.53c:
+https://downloads.imagej.net/fiji/archive/20201104-1356/
+```
 
 -Python: https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe 
 
-(Ensure the "add to path" check box is selected during install)
+(If you are using an older version of Windows, such as Windows 7, you can find compatable versions of Python here: https://www.python.org/downloads/windows/)
 
--Currently the ImageScience package for Fiji must NOT be installed or have been installed on the Fiji installation in use since it is not compatable with our program. If you have installed ImageScience, you can uninstall and reinstall Fiji to solve the problem. Alternatively, it is possible to use ACCT from a fresh installation of Fiji.
+__(Ensure the "add to path" checkbox is selected during installation.)__
+
+-_Currently_ the ImageScience package for Fiji must NOT be installed or have been installed on the Fiji installation in use since it is not compatable with our program. If you have installed ImageScience, you can uninstall and reinstall Fiji to solve the problem. Alternatively, it is possible to use ACCT from a fresh installation of Fiji.
 
 # Installation Guide
-First you will have to download this program, which can be done through a terminal such as Git, Ubuntu, or Microsoft Powershell with the following line of code.
+First, you will have to download this program, which can be done through a terminal such as Git, Ubuntu, or Microsoft Powershell with the following line of code.
 ```
 git clone https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
 ```
 If you are not familiar with terminals, you can also click the green code button and select __Download ZIP__, then unzip the files in a desired location.
+
+<img src = "figures/DownloadZip.png">
+
+A version of the program with a small set of demonstration data can be found here:
+https://github.com/tkataras/Automatic-Cell-Counting-with-TWS/tree/demo_final_with_data
 
 Next, ensure you have downloaded the software located in the [Prerequisites](#prerequisites) section.
 
@@ -41,9 +53,8 @@ apply_BS_TWS_prob.bsh
 apply_TWS_one_classifier_prob.bsh
 ```
 
-
 # Software Dependencies
-__Windows:__ In order to install the neccessary Python packages, the Python Scripts folder must be added to the terminal's knowledge of working areas designated by the PATH file. The easiest way to do this is to ensure the "add to path" checkbox is filled during the installation of Python.
+__Windows:__ In order to install the neccessary Python packages, the Python Scripts folder must be added to the terminal's knowledge of working areas designated by the PATH file. To do this, ensure the "add to path" checkbox is selected during the installation of Python.
 
 If you have an existing installation of Python not added to path, perform the following steps to add Python to the path:
 
@@ -53,7 +64,7 @@ Copy the address of the scripts folder from the location bar at the top of the E
 Access Edit system environment variables in the control panel, select Environment variables, select Path, Edit and new.
 Paste the copied Python scrips location into the new path line.
 ```
-With Python added to the system apth, open Windows Powershell from the search menu and the packages can be installed by copying the following install commands line by line. Right click the working line of the termnial to paste the command.
+With Python added to the path, open Windows Powershell from the search menu and the packages can be installed by copying the following install commands line by line. Right click the working line of the termnial to paste the command.
 
 ```
 pip3 install numpy
@@ -78,8 +89,8 @@ pip3 install sklearn
 pip3 install matplotlib
 ```
 
-## File architecture
-This image represents the full file architecture of ACCT, displaying information about the location and purpose of different folders. More details about individual sections of this image appear in the following sections.
+## File Architecture
+This image represents the file architecture of ACCT, displaying information about the location and purpose of different folders. More details about individual sections of this image appear in the following sections.
 <img src = "figures/file_diagram.png">
 
 
@@ -88,21 +99,22 @@ This image represents the full file architecture of ACCT, displaying information
 All input images should be in .PNG, .JPEG, or .TIF format. 
 Preferably, images should be in .PNG format.
 ```
-Place the entire set of images you would like counted inside of [testing_area/images](testing_area/images).
 
 Place the set of images you would like to use as images to train the classifiers inside of [training_area/training_images](training_area/training_images). This is mainly for you to keep track of what images you used for training.
 
 Place the set of images you would like use for validation of the machine learning classifiers in [training_area/Validation_data](training_area/Validation_data).
 
-These three sets should have no overlapping images for the most statstically valid automatic counts.
+Place the entire set of images you would like counted inside of [testing_area/images](testing_area/images).
 
-You will also need to create a .csv file storing the experimental condition data for your images. ACCT is set up to handle two condition comparisons automatically. Currently, this is neccessary even if you only have one condition. We refer to these files as genotype.csv for the validation data, and geno_full.csv for the experimental data.
+These three folders __should not__ have overlapping images if you desire valid automatic counts.
+
+You will also need to create a __.csv__ file storing the experimental condition data for your images. ACCT is set up to handle two or more condition comparisons automatically. Currently, this is neccessary even if you only have one condition. We refer to these files as __genotype.csv__ for the validation data, and __geno_full.csv__ for the full image dataset.
 ```
 genotype.csv 
 ```
 Place this file inside of [training_area/](training_area/). 
 
-The file will look similar to this with "geno" as a specified header and your conditions for each image of your training set in alphabetical order written in each row.
+The file will look similar to this with "geno" as a specified header and your conditions for each image written in each row. These conditions must be in the same order as your images in [training_area/Validation_data](training_area/Validation_data) which is in alphabetical order.
 
 <img src = "figures/genotypeCSV.PNG">
 
@@ -120,7 +132,7 @@ Making classifiers is described in the [Creating Classifiers Using Weka](#Creati
 ## Image Protocols
 Images should be of the same dimensions.
 
-Images should be 8-bit.
+Images should be 8-bit. Refer to [Creating Classifiers Using Weka](#Creating-Classifiers-Using-Weka) to make your images 8-bit.
 
 Images should be free of major artifacts (Optional but recommended).
 
@@ -128,21 +140,21 @@ Each image _must_ have a unique file name.
 
 Image file names should not contain the following symbols as they are used for other purposes.
 ```
-.     (except for the default symbol starting the file extension)
+.     (Except for the default symbol separating the file extension from the file name.)
 :
 ```
 ## Projected Images
-In some cases, paired or grouped images should be projected to create a complete cell count of an area. We are working on a more flexible implimentation of ACCT for handling projected images, but presently the images should have the following identifying characteristics to know which projections associate with each other: 
+In some cases, paired or grouped images should be projected to create a complete cell count of an area. ACCT can handle projected images, but presently the images should have the following identifying characteristics to know which projections associate with each other: 
 
 The final characters denoting the end of unique image information should be: ___XY__
 
 There are 3 loci for levels of identifying information seperated by __-__:
 
-1. The __first__ space, before any __"-"__
+1. The __first__ space, after the first __"-"__
 
-2. The __second__ space, after a single __"-"__
+2. The __second__ space, after the second __"-"__
 
-3. The __last__ space, after all __"-"__, and before ___XY__ . Only the first two characters are considered
+3. The __last__ space, after all __"-"__, and before ___XY__ . Only the first two characters are considered.
 
 Example: __BKO-426-S42-Iba-Syn-Cortex-10x-F1a_XY1562195071_Z0_T0_C2.tiff8bit.pngcropped.pngNpt3__
 
@@ -154,13 +166,15 @@ F1
 ```
 
 # Creating Classifiers Using Weka
-ACCT uses Weka Classifiers to identify cells in images, which the user will need to create. 
+ACCT uses classifiers, stored as __.model__ files, to identify cells in images, which the user will need to create. 
 
 Before starting, close any images open in Fiji.
 
-Start by selecting all [training_area/training_images](training_area/training_images) in your file explorer progam and drag them to the Fiji user interface bar to open them all at once.
+Start by selecting all [training_area/training_images](training_area/training_images) in your file explorer progam and drag them into the Fiji user interface bar to open them all at once.
 
-Once all images are open, use the Fiji search bar to apply the __Images to Stack__ operation.
+Once all images are open, use the Fiji search bar to apply the __Images to Stack__ operation. Select _OK_.
+
+<img src = "figures/imageToStack.png">
 
 You will then want to convert the images to 8-bit for consistency, which will make the images appear in greyscale. To do this select __Image >> Type >> 8-bit__.
 
@@ -168,49 +182,69 @@ With the image stack selected, launch the __Advanced Weka Segmentation__ plugin 
 
 With the __full training image stack__ open in Weka, we can beging training classifiers.
 
-It is best to start with small amounts of input data, using the free selection tool to highlight some cell pixels in an image and adding them to __Class 1__ and some non-cell pixels, adding them to __Class 2__.
+It is best to start with small amounts of input data, using the free selection tool to highlight some cell pixels in an image and adding them to __Class 1__ and some non-cell pixels, adding them to __Class 2__. After highlighting some pixels, select __Add to class 1__ or __Add to class 2__ to add these pixels to the class for cell pixels or non-cell pixels, respectively.
 
 <img src = "figures/weka gui.png">
 
-After the first two instances of training data are added, press __Train classifier__ to begin building a classifier with the provided data, which will then be applied to the whole image stack, visible from an overlay on all images. __The first training can take several minutes on an image stack, as features are calcuated for the first time for each image. This speed improves in the following trainings.__
+After the first two instances of training data are added, press __Train classifier__ to begin building a classifier with the provided data, which will then be applied to the whole image stack, visible from an overlay on all images. You can select __Toggle Overlay__ to remove or apply the overlay displaying what the classifier determined to be a cell or non-cell pixel. __The first training can take several minutes on an image stack, as features are calcuated for the first time for each image. This speed improves greatly in the following trainings.__
 
 <img src = "figures/smaller_training/training1.pnghalf.png">
 
-Once there is feedback on the current state of the classifier, save it with the __Save classifier__ button, before adding a few more pixels of training data based on areas with inaccurate segmentation based on the current classifier overlay. 
+Once there is feedback on the current state of the classifier, save it with the __Save classifier__ button, before adding a few more pixels of training data based on areas with inaccurate segmentation based on the current classifier overlay. Navigate to [training_area/Classifiers](training_area/Classifiers) and save the classifier model with a name, such as __classifier1.model__.
 
 <img src = "figures/smaller_training/training2.pnghalf.png">
 
 <img src = "figures/smaller_training/training5.pnghalf.png">
 
-With the new training data added, press __Train classifier__ and observe the result, making further corrections and saving the intermediate classifiers.
+With the new training data added, press __Train classifier__ and observe the result, making further corrections and saving the intermediate classifiers. If your images have been converted to a stack, you can move the horizontal scroll bar to see other images that you can train on.
 
 <img src = "figures/smaller_training/training7.pnghalf.png">
 
 <img src = "figures/smaller_training/training8.pnghalf.png">
 
-Each new addition of data will change the persepctive of the classifier based on the new data, and we can save multiple classifiers which allows us to select the most effective point in training based on the validation data.
+Each new addition of data will change the persepctive of the classifier based on the new data, and we can save multiple classifiers which allows us to select the most effective point in training based on the validation data during Stage __1__.
 
 There will be an image overlay in red and green showing what the classifier thinks is part of the object and what is not. If you would like to see the original image under the overlay, select __Toggle overlay__.
 
-To review, for ACCT's automatic counting to function:
-**Cells** should be **RED**, or class 1
+To review, for ACCT's automatic counting to function **Cells** should be **RED**, or __class 1__, and **Background** should be **GREEN**, or __class 2__.
 
-**Background** should be **GREEN** or class 2
+For more information, there is a thorough explanation of the __Trainable Weka Segmentation__ plugin located at: https://imagej.net/plugins/tws/ .
 
-For more information, there is a thorough explanation of __Trainable Weka Segmentation__ plugin located at: https://imagej.net/plugins/tws/ .
+ACCT will expect at least 2 classifiers to compare performance against for its validation step in Stage __1__.
 
-ACCT will expect at least 2 classifiers to compare performance against for its validation step.
+## Changing Classifier Settings
+__For users who are familiar with the basics.__
+
+By default, the classifiers will be a Fast Random Forest model, however different models may give different results that the user may desire. Settings can also change what features of the image the classifiers will focus on in training, which may be important.
+
+To change the settings, select __Settings__.
+
+The default settings will look like the following image, with Fast Random Forest as the default model. The default features have selected checkboxes:
+
+<img src = "figures/wekaSettings.png">
+
+Selecting __Choose__ will bring up a menu to select a different model. These models are organized by the general algorithm or approach they use to classify images.
+
+<img src = "figures/wekaSettingsWithClassifierOptions.png">
+
+You can edit the settings of the classifier here, which may allow you to create better classifiers than allowed by the default parameters. 
+
+More details about the meaning of these settings can be found here: https://imagej.net/imagej-wiki-static/Trainable_Weka_Segmentation.html#Training_panel .
 
 # Creating Hand Placed Markers for Validation
 Hand count markers are created in ImageJ using the Point Selection Tool, available in the toolbar, and the ROI manager, which is under __Analyze >> Tools >> ROI Manager__. You can also type ROI Manager in the search bar and select it. You should also close __Trainable Weka Segmentation__ if you still have it open.
 
-1. Open an image and place one or two count markers 
-2. Add the selections to the ROI manager
-3. Rename the new ROI with the image name (This is most easily done by using the following keyboard shortcuts: Ctrl+Shift+d -> Ctrl+c -> Ctrl+w -> right click the ROI and then select Rename -> Ctrl+v -> Enter)
-4. Continue selecting cell locations, peridocally updating via the Update button in the ROI Manager
-5. When all cells are selected, save the .roi file in the [training_area/Validation_Hand_Counts](training_area/Validation_Hand_Counts) folder if placing markers for the validation images, or in the [testing_area/Audit_Hand_Counts](testing_area/Audit_Hand_Counts) folder for the audit image set. To do this select __More >> Save__ and navigate to the folder you wish to save the file in.
-6. Once saved, select the roi in the roi manager and select __Delete__ before moving on to the next image. Then close the image so you can open the next image. Your computer will ask if you want to save changes you made to the image, but you _do not_ want to save changes. Instead, select __Don't Save__ when closing the image.
-7. Open a new image and repeat until all validation or audit images are counted.
+1. Close __Trainable Weka Segmentation__ if you still have it open.
+2. Open the ROI manager through __Analyze >> Tools >> ROI Manager__.
+3. From the toolbar, select the __Multipoint__ option.
+4. Navigate to [training_area/Validation_data](training_area/Validation_data).
+5. Open an image and place several count markers.
+6. Add the selections to the ROI manager.
+7. Rename the new ROI with the image name (This is most easily done by using the following keyboard shortcuts: __Ctrl+Shift+d -> Ctrl+c -> Ctrl+w -> Left click the ROI >> Select Rename -> Ctrl+v -> Enter__).
+8. Continue selecting cell locations, peridocally updating via the Update button in the ROI Manager.
+9. When all cells are selected, save the .roi file in the [training_area/Validation_Hand_Counts](training_area/Validation_Hand_Counts) folder if placing markers for the validation images, or in the [testing_area/Audit_Hand_Counts](testing_area/Audit_Hand_Counts) folder for the audit image set during Stage __3__. To do this select __More >> Save__ and navigate to the folder you wish to save the file in.
+10. Once saved, select the roi in the ROI manager and select __Delete__ before moving on to the next image. Then close the image so you can open the next image. Your computer will ask if you want to save changes you made to the image, but you _do not_ want to save changes. Instead, select __Don't Save__ when closing the image.
+11. Open a new image and repeat until all validation or audit images are counted.
 
 <img src = "figures/fijiMultiPoint.PNG">
 
@@ -218,7 +252,11 @@ Hand count markers are created in ImageJ using the Point Selection Tool, availab
 
 # How To Use
 
-TODO: By downloading our Github __demo__ repository you will have a set of folders for demo and for experimental use. (Don't have a demo with example data yet)
+The following is a step-by-step walkthrough of ACCT in its three stages:
+1. [Stage 1](#Stage-1)
+2. [Stage 2](#Stage-2)
+3. [Stage 3](#Stage-3)
+
 
 ## Stage 1
 From the ImageJ bar, navigate and select __Plugins >> ACCT 1__. You may need to scroll down for a period of time to find it.
@@ -229,12 +267,14 @@ __1.1__ The first step is to initiate the pipeline. You will be prompted to loca
 
 <img src = "figures/selectSource.PNG">
 
-__1.2__ The pipeline will ask if you want to reset your folders. Specifically it will ask if you want to reset your Weka_ folders. This is because you may want to run ACCT with new images and so you will need to remove old files or the program will try to use those old files. If you select the option to reset your files, it will then ask to confirm that choice.
+__1.2__ The pipeline will ask if you want to reset your folders. Specifically it will ask if you want to reset your Weka_* folders. This is because you may want to run ACCT with new images and so you will need to remove old files or the program will try to use those old files. If you select the option to reset your files, it will then ask to confirm that choice. By default, this is turned off.
+
+__THIS WILL DELETE ALL PROCESSED IMAGES IN THE WEKA* folders. Your .roi, .csv, classifier.model, and images will be left alone.__
 
 <img src = "figures/fileResetOne.png">
 <img src = "figures/fileResetTwo.png">
 
-__1.3__ The pipeline will ask if you want to run Trainable Weka Segmentation. This will individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .roi files and the supplied genotypes.csv file. This stage needs to only be run once for a set of validation images, but you may want to repeatedly run later stages, such as stage __1.4__, to optimize your results. Thus, we give the option to skip this stage. By default, it is set to run.
+__1.3__ The pipeline will ask if you want to run Trainable Weka Segmentation. This will individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .roi files and the supplied genotypes.csv file. This stage needs to only be run _once_ for a set of validation images, but you may want to repeatedly run later stages, such as Stage __1.4__, to optimize your results. Thus, we give the option to skip this stage. By default, it is set to run.
 
 <img src = "figures/selectWeka.png">
 
@@ -255,11 +295,13 @@ __1.5__ To count the number of objects in your data, the program defaults to a p
 
 <img src = "figures/sizeValues.png">
 
-After the pipeline completes a run, run times will vary by hardware capacity, open the __All\_Classifier\_Comparison\_(current time).csv__ file to compare the performance of the various classifiers. This is a summary of the overall statistical performance of each classifier.
+After the pipeline completes a run, run times will vary by hardware capacity, open the __All\_Classifier\_Comparison\_(current time).csv__ file to compare the performance of the various classifiers. This contains P-Value calculations for statistical significance as well. This is a summary of the overall statistical performance of each classifier.
 
 More statistical information will be printed to the log window.
 
 This will be located under [training_area/Results](training_area/Results).
+
+**TODO** Note, to avoid division by 0 errors, images that are empty in the automatic count will be excluded from calculations for the overall precision, recall, F1 Score, and accuracy. This is mainly relavent if a classifier model does not select any object in the image as a cell. This needs a better explaination of the impact on the statistical outcome.
 
 If you desire even more detailed statistical information about each individual classifier:
 1. Reciever operator curves are also automatically generated for each classifier and located inside of __training_area/Weka_Output_Counted/classifier#/classifier#\_roc\_curve.pdf__.   (Note, Not all models classifiy pixels in a probabilistic manner, instead classifying by a binary label. Thus, ROC plots cannot be generated for that particular model.)
@@ -276,7 +318,7 @@ As an example, the output in log will look similar to this.
 ## Stage 2
 From the ImageJ bar, navigate and select __Plugins >> ACCT 2__.
 
-__2.1__ Once again, the program must know where it is downloaded. Select the directory/folder named [scripts_for_auto_cell_count](scripts_for_auto_cell_count).
+__2.1__ Once again, the program must know where it is downloaded. Select the folder named [scripts_for_auto_cell_count](scripts_for_auto_cell_count).
 
 <img src = "figures/selectSource.PNG">
 
@@ -305,9 +347,9 @@ __2.4.2__ Thresholding..........
 
 <img src = "figures/thresholdprob.png">
 
-__2.5__ After the classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons based on the genotypes file. This is identical to stage __1.5__. To count the number of objects in your data, the program defaults to a pixel minimum and maximum object size. These cuttoffs will have significant effects on accuracy and vary completely by application. You will be prompted to select these values. This has to be left to the user since the size of the objects they want counted will vary between different users. You will also be prompted to optionally apply the watershed algorithm when counting images. This is used to separate objects that are touching or overlapping in the image so they can be separately counted. This is on by default.
+__2.5__ After the classifier is selected, the pipline applies the single selected classifier across the previously unseen dataset and produces count and basic morphology measurements, as well as a handful of prescribed statistical comparisons based on the genotypes file. This is identical to tage __1.5__. 
 
-Please use the same parameters you used in Stage 1 to ensure proper experimental design.
+Please use the same parameters you used in Stage __1__ to ensure proper experimental design.
  
 <img src = "figures/sizeValues.png">
 
@@ -333,17 +375,25 @@ __3.2__ You will select which classifier you want to audit the performance of fr
 
 <img src = "figures/auditSelectClassifier.png">
 
-__3.3__ The program will ask if you are ready to audit your images. This is because the program is waiting for you to select the images you want to audit and move them into the __Audit_Images__ folder. It is also waiting for the .roi files for these images to be placed in the __Audit_Hand_Counts__ folder. Once this is done you can select __OK__ with the checkbox selected.
+__3.3__ The program will ask if you are ready to audit your images. This is because the program is waiting for you to do three steps:
+1. Select the images from [testing_area/images](testing_area/images) that you want to audit and move them into the [testing_area/Audit_Images](testing_area/Audit_Images) folder. 
+2. Generate equivalent .roi files for these images to be placed in the [testing_area/Audit_Hand_Counts](testing_area/Audit_Hand_Counts) folder. This is done as in [Hand Placed Markers for Validation](#creating-Hand-Placed-Markers-for-Validation)
+3. From [testing_area/Weka_Output_Counted](testing_area/Weka_Output_Counted), move the matching images from the selected classifier you want to audit into [testing_area/Audit_Counted](testing_area/Audit_Counted)
+
+Once this is done you can select __OK__ with the checkbox selected.
 
 <img src = "figures/auditConfirmProgress.png">
 
-__3.4__ Same as __1.5__ to set the maximum and minimum object size and toggle the watershed algorithm option. To count the number of objects in your data, the program defaults to a pixel minimum and maximum object size. These cuttoffs will have significant effects on accuracy and vary completely by application. You will be prompted to select these values. This has to be left to the user since the size of the objects they want counted will vary between different users. You will also be prompted to optionally apply the watershed algorithm when counting images. This is used to separate objects that are touching or overlapping in the image so they can be separately counted. This is on by default.
+__3.4__ Same as __1.5__ to set the maximum and minimum object size and toggle the watershed algorithm option. 
 
-Please use the same parameters you used in Stage 1 to ensure proper experimental design.
+Please use the same parameters you used in Stage __1__ and Stage __2__ to ensure proper experimental design.
 
 <img src = "figures/sizeValues.png">
 
-***
+As an example, the output in log will look similar to this.
+
+<img src = "figures/act3ExpectedOut.PNG">
+<img src = "figures/act3ExpectedOutPartTwo.PNG">
 
 # Errors and Troubleshooting
 ## Installation Errors
@@ -352,6 +402,9 @@ __I can't move the files listed in the installation guide into the Plugins folde
   
 __I want to use other classifier models besides the ones that come with ACCT__
 1. Weka allows installation of other classifier models which is explained at the following website: https://imagej.net/imagej-wiki-static/Trainable_Weka_Segmentation_-_How_to_install_new_classifiers
+
+__When converting my images to stack and then into 8-bit images, my program crashes__
+1. This may happen if you are trying to stack and convert too many images at the same time. Instead, convert smaller sets of images into 8-bit instead of all at the same time.
 
 ## Program Errors
 __ACCT will not run if I try to use the result from the search bar.__
@@ -383,29 +436,8 @@ __No ROC plot appears in Weka_Output_Counted folders__
 __No Audit_example.csv file appears in Results folder when running ACCT 3__
 1. Make sure for ACCT 3 that images in __Audit_Counted__ match .roi files in __Audit_Hand_Counts__ and the rows in __geno_audit.csv__
 
+__My output log says that "Counted 0 images" or "Counts from 0 ROIs"__
+1. This is primarily due to having extra folders or files in __Weka_Output_Counted__ or another Weka folder without a matching classifer.model file. The program will give this warning and will not give .csv file results in this case. This is due to the program searching for the matching classifier to the file and not finding one, then proceding to exit that script in the workflow.
 
 
-
-# Quick Start Guide(in progress)
-***
-to quickly test ACCT with your own images follow these steps:
-Download the #### branch, which has no demonstration data included.
-
-Prepare your data:
-  All images should be 8-bit single channel .png images without any extranious information such as scale bars.
-
-Separate your image set and place them in the following folders:
-  training images - a subset of images to train the machine learnign classifier - place in DownloadLocation/training_are/training_images
-  validation images - a sebset of images to assess classifier accuracy durign model selection - place in DownloadLocation/training_are/Validation_images
-  testing images - the remaining images you would like to count - place in DownloadLocation/training_are/Validation_images
- 
- Create a validation marker set
-  Use the "Multi-point" selection tool in FIJI to place a marker near the center of each counted object in each validation image and save one multipoint ROI per image using the same file name as the original images.
-  
- Create a genotype file for the validation images
-  As ACCT is designed for cell counting in experimental conditions, the user must specify the conditions of each image in a .csv file named genotype.csv. the column of data containing the condition infomration must have the first element as "geno" followed by whatever levels are present in the experiment. there must be one cell for each image in the valdiation dataset.
- 
-  Run ACCT 1 from the Macro dropdown menu in FIJI (it will be at the bottom)
-  
-  
  

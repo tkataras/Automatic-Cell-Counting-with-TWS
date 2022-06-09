@@ -1,6 +1,6 @@
 /**
  * Author: Theo Kataras, Tyler Jang
- * Date: 3/9/20212
+ * Date: 5/19/2022
  * 
  * Input: Binary images, hand placed markes in roi files, one file for each image
  * Output: Binary image files including only cells counted, and .csv file in classifier folder with accuracy information
@@ -29,7 +29,7 @@ macro "The -- True -- Count" {
 		projected = false;
 	}
 	
-	//Clear the results table
+	// Clear the results table
 	run("Clear Results");
 	
 	// Set size minimum for cells to exclude small radius noise and large artifacts
@@ -98,14 +98,12 @@ macro "The -- True -- Count" {
 				roiManager("deselect");		
 				roiManager("Delete");
 			}  
-			
-			
+						
 			// This imageJ plugin creates the results file and image of the count cells based on the size exclusion		
 			run("Analyze Particles...", "size=" + sizeMin + "-" + sizeMax + " pixel show=Masks summarize add");
 			
 			// Saving the image of the counted objects
 			saveAs("Png", outputDirs + output + filename);
-		
 	
 			// Number of counted objects
 			counts = 0;

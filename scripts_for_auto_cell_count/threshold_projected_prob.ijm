@@ -1,41 +1,41 @@
 /*
  * Author: Theo, Tyler Jang
- * Date: 4/21/2022
+ * Date: 5/19/2022
  * 
  * Input: Projected Images
  * Output: Thresholded Projected Images
- * Description: Take the projected images and threshold them to the cut off value
+ * Description: Takes the projected images and thresholds them to the cut off value specified by the user.
  */
 setBatchMode(true); 
 print("Starting threshold_projected_prob.ijm");
 
 
-//get the threshold from user
+// Get the threshold from user
 Dialog.create("Set cutoff");
 cutoff = 0.5;
 Dialog.addNumber("Cutoff for cell pixels[0,1], default = 0.5:", cutoff);
 Dialog.show();
 
 // Weka Output
-Arg1 = getArgument();
+arg1 = getArgument();
 // Weka Output Thresholded
 outputDirs = "";
 
 // Get the classifier
-selectedClassifier = split(Arg1, "/");
+selectedClassifier = split(arg1, "/");
 
 firstStage = true;
 
 // Check if the argument is from testing or training area
-if(Arg1.contains("testing_area")) {
+if(arg1.contains("testing_area")) {
 	
-	inputDirs = Arg1 + "/../../Weka_Probability_Projected/"+ selectedClassifier[selectedClassifier.length-1] + "/";
-	outputDirs = Arg1 + "/../../Weka_Output_Projected/" + selectedClassifier[selectedClassifier.length-1] + "/";
+	inputDirs = arg1 + "/../../Weka_Probability_Projected/"+ selectedClassifier[selectedClassifier.length-1] + "/";
+	outputDirs = arg1 + "/../../Weka_Output_Projected/" + selectedClassifier[selectedClassifier.length-1] + "/";
 	
 	firstStage = false;
 } else {
-	inputDirs = Arg1 + "../Weka_Probability_Projected/";
-	outputDirs = Arg1;
+	inputDirs = arg1 + "../Weka_Probability_Projected/";
+	outputDirs = arg1;
 	firstStage = true;
 }
 
