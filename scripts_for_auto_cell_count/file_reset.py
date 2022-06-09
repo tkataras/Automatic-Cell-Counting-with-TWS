@@ -50,7 +50,7 @@ for x in class_list_pre_trim:
     name = x.split('.model')
     class_current = [(name[0])]
     class_list += class_current
-print(class_list)
+print(class_list) 
     
 # Make folders in locations
 output = source + "Weka_Output/"
