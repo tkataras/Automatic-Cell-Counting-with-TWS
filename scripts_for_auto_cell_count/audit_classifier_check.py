@@ -1,7 +1,7 @@
 #!/usr/bin/python
 ###
 # Author: Tyler Jang, Theo Kataras
-# Date 4/21/2022
+# Date 5/19/2022
 #
 # Inputs: List of counted images, roi csv file with hand count represented
 # Outputs: Statistical performance of selected classifier to csv
