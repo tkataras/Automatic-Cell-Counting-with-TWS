@@ -38,7 +38,7 @@ If you are not familiar with terminals, you can also click the green code button
 <img src = "figures/DownloadZip.png">
 
 A version of the program with a small set of demonstration data can be found here:
-https://github.com/tkataras/Automatic-Cell-Counting-with-TWS/tree/demo_final_with_data
+https://github.com/tkataras/Automatic-Cell-Counting-with-TWS/tree/demo_with_data
 
 Next, ensure you have downloaded the software located in the [Prerequisites](#prerequisites) section.
 
@@ -394,6 +394,11 @@ As an example, the output in log will look similar to this.
 
 <img src = "figures/act3ExpectedOut.PNG">
 <img src = "figures/act3ExpectedOutPartTwo.PNG">
+
+# Demo
+A demo of the project can be found on the github branch __demo_with_data__ which can be accessed by selecting the button ... 
+
+This demo contains a small set of images and hand counts. The only files needed from the user are classifier files which is done as stated in [Creating Classifiers Using Weka](#Creating-Classifiers-Using-Weka). 
 
 # Errors and Troubleshooting
 ## Installation Errors
