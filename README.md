@@ -17,7 +17,7 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 -Version v1.53c of the Fiji distribution of ImageJ: https://downloads.imagej.net/fiji/archive/20201104-1356/fiji-win64.zip
 
 ```
-for non-Windows 64 bit installations for FIJI version 1.53c:
+For non-Windows 64 bit installations for FIJI version 1.53c:
 https://downloads.imagej.net/fiji/archive/20201104-1356/
 ```
 
@@ -325,7 +325,6 @@ __2.1__ Once again, the program must know where it is downloaded. Select the fol
 
 __2.2__ Select the most accurate classifier (or any classifier of your choosing). Selecting the best classifier is left to the user, but information is supplied in the form of accuracy values on the validation dataset in the form of in Precision, Recall and F1 score, as well as statistical outputs of mean accuracy comparison between two separate experimental conditions entered in the genotypes.csv file. This program is set to handle any N number of conditions, performing Welch 2 sample T-Tests and ANOVA respective to the number of conditions in the genotype.csv file.
 
-
 <img src = "figures/selectClassifier.PNG">
 
 __2.3__ The pipeline will ask if you want to run Trainable Weka Segmentation. This will individually apply the selected classifier to the full image data set. This stage needs to only be run once for each classifier on the whole dataset, but you may want to repeatedly run later stages, to optimize your results. Thus, we give the option to skip this stage. By default, it is set to run. 
@@ -401,7 +400,7 @@ A demo of the project can be found on the github branch __demo_with_data__ which
 
 <img src = "figures/branchButton.png">
 
-This demo contains a small set of images and hand counts. To start, the only files needed from the user are classifier files which is done as stated in [Creating Classifiers Using Weka](#Creating-Classifiers-Using-Weka). The instructions in [How to Use](#how-to-use) remain the same for this demo of the project. The user input for Stage __3__ remains the same.
+This demo contains a small set of images and hand count .roi files. To start, the only files needed from the user are classifier files which is done as stated in [Creating Classifiers Using Weka](#Creating-Classifiers-Using-Weka). The instructions in [How to Use](#how-to-use) remain the same for this demo of the project. 
 
 # Errors and Troubleshooting
 ## Installation Errors
