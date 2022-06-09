@@ -397,7 +397,7 @@ As an example, the output in log will look similar to this.
 <img src = "figures/act3ExpectedOutPartTwo.PNG">
 
 # Demo
-A demo of the project can be found on the github branch __demo_with_data__ which can be accessed by selecting the branch selection button, with the word "main".
+A demo of the project can be found on the github branch __demo_with_data__ which can be accessed by selecting the branch selection button, with the word "main". Once in this branch, select __Download Zip__ as done in the [Installation Guide](#installation-guide).
 
 <img src = "figures/branchButton.png">
 
