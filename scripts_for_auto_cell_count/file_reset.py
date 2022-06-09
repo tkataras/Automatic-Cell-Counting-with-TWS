@@ -42,6 +42,11 @@ else:
 # Trim the classifier names of the ".model" at the end
 class_list = []
 for x in class_list_pre_trim:
+    # Don't generate subfolder for the empty file tracker
+    if x == ".gitkeep" or x == ".gitignore":
+        remove_empty_marker = True
+        empty_file = x
+        continue
     name = x.split('.model')
     class_current = [(name[0])]
     class_list += class_current
