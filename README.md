@@ -9,7 +9,8 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 5. [Creating Classifiers Using Weka](#creating-classifiers-using-weka)
 6. [Hand Placed Markers for Validation](#creating-hand-placed-markers-for-validation)
 7. [How to Use](#how-to-use) 
-8. [Errors and Troubleshooting](#errors-and-troubleshooting)
+8. [Demo](#demo)
+9. [Errors and Troubleshooting](#errors-and-troubleshooting)
 
 
 # Prerequisites
@@ -396,7 +397,9 @@ As an example, the output in log will look similar to this.
 <img src = "figures/act3ExpectedOutPartTwo.PNG">
 
 # Demo
-A demo of the project can be found on the github branch __demo_with_data__ which can be accessed by selecting the button ... 
+A demo of the project can be found on the github branch __demo_with_data__ which can be accessed by selecting the branch selection button, with the word "main".
+
+<img src = "figures/branchButton.png">
 
 This demo contains a small set of images and hand counts. The only files needed from the user are classifier files which is done as stated in [Creating Classifiers Using Weka](#Creating-Classifiers-Using-Weka). 
 
