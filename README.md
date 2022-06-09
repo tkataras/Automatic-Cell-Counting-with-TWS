@@ -401,7 +401,7 @@ A demo of the project can be found on the github branch __demo_with_data__ which
 
 <img src = "figures/branchButton.png">
 
-This demo contains a small set of images and hand counts. The only files needed from the user are classifier files which is done as stated in [Creating Classifiers Using Weka](#Creating-Classifiers-Using-Weka). 
+This demo contains a small set of images and hand counts. To start, the only files needed from the user are classifier files which is done as stated in [Creating Classifiers Using Weka](#Creating-Classifiers-Using-Weka). The instructions in [How to Use](#how-to-use) remain the same for this demo of the project. The user input for Stage __3__ remains the same.
 
 # Errors and Troubleshooting
 ## Installation Errors
@@ -446,6 +446,3 @@ __No Audit_example.csv file appears in Results folder when running ACCT 3__
 
 __My output log says that "Counted 0 images" or "Counts from 0 ROIs"__
 1. This is primarily due to having extra folders or files in __Weka_Output_Counted__ or another Weka folder without a matching classifer.model file. The program will give this warning and will not give .csv file results in this case. This is due to the program searching for the matching classifier to the file and not finding one, then proceding to exit that script in the workflow.
-
-
- 
