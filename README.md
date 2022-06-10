@@ -287,7 +287,8 @@ __1.4.1__ If you select this option, you will then be prompted to rerun the step
 
 <img src = "figures/rerunProjected.png">
 
-__1.4.2__ Thresholding..........
+__1.4.2__ Thresholding allows the user to select more or less stringent cuttoffs for pixels in an image to be considered -cell pixels. The default value of 0.5 represents a cuttoff probability of .5 where, based on the trained classifier, cell pixels are more likely to be cell than non-cell. Increasing the cuttoff will require more certainty for pixels to be identified as cell pixels, and lowering it will be more permissive. The default value of 0.5 is a good staring place, however, for most datasets.
+
 
 <img src = "figures/thresholdprob.png">
 
@@ -343,7 +344,7 @@ __2.4.1__ If you select this option, you will then be prompted to rerun the step
 
 <img src = "figures/rerunProjected.png">
 
-__2.4.2__ Thresholding..........
+__2.4.2__ As described in section __1.4.2__ Thresholding changes the permissiveness of the classifier, but it is best to start with the default value of 0.5.
 
 <img src = "figures/thresholdprob.png">
 
