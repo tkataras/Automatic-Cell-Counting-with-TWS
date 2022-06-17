@@ -32,7 +32,7 @@ __(Ensure the "add to path" checkbox is selected during installation.)__
 # Installation Guide
 First, you will have to download this program, which can be done through a terminal such as Git, Ubuntu, or Microsoft Powershell with the following line of code.
 ```
-git clone https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
+git clone --depth 1 https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
 ```
 If you are not familiar with terminals, you can also click the green code button and select __Download ZIP__, then unzip the files in a desired location.
 
