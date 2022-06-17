@@ -139,10 +139,11 @@ Images should be free of major artifacts (Optional but recommended).
 
 Each image _must_ have a unique file name.
 
-Image file names should not contain the following symbols as they are used for other purposes.
+Image file names should not contain the following symbols or phrases as they are used for other purposes.
 ```
 .     (Except for the default symbol separating the file extension from the file name.)
 :
+Mask of 
 ```
 ## Projected Images
 In some cases, paired or grouped images should be projected to create a complete cell count of an area. ACCT can handle projected images, but presently the images should have the following identifying characteristics to know which projections associate with each other: 
