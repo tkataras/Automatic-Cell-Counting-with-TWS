@@ -73,6 +73,12 @@ for row in range(0, len(class_results)):
     row_name = class_results.loc[row, "Label"]
     row_name = row_name.split(":")[0]
     row_name = row_name.split(".")[0]
+    # Remove "Mask of " phrase from file names
+    row_name = row_name.split("Mask of ")
+    if len(row_name) > 1:
+        row_name = row_name[1]
+    else:
+        row_name = row_name[0]
     class_results.loc[row, "Label"] = row_name
 
 # Get the images from the counted images file
