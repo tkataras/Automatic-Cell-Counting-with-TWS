@@ -110,7 +110,7 @@ for selectedClassifier in class_list:
     plt.plot(thresholds, tpr, color="blue", marker=".", label="True Positive")
 
     # Set axis limit
-    plt.xlim([0.5, 1])
+    plt.xlim([0.0, 1])
     plt.ylim([0, 1])
 
     # Axis labels
@@ -138,7 +138,7 @@ for selectedClassifier in class_list:
     plt.plot(pr_thresholds, precision, color="red", marker=".", label="Precision")
     plt.xlabel("Threshold")
     plt.ylabel("Rate")
-    plt.xlim([0.5, 1])
+    plt.xlim([0.0, 1])
     plt.ylim([0, 1])
     plt.title("Recall and Precision Threshold Optimization")
     plt.legend()
