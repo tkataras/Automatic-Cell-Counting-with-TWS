@@ -276,7 +276,7 @@ __THIS WILL DELETE ALL PROCESSED IMAGES IN THE WEKA* folders. Your .roi, .csv, c
 <img src = "figures/fileResetOne.png">
 <img src = "figures/fileResetTwo.png">
 
-__1.3__ The pipeline will ask if you want to run Trainable Weka Segmentation. This will individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .roi files and the supplied genotypes.csv file. This stage needs to only be run _once_ for a set of validation images, but you may want to repeatedly run later stages, such as Stage __1.4__, to optimize your results. Thus, we give the option to skip this stage. By default, it is set to run.
+__1.3__ The pipeline will ask if you want to run Trainable Weka Segmentation. This will individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .roi files and the supplied genotypes.csv file. This stage needs to only be run _once_ for a set of validation images at a specified threshold, but you may want to repeatedly run later stages, such as Stage __1.4__, to optimize your results. Thus, we give the option to skip this stage. By default, it is set to run.
 
 <img src = "figures/selectWeka.png">
 
@@ -307,7 +307,7 @@ This will be located under [training_area/Results](training_area/Results).
 **TODO** Note, to avoid division by 0 errors, images that are empty in the automatic count will be excluded from calculations for the overall precision, recall, F1 Score, and accuracy. This is mainly relavent if a classifier model does not select any object in the image as a cell. This needs a better explaination of the impact on the statistical outcome.
 
 If you desire even more detailed statistical information about each individual classifier:
-1. Reciever operator curves are also automatically generated for each classifier and located inside of __training_area/Weka_Output_Counted/classifier#/classifier#\_roc\_curve.pdf__.   (Note, Not all models classifiy pixels in a probabilistic manner, instead classifying by a binary label. Thus, ROC plots cannot be generated for that particular model.)
+1. Reciever operator curves are also automatically generated for each classifier and located inside of __training_area/Weka_Output_Counted/classifier#/classifier#\_roc\_curve.pdf__. (Note, Not all models classifiy pixels in a probabilistic manner, instead classifying by a binary label. Thus, useable ROC plots cannot be generated for that particular model.) Due to the implementation within ACCT, the inital threshold used in Step __1.3__ will affect the predicted ROC curve, and will not predict values at thresholds lower than the starting threshold.
 
 2. The number of true positives, false positives, and false negatives for each individual image for each individual classifier can be found in __training_area/Weka_Output_Counted/classifier#/classifier#\_Final.csv__.
 3. The morphological data and the correctness of each individual object counted for each individual image for each indivdual classifier can be found in __training_area/Weka_Output_Counted/classifier#/classifier#\_Results.csv__.
