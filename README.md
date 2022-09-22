@@ -9,14 +9,15 @@ A user friendly program for automated object counting using Trainable WEKA Segme
 5. [Creating Classifiers Using Weka](#creating-classifiers-using-weka)
 6. [Hand Placed Markers for Validation](#creating-hand-placed-markers-for-validation)
 7. [How to Use](#how-to-use) 
-8. [Errors and Troubleshooting](#errors-and-troubleshooting)
+8. [Demo](#demo)
+9. [Errors and Troubleshooting](#errors-and-troubleshooting)
 
 
 # Prerequisites
 -Version v1.53c of the Fiji distribution of ImageJ: https://downloads.imagej.net/fiji/archive/20201104-1356/fiji-win64.zip
 
 ```
-for non-Windows 64 bit installations for FIJI version 1.53c:
+For non-Windows 64 bit installations for FIJI version 1.53c:
 https://downloads.imagej.net/fiji/archive/20201104-1356/
 ```
 
@@ -31,14 +32,14 @@ __(Ensure the "add to path" checkbox is selected during installation.)__
 # Installation Guide
 First, you will have to download this program, which can be done through a terminal such as Git, Ubuntu, or Microsoft Powershell with the following line of code.
 ```
-git clone https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
+git clone --depth 1 https://github.com/tkataras/Automatic-Cell-counting-with-TWS.git
 ```
 If you are not familiar with terminals, you can also click the green code button and select __Download ZIP__, then unzip the files in a desired location.
 
 <img src = "figures/DownloadZip.png">
 
 A version of the program with a small set of demonstration data can be found here:
-https://github.com/tkataras/Automatic-Cell-Counting-with-TWS/tree/demo_final_with_data
+https://github.com/tkataras/Automatic-Cell-Counting-with-TWS/tree/demo_with_data
 
 Next, ensure you have downloaded the software located in the [Prerequisites](#prerequisites) section.
 
@@ -138,10 +139,11 @@ Images should be free of major artifacts (Optional but recommended).
 
 Each image _must_ have a unique file name.
 
-Image file names should not contain the following symbols as they are used for other purposes.
+Image file names should not contain the following symbols or phrases as they are used for other purposes.
 ```
 .     (Except for the default symbol separating the file extension from the file name.)
 :
+Mask of 
 ```
 ## Projected Images
 In some cases, paired or grouped images should be projected to create a complete cell count of an area. ACCT can handle projected images, but presently the images should have the following identifying characteristics to know which projections associate with each other: 
@@ -274,9 +276,10 @@ __THIS WILL DELETE ALL PROCESSED IMAGES IN THE WEKA* folders. Your .roi, .csv, c
 <img src = "figures/fileResetOne.png">
 <img src = "figures/fileResetTwo.png">
 
-__1.3__ The pipeline will ask if you want to run Trainable Weka Segmentation. This will individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .roi files and the supplied genotypes.csv file. This stage needs to only be run _once_ for a set of validation images, but you may want to repeatedly run later stages, such as Stage __1.4__, to optimize your results. Thus, we give the option to skip this stage. By default, it is set to run.
+__1.3__ The pipeline will ask if you want to run Trainable Weka Segmentation. This will individually apply classifiers to the validation data and output the accuracy statistics using hand count placement .roi files and the supplied genotypes.csv file. This stage needs to only be run _once_ for a set of validation images at a specified threshold, but you may want to repeatedly run later stages, such as Stage __1.4__, to optimize your results. Thus, we give the option to skip this stage. By default, it is set to run. The default threshold is set to 0.5 but can be changed by the user.
 
 <img src = "figures/selectWeka.png">
+<img src = "figures/selectWekaThreshold.png">
 
 __1.4__ Our data includes paired images in individual fields of view for increased context when counting, so intermediate stage are included to identify and project these image pairs for the final automatic count. If your data does not include paired images, do not select this option below:
 
@@ -286,7 +289,8 @@ __1.4.1__ If you select this option, you will then be prompted to rerun the step
 
 <img src = "figures/rerunProjected.png">
 
-__1.4.2__ Thresholding..........
+__1.4.2__ Thresholding allows the user to select more or less stringent cuttoffs for pixels in an image to be considered -cell pixels. The default value of 0.5 represents a cuttoff probability of .5 where, based on the trained classifier, cell pixels are more likely to be cell than non-cell. Increasing the cuttoff will require more certainty for pixels to be identified as cell pixels, and lowering it will be more permissive. The default value of 0.5 is a good staring place, however, for most datasets.
+
 
 <img src = "figures/thresholdprob.png">
 
@@ -304,7 +308,7 @@ This will be located under [training_area/Results](training_area/Results).
 **TODO** Note, to avoid division by 0 errors, images that are empty in the automatic count will be excluded from calculations for the overall precision, recall, F1 Score, and accuracy. This is mainly relavent if a classifier model does not select any object in the image as a cell. This needs a better explaination of the impact on the statistical outcome.
 
 If you desire even more detailed statistical information about each individual classifier:
-1. Reciever operator curves are also automatically generated for each classifier and located inside of __training_area/Weka_Output_Counted/classifier#/classifier#\_roc\_curve.pdf__.   (Note, Not all models classifiy pixels in a probabilistic manner, instead classifying by a binary label. Thus, ROC plots cannot be generated for that particular model.)
+1. Reciever operator curves are also automatically generated for each classifier and located inside of __training_area/Weka_Output_Counted/classifier#/classifier#\_roc\_curve.pdf__. (Note, Not all models classifiy pixels in a probabilistic manner, instead classifying by a binary label. Thus, useable ROC plots cannot be generated for that particular model.) Due to the implementation within ACCT, the inital threshold used in Step __1.3__ will affect the predicted ROC curve, and will not predict values at thresholds lower than the starting threshold.
 
 2. The number of true positives, false positives, and false negatives for each individual image for each individual classifier can be found in __training_area/Weka_Output_Counted/classifier#/classifier#\_Final.csv__.
 3. The morphological data and the correctness of each individual object counted for each individual image for each indivdual classifier can be found in __training_area/Weka_Output_Counted/classifier#/classifier#\_Results.csv__.
@@ -324,7 +328,6 @@ __2.1__ Once again, the program must know where it is downloaded. Select the fol
 
 __2.2__ Select the most accurate classifier (or any classifier of your choosing). Selecting the best classifier is left to the user, but information is supplied in the form of accuracy values on the validation dataset in the form of in Precision, Recall and F1 score, as well as statistical outputs of mean accuracy comparison between two separate experimental conditions entered in the genotypes.csv file. This program is set to handle any N number of conditions, performing Welch 2 sample T-Tests and ANOVA respective to the number of conditions in the genotype.csv file.
 
-
 <img src = "figures/selectClassifier.PNG">
 
 __2.3__ The pipeline will ask if you want to run Trainable Weka Segmentation. This will individually apply the selected classifier to the full image data set. This stage needs to only be run once for each classifier on the whole dataset, but you may want to repeatedly run later stages, to optimize your results. Thus, we give the option to skip this stage. By default, it is set to run. 
@@ -343,7 +346,7 @@ __2.4.1__ If you select this option, you will then be prompted to rerun the step
 
 <img src = "figures/rerunProjected.png">
 
-__2.4.2__ Thresholding..........
+__2.4.2__ As described in section __1.4.2__ Thresholding changes the permissiveness of the classifier, but it is best to start with the default value of 0.5.
 
 <img src = "figures/thresholdprob.png">
 
@@ -395,6 +398,13 @@ As an example, the output in log will look similar to this.
 <img src = "figures/act3ExpectedOut.PNG">
 <img src = "figures/act3ExpectedOutPartTwo.PNG">
 
+# Demo
+A demo of the project can be found on the github branch __demo_with_data__ which can be accessed by selecting the branch selection button, with the word "main". Once in this branch, select __Download Zip__ as done in the [Installation Guide](#installation-guide).
+
+<img src = "figures/branchButton.png">
+
+This demo contains a small set of images and hand count .roi files. To start, the only files needed from the user are classifier files which is done as stated in [Creating Classifiers Using Weka](#Creating-Classifiers-Using-Weka). The instructions in [How to Use](#how-to-use) remain the same for this demo of the project. 
+
 # Errors and Troubleshooting
 ## Installation Errors
 __I can't move the files listed in the installation guide into the Plugins folder__
@@ -438,6 +448,3 @@ __No Audit_example.csv file appears in Results folder when running ACCT 3__
 
 __My output log says that "Counted 0 images" or "Counts from 0 ROIs"__
 1. This is primarily due to having extra folders or files in __Weka_Output_Counted__ or another Weka folder without a matching classifer.model file. The program will give this warning and will not give .csv file results in this case. This is due to the program searching for the matching classifier to the file and not finding one, then proceding to exit that script in the workflow.
-
-
- 
