@@ -448,3 +448,6 @@ __No Audit_example.csv file appears in Results folder when running ACCT 3__
 
 __My output log says that "Counted 0 images" or "Counts from 0 ROIs"__
 1. This is primarily due to having extra folders or files in __Weka_Output_Counted__ or another Weka folder without a matching classifer.model file. The program will give this warning and will not give .csv file results in this case. This is due to the program searching for the matching classifier to the file and not finding one, then proceding to exit that script in the workflow.
+
+__Java exception on Weka output file save during ACCT 1__
+1. Version conflicts can occur between the version of TWS called by the macro in Imagej and TWS itself, in this case run __apply_BS_TWS_prob__ by opening the file in Fiji from the __scripts_for_auto_cell_count__ folder and then rerun ACCT 1 stating that you do not need to run TWS when prompted.
