@@ -1,5 +1,9 @@
 # ACCT: Automatic-Cell-Counting-with-TWS
-A user friendly program for automated object counting using Trainable WEKA Segmentation.
+A user friendly program for automated object counting using Trainable WEKA Segmentation. 
+
+If you use our tool, please cite [Kataras, T.J., Jang, T.J., Koury, J. et al. *ACCT is a fast and accessible automatic cell counting tool using machine learning for 2D image segmentation*. Sci Rep 13, 8213 (2023).](https://doi.org/10.1038/s41598-023-34943-w).
+
+
 
 ## Table of Contents
 1. [Installation Guide](#installation-guide)
