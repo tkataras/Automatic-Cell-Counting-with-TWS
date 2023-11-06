@@ -18,20 +18,20 @@ If you use our tool, please cite [Kataras, T.J., Jang, T.J., Koury, J. et al. *A
 
 
 # Prerequisites
--Version v1.53c of the Fiji distribution of ImageJ: https://downloads.imagej.net/fiji/archive/20201104-1356/fiji-win64.zip
+* Version v1.53c of the Fiji distribution of ImageJ: https://downloads.imagej.net/fiji/archive/20201104-1356/fiji-win64.zip
 
 ```
 For non-Windows 64 bit installations for FIJI version 1.53c:
 https://downloads.imagej.net/fiji/archive/20201104-1356/
 ```
 
--Python: https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe 
+* Python: https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe 
 
 (If you are using an older version of Windows, such as Windows 7, you can find compatable versions of Python here: https://www.python.org/downloads/windows/)
 
 __(Ensure the "add to path" checkbox is selected during installation.)__
 
--_Currently_ the ImageScience package for Fiji must NOT be installed or have been installed on the Fiji installation in use since it is not compatable with our program. If you have installed ImageScience, you can uninstall and reinstall Fiji to solve the problem. Alternatively, it is possible to use ACCT from a fresh installation of Fiji.
+* _Currently_ the ImageScience package for Fiji must NOT be installed or have been installed on the Fiji installation in use since it is not compatable with our program. If you have installed ImageScience, you can uninstall and reinstall Fiji to solve the problem. Alternatively, it is possible to use ACCT from a fresh installation of Fiji.
 
 # Installation Guide
 First, you will have to download this program, which can be done through a terminal such as Git, Ubuntu, or Microsoft Powershell with the following line of code.
