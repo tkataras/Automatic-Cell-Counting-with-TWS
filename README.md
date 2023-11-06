@@ -220,7 +220,7 @@ Optionally, you can instead convert an entire folder of images into 8-bit versio
 
 After this, ensure that the **Output format** is **TIFF**. Then add this exact line ```run("8-bit");``` to the large text box. You can select **Test** to see the output of a single image from the selected folder. Once you are ready, select **Process** and your images will be converted into 8-bit format and saved in the specified output folder. You should have your converted images saved in [training\_area/training\_images](training_area/training_images). An example of what this window looks like can be seen in the below example image.
 
-<img src="figures/batchCorrectMarco.png">
+<img src="figures/batchCorrectMacro.png">
 
 - - -
 
